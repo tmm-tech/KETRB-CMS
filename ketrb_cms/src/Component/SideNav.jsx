@@ -5,7 +5,7 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "@shadcn/ui/tooltip";
+} from "../Component/tooltip";
 
 const SideNav = () => {
   return (
