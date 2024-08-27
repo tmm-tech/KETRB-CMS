@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Sheet, SheetTrigger, SheetContent } from '@shadcn/ui/sheet';
-import { Button } from '@shadcn/ui/button';
+import { Button } from '@shadcn/ui';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from '@shadcn/ui/breadcrumb';
 import { Input } from '@shadcn/ui/input';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem} from '@shadcn/ui/dropdown-menu';

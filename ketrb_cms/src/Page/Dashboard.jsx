@@ -1,7 +1,7 @@
 import React from "react";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
-import { Button } from '@shadcn/ui/button';
+import { Button } from '@shadcn/ui';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuCheckboxItem } from '@shadcn/ui/dropdown-menu';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@shadcn/ui/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@shadcn/ui/card';
