@@ -1,102 +1,104 @@
-.header-container {
-    position: sticky;
-    top: 0;
-    z-index: 30;
-    display: flex;
-    height: 4rem;
-    align-items: center;
-    gap: 1rem;
-    border-bottom: 1px solid #e5e7eb; 
-    background-color: #f9fafb;
-    padding: 0 1rem;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  }
-  
-
-  .sheet-trigger-btn {
-    display: none;
-  }
-  
-
-  .menu-icon {
-    height: 1.25rem;
-    width: 1.25rem;
-  }
-  
-
-  .sheet-content {
-    max-width: 20rem; 
-  }
-  
-
-  .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.625rem 0.625rem;
-    border-radius: 0.5rem;
-    color: #6b7280; 
-    text-decoration: none;
-  }
-  
-  .nav-link:hover {
-    color: #111827; 
-  }
-  
-
-  .nav-link-active {
-    color: #3b82f6; 
-    font-weight: 600;
-  }
-  
-
-  .nav-icon {
-    height: 1.25rem;
-    width: 1.25rem;
-  }
-  
-
-.search-container {
-  position: relative;
-  margin-left: auto;
-  flex: 1;
-  max-width: 300px; 
+/* General header styling */
+.header-nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 4rem;
+  padding: 0 1rem;
+  background-color: #ffffff; /* Background color */
+  border-bottom: 1px solid #e0e0e0; /* Light border for separation */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
+/* Styling for the menu button */
+.menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 0.5rem;
+}
+
+/* Styling for the sheet content */
+.sheet-content {
+  max-width: 20rem;
+  padding: 1rem;
+}
+
+/* Navigation menu styling */
+.nav-menu {
+  display: grid;
+  gap: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Link styling */
+.logo-link, .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: #333333;
+}
+
+/* Hover effect for links */
+.nav-link:hover {
+  color: #007bff; /* Primary color on hover */
+  background-color: #f8f9fa; /* Light background on hover */
+}
+
+/* Icon styling */
+.icon {
+  height: 1.25rem;
+  width: 1.25rem;
+  color: #007bff; /* Primary color for icons */
+}
+
+/* Breadcrumb styling */
+.breadcrumb {
+  flex: 1;
+}
+
+/* Search container styling */
+.search-container {
+  position: relative;
+  flex: 1;
+  margin-left: auto;
+}
 
 .search-icon {
   position: absolute;
-  left: 0.625rem;
-  top: 0.625rem;
-  height: 1rem;
-  width: 1rem;
-  color: #6b7280; 
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #adb5bd; /* Light gray color for icon */
 }
-
 
 .search-input {
   width: 100%;
-  max-width: 200px; 
-  border-radius: 0.5rem;
-  background-color: #f3f4f6; 
-  padding-left: 2rem;
-  box-sizing: border-box; 
+  padding-left: 2.5rem;
+  border-radius: 0.375rem;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
 }
 
+/* Profile button styling */
+.profile-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+}
 
-  .dropdown-menu-btn {
-    overflow: hidden;
-    border-radius: 9999px;
-    border: 1px solid #d1d5db; 
-  }
-  
-
-  .dropdown-menu-img {
-    object-fit: cover;
-  }
-  
-  
-  .dropdown-menu-label {
-    font-weight: 600;
-  }
-  
+/* Profile image styling */
+.profile-image {
+  object-fit: cover;
+  border-radius: 50%;
+}
