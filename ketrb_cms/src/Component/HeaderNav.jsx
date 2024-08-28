@@ -9,7 +9,7 @@ import "./headernav.css";
 
 const HeaderNav = () => {
   return (
-<header className="header-container">
+    <header className="header-container">
       <Sheet>
         <SheetTrigger asChild>
           <Button size="icon" variant="outline" className="sheet-trigger-btn">
@@ -21,17 +21,53 @@ const HeaderNav = () => {
           <nav className="grid gap-6 text-lg font-medium">
             <Link
               to="#"
-              className="nav-link group flex h-10 w-10 items-center justify-center gap-2 rounded-full bg-blue-500 text-white md:text-base"
+              className="nav-link group flex h-10 w-10 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
             >
-              <Package2Icon className="nav-icon transition-transform duration-300 group-hover:scale-110" />
+              <Package2Icon className="nav-icon transition-all group-hover:scale-110" />
               <span className="sr-only">KETRB CMS</span>
             </Link>
-            <NavLink to="#" icon={<HomeIcon />} label="Dashboard" />
-            <NavLink to="#" icon={<NewspaperIcon />} label="News" />
-            <NavLink to="#" icon={<ImageIcon />} label="Images" />
-            <NavLink to="#" icon={<CalendarIcon />} label="Programs" />
-            <NavLink to="#" icon={<UsersIcon />} label="Users" />
-            <NavLink to="#" icon={<SettingsIcon />} label="Settings" />
+            <Link
+              to="#"
+              className="nav-link flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+            >
+              <HomeIcon className="nav-icon" />
+              Dashboard
+            </Link>
+            <Link
+              to="#"
+              className="nav-link flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+            >
+              <NewspaperIcon className="nav-icon" />
+              News
+            </Link>
+            <Link
+              to="#"
+              className="nav-link flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+            >
+              <ImageIcon className="nav-icon" />
+              Images
+            </Link>
+            <Link
+              to="#"
+              className="nav-link flex items-center gap-4 px-2.5 text-foreground"
+            >
+              <CalendarIcon className="nav-icon" />
+              Programs
+            </Link>
+            <Link
+              to="#"
+              className="nav-link flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+            >
+              <UsersIcon className="nav-icon" />
+              Users
+            </Link>
+            <Link
+              to="#"
+              className="nav-link flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+            >
+              <SettingsIcon className="nav-icon" />
+              Settings
+            </Link>
           </nav>
         </SheetContent>
       </Sheet>
@@ -87,18 +123,6 @@ const HeaderNav = () => {
 };
 
 export default HeaderNav;
-
-
-const NavLink = ({ to, icon, label }) => (
-  <Link
-    to={to}
-    className="nav-link text-muted-foreground hover:text-foreground"
-  >
-    {icon}
-    {label}
-  </Link>
-);
-
 
 function CalendarIcon(props) {
   return (
