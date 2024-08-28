@@ -15,13 +15,13 @@ const Dashboard = () => {
       <div className="main-content">
         <HeaderNav />
         <main className="main-content-body">
-          <Tabs defaultValue="news">
+          <Tabs defaultValue="news" className="tabs-container">
             <div className="tabs-header">
               <TabsList className="tabs-list">
-                <TabsTrigger value="news">News</TabsTrigger>
-                <TabsTrigger value="images">Images</TabsTrigger>
-                <TabsTrigger value="programs">Programs</TabsTrigger>
-                <TabsTrigger value="users" className="hidden sm:flex">Users</TabsTrigger>
+                <TabsTrigger value="news" className="tab-trigger">News</TabsTrigger>
+                <TabsTrigger value="images" className="tab-trigger">Images</TabsTrigger>
+                <TabsTrigger value="programs" className="tab-trigger">Programs</TabsTrigger>
+                <TabsTrigger value="users" className="tab-trigger hidden sm:flex">Users</TabsTrigger>
               </TabsList>
               <div className="actions-container">
                 <Button size="sm" variant="outline" className="add-button">
@@ -47,8 +47,8 @@ const Dashboard = () => {
             <TabsContent value="news">
               <Card className="news-card">
                 <CardHeader>
-                  <CardTitle>News Articles</CardTitle>
-                  <CardDescription>Manage your news articles and approve them for publishing.</CardDescription>
+                  <CardTitle className="card-title">News Articles</CardTitle>
+                  <CardDescription className="card-description">Manage your news articles and approve them for publishing.</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Table className="news-table">
