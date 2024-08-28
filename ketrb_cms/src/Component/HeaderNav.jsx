@@ -88,6 +88,18 @@ const HeaderNav = () => {
 
 export default HeaderNav;
 
+
+const NavLink = ({ to, icon, label }) => (
+  <Link
+    to={to}
+    className="nav-link text-muted-foreground hover:text-foreground"
+  >
+    {icon}
+    {label}
+  </Link>
+);
+
+
 function CalendarIcon(props) {
   return (
     <svg
