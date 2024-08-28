@@ -6,7 +6,7 @@ import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbS
 import { Input } from '../Component/input';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem} from '../Component/dropdown-menu';
 import "./headernav.css";
-
+import image1 from "../Asset/joseph.jpg";
 const HeaderNav = () => {
   return (
     <header className="header-container">
@@ -102,7 +102,7 @@ const HeaderNav = () => {
             className="dropdown-menu-btn"
           >
             <img
-              src="/placeholder.svg"
+              src={image1}
               width={36}
               height={36}
               alt="Avatar"
