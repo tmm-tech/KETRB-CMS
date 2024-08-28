@@ -6,26 +6,27 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "../Component/tooltip";
+import "./sidenav.css";
 
 const SideNav = () => {
   return (
-    <aside className="fixed inset-y-0 left-0 z-10 w-16 flex flex-col border-r bg-background h-screen">
-      <nav className="flex flex-col items-center gap-4 px-2 py-5">
+    <aside className="sidenav-container">
+      <nav className="sidenav-nav">
         <TooltipProvider>
           <Link
             to="#"
-            className="group flex h-10 w-10 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+            className="sidenav-logo group"
           >
-            <Package2Icon className="h-5 w-5 transition-all group-hover:scale-110" />
+            <Package2Icon className="sidenav-icon transition-all group-hover:scale-110" />
             <span className="sr-only">KETRB CMS</span>
           </Link>
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
                 to="#"
-                className="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                className="sidenav-item"
               >
-                <HomeIcon className="h-5 w-5" />
+                <HomeIcon className="sidenav-icon" />
                 <span className="sr-only">Dashboard</span>
               </Link>
             </TooltipTrigger>
@@ -35,9 +36,9 @@ const SideNav = () => {
             <TooltipTrigger asChild>
               <Link
                 to="#"
-                className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                className="sidenav-item active"
               >
-                <NewspaperIcon className="h-5 w-5" />
+                <NewspaperIcon className="sidenav-icon" />
                 <span className="sr-only">News</span>
               </Link>
             </TooltipTrigger>
@@ -47,9 +48,9 @@ const SideNav = () => {
             <TooltipTrigger asChild>
               <Link
                 to="#"
-                className="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                className="sidenav-item"
               >
-                <ImageIcon className="h-5 w-5" />
+                <ImageIcon className="sidenav-icon" />
                 <span className="sr-only">Images</span>
               </Link>
             </TooltipTrigger>
@@ -59,9 +60,9 @@ const SideNav = () => {
             <TooltipTrigger asChild>
               <Link
                 to="#"
-                className="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                className="sidenav-item"
               >
-                <CalendarIcon className="h-5 w-5" />
+                <CalendarIcon className="sidenav-icon" />
                 <span className="sr-only">Programs</span>
               </Link>
             </TooltipTrigger>
@@ -71,9 +72,9 @@ const SideNav = () => {
             <TooltipTrigger asChild>
               <Link
                 to="#"
-                className="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                className="sidenav-item"
               >
-                <UsersIcon className="h-5 w-5" />
+                <UsersIcon className="sidenav-icon" />
                 <span className="sr-only">Users</span>
               </Link>
             </TooltipTrigger>
@@ -81,15 +82,15 @@ const SideNav = () => {
           </Tooltip>
         </TooltipProvider>
       </nav>
-      <nav className="mt-auto flex flex-col items-center gap-4 px-2 py-5">
+      <nav className="sidenav-footer">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
                 to="#"
-                className="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                className="sidenav-item"
               >
-                <SettingsIcon className="h-5 w-5" />
+                <SettingsIcon className="sidenav-icon" />
                 <span className="sr-only">Settings</span>
               </Link>
             </TooltipTrigger>

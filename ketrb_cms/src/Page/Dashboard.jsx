@@ -7,94 +7,71 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../Component/card';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Component/table';
 import { Badge } from '../Component/badge';
-
+import "./dashboard.css";
 const Dashboard = () => {
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="dashboard-container">
       <SideNav />
-      <div className="flex-1 flex flex-col">
+      <div className="main-content">
         <HeaderNav />
-        <main className="flex-1 p-4 overflow-auto">
+        <main className="main-content-body">
           <Tabs defaultValue="news">
-            <div className="flex items-center">
-              <TabsList>
+            <div className="tabs-header">
+              <TabsList className="tabs-list">
                 <TabsTrigger value="news">News</TabsTrigger>
                 <TabsTrigger value="images">Images</TabsTrigger>
                 <TabsTrigger value="programs">Programs</TabsTrigger>
-                <TabsTrigger value="users" className="hidden sm:flex">
-                  Users
-                </TabsTrigger>
+                <TabsTrigger value="users" className="hidden sm:flex">Users</TabsTrigger>
               </TabsList>
-              <div className="ml-auto flex items-center gap-2">
-                <Button size="sm" variant="outline" className="h-8 gap-1">
-                  <PlusIcon className="h-3.5 w-3.5" />
-                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                    Add
-                  </span>
+              <div className="actions-container">
+                <Button size="sm" variant="outline" className="add-button">
+                  <PlusIcon className="icon-small" />
+                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Add</span>
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="h-8 gap-1">
-                      <FilterIcon className="h-3.5 w-3.5" />
-                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                        Filter
-                      </span>
+                    <Button variant="outline" size="sm" className="filter-button">
+                      <FilterIcon className="icon-small" />
+                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Filter</span>
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem checked>
-                      Published
-                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem checked>Published</DropdownMenuCheckboxItem>
                     <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>
-                      Pending Approval
-                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem>Pending Approval</DropdownMenuCheckboxItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
             </div>
             <TabsContent value="news">
-              <Card x-chunk="dashboard-06-chunk-0">
+              <Card className="news-card">
                 <CardHeader>
                   <CardTitle>News Articles</CardTitle>
-                  <CardDescription>
-                    Manage your news articles and approve them for publishing.
-                  </CardDescription>
+                  <CardDescription>Manage your news articles and approve them for publishing.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Table>
+                  <Table className="news-table">
                     <TableHeader>
                       <TableRow>
                         <TableHead>Title</TableHead>
                         <TableHead>Author</TableHead>
                         <TableHead>Status</TableHead>
                         <TableHead>Published At</TableHead>
-                        <TableHead>
-                          <span className="sr-only">Actions</span>
-                        </TableHead>
+                        <TableHead><span className="sr-only">Actions</span></TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       <TableRow>
-                        <TableCell className="font-medium">
-                          New Product Launch
-                        </TableCell>
+                        <TableCell className="font-medium">New Product Launch</TableCell>
                         <TableCell>John Doe</TableCell>
-                        <TableCell>
-                          <Badge variant="outline">Pending Approval</Badge>
-                        </TableCell>
+                        <TableCell><Badge variant="outline">Pending Approval</Badge></TableCell>
                         <TableCell>-</TableCell>
                         <TableCell>
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                              <Button
-                                aria-haspopup="true"
-                                size="icon"
-                                variant="ghost"
-                              >
-                                <MoveHorizontalIcon className="h-4 w-4" />
+                              <Button aria-haspopup="true" size="icon" variant="ghost">
+                                <MoveHorizontalIcon className="icon-medium" />
                                 <span className="sr-only">Toggle menu</span>
                               </Button>
                             </DropdownMenuTrigger>
@@ -108,23 +85,15 @@ const Dashboard = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-medium">
-                          Company Expansion Announcement
-                        </TableCell>
+                        <TableCell className="font-medium">Company Expansion Announcement</TableCell>
                         <TableCell>Jane Smith</TableCell>
-                        <TableCell>
-                          <Badge variant="outline">Published</Badge>
-                        </TableCell>
+                        <TableCell><Badge variant="outline">Published</Badge></TableCell>
                         <TableCell>2023-04-15</TableCell>
                         <TableCell>
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                              <Button
-                                aria-haspopup="true"
-                                size="icon"
-                                variant="ghost"
-                              >
-                                <MoveHorizontalIcon className="h-4 w-4" />
+                              <Button aria-haspopup="true" size="icon" variant="ghost">
+                                <MoveHorizontalIcon className="icon-medium" />
                                 <span className="sr-only">Toggle menu</span>
                               </Button>
                             </DropdownMenuTrigger>
@@ -137,13 +106,9 @@ const Dashboard = () => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-medium">
-                          New Sustainability Initiative
-                        </TableCell>
+                        <TableCell className="font-medium">New Sustainability Initiative</TableCell>
                         <TableCell>Michael Johnson</TableCell>
-                        <TableCell>
-                          <Badge variant="secondary">Draft</Badge>
-                        </TableCell>
+                        <TableCell><Badge variant="secondary">Draft</Badge></TableCell>
                         <TableCell>-</TableCell>
                       </TableRow>
                     </TableBody>

@@ -5,69 +5,33 @@ import { Button } from '../Component/button';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from '../Component/breadcrumb';
 import { Input } from '../Component/input';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem} from '../Component/dropdown-menu';
-
+import "./headernav.css";
 
 const HeaderNav = () => {
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-4 shadow-md">
+<header className="header-container">
       <Sheet>
         <SheetTrigger asChild>
-          <Button size="icon" variant="outline" className="sm:hidden">
-            <MenuIcon className="h-5 w-5" />
+          <Button size="icon" variant="outline" className="sheet-trigger-btn">
+            <MenuIcon className="menu-icon" />
             <span className="sr-only">Toggle Menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="sm:max-w-xs">
+        <SheetContent side="left" className="sheet-content">
           <nav className="grid gap-6 text-lg font-medium">
             <Link
               to="#"
-              className="group flex h-10 w-10 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
+              className="nav-link group flex h-10 w-10 items-center justify-center gap-2 rounded-full bg-blue-500 text-white md:text-base"
             >
-              <Package2Icon className="h-5 w-5 transition-all group-hover:scale-110" />
+              <Package2Icon className="nav-icon transition-transform duration-300 group-hover:scale-110" />
               <span className="sr-only">KETRB CMS</span>
             </Link>
-            <Link
-              to="#"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <HomeIcon className="h-5 w-5" />
-              Dashboard
-            </Link>
-            <Link
-              to="#"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <NewspaperIcon className="h-5 w-5" />
-              News
-            </Link>
-            <Link
-              to="#"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <ImageIcon className="h-5 w-5" />
-              Images
-            </Link>
-            <Link
-              to="#"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <CalendarIcon className="h-5 w-5" />
-              Programs
-            </Link>
-            <Link
-              to="#"
-              className="flex items-center gap-4 px-2.5 text-foreground"
-            >
-              <UsersIcon className="h-5 w-5" />
-              Users
-            </Link>
-            <Link
-              to="#"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <SettingsIcon className="h-5 w-5" />
-              Settings
-            </Link>
+            <NavLink to="#" icon={<HomeIcon />} label="Dashboard" />
+            <NavLink to="#" icon={<NewspaperIcon />} label="News" />
+            <NavLink to="#" icon={<ImageIcon />} label="Images" />
+            <NavLink to="#" icon={<CalendarIcon />} label="Programs" />
+            <NavLink to="#" icon={<UsersIcon />} label="Users" />
+            <NavLink to="#" icon={<SettingsIcon />} label="Settings" />
           </nav>
         </SheetContent>
       </Sheet>
@@ -86,12 +50,12 @@ const HeaderNav = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <div className="relative ml-auto flex-1">
-        <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+      <div className="search-container">
+        <SearchIcon className="search-icon" />
         <Input
           type="search"
           placeholder="Search..."
-          className="w-full rounded-lg bg-background pl-8"
+          className="search-input"
         />
       </div>
       <DropdownMenu>
@@ -99,19 +63,19 @@ const HeaderNav = () => {
           <Button
             variant="outline"
             size="icon"
-            className="overflow-hidden rounded-full"
+            className="dropdown-menu-btn"
           >
             <img
               src="/placeholder.svg"
               width={36}
               height={36}
               alt="Avatar"
-              className="object-cover"
+              className="dropdown-menu-img"
             />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Account</DropdownMenuLabel>
+          <DropdownMenuLabel className="dropdown-menu-label">Account</DropdownMenuLabel>
           <DropdownMenuItem>Edit Profile</DropdownMenuItem>
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuSeparator />
