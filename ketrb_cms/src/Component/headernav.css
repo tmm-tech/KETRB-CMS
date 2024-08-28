@@ -101,8 +101,6 @@
 .profile-image {
   object-fit: cover;
   border-radius: 50%;
-  height:auto;
-  width:100%;
 }
 
 
