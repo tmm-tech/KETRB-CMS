@@ -6,66 +6,66 @@ import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbS
 import { Input } from '../Component/input';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem} from '../Component/dropdown-menu';
 import "./headernav.css";
-import image1 from "../Asset/joseph.jpg";
+
 const HeaderNav = () => {
   return (
-    <header className="header-container">
+    <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-4 shadow-md">
       <Sheet>
         <SheetTrigger asChild>
-          <Button size="icon" variant="outline" className="sheet-trigger-btn">
-            <MenuIcon className="menu-icon" />
+          <Button size="icon" variant="outline" className="sm:hidden">
+            <MenuIcon className="h-5 w-5" />
             <span className="sr-only">Toggle Menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="sheet-content">
+        <SheetContent side="left" className="sm:max-w-xs">
           <nav className="grid gap-6 text-lg font-medium">
             <Link
               to="#"
-              className="nav-link group flex h-10 w-10 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
+              className="group flex h-10 w-10 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
             >
-              <Package2Icon className="nav-icon transition-all group-hover:scale-110" />
+              <Package2Icon className="h-5 w-5 transition-all group-hover:scale-110" />
               <span className="sr-only">KETRB CMS</span>
             </Link>
             <Link
               to="#"
-              className="nav-link flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
-              <HomeIcon className="nav-icon" />
+              <HomeIcon className="h-5 w-5" />
               Dashboard
             </Link>
             <Link
               to="#"
-              className="nav-link flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
-              <NewspaperIcon className="nav-icon" />
+              <NewspaperIcon className="h-5 w-5" />
               News
             </Link>
             <Link
               to="#"
-              className="nav-link flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
-              <ImageIcon className="nav-icon" />
+              <ImageIcon className="h-5 w-5" />
               Images
             </Link>
             <Link
               to="#"
-              className="nav-link flex items-center gap-4 px-2.5 text-foreground"
+              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
-              <CalendarIcon className="nav-icon" />
+              <CalendarIcon className="h-5 w-5" />
               Programs
             </Link>
             <Link
               to="#"
-              className="nav-link flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+              className="flex items-center gap-4 px-2.5 text-foreground"
             >
-              <UsersIcon className="nav-icon" />
+              <UsersIcon className="h-5 w-5" />
               Users
             </Link>
             <Link
               to="#"
-              className="nav-link flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
-              <SettingsIcon className="nav-icon" />
+              <SettingsIcon className="h-5 w-5" />
               Settings
             </Link>
           </nav>
@@ -86,12 +86,12 @@ const HeaderNav = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <div className="search-container">
-        <SearchIcon className="search-icon" />
+      <div className="relative ml-auto flex-1">
+        <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
           type="search"
           placeholder="Search..."
-          className="search-input"
+          className="w-full rounded-lg bg-background pl-8"
         />
       </div>
       <DropdownMenu>
@@ -99,19 +99,19 @@ const HeaderNav = () => {
           <Button
             variant="outline"
             size="icon"
-            className="dropdown-menu-btn"
+            className="overflow-hidden rounded-full"
           >
             <img
-              src={image1}
+              src="/placeholder.svg"
               width={36}
               height={36}
               alt="Avatar"
-              className="dropdown-menu-img"
+              className="object-cover"
             />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel className="dropdown-menu-label">Account</DropdownMenuLabel>
+          <DropdownMenuLabel>Account</DropdownMenuLabel>
           <DropdownMenuItem>Edit Profile</DropdownMenuItem>
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuSeparator />
