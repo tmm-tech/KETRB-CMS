@@ -9,7 +9,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLab
 
 const HeaderNav = () => {
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-4 shadow-md">
       <Sheet>
         <SheetTrigger asChild>
           <Button size="icon" variant="outline" className="sm:hidden">
@@ -20,57 +20,50 @@ const HeaderNav = () => {
         <SheetContent side="left" className="sm:max-w-xs">
           <nav className="grid gap-6 text-lg font-medium">
             <Link
-              href="#"
-              className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
-              prefetch={false}
+              to="#"
+              className="group flex h-10 w-10 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
             >
               <Package2Icon className="h-5 w-5 transition-all group-hover:scale-110" />
               <span className="sr-only">KETRB CMS</span>
             </Link>
             <Link
-              href="#"
+              to="#"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-              prefetch={false}
             >
               <HomeIcon className="h-5 w-5" />
               Dashboard
             </Link>
             <Link
-              href="#"
+              to="#"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-              prefetch={false}
             >
               <NewspaperIcon className="h-5 w-5" />
               News
             </Link>
             <Link
-              href="#"
+              to="#"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-              prefetch={false}
             >
               <ImageIcon className="h-5 w-5" />
               Images
             </Link>
             <Link
-              href="#"
+              to="#"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-              prefetch={false}
             >
               <CalendarIcon className="h-5 w-5" />
               Programs
             </Link>
             <Link
-              href="#"
+              to="#"
               className="flex items-center gap-4 px-2.5 text-foreground"
-              prefetch={false}
             >
               <UsersIcon className="h-5 w-5" />
               Users
             </Link>
             <Link
-              href="#"
+              to="#"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-              prefetch={false}
             >
               <SettingsIcon className="h-5 w-5" />
               Settings
@@ -82,7 +75,7 @@ const HeaderNav = () => {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="#" prefetch={false}>
+              <Link to="#">
                 Dashboard
               </Link>
             </BreadcrumbLink>
@@ -93,12 +86,12 @@ const HeaderNav = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <div className="relative ml-auto flex-1 md:grow-0">
+      <div className="relative ml-auto flex-1">
         <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
           type="search"
           placeholder="Search..."
-          className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+          className="w-full rounded-lg bg-background pl-8"
         />
       </div>
       <DropdownMenu>
@@ -113,16 +106,14 @@ const HeaderNav = () => {
               width={36}
               height={36}
               alt="Avatar"
-              className="overflow-hidden rounded-full"
-              style={{ aspectRatio: "36/36", objectFit: "cover" }}
+              className="object-cover"
             />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
+          <DropdownMenuLabel>Account</DropdownMenuLabel>
+          <DropdownMenuItem>Edit Profile</DropdownMenuItem>
           <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Logout</DropdownMenuItem>
         </DropdownMenuContent>

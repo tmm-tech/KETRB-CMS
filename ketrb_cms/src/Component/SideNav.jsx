@@ -9,23 +9,21 @@ import {
 
 const SideNav = () => {
   return (
-    <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
-      <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
+    <aside className="fixed inset-y-0 left-0 z-10 w-16 flex flex-col border-r bg-background h-screen">
+      <nav className="flex flex-col items-center gap-4 px-2 py-5">
         <TooltipProvider>
           <Link
-            href="#"
-            className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
-            prefetch={false}
+            to="#"
+            className="group flex h-10 w-10 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
           >
-            <Package2Icon className="h-4 w-4 transition-all group-hover:scale-110" />
+            <Package2Icon className="h-5 w-5 transition-all group-hover:scale-110" />
             <span className="sr-only">KETRB CMS</span>
           </Link>
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                prefetch={false}
+                to="#"
+                className="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <HomeIcon className="h-5 w-5" />
                 <span className="sr-only">Dashboard</span>
@@ -36,9 +34,8 @@ const SideNav = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                prefetch={false}
+                to="#"
+                className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <NewspaperIcon className="h-5 w-5" />
                 <span className="sr-only">News</span>
@@ -49,9 +46,8 @@ const SideNav = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                prefetch={false}
+                to="#"
+                className="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <ImageIcon className="h-5 w-5" />
                 <span className="sr-only">Images</span>
@@ -62,9 +58,8 @@ const SideNav = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                prefetch={false}
+                to="#"
+                className="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <CalendarIcon className="h-5 w-5" />
                 <span className="sr-only">Programs</span>
@@ -75,9 +70,8 @@ const SideNav = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                prefetch={false}
+                to="#"
+                className="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <UsersIcon className="h-5 w-5" />
                 <span className="sr-only">Users</span>
@@ -87,14 +81,13 @@ const SideNav = () => {
           </Tooltip>
         </TooltipProvider>
       </nav>
-      <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
+      <nav className="mt-auto flex flex-col items-center gap-4 px-2 py-5">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                prefetch={false}
+                to="#"
+                className="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <SettingsIcon className="h-5 w-5" />
                 <span className="sr-only">Settings</span>
