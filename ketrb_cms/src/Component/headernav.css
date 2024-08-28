@@ -1,4 +1,4 @@
-/* General header styling */
+/*General header styling
 .header-nav {
   position: sticky;
   top: 0;
@@ -8,12 +8,11 @@
   gap: 1rem;
   height: 4rem;
   padding: 0 1rem;
-  background-color: #ffffff; /* Background color */
-  border-bottom: 1px solid #e0e0e0; /* Light border for separation */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  background-color: #ffffff; 
+  border-bottom: 1px solid #e0e0e0; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
-/* Styling for the menu button */
 .menu-button {
   display: flex;
   align-items: center;
@@ -22,13 +21,13 @@
   padding: 0.5rem;
 }
 
-/* Styling for the sheet content */
+
 .sheet-content {
   max-width: 20rem;
   padding: 1rem;
 }
 
-/* Navigation menu styling */
+
 .nav-menu {
   display: grid;
   gap: 1rem;
@@ -36,7 +35,7 @@
   font-weight: 500;
 }
 
-/* Link styling */
+
 .logo-link, .nav-link {
   display: flex;
   align-items: center;
@@ -47,25 +46,25 @@
   color: #333333;
 }
 
-/* Hover effect for links */
+
 .nav-link:hover {
-  color: #007bff; /* Primary color on hover */
-  background-color: #f8f9fa; /* Light background on hover */
+  color: #007bff; 
+  background-color: #f8f9fa; 
 }
 
-/* Icon styling */
+
 .icon {
   height: 1.25rem;
   width: 1.25rem;
-  color: #007bff; /* Primary color for icons */
+  color: #007bff; 
 }
 
-/* Breadcrumb styling */
+
 .breadcrumb {
   flex: 1;
 }
 
-/* Search container styling */
+
 .search-container {
   position: relative;
   flex: 1;
@@ -77,7 +76,7 @@
   left: 0.75rem;
   top: 50%;
   transform: translateY(-50%);
-  color: #adb5bd; /* Light gray color for icon */
+  color: #adb5bd; 
 }
 
 .search-input {
@@ -88,7 +87,7 @@
   border: 1px solid #ced4da;
 }
 
-/* Profile button styling */
+
 .profile-button {
   display: flex;
   align-items: center;
@@ -97,8 +96,8 @@
   overflow: hidden;
 }
 
-/* Profile image styling */
+
 .profile-image {
   object-fit: cover;
   border-radius: 50%;
-}
+}*/

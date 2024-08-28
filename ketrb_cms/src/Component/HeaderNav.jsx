@@ -9,79 +9,117 @@ import "./headernav.css";
 import image1 from "../Asset/joseph.jpg";
 const HeaderNav = () => {
   return (
-    <header className="header-nav">
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button size="icon" variant="outline" className="menu-button sm:hidden">
-            <MenuIcon className="icon" />
-            <span className="sr-only">Toggle Menu</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="sheet-content">
-          <nav className="nav-menu">
-            <Link to="#" className="logo-link">
-              <Package2Icon className="icon" />
-              <span className="sr-only">KETRB CMS</span>
-            </Link>
-            <Link to="#" className="nav-link">
-              <HomeIcon className="icon" />
+    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button size="icon" variant="outline" className="sm:hidden">
+          <MenuIcon className="h-5 w-5" />
+          <span className="sr-only">Toggle Menu</span>
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="left" className="sm:max-w-xs">
+        <nav className="grid gap-6 text-lg font-medium">
+          <Link
+            href="#"
+            className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
+            prefetch={false}
+          >
+            <Package2Icon className="h-5 w-5 transition-all group-hover:scale-110" />
+            <span className="sr-only">Acme CMS</span>
+          </Link>
+          <Link
+            href="#"
+            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+            prefetch={false}
+          >
+            <HomeIcon className="h-5 w-5" />
+            Dashboard
+          </Link>
+          <Link
+            href="#"
+            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+            prefetch={false}
+          >
+            <NewspaperIcon className="h-5 w-5" />
+            News
+          </Link>
+          <Link
+            href="#"
+            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+            prefetch={false}
+          >
+            <ImageIcon className="h-5 w-5" />
+            Images
+          </Link>
+          <Link
+            href="#"
+            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+            prefetch={false}
+          >
+            <CalendarIcon className="h-5 w-5" />
+            Programs
+          </Link>
+          <Link href="#" className="flex items-center gap-4 px-2.5 text-foreground" prefetch={false}>
+            <UsersIcon className="h-5 w-5" />
+            Users
+          </Link>
+          <Link
+            href="#"
+            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+            prefetch={false}
+          >
+            <SettingsIcon className="h-5 w-5" />
+            Settings
+          </Link>
+        </nav>
+      </SheetContent>
+    </Sheet>
+    <Breadcrumb className="hidden md:flex">
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild>
+            <Link href="#" prefetch={false}>
               Dashboard
             </Link>
-            <Link to="#" className="nav-link">
-              <NewspaperIcon className="icon" />
-              News
-            </Link>
-            <Link to="#" className="nav-link">
-              <ImageIcon className="icon" />
-              Images
-            </Link>
-            <Link to="#" className="nav-link">
-              <CalendarIcon className="icon" />
-              Programs
-            </Link>
-            <Link to="#" className="nav-link">
-              <UsersIcon className="icon" />
-              Users
-            </Link>
-            <Link to="#" className="nav-link">
-              <SettingsIcon className="icon" />
-              Settings
-            </Link>
-          </nav>
-        </SheetContent>
-      </Sheet>
-      <Breadcrumb className="breadcrumb hidden md:flex">
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link to="#">Dashboard</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>News</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-      <div className="search-container">
-        <SearchIcon className="search-icon" />
-        <Input type="search" placeholder="Search..." className="search-input" />
-      </div>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="icon" className="profile-button">
-            <img src={image1} width={36} height={36} alt="Avatar" className="profile-image" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Account</DropdownMenuLabel>
-          <DropdownMenuItem>Edit Profile</DropdownMenuItem>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </header>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>News</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+    <div className="relative ml-auto flex-1 md:grow-0">
+      <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+      <Input
+        type="search"
+        placeholder="Search..."
+        className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+      />
+    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
+          <img
+            src={image1}
+            width={36}
+            height={36}
+            alt="Avatar"
+            className="overflow-hidden rounded-full"
+            style={{ aspectRatio: "36/36", objectFit: "cover" }}
+          />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuItem>Support</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>Logout</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  </header>
   );
 };
 
