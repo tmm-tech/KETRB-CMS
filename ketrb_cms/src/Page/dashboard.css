@@ -1,3 +1,7 @@
+.main-content {
+  margin-left: 4rem;
+}
+
 .main-content-body {
   display: flex;
   flex-direction: column;
