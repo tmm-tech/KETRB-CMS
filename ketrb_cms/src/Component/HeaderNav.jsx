@@ -6,7 +6,7 @@ import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbS
 import { Input } from '../Component/input';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem} from '../Component/dropdown-menu';
 import "./headernav.css";
-
+import image1 from "../Asset/joseph.jpg";
 const HeaderNav = () => {
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-4 shadow-md">
@@ -102,7 +102,7 @@ const HeaderNav = () => {
             className="overflow-hidden rounded-full"
           >
             <img
-              src="/placeholder.svg"
+              src={image1}
               width={36}
               height={36}
               alt="Avatar"
