@@ -5,10 +5,11 @@ import bgImage from "../Asset/bg.png";
 import image1 from "../Asset/joseph.jpg";
 import { Button } from '../Component/button';
 import { Input } from '../Component/input';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from '../Component/dropdown-menu';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuCheckboxItem } from '../Component/dropdown-menu';
+import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink} from '../Component/breadcrumb';
 import { Sheet, SheetTrigger, SheetContent } from '../Component/sheet';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../Component/card';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter} from '../Component/card';
 import { Badge } from '../Component/badge';
 const NewsPage = () => {
     return (
