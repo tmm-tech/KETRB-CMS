@@ -21,10 +21,11 @@ const SideNav = () => {
             <img
               src={logo}
               alt="KETRB CMS"
-              className="h-4 w-4 transition-all group-hover:scale-110"
+              className="h-6 w-6 transition-all group-hover:scale-110" 
             />
             <span className="sr-only">KETRB CMS</span>
           </Link>
+
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
