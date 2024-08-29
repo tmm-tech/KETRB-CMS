@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import { Button } from '../Component/button';
@@ -8,6 +7,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../Component/card';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Component/table';
 import { Badge } from '../Component/badge';
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   return (
@@ -121,7 +121,7 @@ const Dashboard = () => {
                           />
                         </TableCell>
                         <TableCell className="font-medium">
-                          <Link href="#" className="hover:underline" prefetch={false}>
+                          <Link to="#" className="hover:underline" prefetch={false}>
                             Acme Inc Wins Industry Award
                           </Link>
                         </TableCell>
