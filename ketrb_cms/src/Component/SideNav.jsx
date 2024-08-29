@@ -19,13 +19,13 @@ const SideNav = () => {
             prefetch={false}
           >
             <Package2Icon className="h-4 w-4 transition-all group-hover:scale-110" />
-            <span className="sr-only">Acme CMS</span>
+            <span className="sr-only">KETRB CMS</span>
           </Link>
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
                 href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-black text-white transition-colors hover:text-foreground md:h-8 md:w-8"
                 prefetch={false}
               >
                 <LayoutGridIcon className="h-5 w-5" />
