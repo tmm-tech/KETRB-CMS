@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import { Button } from '../Component/button';
@@ -8,12 +7,12 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../Component/card';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Component/table';
 import { Badge } from '../Component/badge';
-
+import "./dashboard.css";
 const Dashboard = () => {
   return (
-    <div className="dashboard-container">
+    <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <SideNav />
-      <div className="main-content">
+      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
         <HeaderNav />
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
           <Tabs defaultValue="news">
@@ -81,12 +80,12 @@ const Dashboard = () => {
                             alt="News thumbnail"
                             className="aspect-square rounded-md object-cover"
                             height="64"
-                            src="https://via.placeholder.com/150"
+                            src="/placeholder.svg"
                             width="64"
                           />
                         </TableCell>
                         <TableCell className="font-medium">
-                          <Link to="#" className="hover:underline" prefetch={false}>
+                          <Link href="#" className="hover:underline" prefetch={false}>
                             Acme Inc Announces New Product Launch
                           </Link>
                         </TableCell>
@@ -116,12 +115,12 @@ const Dashboard = () => {
                             alt="News thumbnail"
                             className="aspect-square rounded-md object-cover"
                             height="64"
-                            src="https://via.placeholder.com/150"
+                            src="/placeholder.svg"
                             width="64"
                           />
                         </TableCell>
                         <TableCell className="font-medium">
-                          <Link to="#" className="hover:underline" prefetch={false}>
+                          <Link href="#" className="hover:underline" prefetch={false}>
                             Acme Inc Wins Industry Award
                           </Link>
                         </TableCell>
@@ -148,28 +147,6 @@ const Dashboard = () => {
 
 export default Dashboard;
 
-function DownloadIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-      <polyline points="7 10 12 15 17 10" />
-      <line x1="12" x2="12" y1="15" y2="3" />
-    </svg>
-  )
-}
-
-
 function FilterIcon(props) {
   return (
     <svg
@@ -186,7 +163,7 @@ function FilterIcon(props) {
     >
       <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
     </svg>
-  )
+  );
 }
 
 function MoveHorizontalIcon(props) {
@@ -207,7 +184,7 @@ function MoveHorizontalIcon(props) {
       <polyline points="6 8 2 12 6 16" />
       <line x1="2" x2="22" y1="12" y2="12" />
     </svg>
-  )
+  );
 }
 
 function PlusIcon(props) {
@@ -227,5 +204,5 @@ function PlusIcon(props) {
       <path d="M5 12h14" />
       <path d="M12 5v14" />
     </svg>
-  )
+  );
 }
