@@ -47,10 +47,11 @@ const Dashboard = () => {
                   <DownloadIcon className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Export</span>
                 </Button>
-                <Button size="sm" className="h-8 gap-1">
+                <Button size="sm" className="h-8 gap-1 bg-black text-white">
                   <PlusIcon className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Add New</span>
                 </Button>
+
               </div>
             </div>
             <TabsContent value="news">
