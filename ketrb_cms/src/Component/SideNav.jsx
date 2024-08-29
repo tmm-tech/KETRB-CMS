@@ -33,7 +33,7 @@ const SideNav = () => {
             <TooltipTrigger asChild>
               <Link
                 to="/"
-                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/dashboard')
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/')
                     ? "bg-black text-white"
                     : "text-muted-foreground hover:text-foreground"
                   }`}
