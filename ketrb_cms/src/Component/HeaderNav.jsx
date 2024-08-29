@@ -5,11 +5,11 @@ import { Button } from '../Component/button';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from '../Component/breadcrumb';
 import { Input } from '../Component/input';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from '../Component/dropdown-menu';
-import "./headernav.css";
+// import "./headernav.css";
 import image1 from "../Asset/joseph.jpg";
 const HeaderNav = () => {
   return (
-<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 bg-red-500">
+<header className="bg-red-500">
           <Sheet>
             <SheetTrigger asChild>
               <Button size="icon" variant="outline" className="sm:hidden">
