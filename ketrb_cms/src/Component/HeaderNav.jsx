@@ -76,7 +76,7 @@ const HeaderNav = () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Content Management</BreadcrumbPage>
+            <BreadcrumbPage>News</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
