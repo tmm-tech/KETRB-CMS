@@ -9,7 +9,7 @@ import "./headernav.css";
 import image1 from "../Asset/joseph.jpg";
 const HeaderNav = () => {
   return (
-<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+<header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 bg-red-500">
           <Sheet>
             <SheetTrigger asChild>
               <Button size="icon" variant="outline" className="sm:hidden">
@@ -19,7 +19,7 @@ const HeaderNav = () => {
             </SheetTrigger>
             <SheetContent side="left" className="sm:max-w-xs">
               <nav className="grid gap-6 text-lg font-medium">
-                <Link
+                <Link  vm
                   href="#"
                   className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
                   prefetch={false}
@@ -44,7 +44,7 @@ const HeaderNav = () => {
                   Images
                 </Link>
                 <Link href="#" className="flex items-center gap-4 px-2.5 text-foreground" prefetch={false}>
-                  <CalendarIcon className="h-5 w-5" />
+                  <Calend  vmarIcon className="h-5 w-5" />
                   Programs
                 </Link>
                 <Link
@@ -63,7 +63,7 @@ const HeaderNav = () => {
                   <SettingsIcon className="h-5 w-5" />
                   Settings
                 </Link>
-              </nav>
+              </nav>   vm
             </SheetContent>
           </Sheet>
           <Breadcrumb className="hidden md:flex">
@@ -88,7 +88,7 @@ const HeaderNav = () => {
               placeholder="Search..."
               className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
             />
-          </div>
+          </div>   vm
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
@@ -107,7 +107,7 @@ const HeaderNav = () => {
               <DropdownMenuSeparator />
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
+              <DropdownMenuSepa  vmrator />
               <DropdownMenuItem>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -132,7 +132,7 @@ function CalendarIcon(props) {
       strokeLinejoin="round"
     >
       <path d="M8 2v4" />
-      <path d="M16 2v4" />
+      <path d="M16 2v4" />   vm
       <rect width="18" height="18" x="3" y="4" rx="2" />
       <path d="M3 10h18" />
     </svg>
