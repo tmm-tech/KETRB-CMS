@@ -6,7 +6,7 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "../Component/tooltip";
-
+import logo from "../Asset/Logo/ketrb.ico"
 
 const SideNav = () => {
   return (
@@ -15,10 +15,14 @@ const SideNav = () => {
         <TooltipProvider>
           <Link
             href="#"
-            className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+            className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
             prefetch={false}
           >
-            <Package2Icon className="h-4 w-4 transition-all group-hover:scale-110" />
+            <img
+              src={logo}
+              alt="KETRB CMS"
+              className="h-4 w-4 transition-all group-hover:scale-110"
+            />
             <span className="sr-only">KETRB CMS</span>
           </Link>
           <Tooltip>
