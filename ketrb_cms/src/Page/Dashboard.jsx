@@ -8,11 +8,15 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../Component/card';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Component/table';
 import { Badge } from '../Component/badge';
-// import "./dashboard.css";
+
 
 const Dashboard = () => {
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40">
+    <div className="flex min-h-screen w-full flex-col" style={{
+      backgroundImage: "url('../Asset/bg.png')", 
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}>
       <SideNav />
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
         <HeaderNav />
