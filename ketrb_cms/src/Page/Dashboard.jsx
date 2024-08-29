@@ -17,6 +17,80 @@ const Dashboard = () => {
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
         <HeaderNav />
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Users</CardTitle>
+                <CardDescription>Total users registered</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">1,234</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Images</CardTitle>
+                <CardDescription>Total images uploaded</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">567</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>News</CardTitle>
+                <CardDescription>Total news articles</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">89</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Events</CardTitle>
+                <CardDescription>Total events created</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">23</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Programs</CardTitle>
+                <CardDescription>Total programs listed</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">45</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Projects</CardTitle>
+                <CardDescription>Total projects uploaded</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">78</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Viewers</CardTitle>
+                <CardDescription>Total viewers this month</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">12,345</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Pending</CardTitle>
+                <CardDescription>Unpublished content</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">27</div>
+              </CardContent>
+            </Card>
+          </div>
           <Tabs defaultValue="news">
             <div className="flex items-center">
               <TabsList>
