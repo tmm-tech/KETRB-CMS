@@ -44,7 +44,7 @@ const HeaderNav = () => {
                   Images
                 </Link>
                 <Link href="#" className="flex items-center gap-4 px-2.5 text-foreground" prefetch={false}>
-                  <Calend  vmarIcon className="h-5 w-5" />
+                  <CalendarIcon  vmarIcon className="h-5 w-5" />
                   Programs
                 </Link>
                 <Link
@@ -63,7 +63,7 @@ const HeaderNav = () => {
                   <SettingsIcon className="h-5 w-5" />
                   Settings
                 </Link>
-              </nav>   vm
+              </nav>   
             </SheetContent>
           </Sheet>
           <Breadcrumb className="hidden md:flex">
@@ -88,7 +88,7 @@ const HeaderNav = () => {
               placeholder="Search..."
               className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
             />
-          </div>   vm
+          </div> 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
@@ -107,7 +107,8 @@ const HeaderNav = () => {
               <DropdownMenuSeparator />
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSepa  vmrator />
+              <DropdownMenuSeparator />
+
               <DropdownMenuItem>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
