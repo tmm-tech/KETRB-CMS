@@ -107,8 +107,7 @@ const HeaderNav = () => {
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
-
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuItem><Link to="/login">Login</Link></DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>
