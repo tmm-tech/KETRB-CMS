@@ -8,17 +8,13 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../Component/card';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Component/table';
 import { Badge } from '../Component/badge';
-
+import bgImage from "../Asset/bg.png";
 
 const Dashboard = () => {
   return (
-    <div className="flex min-h-screen w-full flex-col" style={{
-      backgroundImage: "url('../Asset/bg.png')", 
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-    }}>
+    <div className="flex min-h-screen w-full flex-col">
       <SideNav />
-      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: "center"}}>
         <HeaderNav />
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
