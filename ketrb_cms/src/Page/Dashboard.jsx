@@ -81,12 +81,12 @@ const Dashboard = () => {
                             alt="News thumbnail"
                             className="aspect-square rounded-md object-cover"
                             height="64"
-                            src="/placeholder.svg"
+                            src="https://via.placeholder.com/150"
                             width="64"
                           />
                         </TableCell>
                         <TableCell className="font-medium">
-                          <Link href="#" className="hover:underline" prefetch={false}>
+                          <Link to="#" className="hover:underline" prefetch={false}>
                             Acme Inc Announces New Product Launch
                           </Link>
                         </TableCell>
@@ -116,7 +116,7 @@ const Dashboard = () => {
                             alt="News thumbnail"
                             className="aspect-square rounded-md object-cover"
                             height="64"
-                            src="/placeholder.svg"
+                            src="https://via.placeholder.com/150"
                             width="64"
                           />
                         </TableCell>
