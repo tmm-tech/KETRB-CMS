@@ -32,7 +32,7 @@ const NewsPage = () => {
                                     prefetch={false}
                                 >
                                     <Package2Icon className="h-5 w-5 transition-all group-hover:scale-110" />
-                                    <span className="sr-only">Acme CMS</span>
+                                    <span className="sr-only">KETRB CMS</span>
                                 </Link>
                                 <Link href="#" className="flex items-center gap-4 px-2.5 text-foreground" prefetch={false}>
                                     <NewspaperIcon className="h-5 w-5" />

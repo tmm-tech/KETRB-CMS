@@ -1,27 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   TooltipProvider,
   Tooltip,
   TooltipTrigger,
   TooltipContent,
 } from "../Component/tooltip";
-import logo from "../Asset/Logo/ketrb.ico"
+import logo from "../Asset/Logo/ketrb.ico";
 
+
+const isActive = (pathname, link) => pathname === link;
 const SideNav = () => {
+  const { pathname } = useLocation();
+
   return (
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
       <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
         <TooltipProvider>
           <Link
-            href="#"
+            to="/"
             className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
-            prefetch={false}
           >
             <img
               src={logo}
               alt="KETRB CMS"
-              className="h-6 w-6 transition-all group-hover:scale-110" 
+              className="h-6 w-6 transition-all group-hover:scale-110"
             />
             <span className="sr-only">KETRB CMS</span>
           </Link>
@@ -29,9 +32,11 @@ const SideNav = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-black text-white transition-colors hover:text-foreground md:h-8 md:w-8"
-                prefetch={false}
+                to="/"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/dashboard')
+                    ? "bg-black text-white"
+                    : "text-muted-foreground hover:text-foreground"
+                  }`}
               >
                 <LayoutGridIcon className="h-5 w-5" />
                 <span className="sr-only">Dashboard</span>
@@ -39,12 +44,15 @@ const SideNav = () => {
             </TooltipTrigger>
             <TooltipContent side="right">Dashboard</TooltipContent>
           </Tooltip>
+
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                prefetch={false}
+                to="/news"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/news')
+                    ? "bg-black text-white"
+                    : "text-muted-foreground hover:text-foreground"
+                  }`}
               >
                 <NewspaperIcon className="h-5 w-5" />
                 <span className="sr-only">News</span>
@@ -52,12 +60,15 @@ const SideNav = () => {
             </TooltipTrigger>
             <TooltipContent side="right">News</TooltipContent>
           </Tooltip>
+
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                prefetch={false}
+                to="/images"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/images')
+                    ? "bg-black text-white"
+                    : "text-muted-foreground hover:text-foreground"
+                  }`}
               >
                 <ImageIcon className="h-5 w-5" />
                 <span className="sr-only">Images</span>
@@ -65,12 +76,15 @@ const SideNav = () => {
             </TooltipTrigger>
             <TooltipContent side="right">Images</TooltipContent>
           </Tooltip>
+
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                prefetch={false}
+                to="/programs"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/programs')
+                    ? "bg-black text-white"
+                    : "text-muted-foreground hover:text-foreground"
+                  }`}
               >
                 <CalendarIcon className="h-5 w-5" />
                 <span className="sr-only">Programs</span>
@@ -78,12 +92,15 @@ const SideNav = () => {
             </TooltipTrigger>
             <TooltipContent side="right">Programs</TooltipContent>
           </Tooltip>
+
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                prefetch={false}
+                to="/users"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/users')
+                    ? "bg-black text-white"
+                    : "text-muted-foreground hover:text-foreground"
+                  }`}
               >
                 <UsersIcon className="h-5 w-5" />
                 <span className="sr-only">Users</span>
@@ -98,9 +115,11 @@ const SideNav = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                prefetch={false}
+                to="/settings"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/settings')
+                    ? "bg-black text-white"
+                    : "text-muted-foreground hover:text-foreground"
+                  }`}
               >
                 <SettingsIcon className="h-5 w-5" />
                 <span className="sr-only">Settings</span>
