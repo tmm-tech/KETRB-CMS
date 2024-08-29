@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import { Button } from '../Component/button';
@@ -7,7 +8,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../Component/card';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Component/table';
 import { Badge } from '../Component/badge';
-import "./dashboard.css";
+// import "./dashboard.css";
+
 const Dashboard = () => {
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -80,12 +82,12 @@ const Dashboard = () => {
                             alt="News thumbnail"
                             className="aspect-square rounded-md object-cover"
                             height="64"
-                            src="/placeholder.svg"
+                            src="https://via.placeholder.com/150"
                             width="64"
                           />
                         </TableCell>
                         <TableCell className="font-medium">
-                          <Link href="#" className="hover:underline" prefetch={false}>
+                          <Link to="#" className="hover:underline" prefetch={false}>
                             Acme Inc Announces New Product Launch
                           </Link>
                         </TableCell>
@@ -115,12 +117,12 @@ const Dashboard = () => {
                             alt="News thumbnail"
                             className="aspect-square rounded-md object-cover"
                             height="64"
-                            src="/placeholder.svg"
+                            src="https://via.placeholder.com/150"
                             width="64"
                           />
                         </TableCell>
                         <TableCell className="font-medium">
-                          <Link href="#" className="hover:underline" prefetch={false}>
+                          <Link to="#" className="hover:underline" prefetch={false}>
                             Acme Inc Wins Industry Award
                           </Link>
                         </TableCell>
