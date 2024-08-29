@@ -86,9 +86,9 @@ const Dashboard = () => {
                           />
                         </TableCell>
                         <TableCell className="font-medium">
-                          <a href="#" className="hover:underline" prefetch={false}>
+                          <Link to="#" className="hover:underline" prefetch={false}>
                             Acme Inc Announces New Product Launch
-                          </a>
+                          </Link>
                         </TableCell>
                         <TableCell>
                           <Badge variant="outline">Published</Badge>
@@ -121,9 +121,9 @@ const Dashboard = () => {
                           />
                         </TableCell>
                         <TableCell className="font-medium">
-                          <a href="#" className="hover:underline" prefetch={false}>
+                          <Link to="#" className="hover:underline" prefetch={false}>
                             Acme Inc Wins Industry Award
-                          </a>
+                          </Link>
                         </TableCell>
                         <TableCell>
                           <Badge variant="outline">Published</Badge>
