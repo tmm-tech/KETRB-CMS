@@ -36,9 +36,6 @@ const ImagePage = () => {
                     <Badge variant="outline" className="bg-yellow-500 text-yellow-50">
                       Pending
                     </Badge>
-                    <Badge variant="outline" className="bg-gray-500 text-gray-50">
-                      Draft
-                    </Badge>
                   </div>
                 </div>
               </CardFooter>
@@ -84,14 +81,14 @@ const ImagePage = () => {
                 <div className="p-4">
                   <div className="flex items-center justify-between">
                     <div className="text-sm font-medium">Image 1</div>
-                    <Badge variant="pending">Pending Approval</Badge>
+                    <Badge variant="pending" className="bg-yellow-500 text-yellow-50">Pending Approval</Badge>
                   </div>
                   <div className="text-muted-foreground text-sm mt-1">Uploaded 2 days ago</div>
                   <div className="flex items-center justify-end gap-2 mt-4">
                     <Button variant="outline" size="sm">
                       <TrashIcon className="h-4 w-4" />
                     </Button>
-                    <Button size="sm">Approve</Button>
+                    <Button size="sm" className="inline-flex w-full items-center justify-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">Approve</Button>
                   </div>
                 </div>
               </div>
@@ -107,7 +104,7 @@ const ImagePage = () => {
                 <div className="p-4">
                   <div className="flex items-center justify-between">
                     <div className="text-sm font-medium">Image 2</div>
-                    <Badge variant="published">Published</Badge>
+                    <Badge variant="published" className="bg-green-500 text-green-50">Published</Badge>
                   </div>
                   <div className="text-muted-foreground text-sm mt-1">Uploaded 1 week ago</div>
                   <div className="flex items-center justify-end gap-2 mt-4">
@@ -129,14 +126,14 @@ const ImagePage = () => {
                 <div className="p-4">
                   <div className="flex items-center justify-between">
                     <div className="text-sm font-medium">Image 3</div>
-                    <Badge variant="pending">Pending Approval</Badge>
+                    <Badge variant="pending" className="bg-yellow-500 text-yellow-50">Pending Approval</Badge>
                   </div>
                   <div className="text-muted-foreground text-sm mt-1">Uploaded 3 days ago</div>
                   <div className="flex items-center justify-end gap-2 mt-4">
                     <Button variant="outline" size="sm">
                       <TrashIcon className="h-4 w-4" />
                     </Button>
-                    <Button size="sm">Approve</Button>
+                    <Button size="sm" className="inline-flex w-full items-center justify-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">Approve</Button>
                   </div>
                 </div>
               </div>
@@ -152,7 +149,7 @@ const ImagePage = () => {
                 <div className="p-4">
                   <div className="flex items-center justify-between">
                     <div className="text-sm font-medium">Image 4</div>
-                    <Badge variant="published">Published</Badge>
+                    <Badge variant="published" className="bg-green-500 text-green-50">Published</Badge>
                   </div>
                   <div className="text-muted-foreground text-sm mt-1">Uploaded 2 weeks ago</div>
                   <div className="flex items-center justify-end gap-2 mt-4">
@@ -172,48 +169,6 @@ const ImagePage = () => {
 
 export default ImagePage;
 
-function DownloadIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-      <polyline points="7 10 12 15 17 10" />
-      <line x1="12" x2="12" y1="15" y2="3" />
-    </svg>
-  )
-}
-
-
-function FilePenIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 22h6a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v10" />
-      <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-      <path d="M10.4 12.6a2 2 0 1 1 3 3L8 21l-4 1 1-4Z" />
-    </svg>
-  )
-}
 
 
 function FilterIcon(props) {
