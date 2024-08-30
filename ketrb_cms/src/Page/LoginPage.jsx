@@ -25,12 +25,6 @@ const LoginPage = () => {
                 <label htmlFor="password" className="sr-only">
                   Password
                 </label>
-                <a
-                  href="#"
-                  className="text-sm font-medium underline underline-offset-4 text-primary hover:text-primary/90"
-                >
-                  Forgot password?
-                </a>
               </div>
               <input
                 id="password"
@@ -45,13 +39,14 @@ const LoginPage = () => {
             >
               Sign in
             </button>
+               <a
+                  href="#"
+                  className="text-sm font-medium underline underline-offset-4 text-primary hover:text-primary/90"
+                >
+                  Forgot password?
+                </a>
           </form>
-          <p className="text-center text-sm text-muted-foreground">
-            Don't have an account?{" "}
-            <a href="#" className="font-medium underline underline-offset-4 text-primary hover:text-primary/90">
-              Sign up
-            </a>
-          </p>
+          
         </div>
       </div>
   );
