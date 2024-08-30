@@ -28,7 +28,7 @@ const HeaderNav = () => {
             <img
               src={logo}
               alt="KETRB CMS"
-              className="h-6 w-6 transition-all group-hover:scale-110"
+              className="h-10 w-10 transition-all group-hover:scale-110"
             />
               <span className="sr-only">KETRB CMS</span>
             </Link>
