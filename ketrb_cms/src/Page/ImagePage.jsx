@@ -74,7 +74,7 @@ const ImagePage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               <div className="bg-background rounded-lg shadow-lg overflow-hidden">
                 <img
-                  src="/placeholder.svg"
+                  src="https://via.placeholder.com/150"
                   alt="Image"
                   width={400}
                   height={300}
@@ -97,7 +97,7 @@ const ImagePage = () => {
               </div>
               <div className="bg-background rounded-lg shadow-lg overflow-hidden">
                 <img
-                  src="/placeholder.svg"
+                  src="https://via.placeholder.com/150"
                   alt="Image"
                   width={400}
                   height={300}
@@ -119,7 +119,7 @@ const ImagePage = () => {
               </div>
               <div className="bg-background rounded-lg shadow-lg overflow-hidden">
                 <img
-                  src="/placeholder.svg"
+                  src="https://via.placeholder.com/150"
                   alt="Image"
                   width={400}
                   height={300}
@@ -142,7 +142,7 @@ const ImagePage = () => {
               </div>
               <div className="bg-background rounded-lg shadow-lg overflow-hidden">
                 <img
-                  src="/placeholder.svg"
+                  src="https://via.placeholder.com/150"
                   alt="Image"
                   width={400}
                   height={300}
