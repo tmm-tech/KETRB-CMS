@@ -93,7 +93,7 @@ const Dashboard = () => {
           </div>
           <Tabs defaultValue="news">
             <div className="flex items-center">
-              <TabsList>
+              <TabsList className="bg-gray-200 p-2 rounded-md">
                 <TabsTrigger value="news">News</TabsTrigger>
                 <TabsTrigger value="images">Images</TabsTrigger>
                 <TabsTrigger value="programs">Programs</TabsTrigger>
