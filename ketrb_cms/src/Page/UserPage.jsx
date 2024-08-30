@@ -72,69 +72,41 @@ const UserPage = () => {
                 </Button>
               </div>
             </div>
-            <TabsContent value="users">
-              <div className="grid gap-4">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>New Product Launch</CardTitle>
-                    <CardDescription>Published on August 15, 2023</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p>
-                      We are excited to announce the launch of our new product, the Acme Pro Controller. This
-                      cutting-edge device offers enhanced features and improved performance for the ultimate gaming
-                      experience.
-                    </p>
-                  </CardContent>
-                  <CardFooter>
-                    <div className="flex items-center justify-between">
-                      <Badge variant="outline" className="bg-green-500 text-green-50">
-                        Published
-                      </Badge>
-                      <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm" className="h-8 gap-1">
-                          <FilePenIcon className="h-3.5 w-3.5" />
-                          <span>Edit</span>
-                        </Button>
-                        <Button variant="outline" size="sm" className="h-8 gap-1">
-                          <TrashIcon className="h-3.5 w-3.5" />
-                          <span>Delete</span>
-                        </Button>
-                      </div>
-                    </div>
-                  </CardFooter>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>New Partnership Announcement</CardTitle>
-                    <CardDescription>Pending approval</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p>
-                      We are thrilled to announce our new partnership with Acme Inc. Together, we will be launching a
-                      series of innovative products that will revolutionize the industry.
-                    </p>
-                  </CardContent>
-                  <CardFooter>
-                    <div className="flex items-center justify-between">
-                      <Badge variant="outline" className="bg-yellow-500 text-yellow-50">
-                        Pending
-                      </Badge>
-                      <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm" className="h-8 gap-1">
-                          <FilePenIcon className="h-3.5 w-3.5" />
-                          <span>Edit</span>
-                        </Button>
-                        <Button variant="outline" size="sm" className="h-8 gap-1">
-                          <TrashIcon className="h-3.5 w-3.5" />
-                          <span>Delete</span>
-                        </Button>
-                      </div>
-                    </div>
-                  </CardFooter>
-                </Card>
-              </div>
-            </TabsContent>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Role</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {users.map((user) => (
+                    <TableRow key={user.id}>
+                      <TableCell>{user.name}</TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>
+                        <Badge variant={user.role === "Admin" ? "danger" : user.role === "Editor" ? "warning" : "success"}>
+                          {user.role}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <Button variant="outline" size="sm" onClick={() => handleEditUser(user.id)}>
+                            Edit
+                          </Button>
+                          <Button variant="outline" size="sm" onClick={() => handleDeleteUser(user.id)}>
+                            Delete
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </Tabs>
         </main>
       </div>
