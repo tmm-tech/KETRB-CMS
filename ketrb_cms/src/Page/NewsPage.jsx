@@ -43,10 +43,6 @@ const NewsPage = () => {
                                             Draft
                                         </Badge>
                                     </div>
-                                    <Button variant="outline" size="sm" className="h-8 gap-1">
-                                        <FilePenIcon className="h-3.5 w-3.5" />
-                                        <span>Manage</span>
-                                    </Button>
                                 </div>
                             </CardFooter>
                         </Card>
