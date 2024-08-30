@@ -111,7 +111,6 @@ const HeaderNav = () => {
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem><Link to="/login">Login</Link></DropdownMenuItem>
         </DropdownMenuContent>
