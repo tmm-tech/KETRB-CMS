@@ -81,7 +81,7 @@ const ImagePage = () => {
                 <div className="p-4">
                   <div className="flex items-center justify-between">
                     <div className="text-sm font-medium">Image 1</div>
-                    <Badge variant="pending" className="bg-yellow-500 text-yellow-50">Pending Approval</Badge>
+                    <Badge variant="pending" className="bg-yellow-500 text-yellow-50">Pending</Badge>
                   </div>
                   <div className="text-muted-foreground text-sm mt-1">Uploaded 2 days ago</div>
                   <div className="flex items-center justify-end gap-2 mt-4">
@@ -126,7 +126,7 @@ const ImagePage = () => {
                 <div className="p-4">
                   <div className="flex items-center justify-between">
                     <div className="text-sm font-medium">Image 3</div>
-                    <Badge variant="pending" className="bg-yellow-500 text-yellow-50">Pending Approval</Badge>
+                    <Badge variant="pending" className="bg-yellow-500 text-yellow-50">Pending</Badge>
                   </div>
                   <div className="text-muted-foreground text-sm mt-1">Uploaded 3 days ago</div>
                   <div className="flex items-center justify-end gap-2 mt-4">
