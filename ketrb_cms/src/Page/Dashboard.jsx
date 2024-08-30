@@ -123,7 +123,7 @@ const Dashboard = () => {
                 </Button>
                 <Button size="sm" className="h-8 gap-1 bg-black text-white">
                   <PlusIcon className="h-3.5 w-3.5" />
-                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Add New</span>
+                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Add News</span>
                 </Button>
 
               </div>
