@@ -34,17 +34,18 @@ const LoginPage = () => {
               />
             </div>
             <button
-              type="submit"
-              className="inline-flex w-full items-center justify-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Sign in
-            </button>
-               <a
-                  href="#"
-                  className="text-sm font-medium underline underline-offset-4 text-primary hover:text-primary/90"
-                >
-                  Forgot password?
-                </a>
+  type="submit"
+  className="inline-flex w-full items-center justify-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+>
+  Sign in
+</button>
+<a
+  href="#"
+  className="text-sm font-medium underline underline-offset-4 text-primary hover:text-primary/90 text-center block w-full"
+>
+  Forgot password?
+</a>
+
           </form>
           
         </div>
