@@ -6,7 +6,7 @@ const LoginPage = () => {
         <div className="mx-auto w-full max-w-md space-y-4 rounded-lg border bg-card p-6 shadow-lg">
           <div className="space-y-2 text-center">
             <h1 className="text-3xl font-bold">Login</h1>
-            <p className="text-muted-foreground">Enter your credentials to access the CRM.</p>
+            <p className="text-muted-foreground">Enter your credentials to access the CMS.</p>
           </div>
           <form className="space-y-4">
             <div className="space-y-2">
