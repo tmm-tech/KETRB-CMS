@@ -5,7 +5,7 @@ import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
 import { Button } from '../Component/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from '../Component/dropdown-menu';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
+import { Tabs, TabsList, TabsTrigger} from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../Component/card';
 import { Badge } from '../Component/badge';
 const ImagePage = () => {
@@ -71,73 +71,102 @@ const ImagePage = () => {
                 </Button>
               </div>
             </div>
-            <TabsContent value="image">
-              <div className="grid gap-4">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>New Product Launch</CardTitle>
-                    <CardDescription>Published on August 15, 2023</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p>
-                      We are excited to announce the launch of our new product, the Acme Pro Controller. This
-                      cutting-edge device offers enhanced features and improved performance for the ultimate gaming
-                      experience.
-                    </p>
-                  </CardContent>
-                  <CardFooter>
-                    <div className="flex items-center justify-between">
-                      <Badge variant="outline" className="bg-green-500 text-green-50">
-                        Published
-                      </Badge>
-                      <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm" className="h-8 gap-1">
-                          <FilePenIcon className="h-3.5 w-3.5" />
-                          <span>Edit</span>
-                        </Button>
-                        <Button variant="outline" size="sm" className="h-8 gap-1">
-                          <TrashIcon className="h-3.5 w-3.5" />
-                          <span>Delete</span>
-                        </Button>
-                      </div>
-                    </div>
-                  </CardFooter>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>New Partnership Announcement</CardTitle>
-                    <CardDescription>Pending approval</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p>
-                      We are thrilled to announce our new partnership with Acme Inc. Together, we will be launching a
-                      series of innovative products that will revolutionize the industry.
-                    </p>
-                  </CardContent>
-                  <CardFooter>
-                    <div className="flex items-center justify-between">
-                      <Badge variant="outline" className="bg-yellow-500 text-yellow-50">
-                        Pending
-                      </Badge>
-                      <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm" className="h-8 gap-1">
-                          <FilePenIcon className="h-3.5 w-3.5" />
-                          <span>Edit</span>
-                        </Button>
-                        <Button variant="outline" size="sm" className="h-8 gap-1">
-                          <TrashIcon className="h-3.5 w-3.5" />
-                          <span>Delete</span>
-                        </Button>
-                      </div>
-                    </div>
-                  </CardFooter>
-                </Card>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              <div className="bg-background rounded-lg shadow-lg overflow-hidden">
+                <img
+                  src="/placeholder.svg"
+                  alt="Image"
+                  width={400}
+                  height={300}
+                  className="w-full h-48 object-cover"
+                  style={{ aspectRatio: "400/300", objectFit: "cover" }}
+                />
+                <div className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm font-medium">Image 1</div>
+                    <Badge variant="pending">Pending Approval</Badge>
+                  </div>
+                  <div className="text-muted-foreground text-sm mt-1">Uploaded 2 days ago</div>
+                  <div className="flex items-center justify-end gap-2 mt-4">
+                    <Button variant="outline" size="sm">
+                      <TrashIcon className="h-4 w-4" />
+                    </Button>
+                    <Button size="sm">Approve</Button>
+                  </div>
+                </div>
               </div>
-            </TabsContent>
+              <div className="bg-background rounded-lg shadow-lg overflow-hidden">
+                <img
+                  src="/placeholder.svg"
+                  alt="Image"
+                  width={400}
+                  height={300}
+                  className="w-full h-48 object-cover"
+                  style={{ aspectRatio: "400/300", objectFit: "cover" }}
+                />
+                <div className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm font-medium">Image 2</div>
+                    <Badge variant="published">Published</Badge>
+                  </div>
+                  <div className="text-muted-foreground text-sm mt-1">Uploaded 1 week ago</div>
+                  <div className="flex items-center justify-end gap-2 mt-4">
+                    <Button variant="outline" size="sm">
+                      <TrashIcon className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-background rounded-lg shadow-lg overflow-hidden">
+                <img
+                  src="/placeholder.svg"
+                  alt="Image"
+                  width={400}
+                  height={300}
+                  className="w-full h-48 object-cover"
+                  style={{ aspectRatio: "400/300", objectFit: "cover" }}
+                />
+                <div className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm font-medium">Image 3</div>
+                    <Badge variant="pending">Pending Approval</Badge>
+                  </div>
+                  <div className="text-muted-foreground text-sm mt-1">Uploaded 3 days ago</div>
+                  <div className="flex items-center justify-end gap-2 mt-4">
+                    <Button variant="outline" size="sm">
+                      <TrashIcon className="h-4 w-4" />
+                    </Button>
+                    <Button size="sm">Approve</Button>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-background rounded-lg shadow-lg overflow-hidden">
+                <img
+                  src="/placeholder.svg"
+                  alt="Image"
+                  width={400}
+                  height={300}
+                  className="w-full h-48 object-cover"
+                  style={{ aspectRatio: "400/300", objectFit: "cover" }}
+                />
+                <div className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm font-medium">Image 4</div>
+                    <Badge variant="published">Published</Badge>
+                  </div>
+                  <div className="text-muted-foreground text-sm mt-1">Uploaded 2 weeks ago</div>
+                  <div className="flex items-center justify-end gap-2 mt-4">
+                    <Button variant="outline" size="sm">
+                      <TrashIcon className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </Tabs>
-        </main>
-      </div>
-    </div>
+        </main >
+      </div >
+    </div >
   );
 };
 
