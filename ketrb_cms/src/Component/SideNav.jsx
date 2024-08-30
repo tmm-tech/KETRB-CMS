@@ -24,7 +24,7 @@ const SideNav = () => {
             <img
               src={logo}
               alt="KETRB CMS"
-              className="h-10 w-12 transition-all group-hover:scale-110"
+              className="h-8 w-10 transition-all group-hover:scale-110"
             />
             <span className="sr-only">KETRB CMS</span>
           </Link>
