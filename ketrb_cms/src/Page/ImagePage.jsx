@@ -22,7 +22,7 @@ const ImagePage = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         <Card>
                             <CardHeader>
-                                <CardTitle>News</CardTitle>
+                                <CardTitle>Images</CardTitle>
                                 <CardDescription>Manage your news articles</CardDescription>
                             </CardHeader>
                             <CardContent>
