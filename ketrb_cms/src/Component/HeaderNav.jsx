@@ -8,7 +8,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLab
 import image1 from "../Asset/joseph.jpg";
 const HeaderNav = () => {
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-white px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Sheet>
         <SheetTrigger asChild>
           <Button size="icon" variant="outline" className="sm:hidden">
@@ -18,12 +18,11 @@ const HeaderNav = () => {
         </SheetTrigger>
         <SheetContent side="left" className="sm:max-w-xs">
           <nav className="grid gap-6 text-lg font-medium">
-            <Link 
-              to="/"
-              className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
-              prefetch={false}
-            >
-              <Package2Icon className="h-5 w-5 transition-all group-hover:scale-110" />
+            <img
+              src={logo}
+              alt="KETRB CMS"
+              className="h-6 w-6 transition-all group-hover:scale-110"
+            />
               <span className="sr-only">KETRB CMS</span>
             </Link>
             <Link
