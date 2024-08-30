@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SideNav from "../Component/SideNav";
+import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
 import image1 from "../Asset/joseph.jpg";
 import { Button } from '../Component/button';
