@@ -88,7 +88,7 @@ const ImagePage = () => {
                     <Button variant="outline" size="sm">
                       <TrashIcon className="h-4 w-4" />
                     </Button>
-                    <Button size="sm" className="inline-flex w-full items-center justify-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">Approve</Button>
+                    <Button size="sm" variant="black">Approve</Button>
                   </div>
                 </div>
               </div>
@@ -133,7 +133,7 @@ const ImagePage = () => {
                     <Button variant="outline" size="sm">
                       <TrashIcon className="h-4 w-4" />
                     </Button>
-                    <Button size="sm" className="inline-flex w-full items-center justify-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">Approve</Button>
+                    <Button size="sm" variant="black">Approve</Button>
                   </div>
                 </div>
               </div>
