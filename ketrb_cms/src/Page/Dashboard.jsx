@@ -167,7 +167,7 @@ const Dashboard = () => {
                           </Link>
                         </TableCell>
                         <TableCell>
-                          <Badge variant="outline">Published</Badge>
+                          <Badge variant="outline" className="bg-green-500 text-green-50">Published</Badge>
                         </TableCell>
                         <TableCell className="hidden md:table-cell">John Doe</TableCell>
                         <TableCell className="hidden md:table-cell">2023-07-12 10:42 AM</TableCell>
@@ -202,7 +202,7 @@ const Dashboard = () => {
                           </Link>
                         </TableCell>
                         <TableCell>
-                          <Badge variant="outline">Published</Badge>
+                          <Badge variant="outline" className="bg-green-500 text-green-50">Published</Badge>
                         </TableCell>
                         <TableCell className="hidden md:table-cell">Jane Doe</TableCell>
                         <TableCell className="hidden md:table-cell">2023-06-30 3:15 PM</TableCell>
