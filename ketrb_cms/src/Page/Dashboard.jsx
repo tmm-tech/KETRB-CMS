@@ -94,10 +94,10 @@ const Dashboard = () => {
           <Tabs defaultValue="news">
             <div className="flex items-center">
               <TabsList className="bg-gray-200 p-2 rounded-md">
-                <TabsTrigger value="news"  className="bg-white hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md">News</TabsTrigger>
-                <TabsTrigger value="images"  className="bg-white hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md">Images</TabsTrigger>
-                <TabsTrigger value="programs"  className="bg-white hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md">Programs</TabsTrigger>
-                <TabsTrigger value="users" className="bg-white hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md hidden sm:flex">
+                <TabsTrigger value="news">News</TabsTrigger>
+                <TabsTrigger value="images">Images</TabsTrigger>
+                <TabsTrigger value="programs">Programs</TabsTrigger>
+                <TabsTrigger value="users" className="hidden sm:flex">
                   Users
                 </TabsTrigger>
               </TabsList>
