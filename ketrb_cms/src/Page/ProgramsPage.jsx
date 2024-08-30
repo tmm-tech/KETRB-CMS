@@ -24,10 +24,7 @@ const ProgramsPage = () => {
                             <CardContent>
                                 <div className="flex items-center justify-between">
                                     <div className="text-4xl font-bold">89</div>
-                                    <Button variant="outline" size="sm" className="h-8 gap-1">
-                                        <PlusIcon className="h-3.5 w-3.5" />
-                                        <span>Add Programs</span>
-                                    </Button>
+                                    
                                 </div>
                             </CardContent>
                             <CardFooter>
@@ -68,9 +65,9 @@ const ProgramsPage = () => {
                                         <DropdownMenuCheckboxItem>Pending</DropdownMenuCheckboxItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
-                                <Button size="sm" variant="outline" className="h-8 gap-1">
-                                    <DownloadIcon className="h-3.5 w-3.5" />
-                                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Export</span>
+                                <Button variant="outline" size="sm" className="h-8 gap-1">
+                                        <PlusIcon className="h-3.5 w-3.5" />
+                                        <span>Add Programs</span>
                                 </Button>
                             </div>
                         </div>
