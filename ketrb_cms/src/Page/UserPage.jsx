@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
@@ -9,6 +9,27 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../Component/card';
 import { Badge } from '../Component/badge';
 const UserPage = () => {
+  const [users, setUsers] = useState([
+    {
+      id: 1,
+      name: "John Doe",
+      email: "john@example.com",
+      role: "Admin",
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      email: "jane@example.com",
+      role: "Editor",
+    },
+    {
+      id: 3,
+      name: "Bob Johnson",
+      email: "bob@example.com",
+      role: "User",
+    },
+  ])
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
@@ -72,40 +93,40 @@ const UserPage = () => {
               </div>
             </div>
             <div className="overflow-x-auto">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {users.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>
-                  <Badge variant={user.role === "Admin" ? "danger" : user.role === "Editor" ? "warning" : "success"}>
-                    {user.role}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" onClick={() => handleEditUser(user.id)}>
-                      <FilePenIcon/>
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={() => handleDeleteUser(user.id)}>
-                      <TrashIcon/>
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Role</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {users.map((user) => (
+                    <TableRow key={user.id}>
+                      <TableCell>{user.name}</TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>
+                        <Badge variant={user.role === "Admin" ? "danger" : user.role === "Editor" ? "warning" : "success"}>
+                          {user.role}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <Button variant="outline" size="sm" /* onClick={() => handleEditUser(user.id)}*/>
+                            <FilePenIcon />
+                          </Button>
+                          <Button variant="outline" size="sm" /* onClick={() => handleDeleteUser(user.id)}*/>
+                            <TrashIcon />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </Tabs>
         </main>
       </div>
