@@ -18,8 +18,8 @@ const HeaderNav = () => {
         </SheetTrigger>
         <SheetContent side="left" className="sm:max-w-xs">
           <nav className="grid gap-6 text-lg font-medium">
-            <Link vm
-              href="#"
+            <Link 
+              to="/"
               className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
               prefetch={false}
             >
@@ -27,27 +27,27 @@ const HeaderNav = () => {
               <span className="sr-only">KETRB CMS</span>
             </Link>
             <Link
-              href="#"
+              to="/"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
               prefetch={false}
             >
               <LayoutGridIcon className="h-5 w-5" />
               Dashboard
             </Link>
-            <Link href="#" className="flex items-center gap-4 px-2.5 text-foreground" prefetch={false}>
+            <Link to="/news" className="flex items-center gap-4 px-2.5 text-foreground" prefetch={false}>
               <NewspaperIcon className="h-5 w-5" />
               News
             </Link>
-            <Link href="#" className="flex items-center gap-4 px-2.5 text-foreground" prefetch={false}>
+            <Link to="/images" className="flex items-center gap-4 px-2.5 text-foreground" prefetch={false}>
               <ImageIcon className="h-5 w-5" />
               Images
             </Link>
-            <Link href="#" className="flex items-center gap-4 px-2.5 text-foreground" prefetch={false}>
+            <Link to="/programs" className="flex items-center gap-4 px-2.5 text-foreground" prefetch={false}>
               <CalendarIcon vmarIcon className="h-5 w-5" />
               Programs
             </Link>
             <Link
-              href="#"
+              to="/users"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
               prefetch={false}
             >
@@ -55,7 +55,7 @@ const HeaderNav = () => {
               Users
             </Link>
             <Link
-              href="#"
+              to="/settings"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
               prefetch={false}
             >
