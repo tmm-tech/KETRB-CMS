@@ -5,7 +5,7 @@ import bgImage from "../Asset/bg.png";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Component/table';
 import { Button } from '../Component/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuCheckboxItem } from '../Component/dropdown-menu';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
+import { Tabs, TabsList, TabsTrigger } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../Component/card';
 import { Badge } from '../Component/badge';
 const UserPage = () => {
@@ -114,11 +114,13 @@ const UserPage = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          <Button variant="outline" size="sm" /* onClick={() => handleEditUser(user.id)}*/>
-                            <FilePenIcon />
+                          <Button variant="outline" size="icon" /*onClick={() => handleEditUser(user.id)}*/>
+                            <FilePenIcon className="h-4 w-4" />
+                            <span className="sr-only">Edit</span>
                           </Button>
-                          <Button variant="outline" size="sm" /* onClick={() => handleDeleteUser(user.id)}*/>
-                            <TrashIcon />
+                          <Button variant="outline" size="icon" /*onClick={() => handleDeleteUser(user.id)}*/>
+                            <TrashIcon className="h-4 w-4" />
+                            <span className="sr-only">Delete</span>
                           </Button>
                         </div>
                       </TableCell>
