@@ -20,6 +20,11 @@ const HeaderNav = () => {
         </SheetTrigger>
         <SheetContent side="left" className="sm:max-w-xs">
           <nav className="grid gap-6 text-lg font-medium">
+            <Link
+              to="/"
+              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+              prefetch={false}
+            >
             <img
               src={logo}
               alt="KETRB CMS"
