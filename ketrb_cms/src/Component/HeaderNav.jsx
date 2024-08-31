@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Sheet, SheetTrigger, SheetContent } from '../Component/sheet';
 import { Button } from '../Component/button';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from '../Component/breadcrumb';
@@ -9,6 +9,31 @@ import image1 from "../Asset/joseph.jpg";
 import logo from "../Asset/Logo/ketrb.ico";
 
 const HeaderNav = () => {
+  const location = useLocation();
+  const getPathname = (path) => path.split('/').filter(Boolean);
+
+  const breadcrumbItems = () => {
+    const paths = getPathname(location.pathname);
+    return paths.map((path, index) => {
+      const url = `/${paths.slice(0, index + 1).join('/')}`;
+      return (
+        <BreadcrumbItem key={index}>
+          {index < paths.length - 1 ? (
+            <>
+              <BreadcrumbLink asChild>
+                <Link href="/" prefetch={false}>
+                  Dashboard
+                </Link>
+              </BreadcrumbLink>
+              <BreadcrumbSeparator />
+            </>
+          ) : (
+            <BreadcrumbPage>{path.charAt(0).toUpperCase() + path.slice(1)}</BreadcrumbPage>
+          )}
+        </BreadcrumbItem>
+      );
+    });
+  };
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Sheet>
@@ -25,11 +50,11 @@ const HeaderNav = () => {
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
               prefetch={false}
             >
-            <img
-              src={logo}
-              alt="KETRB CMS"
-              className="h-10 w-10 transition-all group-hover:scale-110"
-            />
+              <img
+                src={logo}
+                alt="KETRB CMS"
+                className="h-10 w-10 transition-all group-hover:scale-110"
+              />
               <span className="sr-only">KETRB CMS</span>
             </Link>
             <Link
@@ -73,17 +98,7 @@ const HeaderNav = () => {
       </Sheet>
       <Breadcrumb className="hidden md:flex">
         <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href="#" prefetch={false}>
-                Dashboard
-              </Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Content Management</BreadcrumbPage>
-          </BreadcrumbItem>
+          {breadcrumbItems()}
         </BreadcrumbList>
       </Breadcrumb>
       <div className="relative ml-auto flex-1 md:grow-0">
