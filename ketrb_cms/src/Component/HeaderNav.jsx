@@ -14,11 +14,7 @@ const HeaderNav = () => {
 
   const breadcrumbItems = () => {
     const paths = getPathname(location.pathname);
-    const formattedPath = path
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-
+  
     if (paths.length === 0) {
       return (
         <BreadcrumbItem key="dashboard" className="text-sm font-medium">
@@ -30,7 +26,7 @@ const HeaderNav = () => {
         </BreadcrumbItem>
       );
     }
-
+  
     return (
       <>
         <BreadcrumbItem key="dashboard" className="text-sm font-medium">
@@ -43,16 +39,21 @@ const HeaderNav = () => {
         </BreadcrumbItem>
         {paths.map((path, index) => {
           const url = `/${paths.slice(0, index + 1).join('/')}`;
+          const formattedPath = path
+            .split('-')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+  
           return (
             <BreadcrumbItem key={index} className="text-sm font-medium">
               {index < paths.length - 1 ? (
                 <>
                   <BreadcrumbLink asChild>
-                    <Link href={url} prefetch={false}>
+                    <Link to={url} prefetch={false} className="hover:text-blue-500 transition-colors duration-200">
                       {formattedPath}
                     </Link>
                   </BreadcrumbLink>
-                  <BreadcrumbSeparator />
+                  <BreadcrumbSeparator className="mx-1" />
                 </>
               ) : (
                 <BreadcrumbPage className="text-gray-600 font-medium">
