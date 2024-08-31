@@ -15,12 +15,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/news" element={<NewsPage />} />
-        <Route path="/add news" element={<NewsAdd />} />
+        <Route path="/news/add news" element={<NewsAdd />} />
         <Route path="/images" element={<ImagePage />} />
         <Route path="/programs" element={<ProgramsPage />} />
-        <Route path="/add program" element={<ProgramsAdd />} />
+        <Route path="/programs/add program" element={<ProgramsAdd />} />
         <Route path="/users" element={<UserPage />} />
-        <Route path="/add users" element={<UserAdd />} />
+        <Route path="/users/add users" element={<UserAdd />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
     </div>
