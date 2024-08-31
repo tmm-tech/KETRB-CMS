@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // import { Link } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
@@ -9,6 +9,36 @@ import { Tabs, TabsList, TabsTrigger} from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../Component/card';
 import { Badge } from '../Component/badge';
 const ImagePage = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setPreviewUrl(URL.createObjectURL(file));
+      setSelectedImage(file);
+    }
+  };
+
+  const handleSave = () => {
+    // Handle the save action here
+    alert('Image saved!');
+    setSelectedImage(null);
+    setPreviewUrl(null);
+  };
+
+  const handleCancel = () => {
+    setSelectedImage(null);
+    setPreviewUrl(null);
+  };
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
@@ -62,7 +92,7 @@ const ImagePage = () => {
                     <DropdownMenuCheckboxItem>Pending</DropdownMenuCheckboxItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <Button variant="outline" size="sm" className="h-8 gap-1 bg-black text-white">
+                <Button onClick={openModal}  variant="black" size="sm">
                   <PlusIcon className="h-3.5 w-3.5" />
                   <span>Add Images</span>
                 </Button>
@@ -161,6 +191,36 @@ const ImagePage = () => {
               </div>
             </div>
           </Tabs>
+          {isModalOpen && (
+            <>
+              <div className="fixed inset-0 bg-black bg-opacity-50 z-50" onClick={closeModal}></div>
+              <div className="fixed inset-0 flex items-center justify-center z-60">
+                <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-md relative">
+                  <h2 className="text-lg font-semibold mb-4">Upload and Preview Image</h2>
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={handleImageChange} 
+                    className="mb-4"
+                  />
+                  {previewUrl && (
+                    <div className="mb-4">
+                      <img
+                        src={previewUrl}
+                        alt="Preview"
+                        className="w-full h-auto object-cover rounded-lg"
+                        style={{ aspectRatio: "16/9", objectFit: "cover" }}
+                      />
+                    </div>
+                  )}
+                  <div className="flex gap-2">
+                    <Button onClick={handleCancel} variant="outline" className="flex-1">Cancel</Button>
+                    <Button onClick={handleSave} className="flex-1">Save</Button>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </main >
       </div >
     </div >
