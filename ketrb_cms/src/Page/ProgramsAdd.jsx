@@ -33,7 +33,7 @@ const ProgramsAdd = () => {
             >
                 <HeaderNav />
                 <div className="flex items-center justify-center min-h-screen bg-muted">
-                    <Card className="w-full max-w-2xl">
+                    <Card className="w-full max-w-2xl bg-white">
                         <CardHeader>
                             <CardTitle>Programs Add</CardTitle>
                         </CardHeader>
