@@ -16,10 +16,10 @@ const SettingPage = () => {
                 style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
             >
                 <HeaderNav />
-                <div className="flex min-h-screen bg-muted mt-20">
+                <div className="flex min-h-screen bg-muted">
                     <Tabs className="flex-1 grid md:grid-cols-[240px_1fr] gap-8 p-4 md:p-8" defaultValue="general">
                         {/* Vertical Tab List */}
-                        <TabsList asChild>
+                        <TabsList asChild className="mt-20">
                             <nav className="bg-background rounded-md shadow-sm">
                                 <div className="space-y-1 p-4">
                                     <TabsTrigger value="general" asChild>
