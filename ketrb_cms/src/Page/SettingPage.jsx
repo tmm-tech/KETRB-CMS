@@ -19,7 +19,7 @@ const SettingPage = () => {
                 <div className="flex min-h-screen bg-muted">
                     <Tabs className="flex-1 grid md:grid-cols-[240px_1fr] gap-8 p-4 md:p-8" defaultValue="general">
                         {/* Vertical Tab List */}
-                        <TabsList asChild className="mt-20">
+                        <TabsList asChild className="mt-30">
                             <nav className="bg-background rounded-md shadow-sm">
                                 <div className="space-y-1 p-4">
                                     <TabsTrigger value="general" asChild>
