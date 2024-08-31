@@ -65,7 +65,7 @@ const ProgramsPage = () => {
                                         <DropdownMenuCheckboxItem>Pending</DropdownMenuCheckboxItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
-                                <Button variant="outline" size="sm" className="h-8 gap-1">
+                                <Button variant="outline" size="sm" className="h-8 gap-1 bg-black text-white">
                                         <PlusIcon className="h-3.5 w-3.5" />
                                         <span>Add Programs</span>
                                 </Button>
