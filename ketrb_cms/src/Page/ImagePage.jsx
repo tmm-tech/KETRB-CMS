@@ -20,9 +20,16 @@ import {
 import { Input } from "../Component/input";
 const ImagePage = () => {
   const [selectedImage, setSelectedImage] = useState(null)
-  const handleImageSelect = (e) => {
-    setSelectedImage(e.target.files[0])
-  }
+  const handleImageSelect = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   const handleCancel = () => {
     setSelectedImage(null);
   };
