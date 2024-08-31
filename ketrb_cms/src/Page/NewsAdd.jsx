@@ -1,5 +1,4 @@
 import React from "react";
-// import { Link } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
@@ -9,14 +8,15 @@ import { Label } from "../Component/label";
 import { Input } from '../Component/input';
 import { Textarea } from "../Component/textarea";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../Component/select";
+
 const NewsAdd = () => {
   return (
     <div className="flex min-h-screen w-full flex-col">
-    <SideNav />
-    <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: "center" }}>
-      <HeaderNav />
-    <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-          <div className="mx-auto grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <SideNav />
+      <div className="flex flex-col flex-1" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: "center" }}>
+        <HeaderNav />
+        <main className="flex-1 p-4 sm:px-6 sm:py-4">
+          <div className="mx-auto w-full max-w-6xl grid gap-4">
             <Card>
               <CardHeader>
                 <CardTitle>News</CardTitle>
@@ -77,7 +77,7 @@ const NewsAdd = () => {
                         height={100}
                         alt="Featured Image"
                         className="rounded-md object-cover"
-                        style={{ aspectRatio: "100/100", objectFit: "cover" }}
+                        style={{ aspectRatio: "1/1", objectFit: "cover" }}
                       />
                       <Button variant="outline" size="sm">
                         Change
@@ -95,9 +95,9 @@ const NewsAdd = () => {
             </Card>
           </div>
         </main>
+      </div>
     </div>
-    </div>
-);
+  );
 };
 
 export default NewsAdd;
