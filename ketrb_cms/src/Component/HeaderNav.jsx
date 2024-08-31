@@ -15,12 +15,11 @@ const HeaderNav = () => {
   const breadcrumbItems = () => {
     const paths = getPathname(location.pathname);
     
-    // Check if the path is the root ("/") and return only "Dashboard"
     if (paths.length === 0) {
       return (
-        <BreadcrumbItem key="dashboard">
+        <BreadcrumbItem key="dashboard" className="text-sm font-medium">
           <BreadcrumbLink asChild>
-            <Link href="/" prefetch={false}>
+            <Link href="/" prefetch={false} className="hover:text-blue-500 transition-colors duration-200">
               Dashboard
             </Link>
           </BreadcrumbLink>
@@ -30,18 +29,18 @@ const HeaderNav = () => {
   
     return (
       <>
-        <BreadcrumbItem key="dashboard">
+        <BreadcrumbItem key="dashboard" className="text-sm font-medium">
           <BreadcrumbLink asChild>
-            <Link href="/" prefetch={false}>
+            <Link href="/" prefetch={false} className="hover:text-blue-500 transition-colors duration-200">
               Dashboard
             </Link>
           </BreadcrumbLink>
-          <BreadcrumbSeparator />
+          <BreadcrumbSeparator className="mx-1"/>
         </BreadcrumbItem>
         {paths.map((path, index) => {
           const url = `/${paths.slice(0, index + 1).join('/')}`;
           return (
-            <BreadcrumbItem key={index}>
+            <BreadcrumbItem key={index} className="text-sm font-medium">
               {index < paths.length - 1 ? (
                 <>
                   <BreadcrumbLink asChild>
@@ -124,7 +123,7 @@ const HeaderNav = () => {
           </nav>
         </SheetContent>
       </Sheet>
-      <Breadcrumb className="hidden md:flex">
+      <Breadcrumb className="hidden md:flex items-center space-x-2 text-gray-600">
         <BreadcrumbList>
           {breadcrumbItems()}
         </BreadcrumbList>
