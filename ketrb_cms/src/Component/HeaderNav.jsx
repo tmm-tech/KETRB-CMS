@@ -14,7 +14,11 @@ const HeaderNav = () => {
 
   const breadcrumbItems = () => {
     const paths = getPathname(location.pathname);
-    
+    const formattedPath = path
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+
     if (paths.length === 0) {
       return (
         <BreadcrumbItem key="dashboard" className="text-sm font-medium">
@@ -26,7 +30,7 @@ const HeaderNav = () => {
         </BreadcrumbItem>
       );
     }
-  
+
     return (
       <>
         <BreadcrumbItem key="dashboard" className="text-sm font-medium">
@@ -35,7 +39,7 @@ const HeaderNav = () => {
               Dashboard
             </Link>
           </BreadcrumbLink>
-          <BreadcrumbSeparator className="mx-1"/>
+          <BreadcrumbSeparator className="mx-1" />
         </BreadcrumbItem>
         {paths.map((path, index) => {
           const url = `/${paths.slice(0, index + 1).join('/')}`;
@@ -45,14 +49,14 @@ const HeaderNav = () => {
                 <>
                   <BreadcrumbLink asChild>
                     <Link href={url} prefetch={false}>
-                      {path.charAt(0).toUpperCase() + path.slice(1)}
+                      {formattedPath}
                     </Link>
                   </BreadcrumbLink>
                   <BreadcrumbSeparator />
                 </>
               ) : (
                 <BreadcrumbPage className="text-gray-600 font-medium">
-                  {path.charAt(0).toUpperCase() + path.slice(1)}
+                  {formattedPath}
                 </BreadcrumbPage>
               )}
             </BreadcrumbItem>
@@ -60,7 +64,7 @@ const HeaderNav = () => {
         })}
       </>
     );
-  };  
+  };
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Sheet>
