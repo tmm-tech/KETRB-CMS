@@ -52,7 +52,7 @@ const ProfilePage = () => {
                                 </div>
                             </CardContent>
                             <CardFooter>
-                                <Button variant="outline">Edit Profile</Button>
+                                <Button variant="black">Edit Profile</Button>
                             </CardFooter>
                         </Card>
                         <Card>
@@ -103,7 +103,7 @@ const ProfilePage = () => {
                                 </div>
                             </CardContent>
                             <CardFooter>
-                                <Button variant="outline">Update Settings</Button>
+                                <Button variant="black">Update Settings</Button>
                             </CardFooter>
                         </Card>
                     </section>
@@ -119,7 +119,7 @@ const ProfilePage = () => {
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Password</div>
                                         <div className="text-sm">
-                                            <Button variant="outline" size="sm">
+                                            <Button variant="black" size="sm">
                                                 Change Password
                                             </Button>
                                         </div>
@@ -144,7 +144,7 @@ const ProfilePage = () => {
                                 </div>
                             </CardContent>
                             <CardFooter>
-                                <Button variant="outline">Update Security</Button>
+                                <Button variant="black">Update Security</Button>
                             </CardFooter>
                         </Card>
                     </section>
