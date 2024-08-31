@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
@@ -11,6 +11,7 @@ import { Badge } from '../Component/badge';
 const ImagePage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);

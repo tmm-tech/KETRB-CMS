@@ -1,4 +1,7 @@
 import React,{ useState } from "react";
+import SideNav from "../Component/SideNav";
+import HeaderNav from "../Component/HeaderNav";
+import bgImage from "../Asset/bg.png";
 import { Card, CardHeader, CardTitle, CardContent } from "../Component/card";
 import { Label } from "../Component/label";
 import { Input } from "../Component/input";
