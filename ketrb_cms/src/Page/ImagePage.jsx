@@ -17,6 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../Component/dialog";
+import { Input } from "../Component/input";
 const ImagePage = () => {
   const [selectedImage, setSelectedImage] = useState(null)
   const handleImageSelect = (e) => {
