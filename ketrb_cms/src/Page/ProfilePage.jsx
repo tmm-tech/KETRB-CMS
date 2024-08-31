@@ -28,10 +28,10 @@ const ProfilePage = () => {
                             </div>
                         </div>
                         <div className="prose prose-sm">
-                            <p>
+                            {/* <p>
                                 I'm a software engineer with a passion for building great products. I've been working in the tech industry
                                 for the past 5 years and have experience with a variety of technologies.
-                            </p>
+                            </p> */}
                         </div>
                     </section>
                     <section>
