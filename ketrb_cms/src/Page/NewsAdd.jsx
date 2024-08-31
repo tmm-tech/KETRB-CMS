@@ -117,7 +117,7 @@ const NewsAdd = () => {
                                             <Button variant="outline" onClick={handleSaveDraft}>
                                                 Save as Draft
                                             </Button>
-                                            <Button onClick={handlePublish}>Publish</Button>
+                                            <Button variant="black" onClick={handlePublish}>Publish</Button>
                                         </div>
                                     </form>
                                 </div>
