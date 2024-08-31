@@ -57,13 +57,17 @@ const UserAdd = () => {
                                         </div>
                                         <div>
                                             <Label htmlFor="role" className="block text-sm font-medium text-muted-foreground">
-                                                Role
+                                                Select Role
                                             </Label>
                                             <Select id="role" value={role} className="mt-1 block w-full" onValueChange={handleRoleChange}>
-                                                <option value="#">...</option>
-                                                <option value="admin">Admin</option>
-                                                <option value="manager">Manager</option>
-                                                <option value="user">User</option>
+                                                <SelectTrigger className="w-[180px]">
+                                                    <SelectValue placeholder="Role" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="admin">Admin</SelectItem>
+                                                    <SelectItem value="editor">Editor</SelectItem>
+                                                    
+                                                </SelectContent>
                                             </Select>
                                         </div>
                                         <div>
