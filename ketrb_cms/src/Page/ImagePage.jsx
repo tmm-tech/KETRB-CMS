@@ -18,7 +18,10 @@ import {
   DialogTrigger,
 } from "../Component/dialog";
 const ImagePage = () => {
-
+  const [selectedImage, setSelectedImage] = useState(null)
+  const handleImageSelect = (e) => {
+    setSelectedImage(e.target.files[0])
+  }
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
@@ -90,34 +93,34 @@ const ImagePage = () => {
                       </div>
                     </div>
                   </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
-                      <DialogHeader>
-                        <DialogTitle>Upload Image</DialogTitle>
-                        <DialogDescription>Select an image to upload for the user profile.</DialogDescription>
-                      </DialogHeader>
-                      <div className="grid gap-4 py-4">
-                        <Input
-                          id="image"
-                          type="file"
-                          accept="image/*"
-                          onChange={handleImageSelect}
-                          className="block w-full"
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Upload Image</DialogTitle>
+                      <DialogDescription>Select an image to upload for the user profile.</DialogDescription>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                      <Input
+                        id="image"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageSelect}
+                        className="block w-full"
+                      />
+                      {selectedImage && (
+                        <img
+                          src="/placeholder.svg"
+                          alt="Selected Image"
+                          width={300}
+                          height={300}
+                          className="rounded-md"
+                          style={{ aspectRatio: "300/300", objectFit: "cover" }}
                         />
-                        {selectedImage && (
-                          <img
-                            src="/placeholder.svg"
-                            alt="Selected Image"
-                            width={300}
-                            height={300}
-                            className="rounded-md"
-                            style={{ aspectRatio: "300/300", objectFit: "cover" }}
-                          />
-                        )}
-                      </div>
-                      <DialogFooter>
-                        <Button type="submit">Save Image</Button>
-                      </DialogFooter>
-                    </DialogContent>
+                      )}
+                    </div>
+                    <DialogFooter>
+                      <Button type="submit">Save Image</Button>
+                    </DialogFooter>
+                  </DialogContent>
                 </Dialog>
               </div>
             </div>
@@ -214,36 +217,6 @@ const ImagePage = () => {
               </div>
             </div>
           </Tabs>
-          {isModalOpen && (
-            <>
-              <div className="fixed inset-0 bg-black bg-opacity-50 z-50" onClick={closeModal}></div>
-              <div className="fixed inset-0 flex items-center justify-center z-60">
-                <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-md relative">
-                  <h2 className="text-lg font-semibold mb-4">Upload and Preview Image</h2>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="mb-4"
-                  />
-                  {previewUrl && (
-                    <div className="mb-4">
-                      <img
-                        src={previewUrl}
-                        alt="Preview"
-                        className="w-full h-auto object-cover rounded-lg"
-                        style={{ aspectRatio: "16/9", objectFit: "cover" }}
-                      />
-                    </div>
-                  )}
-                  <div className="flex gap-2">
-                    <Button onClick={handleCancel} variant="outline" className="flex-1">Cancel</Button>
-                    <Button onClick={handleSave} className="flex-1">Save</Button>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
         </main >
       </div >
     </div >
