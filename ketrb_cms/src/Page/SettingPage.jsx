@@ -19,7 +19,7 @@ const SettingPage = () => {
                 <div className="flex flex-col min-h-screen bg-muted">
                     <Tabs className="flex-1 grid grid-cols-[1fr_3fr] gap-8 p-4 md:p-8" defaultValue="general">
                         {/* Vertical Tab List */}
-                        <TabsList asChild className="flex flex-col space-y-1 bg-background rounded-md shadow-sm p-4 mt-25">
+                        <TabsList asChild className="flex flex-col space-y-1 bg-background rounded-md shadow-sm p-4 mt-50">
                             <nav className="flex flex-col space-y-1">
                                 <TabsTrigger value="general" asChild>
                                     <Button variant="ghost" className="w-full justify-start gap-2 text-left">
