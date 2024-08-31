@@ -11,13 +11,13 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from ".
 
 const NewsAdd = () => {
   return (
-    <div className="flex min-h-screen w-full flex-col">
+    <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <SideNav />
-      <div className="flex flex-col flex-1" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: "center" }}>
+      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: "center" }}>
         <HeaderNav />
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 w-full">
           <div
-            className="mx-auto grid max-w-[1200px] grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            className="mx-auto grid max-w-[100vw] grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <Card>
               <CardHeader>
                 <CardTitle>News</CardTitle>
