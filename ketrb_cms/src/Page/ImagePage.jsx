@@ -23,6 +23,9 @@ const ImagePage = () => {
   const handleImageSelect = (e) => {
     setSelectedImage(e.target.files[0])
   }
+  const handleCancel = () => {
+    setSelectedImage(null);
+  };
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
