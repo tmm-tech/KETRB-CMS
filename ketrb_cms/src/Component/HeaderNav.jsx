@@ -40,7 +40,7 @@ const HeaderNav = () => {
         {paths.map((path, index) => {
           const url = `/${paths.slice(0, index + 1).join('/')}`;
           const formattedPath = path
-            .split('-')
+            .split('%20')
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
   
