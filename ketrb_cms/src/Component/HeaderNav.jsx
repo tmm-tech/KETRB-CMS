@@ -19,7 +19,7 @@ const HeaderNav = () => {
       return (
         <BreadcrumbItem key="dashboard" className="text-sm font-medium">
           <BreadcrumbLink asChild>
-            <Link href="/" prefetch={false} className="hover:text-blue-500 transition-colors duration-200">
+            <Link to="/" prefetch={false} className="hover:text-blue-500 transition-colors duration-200">
               Dashboard
             </Link>
           </BreadcrumbLink>
@@ -31,7 +31,7 @@ const HeaderNav = () => {
       <>
         <BreadcrumbItem key="dashboard" className="text-sm font-medium">
           <BreadcrumbLink asChild>
-            <Link href="/" prefetch={false} className="hover:text-blue-500 transition-colors duration-200">
+            <Link to="/" prefetch={false} className="hover:text-blue-500 transition-colors duration-200">
               Dashboard
             </Link>
           </BreadcrumbLink>
