@@ -32,7 +32,7 @@ const NewsAdd = () => {
                 style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
             >
                 <HeaderNav />
-                <div className="flex items-center justify-center min-h-screen bg-muted">
+                <div className="flex items-center justify-center min-h-screen bg-white">
                     <Card className="w-full max-w-2xl">
                         <CardHeader>
                             <CardTitle>News Add</CardTitle>
