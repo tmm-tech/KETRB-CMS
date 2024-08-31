@@ -39,7 +39,7 @@ const SettingPage = () => {
                                         <span>Security</span>
                                     </Button>
                                 </TabsTrigger>
-                                <TabsTrigger value="notifications" asChild>
+                                <TabsTrigger value="notification" asChild>
                                     <Button variant="ghost" className="w-full justify-start gap-2 text-left">
                                         <BellIcon className="w-5 h-5" />
                                         <span>Notifications</span>
