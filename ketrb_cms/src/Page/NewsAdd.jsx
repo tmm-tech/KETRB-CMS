@@ -33,7 +33,7 @@ const NewsAdd = () => {
             >
                 <HeaderNav />
                 <div className="flex items-center justify-center min-h-screen bg-muted">
-                    <Card className="w-full max-w-2xl">
+                    <Card className="w-full">
                         <CardHeader>
                             <CardTitle>News Add</CardTitle>
                         </CardHeader>
