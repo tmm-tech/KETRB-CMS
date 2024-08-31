@@ -12,12 +12,12 @@ const SettingPage = () => {
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
             <SideNav />
             <div
-                className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14 mt-20"
+                className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14"
                 style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
             >
                 <HeaderNav />
                 <div className="flex flex-col min-h-screen bg-muted">
-                    <Tabs className="flex-1 grid grid-cols-[1fr_3fr] gap-8 p-4 md:p-8" defaultValue="general">
+                    <Tabs className="flex-1 grid grid-cols-[1fr_3fr] gap-8 p-4 md:p-8 mt-20" defaultValue="general">
                         {/* Vertical Tab List */}
                         <TabsList asChild className="flex flex-col space-y-1 bg-background rounded-md shadow-sm p-4 mt-50">
                             <nav className="flex flex-col space-y-1">
