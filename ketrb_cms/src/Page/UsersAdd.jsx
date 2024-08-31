@@ -70,7 +70,6 @@ const UserAdd = () => {
                                                     <SelectValue placeholder="Role" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                <SelectItem value="...">...</SelectItem>
                                                     <SelectItem value="admin">Admin</SelectItem>
                                                     <SelectItem value="editor">Editor</SelectItem>
                                                 </SelectContent>
