@@ -80,8 +80,8 @@ const ImagePage = () => {
                   <DialogTrigger asChild>
                     <div className="flex items-center gap-4">
                       <div className="flex-1">
-                        <Button variant="black" > 
-                          <PlusIcon className="h-3.5 w-3.5" /> 
+                        <Button variant="black">
+                          <PlusIcon className="h-3.5 w-3.5" />
                           <span>Add Image</span>
                         </Button>
                       </div>
@@ -107,11 +107,12 @@ const ImagePage = () => {
                           width={300}
                           height={300}
                           className="rounded-md"
-                          style={{ aspectRatio: "300/300", objectFit: "cover" }}
+                          style={{ aspectRatio: "1 / 1", objectFit: "cover" }}
                         />
                       )}
                     </div>
                     <DialogFooter>
+                      <Button onClick={handleCancel} variant="outline">Cancel</Button>
                       <Button type="submit" variant="black">Save Image</Button>
                     </DialogFooter>
                   </DialogContent>
