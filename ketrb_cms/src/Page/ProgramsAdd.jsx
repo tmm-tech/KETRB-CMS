@@ -41,7 +41,7 @@ const ProgramsAdd = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div>
                                     <h2 className="text-xl font-bold mb-4">Add Programs</h2>
-                                    <form className="space-y-6">
+                                    <form className="space-y-6 w-[600px] mx-auto">
                                         <div>
                                             <label htmlFor="title" className="block text-sm font-medium text-muted-foreground">
                                                 Title

@@ -42,7 +42,7 @@ const UserAdd = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div>
                                     <h2 className="text-xl font-bold mb-4">Add New User</h2>
-                                    <form className="space-y-6" onSubmit={handleSubmit}>
+                                    <form className="space-y-6 w-[600px] mx-auto" onSubmit={handleSubmit}>
                                         <div>
                                             <Label htmlFor="name" className="block text-sm font-medium text-muted-foreground">
                                                 Name
