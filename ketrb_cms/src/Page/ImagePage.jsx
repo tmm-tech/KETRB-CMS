@@ -90,7 +90,7 @@ const ImagePage = () => {
                   <DialogTrigger asChild>
                     <div className="flex items-center gap-4">
                       <div className="flex-1">
-                        <Button variant="black">
+                        <Button variant="black" size="sm" className="h-8 gap-1">
                           <PlusIcon className="h-3.5 w-3.5" />
                           <span>Add Image</span>
                         </Button>
