@@ -67,7 +67,7 @@ const SettingPage = () => {
                         </TabsList>
 
                         {/* Tab Content */}
-                        <div className="bg-white p-6 rounded-md shadow-sm flex-1 -mt-25">
+                        <div className="bg-white p-6 rounded-md shadow-sm flex-1 -mt-30">
                             <TabsContent value="general">
                                 <GeneralSettings />
                             </TabsContent>
