@@ -77,7 +77,7 @@ const ImagePage = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
                 <Dialog>
-                  {/* <DialogTrigger asChild>
+                  <DialogTrigger asChild>
                     <div className="flex items-center gap-4">
                       {selectedImage && (
                         <img
@@ -90,10 +90,13 @@ const ImagePage = () => {
                         />
                       )}
                       <div className="flex-1">
-                        <Button variant="outline">{selectedImage ? "Change Image" : "Upload Image"}</Button>
+                        <Button variant="black" > 
+                          <PlusIcon className="h-3.5 w-3.5" /> 
+                          <span>Add Image</span>
+                        </Button>
                       </div>
                     </div>
-                  </DialogTrigger> */}
+                  </DialogTrigger>
                   <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
                       <DialogTitle>Upload Image</DialogTitle>
