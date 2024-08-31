@@ -1,5 +1,5 @@
 import React from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
@@ -64,10 +64,12 @@ const NewsPage = () => {
                     <DropdownMenuCheckboxItem>Pending</DropdownMenuCheckboxItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <Button variant="outline" size="sm" className="h-8 gap-1 bg-black text-white">
-                  <PlusIcon className="h-3.5 w-3.5" />
-                  <span>Add News</span>
-                </Button>
+                <Link to="/addnews">
+                  <Button variant="outline" size="sm" className="h-8 gap-1 bg-black text-white">
+                    <PlusIcon className="h-3.5 w-3.5" />
+                    <span>Add News</span>
+                  </Button>
+                </Link>
               </div>
             </div>
             <TabsContent value="news">
