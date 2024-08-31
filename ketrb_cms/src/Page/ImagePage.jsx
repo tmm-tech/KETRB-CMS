@@ -79,16 +79,6 @@ const ImagePage = () => {
                 <Dialog>
                   <DialogTrigger asChild>
                     <div className="flex items-center gap-4">
-                      {selectedImage && (
-                        <img
-                          src="/placeholder.svg"
-                          alt="Selected Image"
-                          width={100}
-                          height={100}
-                          className="rounded-md"
-                          style={{ aspectRatio: "100/100", objectFit: "cover" }}
-                        />
-                      )}
                       <div className="flex-1">
                         <Button variant="black" > 
                           <PlusIcon className="h-3.5 w-3.5" /> 
