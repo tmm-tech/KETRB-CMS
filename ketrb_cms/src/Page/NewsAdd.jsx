@@ -1,5 +1,5 @@
 import React,{ useState } from "react"
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import { Popover, PopoverTrigger, PopoverContent } from "../Component/popover";
 import { Calendar } from "../Component/calendar";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
