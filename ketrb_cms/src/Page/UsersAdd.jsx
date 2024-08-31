@@ -65,7 +65,7 @@ const UserAdd = () => {
                                             <Label htmlFor="role" className="block text-sm font-medium text-muted-foreground">
                                                 Select Role
                                             </Label>
-                                            <Select id="role" value={role} className="mt-1 block w-[600px]" onValueChange={handleRoleChange}>
+                                            <Select id="role" value={role} className="mt-1 block w-full" onValueChange={handleRoleChange}>
                                                 <SelectTrigger className="w-[180px]">
                                                     <SelectValue placeholder="Role" />
                                                 </SelectTrigger>

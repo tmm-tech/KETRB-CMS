@@ -1,45 +1,24 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
 import { Button } from '../Component/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from '../Component/dropdown-menu';
-import { Tabs, TabsList, TabsTrigger} from '../Component/tabs';
+import { Tabs, TabsList, TabsTrigger } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../Component/card';
 import { Badge } from '../Component/badge';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../Component/dialog";
 const ImagePage = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setPreviewUrl(URL.createObjectURL(file));
-      setSelectedImage(file);
-    }
-  };
-
-  const handleSave = () => {
-    // Handle the save action here
-    alert('Image saved!');
-    setSelectedImage(null);
-    setPreviewUrl(null);
-  };
-
-  const handleCancel = () => {
-    setSelectedImage(null);
-    setPreviewUrl(null);
-  };
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
@@ -93,10 +72,53 @@ const ImagePage = () => {
                     <DropdownMenuCheckboxItem>Pending</DropdownMenuCheckboxItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <Button onClick={openModal}  variant="black" size="sm">
-                  <PlusIcon className="h-3.5 w-3.5" />
-                  <span>Add Images</span>
-                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="flex items-center gap-4">
+                      {selectedImage && (
+                        <img
+                          src="/placeholder.svg"
+                          alt="Selected Image"
+                          width={100}
+                          height={100}
+                          className="rounded-md"
+                          style={{ aspectRatio: "100/100", objectFit: "cover" }}
+                        />
+                      )}
+                      <div className="flex-1">
+                        <Button variant="outline">{selectedImage ? "Change Image" : "Upload Image"}</Button>
+                      </div>
+                    </div>
+                  </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                      <DialogHeader>
+                        <DialogTitle>Upload Image</DialogTitle>
+                        <DialogDescription>Select an image to upload for the user profile.</DialogDescription>
+                      </DialogHeader>
+                      <div className="grid gap-4 py-4">
+                        <Input
+                          id="image"
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageSelect}
+                          className="block w-full"
+                        />
+                        {selectedImage && (
+                          <img
+                            src="/placeholder.svg"
+                            alt="Selected Image"
+                            width={300}
+                            height={300}
+                            className="rounded-md"
+                            style={{ aspectRatio: "300/300", objectFit: "cover" }}
+                          />
+                        )}
+                      </div>
+                      <DialogFooter>
+                        <Button type="submit">Save Image</Button>
+                      </DialogFooter>
+                    </DialogContent>
+                </Dialog>
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -198,10 +220,10 @@ const ImagePage = () => {
               <div className="fixed inset-0 flex items-center justify-center z-60">
                 <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-md relative">
                   <h2 className="text-lg font-semibold mb-4">Upload and Preview Image</h2>
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    onChange={handleImageChange} 
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
                     className="mb-4"
                   />
                   {previewUrl && (
