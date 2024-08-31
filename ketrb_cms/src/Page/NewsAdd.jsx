@@ -15,8 +15,9 @@ const NewsAdd = () => {
       <SideNav />
       <div className="flex flex-col flex-1" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: "center" }}>
         <HeaderNav />
-        <main className="flex-1 p-4 sm:px-6 sm:py-4 w-full">
-          <div className="mx-auto w-full max-w-6xl grid gap-4">
+        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 w-full">
+          <div
+            className="mx-auto grid max-w-[1200px] grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <Card>
               <CardHeader>
                 <CardTitle>News</CardTitle>
@@ -72,13 +73,12 @@ const NewsAdd = () => {
                     <Label htmlFor="featured-image">Featured Image</Label>
                     <div className="flex items-center gap-4">
                       <img
-                        src="https://via.placeholder.com/150"
+                        src="/placeholder.svg"
                         width={100}
                         height={100}
                         alt="Featured Image"
                         className="rounded-md object-cover"
-                        style={{ aspectRatio: "1/1", objectFit: "cover" }}
-                      />
+                        style={{ aspectRatio: "100/100", objectFit: "cover" }} />
                       <Button variant="outline" size="sm">
                         Change
                       </Button>
