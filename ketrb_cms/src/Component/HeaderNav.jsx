@@ -51,7 +51,7 @@ const HeaderNav = () => {
                   <BreadcrumbSeparator />
                 </>
               ) : (
-                <BreadcrumbPage>
+                <BreadcrumbPage className="text-gray-600">
                   {path.charAt(0).toUpperCase() + path.slice(1)}
                 </BreadcrumbPage>
               )}
