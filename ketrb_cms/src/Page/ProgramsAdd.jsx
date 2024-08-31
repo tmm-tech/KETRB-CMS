@@ -35,12 +35,12 @@ const ProgramsAdd = () => {
                 <div className="flex items-center justify-center min-h-screen bg-muted">
                     <Card className="w-full max-w-2xl">
                         <CardHeader>
-                            <CardTitle>Programs Edit</CardTitle>
+                            <CardTitle>Programs Add</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div>
-                                    <h2 className="text-xl font-bold mb-4">Edit Programs</h2>
+                                    <h2 className="text-xl font-bold mb-4">Add Programs</h2>
                                     <form className="space-y-6">
                                         <div>
                                             <label htmlFor="title" className="block text-sm font-medium text-muted-foreground">
