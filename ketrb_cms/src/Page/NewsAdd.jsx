@@ -5,7 +5,7 @@ import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
 import { Button } from '../Component/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../Component/card';
-import { Label } from "../Component/label";
+import { Label } from "@radix-ui/react-dropdown-menu";
 import { Input } from '../Component/input';
 import { Textarea } from "../Component/textarea";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../Component/select";
