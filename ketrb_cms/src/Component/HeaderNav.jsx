@@ -14,26 +14,54 @@ const HeaderNav = () => {
 
   const breadcrumbItems = () => {
     const paths = getPathname(location.pathname);
-    return paths.map((path, index) => {
-      const url = `/${paths.slice(0, index + 1).join('/')}`;
+    
+    // Check if the path is the root ("/") and return only "Dashboard"
+    if (paths.length === 0) {
       return (
-        <BreadcrumbItem key={index}>
-          {index < paths.length - 1 ? (
-            <>
-              <BreadcrumbLink asChild>
-                <Link href="/" prefetch={false}>
-                  Dashboard
-                </Link>
-              </BreadcrumbLink>
-              <BreadcrumbSeparator />
-            </>
-          ) : (
-            <BreadcrumbPage>{path.charAt(0).toUpperCase() + path.slice(1)}</BreadcrumbPage>
-          )}
+        <BreadcrumbItem key="dashboard">
+          <BreadcrumbLink asChild>
+            <Link href="/" prefetch={false}>
+              Dashboard
+            </Link>
+          </BreadcrumbLink>
         </BreadcrumbItem>
       );
-    });
-  };
+    }
+  
+    return (
+      <>
+        <BreadcrumbItem key="dashboard">
+          <BreadcrumbLink asChild>
+            <Link href="/" prefetch={false}>
+              Dashboard
+            </Link>
+          </BreadcrumbLink>
+          <BreadcrumbSeparator />
+        </BreadcrumbItem>
+        {paths.map((path, index) => {
+          const url = `/${paths.slice(0, index + 1).join('/')}`;
+          return (
+            <BreadcrumbItem key={index}>
+              {index < paths.length - 1 ? (
+                <>
+                  <BreadcrumbLink asChild>
+                    <Link href={url} prefetch={false}>
+                      {path.charAt(0).toUpperCase() + path.slice(1)}
+                    </Link>
+                  </BreadcrumbLink>
+                  <BreadcrumbSeparator />
+                </>
+              ) : (
+                <BreadcrumbPage>
+                  {path.charAt(0).toUpperCase() + path.slice(1)}
+                </BreadcrumbPage>
+              )}
+            </BreadcrumbItem>
+          );
+        })}
+      </>
+    );
+  };  
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Sheet>
