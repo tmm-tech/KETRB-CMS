@@ -46,7 +46,7 @@ const ProfilePage = () => {
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Status</div>
                                         <div className="text-sm">
-                                            <Badge variant="outline">Active</Badge>
+                                            <Badge className="bg-green-500 text-green-50">Active</Badge>
                                         </div>
                                     </div>
                                 </div>
