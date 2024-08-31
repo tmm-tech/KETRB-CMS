@@ -38,7 +38,7 @@ const NewsAdd = () => {
                             <CardTitle>News Add</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-[1200px] mx-auto">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div>
                                     <h2 className="text-xl font-bold mb-4">Add News Article</h2>
                                     <form className="space-y-6">
