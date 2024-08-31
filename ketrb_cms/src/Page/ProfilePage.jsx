@@ -15,252 +15,384 @@ const ProfilePage = () => {
                 style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
             >
                 <HeaderNav />
-                <div className="flex flex-col min-h-screen bg-muted">
-                    <Tabs className="flex-1 grid grid-cols-[1fr_3fr] gap-8 p-4 md:p-8 mt-20" defaultValue="general">
-                        {/* Vertical Tab List */}
-                        <TabsList asChild className="flex flex-col space-y-1 bg-background rounded-md shadow-sm p-4">
-                            <nav className="flex flex-col space-y-1">
-                                <TabsTrigger value="general" asChild>
-                                    <Button variant="ghost" className="w-full justify-start gap-2 text-left">
-                                        <SettingsIcon className="w-5 h-5" />
-                                        <span>General</span>
-                                    </Button>
-                                </TabsTrigger>
-                                <TabsTrigger value="account" asChild>
-                                    <Button variant="ghost" className="w-full justify-start gap-2 text-left">
-                                        <UserIcon className="w-5 h-5" />
-                                        <span>Account</span>
-                                    </Button>
-                                </TabsTrigger>
-                                <TabsTrigger value="security" asChild>
-                                    <Button variant="ghost" className="w-full justify-start gap-2 text-left">
-                                        <LockIcon className="w-5 h-5" />
-                                        <span>Security</span>
-                                    </Button>
-                                </TabsTrigger>
-                                <TabsTrigger value="notification" asChild>
-                                    <Button variant="ghost" className="w-full justify-start gap-2 text-left">
-                                        <BellIcon className="w-5 h-5" />
-                                        <span>Notifications</span>
-                                    </Button>
-                                </TabsTrigger>
-                                <TabsTrigger value="appearance" asChild>
-                                    <Button variant="ghost" className="w-full justify-start gap-2 text-left">
-                                        <PaletteIcon className="w-5 h-5" />
-                                        <span>Appearance</span>
-                                    </Button>
-                                </TabsTrigger>
-                                <TabsTrigger value="integrations" asChild>
-                                    <Button variant="ghost" className="w-full justify-start gap-2 text-left">
-                                        <PlugIcon className="w-5 h-5" />
-                                        <span>Integrations</span>
-                                    </Button>
-                                </TabsTrigger>
-                                <TabsTrigger value="advanced" asChild>
-                                    <Button variant="ghost" className="w-full justify-start gap-2 text-left">
-                                        <SlidersVerticalIcon className="w-5 h-5" />
-                                        <span>Advanced</span>
-                                    </Button>
-                                </TabsTrigger>
-                            </nav>
-                        </TabsList>
-
-                        {/* Tab Content */}
-                        <div className="bg-white p-6 rounded-md shadow-sm flex-1 -mt-20">
-                            <TabsContent value="general">
-                                <GeneralSettings />
-                            </TabsContent>
-                            <TabsContent value="account">
-                                <AccountSettings />
-                            </TabsContent>
-                            <TabsContent value="security">
-                                <SecuritySettings />
-                            </TabsContent>
-                            <TabsContent value="notifications">
-                                <NotificationsSettings />
-                            </TabsContent>
-                            <TabsContent value="appearance">
-                                <AppearanceSettings />
-                            </TabsContent>
-                            <TabsContent value="integrations">
-                                <IntegrationsSettings />
-                            </TabsContent>
-                            <TabsContent value="advanced">
-                                <AdvancedSettings />
-                            </TabsContent>
+                <div className="flex flex-col gap-8 w-full max-w-[900px] mx-auto">
+                    <section>
+                        <div className="flex items-center gap-4 mb-6">
+                            <Avatar className="h-16 w-16">
+                                <AvatarImage src="/placeholder-user.jpg" alt="@shadcn" />
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                            <div>
+                                <h2 className="text-2xl font-bold">Jared Palmer</h2>
+                                <p className="text-muted-foreground">jared@acme.com</p>
+                            </div>
                         </div>
-                    </Tabs>
+                        <div className="prose prose-sm">
+                            <p>
+                                I'm a software engineer with a passion for building great products. I've been working in the tech industry
+                                for the past 5 years and have experience with a variety of technologies.
+                            </p>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 className="text-xl font-bold mb-4">Account Settings</h3>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Update Account Details</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <div className="grid gap-2">
+                                    <Label htmlFor="email">Email</Label>
+                                    <Input id="email" type="email" defaultValue="jared@acme.com" />
+                                </div>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="password">Password</Label>
+                                    <Input id="password" type="password" />
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <Button>Save Changes</Button>
+                            </CardFooter>
+                        </Card>
+                        <Card className="mt-4">
+                            <CardHeader>
+                                <CardTitle>Connected Accounts</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="-mx-2 flex items-start gap-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground">
+                                    <ChromeIcon className="mt-px h-5 w-5" />
+                                    <div className="space-y-1">
+                                        <p className="text-sm font-medium leading-none">Google</p>
+                                        <p className="text-sm text-muted-foreground">Linked since June 2021</p>
+                                    </div>
+                                    <div className="ml-auto">
+                                        <Button variant="ghost" size="icon">
+                                            <TrashIcon className="h-5 w-5" />
+                                            <span className="sr-only">Unlink Google account</span>
+                                        </Button>
+                                    </div>
+                                </div>
+                                <div className="-mx-2 flex items-start gap-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground">
+                                    <GitlabIcon className="mt-px h-5 w-5" />
+                                    <div className="space-y-1">
+                                        <p className="text-sm font-medium leading-none">GitHub</p>
+                                        <p className="text-sm text-muted-foreground">Linked since August 2020</p>
+                                    </div>
+                                    <div className="ml-auto">
+                                        <Button variant="ghost" size="icon">
+                                            <TrashIcon className="h-5 w-5" />
+                                            <span className="sr-only">Unlink GitHub account</span>
+                                        </Button>
+                                    </div>
+                                </div>
+                                <Button variant="outline" className="mt-4">
+                                    Connect a new account
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    </section>
+                    <section>
+                        <h3 className="text-xl font-bold mb-4">Security Settings</h3>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Change Password</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <div className="grid gap-2">
+                                    <Label htmlFor="current-password">Current Password</Label>
+                                    <Input id="current-password" type="password" />
+                                </div>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="new-password">New Password</Label>
+                                    <Input id="new-password" type="password" />
+                                </div>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="confirm-password">Confirm Password</Label>
+                                    <Input id="confirm-password" type="password" />
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <Button>Change Password</Button>
+                            </CardFooter>
+                        </Card>
+                        <Card className="mt-4">
+                            <CardHeader>
+                                <CardTitle>Two-Factor Authentication</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="-mx-2 flex items-start gap-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground">
+                                    <LockIcon className="mt-px h-5 w-5" />
+                                    <div className="space-y-1">
+                                        <p className="text-sm font-medium leading-none">Two-Factor Authentication</p>
+                                        <p className="text-sm text-muted-foreground">
+                                            Enhance your account security with two-factor authentication.
+                                        </p>
+                                    </div>
+                                    <div className="ml-auto">
+                                        <Switch id="two-factor" defaultChecked={false} onCheckedChange={(checked) => { }} />
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </section>
+                    <section>
+                        <h3 className="text-xl font-bold mb-4">Notifications</h3>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Notification Preferences</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="-mx-2 flex items-start gap-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground">
+                                    <BellIcon className="mt-px h-5 w-5" />
+                                    <div className="space-y-1">
+                                        <p className="text-sm font-medium leading-none">Email Notifications</p>
+                                        <p className="text-sm text-muted-foreground">
+                                            Receive email notifications for important updates and activities.
+                                        </p>
+                                    </div>
+                                    <div className="ml-auto">
+                                        <Switch id="email-notifications" defaultChecked onCheckedChange={(checked) => { }} />
+                                    </div>
+                                </div>
+                                <div className="-mx-2 flex items-start gap-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground">
+                                    <BellIcon className="mt-px h-5 w-5" />
+                                    <div className="space-y-1">
+                                        <p className="text-sm font-medium leading-none">In-App Notifications</p>
+                                        <p className="text-sm text-muted-foreground">
+                                            Receive in-app notifications for important updates and activities.
+                                        </p>
+                                    </div>
+                                    <div className="ml-auto">
+                                        <Switch id="in-app-notifications" defaultChecked onCheckedChange={(checked) => { }} />
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </section>
+                    <section>
+                        <h3 className="text-xl font-bold mb-4">Privacy Settings</h3>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Data Sharing and Visibility</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="-mx-2 flex items-start gap-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground">
+                                    <EyeIcon className="mt-px h-5 w-5" />
+                                    <div className="space-y-1">
+                                        <p className="text-sm font-medium leading-none">Profile Visibility</p>
+                                        <p className="text-sm text-muted-foreground">Control who can see your profile information.</p>
+                                    </div>
+                                    <div className="ml-auto">
+                                        <Select>
+                                            <SelectTrigger aria-label="Select profile visibility">
+                                                <SelectValue placeholder="Select visibility" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="public">Public</SelectItem>
+                                                <SelectItem value="private">Private</SelectItem>
+                                                <SelectItem value="friends">Friends Only</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+                                <div className="-mx-2 flex items-start gap-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground">
+                                    <ShareIcon className="mt-px h-5 w-5" />
+                                    <div className="space-y-1">
+                                        <p className="text-sm font-medium leading-none">Data Sharing</p>
+                                        <p className="text-sm text-muted-foreground">
+                                            Control what data you share with third-party apps and services.
+                                        </p>
+                                    </div>
+                                    <div className="ml-auto">
+                                        <Select>
+                                            <SelectTrigger aria-label="Select data sharing">
+                                                <SelectValue placeholder="Select data sharing" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="all">Share all data</SelectItem>
+                                                <SelectItem value="limited">Share limited data</SelectItem>
+                                                <SelectItem value="none">Don't share any data</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Card className="mt-4">
+                            <CardHeader>
+                                <CardTitle>Account Deactivation</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="-mx-2 flex items-start gap-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground">
+                                    <TrashIcon className="mt-px h-5 w-5" />
+                                    <div className="space-y-1">
+                                        <p className="text-sm font-medium leading-none">Deactivate Account</p>
+                                        <p className="text-sm text-muted-foreground">Temporarily or permanently deactivate your account.</p>
+                                    </div>
+                                    <div className="ml-auto">
+                                        <Button variant="destructive" size="sm">
+                                            Deactivate
+                                        </Button>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </section>
                 </div>
             </div>
         </div>
     );
 };
 
-const GeneralSettings = () => <div><h2>General Settings</h2></div>;
-const AccountSettings = () => <div><h2>Account Settings</h2></div>;
-const SecuritySettings = () => <div><h2>Security Settings</h2></div>;
-const NotificationsSettings = () => <div><h2>Notifications Settings</h2></div>;
-const AppearanceSettings = () => <div><h2>Appearance Settings</h2></div>;
-const IntegrationsSettings = () => <div><h2>Integrations Settings</h2></div>;
-const AdvancedSettings = () => <div><h2>Advanced Settings</h2></div>;
-
 
 export default ProfilePage;
 
 function BellIcon(props) {
     return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-        </svg>
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+        <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+      </svg>
     )
-}
-
-
-function LockIcon(props) {
+  }
+  
+  
+  function ChromeIcon(props) {
     return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-        </svg>
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <circle cx="12" cy="12" r="4" />
+        <line x1="21.17" x2="12" y1="8" y2="8" />
+        <line x1="3.95" x2="8.54" y1="6.06" y2="14" />
+        <line x1="10.88" x2="15.46" y1="21.94" y2="14" />
+      </svg>
     )
-}
-
-
-function PaletteIcon(props) {
+  }
+  
+  
+  function EyeIcon(props) {
     return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
-            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
-            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
-            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
-            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
-        </svg>
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
     )
-}
-
-
-function PlugIcon(props) {
+  }
+  
+  
+  function GitlabIcon(props) {
     return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <path d="M12 22v-5" />
-            <path d="M9 8V2" />
-            <path d="M15 8V2" />
-            <path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z" />
-        </svg>
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="m22 13.29-3.33-10a.42.42 0 0 0-.14-.18.38.38 0 0 0-.22-.11.39.39 0 0 0-.23.07.42.42 0 0 0-.14.18l-2.26 6.67H8.32L6.1 3.26a.42.42 0 0 0-.1-.18.38.38 0 0 0-.26-.08.39.39 0 0 0-.23.07.42.42 0 0 0-.14.18L2 13.29a.74.74 0 0 0 .27.83L12 21l9.69-6.88a.71.71 0 0 0 .31-.83Z" />
+      </svg>
     )
-}
-
-
-function SettingsIcon(props) {
+  }
+  
+  
+  function LockIcon(props) {
     return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-            <circle cx="12" cy="12" r="3" />
-        </svg>
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+      </svg>
     )
-}
-
-
-function SlidersVerticalIcon(props) {
+  }
+  
+  
+  function ShareIcon(props) {
     return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <line x1="4" x2="4" y1="21" y2="14" />
-            <line x1="4" x2="4" y1="10" y2="3" />
-            <line x1="12" x2="12" y1="21" y2="12" />
-            <line x1="12" x2="12" y1="8" y2="3" />
-            <line x1="20" x2="20" y1="21" y2="16" />
-            <line x1="20" x2="20" y1="12" y2="3" />
-            <line x1="2" x2="6" y1="14" y2="14" />
-            <line x1="10" x2="14" y1="8" y2="8" />
-            <line x1="18" x2="22" y1="16" y2="16" />
-        </svg>
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+        <polyline points="16 6 12 2 8 6" />
+        <line x1="12" x2="12" y1="2" y2="15" />
+      </svg>
     )
-}
-
-
-function UserIcon(props) {
+  }
+  
+  
+  function TrashIcon(props) {
     return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-        </svg>
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M3 6h18" />
+        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+      </svg>
     )
-}
+  }
