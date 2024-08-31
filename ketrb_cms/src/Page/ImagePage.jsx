@@ -122,7 +122,9 @@ const ImagePage = () => {
                       )}
                     </div>
                     <DialogFooter>
-                      <Button onClick={handleCancel} variant="outline">Cancel</Button>
+                      {selectedImage && (
+                        <Button onClick={handleCancel} variant="outline">Cancel</Button>
+                      )}
                       <Button type="submit" variant="black">Save Image</Button>
                     </DialogFooter>
                   </DialogContent>
