@@ -18,7 +18,7 @@ const SideNav = () => {
       <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
         <TooltipProvider>
           <Link
-            to="/"
+            to="https://ketrb.netlify.app/"
             className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
           >
             <img
