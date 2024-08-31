@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "../Component/card";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription} from "../Component/card";
 import { Switch } from "../Component/switch";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../Component/select";
 import { Button } from '../Component/button';
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
+import { Badge } from '../Component/badge';
 
 const ProfilePage = () => {
 
