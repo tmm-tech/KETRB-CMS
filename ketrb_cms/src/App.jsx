@@ -7,6 +7,7 @@ import ProgramsPage from "./Page/ProgramsPage";
 import UserPage from "./Page/UserPage";
 import LoginPage from "./Page/LoginPage";
 import NewsAdd from "./Page/NewsAdd";
+import ProgramsAdd from "./Page/ProgramsAdd";
 function App() {
   return (
     <div className="App">
@@ -15,6 +16,7 @@ function App() {
         <Route path="/news" element={<NewsPage />} />
         <Route path="/images" element={<ImagePage />} />
         <Route path="/programs" element={<ProgramsPage />} />
+        <Route path="/addprogram" element={<ProgramsAdd />} />
         <Route path="/users" element={<UserPage />} />
         <Route path="/addnews" element={<NewsAdd />} />
         <Route path="/login" element={<LoginPage />} />
