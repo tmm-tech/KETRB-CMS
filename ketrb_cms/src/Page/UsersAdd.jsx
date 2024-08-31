@@ -5,7 +5,13 @@ import bgImage from "../Asset/bg.png";
 import { Card, CardHeader, CardTitle, CardContent } from "../Component/card";
 import { Label } from "../Component/label";
 import { Input } from "../Component/input";
-import { Select } from "../Component/select";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "../Component/select";
 import { Button } from "../Component/button";
 
 const UserAdd = () => {
@@ -66,7 +72,7 @@ const UserAdd = () => {
                                                 <SelectContent>
                                                     <SelectItem value="admin">Admin</SelectItem>
                                                     <SelectItem value="editor">Editor</SelectItem>
-                                                    
+
                                                 </SelectContent>
                                             </Select>
                                         </div>
