@@ -15,7 +15,7 @@ const NewsAdd = () => {
       <SideNav />
       <div className="flex flex-col flex-1" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: "center" }}>
         <HeaderNav />
-        <main className="flex-1 p-4 sm:px-6 sm:py-4">
+        <main className="flex-1 p-4 sm:px-6 sm:py-4 w-full">
           <div className="mx-auto w-full max-w-6xl grid gap-4">
             <Card>
               <CardHeader>
@@ -72,7 +72,7 @@ const NewsAdd = () => {
                     <Label htmlFor="featured-image">Featured Image</Label>
                     <div className="flex items-center gap-4">
                       <img
-                        src="/placeholder.svg"
+                        src="https://via.placeholder.com/150"
                         width={100}
                         height={100}
                         alt="Featured Image"
