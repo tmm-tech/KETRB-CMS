@@ -77,7 +77,7 @@ const ImagePage = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
                 <Dialog>
-                  <DialogTrigger asChild>
+                  {/* <DialogTrigger asChild>
                     <div className="flex items-center gap-4">
                       {selectedImage && (
                         <img
@@ -93,7 +93,7 @@ const ImagePage = () => {
                         <Button variant="outline">{selectedImage ? "Change Image" : "Upload Image"}</Button>
                       </div>
                     </div>
-                  </DialogTrigger>
+                  </DialogTrigger> */}
                   <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
                       <DialogTitle>Upload Image</DialogTitle>
@@ -109,7 +109,7 @@ const ImagePage = () => {
                       />
                       {selectedImage && (
                         <img
-                          src="/placeholder.svg"
+                          src={selectedImage}
                           alt="Selected Image"
                           width={300}
                           height={300}
@@ -119,7 +119,7 @@ const ImagePage = () => {
                       )}
                     </div>
                     <DialogFooter>
-                      <Button type="submit">Save Image</Button>
+                      <Button type="submit" variant="black">Save Image</Button>
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>
