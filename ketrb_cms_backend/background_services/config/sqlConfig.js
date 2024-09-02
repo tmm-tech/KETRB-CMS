@@ -1,18 +1,26 @@
-require('dotenv').config()
+const { Pool } = require('pg');
+
+
+require('dotenv').config();
+
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, 
+  },
+});
+
+
+pool.connect((err, client, release) => {
+  if (err) {
+    console.error('Error acquiring client', err.stack);
+  } else {
+    console.log('Connected to the database');
+  }
+});
+
+
 module.exports = {
-    config: {
-        user: process.env.DB_USER,
-        password: process.env.DB_PWD,
-        database: process.env.DB_NAME,
-        server: 'localhost',
-        pool: {
-            max: 10,
-            min: 0,
-            idleTimeoutMillis: 30000
-        },
-        options: {
-            encrypt: true, //for azure
-            trustServerCertificate: true //change to true for local dev /  self signed certs
-        }
-    }
-}
+  query: (text, params) => pool.query(text, params),
+};
