@@ -47,27 +47,14 @@ const redirect = function(proxyReq, req, res, options) {
     }
 };
 
-// Proxy middleware for product sales service
-const productsProxy = createProxyMiddleware('/productsales', {
-    target: 'http://localhost:4042',
-    changeOrigin: true,
-    // onProxyReq: redirect
-});
-
-const backgroundProxy = createProxyMiddleware('/infoupdate', {
-    target: 'http://localhost:4041',
-    changeOrigin: true,
-    // onProxyReq: redirect
-});
-
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 // Routes
 app.use('/users', UserRoutes);
-app.use('/customer', customerRoute);
+
 
 app.get('/', async(req, res) => {
-    res.json({ message: "Confirmed Connection to Kustoma24" });
+    res.json({ message: "Confirmed Connection to  KETRB CMS" });
     res.send('');
 });
 
