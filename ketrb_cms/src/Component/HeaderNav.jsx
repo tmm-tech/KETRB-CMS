@@ -157,7 +157,7 @@ const HeaderNav = () => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel><Link to="/profile">My Account</Link></DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem><Link to="/settings">Settings</Link></DropdownMenuItem>
+          <DropdownMenuItem><Link to="/profile">Settings</Link></DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem><Link to="/login">Login</Link></DropdownMenuItem>
         </DropdownMenuContent>

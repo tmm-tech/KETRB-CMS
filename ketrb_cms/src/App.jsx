@@ -9,7 +9,6 @@ import LoginPage from "./Page/LoginPage";
 import NewsAdd from "./Page/NewsAdd";
 import ProgramsAdd from "./Page/ProgramsAdd";
 import UserAdd from "./Page/UsersAdd";
-import SettingPage from "./Page/SettingPage";
 import ProfilePage from "./Page/ProfilePage";
 
 function App() {
@@ -25,7 +24,6 @@ function App() {
         <Route path="/users" element={<UserPage />} />
         <Route path="/users/add users" element={<UserAdd />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/settings" element={<SettingPage />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </div>

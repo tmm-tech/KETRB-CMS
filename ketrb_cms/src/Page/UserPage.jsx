@@ -16,18 +16,21 @@ const UserPage = () => {
       name: "John Doe",
       email: "john@example.com",
       role: "Admin",
+      status:"Active",
     },
     {
       id: 2,
       name: "Jane Smith",
       email: "jane@example.com",
       role: "Editor",
+      status:"Active",
     },
     {
       id: 3,
       name: "Bob Johnson",
       email: "bob@example.com",
       role: "User",
+      status:"Active",
     },
   ])
 
@@ -57,9 +60,6 @@ const UserPage = () => {
                     </Badge>
                     <Badge variant="outline" className="bg-yellow-500 text-yellow-50">
                       Pending
-                    </Badge>
-                    <Badge variant="outline" className="bg-gray-500 text-gray-50">
-                      Draft
                     </Badge>
                   </div>
                 </div>
@@ -102,6 +102,7 @@ const UserPage = () => {
                     <TableHead>Name</TableHead>
                     <TableHead>Email</TableHead>
                     <TableHead>Role</TableHead>
+                    <TableHead>Status</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -113,6 +114,11 @@ const UserPage = () => {
                       <TableCell>
                         <Badge variant={user.role === "Admin" ? "danger" : user.role === "Editor" ? "warning" : "success"}>
                           {user.role}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={user.status === "Deactivate" ? "danger" : "success"}>
+                          {user.status}
                         </Badge>
                       </TableCell>
                       <TableCell>

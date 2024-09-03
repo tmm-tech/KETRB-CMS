@@ -15,16 +15,50 @@ import {
 import { Button } from "../Component/button";
 
 const UserAdd = () => {
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [role, setRole] = useState("admin")
-    const handleNameChange = (e) => setName(e.target.value)
-    const handleEmailChange = (e) => setEmail(e.target.value)
-    const handleRoleChange = (e) => setRole(e.target.value)
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [role, setRole] = useState("admin");
+    const [gender, setGender] = useState("male");
+    const [password, setPassword] = useState("");
+
+    const handleNameChange = (e) => setName(e.target.value);
+    const handleEmailChange = (e) => setEmail(e.target.value);
+    const handleGenderChange = (e) => setGender(e.target.value);
+    const handleRoleChange = (e) => setRole(e.target.value);
+
+    
+    const generatePassword = () => {
+        const capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const smallLetters = "abcdefghijklmnopqrstuvwxyz";
+        const digits = "0123456789";
+        const specialChars = "!@#$%^&*()";
+
+        const allChars = capitalLetters + smallLetters + digits + specialChars;
+
+        const getRandomChar = (str) => str[Math.floor(Math.random() * str.length)];
+
+        let password = "";
+        password += getRandomChar(capitalLetters);
+        password += getRandomChar(smallLetters); 
+        password += getRandomChar(digits); 
+        password += getRandomChar(specialChars); 
+
+        for (let i = 4; i < 12; i++) {
+            password += getRandomChar(allChars);
+        }
+
+        password = password.split("").sort(() => 0.5 - Math.random()).join("");
+
+        return password;
+    };
+
     const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log("New user:", { name, email, role, password: "password123" })
-    }
+        e.preventDefault();
+        const generatedPassword = generatePassword();
+        setPassword(generatedPassword);
+        console.log("New user:", { name, email, role, gender, password: generatedPassword });
+    };
+
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
             <SideNav />
@@ -62,11 +96,25 @@ const UserAdd = () => {
                                             />
                                         </div>
                                         <div>
+                                            <Label htmlFor="gender" className="block text-sm font-medium text-muted-foreground">
+                                                Gender
+                                            </Label>
+                                            <Select id="gender" value={gender} className="mt-1 block w-full" onValueChange={handleGenderChange}>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Gender" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="male">Male</SelectItem>
+                                                    <SelectItem value="female">Female</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+                                        <div>
                                             <Label htmlFor="role" className="block text-sm font-medium text-muted-foreground">
                                                 Select Role
                                             </Label>
                                             <Select id="role" value={role} className="mt-1 block w-full" onValueChange={handleRoleChange}>
-                                                <SelectTrigger className="w-[180px]">
+                                                <SelectTrigger>
                                                     <SelectValue placeholder="Role" />
                                                 </SelectTrigger>
                                                 <SelectContent>
@@ -77,9 +125,9 @@ const UserAdd = () => {
                                         </div>
                                         <div>
                                             <Label htmlFor="password" className="block text-sm font-medium text-muted-foreground">
-                                                Default Password
+                                                Generated Password
                                             </Label>
-                                            <Input id="password" type="text" value="password123" disabled className="mt-1 block w-full" />
+                                            <Input id="password" type="password" value={password} readOnly className="mt-1 block w-full" />
                                         </div>
                                         <div className="flex justify-end gap-2">
                                             <Button variant="outline" type="button">
@@ -97,7 +145,6 @@ const UserAdd = () => {
                 </div>
             </div>
         </div>
-
     );
 };
 
