@@ -15,7 +15,7 @@ module.exports = {
 
             const insertUserQuery = `
                 INSERT INTO users (fullname, email, password, gender, role, status)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                VALUES ($1, $2, $3, $4, $5, $6)
                 RETURNING id;
             `;
             const params = [
