@@ -16,7 +16,7 @@ import {
 import { Button } from "../Component/button";
 
 const UserAdd = () => {
-    const [name, setName] = useState("");
+    const [fullname, setName] = useState("");
     const [email, setEmail] = useState("");
     const [role, setRole] = useState("admin");
     const [gender, setGender] = useState("male");
@@ -59,7 +59,7 @@ const UserAdd = () => {
         setPassword(generatedPassword);
     
         const userData = {
-            name,
+            fullname,
             email,
             role,
             gender,
@@ -104,7 +104,7 @@ const UserAdd = () => {
                                             <Label htmlFor="name" className="block text-sm font-medium text-muted-foreground">
                                                 Name
                                             </Label>
-                                            <Input id="name" type="text" value={name} onChange={handleNameChange} className="mt-1 block w-full" />
+                                            <Input id="name" type="text" value={fullname} onChange={handleNameChange} className="mt-1 block w-full" />
                                         </div>
                                         <div>
                                             <Label htmlFor="email" className="block text-sm font-medium text-muted-foreground">
