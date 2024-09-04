@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { verifyToken } = require('../services/jwtServices');
 
-// Middleware to validate JWT token for local users
+
 function validateTokenUser(req, res, next) {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
@@ -10,18 +10,18 @@ function validateTokenUser(req, res, next) {
 
     const token = authHeader.split(" ")[1];
     try {
-        const decodedToken = verifyToken(token); // Ensure this function handles token verification
+        const decodedToken = verifyToken(token); 
         if (decodedToken.message) {
             return res.status(401).json({ message: decodedToken.message });
         }
-        req.user = decodedToken; // Optionally attach user info to request
+        req.user = decodedToken; 
         next();
     } catch (error) {
         res.status(403).json({ message: error.message });
     }
 }
 
-// Middleware to validate JWT token for foreign users
+
 function validateJwtTokenForeign(req, res, next) {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
