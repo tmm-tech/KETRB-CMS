@@ -37,7 +37,7 @@ const UserAdd = () => {
         const allChars = capitalLetters + smallLetters + digits + specialChars;
 
         const getRandomChar = (str) => str[Math.floor(Math.random() * str.length)];
-
+        const generatedPassword = generatePassword();
         let password = "";
         password += getRandomChar(capitalLetters);
         password += getRandomChar(smallLetters); 
@@ -55,7 +55,6 @@ const UserAdd = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const generatedPassword = generatePassword();
         setPassword(generatedPassword);
     
         const userData = {
@@ -150,7 +149,7 @@ const UserAdd = () => {
                                             <Label htmlFor="password" className="block text-sm font-medium text-muted-foreground">
                                                 Generated Password
                                             </Label>
-                                            <Input id="password" type="password" value={password} readOnly className="mt-1 block w-full" />
+                                            <Input id="password" type="password" value={generatedPassword} readOnly className="mt-1 block w-full" />
                                         </div>
                                         <div className="flex justify-end gap-2">
                                             <Button variant="outline" type="button">
