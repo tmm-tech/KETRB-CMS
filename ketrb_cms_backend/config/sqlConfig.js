@@ -8,11 +8,13 @@ const pool = new Pool({
   },
 });
 
+
 pool.connect((err, client, release) => {
   if (err) {
     console.error('Error acquiring client', err.stack);
   } else {
     console.log('Connected to the database');
+    release();
   }
 });
 

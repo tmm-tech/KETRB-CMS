@@ -4,7 +4,7 @@ const cors = require('cors');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const { validateJwtTokenForeign } = require('./middlewares/validateauthentication');
 const UserRoutes = require('./routes/UserRoutes');
-// const scheduleReport = require('./services/ReportService');
+
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Middleware to validate JWT token and add it to the request object
+
 const addTokenToRequest = async (req, res, next) => {
     const token = req.headers.authorization;
     if (token) {
@@ -28,7 +28,7 @@ const addTokenToRequest = async (req, res, next) => {
 
 app.use(addTokenToRequest);
 
-// Redirect function for modifying outgoing requests
+
 const redirect = (proxyReq, req, res, options) => {
     const valid = validateJwtTokenForeign(proxyReq, req, res);
     if (valid === true) {
@@ -47,7 +47,7 @@ const redirect = (proxyReq, req, res, options) => {
     }
 };
 
-// Routes
+
 app.use('/users', UserRoutes);
 
 app.get('/', (req, res) => {
