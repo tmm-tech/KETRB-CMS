@@ -24,4 +24,3 @@ UserRoutes.post('/logout/:email', Logout)
     // UserRoutes.get('/user/authenticate', userAuthenticate)
 
 module.exports = UserRoutes
-module.exports = UserRoutes
