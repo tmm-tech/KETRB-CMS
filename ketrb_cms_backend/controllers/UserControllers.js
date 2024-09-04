@@ -8,23 +8,21 @@ module.exports = {
     createUser: async (req, res) => {
         const details = req.body;
         try {
-            // Validate the content
+            
             let value = await validateCreateUserSchema(details);
-            // Hash the password asynchronously
+            
             let hashed_pwd = await bcrypt.hash(value.password, 8);
 
             const insertUserQuery = `
-                INSERT INTO users (fullname, email, profile, password, gender, department, roles, status)
+                INSERT INTO users (fullname, email, password, gender, roles, status)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                 RETURNING id;
             `;
             const params = [
                 value.fullname,
                 value.email,
-                value.profile,
                 hashed_pwd,
                 value.gender,
-                value.department,
                 value.roles,
                 'active',
             ];
@@ -90,14 +88,14 @@ module.exports = {
     },
 
     updateUser: async (req, res) => {
-        const { fullname, department, profile, password, email, roles } = req.body;
+        const { fullname, password, email, roles } = req.body;
         const { id } = req.params;
         try {
             let hashed_pwd = await bcrypt.hash(password, 8);
 
             const updateUserQuery = `
                 UPDATE users
-                SET fullname = $1, email = $2, profile = $3, password = $4, department = $5, roles = $6
+                SET fullname = $1, email = $2, password = $4, roles = $6
                 WHERE id = $7
                 RETURNING *;
             `;
