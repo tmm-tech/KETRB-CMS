@@ -3,6 +3,7 @@ import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
 import { Card, CardHeader, CardTitle, CardContent } from "../Component/card";
+import axios from 'axios';
 import { Label } from "../Component/label";
 import { Input } from "../Component/input";
 import {
@@ -52,11 +53,33 @@ const UserAdd = () => {
         return password;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const generatedPassword = generatePassword();
         setPassword(generatedPassword);
-        console.log("New user:", { name, email, role, gender, password: generatedPassword });
+    
+        const userData = {
+            name,
+            email,
+            role,
+            gender,
+            password: generatedPassword,
+        };
+    
+        try {
+            const response = await axios.post('https://ketrb-backend.onrender.com/users/register', userData);
+    
+            console.log('User registered successfully:', response.data);
+            
+        } catch (error) {
+            if (error.response) {
+                console.error('Error registering user:', error.response.data);
+                
+            } else {
+                console.error('Network error:', error.message);
+               
+            }
+        }
     };
 
     return (
