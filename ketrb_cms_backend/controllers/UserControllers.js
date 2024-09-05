@@ -14,11 +14,7 @@ module.exports = {
             let hashed_pwd = await bcrypt.hash(value.password, 8);
 
             const insertUserQuery = `
-<<<<<<< HEAD:ketrb_cms_backend/authentication/controllers/UserControllers.js
                 INSERT INTO users (fullname, email, password, gender, roles, status)
-=======
-                INSERT INTO users (fullname, email, password, gender, role, status)
->>>>>>> 58254f769087550f00c8850673949a89a68a7654:ketrb_cms_backend/controllers/UserControllers.js
                 VALUES ($1, $2, $3, $4, $5, $6)
                 RETURNING id;
             `;
@@ -27,11 +23,7 @@ module.exports = {
                 value.email,
                 hashed_pwd,
                 value.gender,
-<<<<<<< HEAD:ketrb_cms_backend/authentication/controllers/UserControllers.js
                 value.roles,
-=======
-                value.role,
->>>>>>> 58254f769087550f00c8850673949a89a68a7654:ketrb_cms_backend/controllers/UserControllers.js
                 'active',
             ];
 
