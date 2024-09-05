@@ -1,5 +1,5 @@
 const { query } = require('../config/sqlConfig');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const validateCreateUserSchema = require('../services/RegistrationValidation');
 const { createToken } = require('../services/jwtServices');
@@ -14,17 +14,15 @@ module.exports = {
             let hashed_pwd = await bcrypt.hash(value.password, 8);
 
             const insertUserQuery = `
-                INSERT INTO users (fullname, email, profile, password, gender, department, roles, status)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                INSERT INTO users (fullname, email, password, gender, roles, status)
+                VALUES ($1, $2, $3, $4, $5, $6)
                 RETURNING id;
             `;
             const params = [
                 value.fullname,
                 value.email,
-                value.profile,
                 hashed_pwd,
                 value.gender,
-                value.department,
                 value.roles,
                 'active',
             ];
@@ -97,11 +95,11 @@ module.exports = {
 
             const updateUserQuery = `
                 UPDATE users
-                SET fullname = $1, email = $2, profile = $3, password = $4, department = $5, roles = $6
+                SET fullname = $1, email = $2, password = $3, roles = $4
                 WHERE id = $7
                 RETURNING *;
             `;
-            const params = [fullname, email, profile, hashed_pwd, department, roles, id];
+            const params = [fullname, email, hashed_pwd, roles, id];
 
             const result = await query(updateUserQuery, params);
 
