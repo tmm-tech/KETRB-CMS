@@ -87,9 +87,9 @@ exports.sendAccountCreation = (recipient, password, fullname) => {
                     <li><strong>Password: </strong>${password}</li>
                     <li><strong>Role: </strong>${role}</li>
                 </ul>
-                <p>You can now use your login credentials to access your account and start shopping on our website.</p>
+                <p>You can now use your login credentials to access your KETRB CMS account.</p>
                 <p>If you have any questions or concerns, please don't hesitate to contact us.</p>
-                <a href="http:/localhost:3000/" class="btn">Go to Website</a>
+                <a href="https://ketrb-cms-one.vercel.app/" class="btn">Go to Website</a>
             </div>
         </body>
         
