@@ -24,12 +24,12 @@ module.exports = {
                 value.email,
                 hashed_pwd,
                 value.gender,
-                value.roles,
+                value.role,
                 'active',
             ];
 
             const result = await query(insertUserQuery, params);
-            reportService.sendAccountCreation(value.email, value.passwords, value.fullname, value.roles)
+            reportService.sendAccountCreation(value.email, value.passwords, value.fullname, value.role)
             res.json({ success: true, message: 'Registration successful', userId: result.rows[0].id });
 
         } catch (error) {
