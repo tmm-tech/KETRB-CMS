@@ -4,7 +4,7 @@ import { cn } from "../lib/utils";
 
 function stringToColor(string) {
   let hash = 0;
-  for (let i = 0; i < string.length; i++) {
+  for (let i = 0; i < string?.length; i++) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
   let color = "#";
@@ -23,7 +23,7 @@ function getContrastYIQ(color) {
   return yiq >= 128 ? "black" : "white";
 }
 
-const Avatar = React.forwardRef(({ className, initials, ...props }, ref) => {
+const Avatar = React.forwardRef(({ className, initials = "N/A", ...props }, ref) => {
   const bgColor = stringToColor(initials);
   const textColor = getContrastYIQ(bgColor);
 
@@ -50,7 +50,7 @@ const AvatarImage = React.forwardRef(({ className, ...props }, ref) => (
 ));
 AvatarImage.displayName = AvatarPrimitive.Image.displayName;
 
-const AvatarFallback = React.forwardRef(({ className, initials, ...props }, ref) => (
+const AvatarFallback = React.forwardRef(({ className, initials = "N/A", ...props }, ref) => (
   <AvatarPrimitive.Fallback
     ref={ref}
     className={cn(
