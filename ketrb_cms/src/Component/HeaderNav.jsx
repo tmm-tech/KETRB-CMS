@@ -7,14 +7,14 @@ import { Input } from '../Component/input';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from '../Component/dropdown-menu';
 import image1 from "../Asset/joseph.jpg";
 import logo from "../Asset/Logo/ketrb.ico";
-
+import { Avatar, AvatarFallback, AvatarImage, } from "../Component/avatar";
 const HeaderNav = () => {
   const location = useLocation();
   const getPathname = (path) => path.split('/').filter(Boolean);
 
   const breadcrumbItems = () => {
     const paths = getPathname(location.pathname);
-  
+
     if (paths.length === 0) {
       return (
         <BreadcrumbItem key="dashboard" className="text-sm font-medium">
@@ -26,7 +26,7 @@ const HeaderNav = () => {
         </BreadcrumbItem>
       );
     }
-  
+
     return (
       <>
         <BreadcrumbItem key="dashboard" className="text-sm font-medium">
@@ -43,7 +43,7 @@ const HeaderNav = () => {
             .split('%20')
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
-  
+
           return (
             <BreadcrumbItem key={index} className="text-sm font-medium">
               {index < paths.length - 1 ? (
@@ -68,7 +68,7 @@ const HeaderNav = () => {
   };
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-      <Sheet>
+      <Sheet className="bg-white">
         <SheetTrigger asChild>
           <Button size="icon" variant="outline" className="sm:hidden">
             <MenuIcon className="h-5 w-5" />
@@ -118,7 +118,7 @@ const HeaderNav = () => {
               Users
             </Link>
             <Link
-              to="/settings"
+              to="/profile"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
               prefetch={false}
             >
@@ -144,14 +144,10 @@ const HeaderNav = () => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
-            <img
-              src={image1}
-              width={36}
-              height={36}
-              alt="Avatar"
-              className="overflow-hidden rounded-full"
-              style={{ aspectRatio: "36/36", objectFit: "cover" }}
-            />
+            <Avatar>
+  <AvatarFallback initials="RO" />
+</Avatar>
+
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">

@@ -3,6 +3,7 @@ import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
 import { Card, CardHeader, CardTitle, CardContent } from "../Component/card";
+import axios from 'axios';
 import { Label } from "../Component/label";
 import { Input } from "../Component/input";
 import {
@@ -12,21 +13,34 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../Component/select";
+import {
+    AlertDialog,
+    AlertDialogTrigger,
+    AlertDialogContent,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogCancel
+} from "../Component/alert-dialog";
 import { Button } from "../Component/button";
 
 const UserAdd = () => {
-    const [name, setName] = useState("");
+    const [fullname, setName] = useState("");
     const [email, setEmail] = useState("");
     const [role, setRole] = useState("admin");
     const [gender, setGender] = useState("male");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [dialogMessage, setDialogMessage] = useState("");
 
     const handleNameChange = (e) => setName(e.target.value);
     const handleEmailChange = (e) => setEmail(e.target.value);
     const handleGenderChange = (e) => setGender(e.target.value);
     const handleRoleChange = (e) => setRole(e.target.value);
 
-    
+
     const generatePassword = () => {
         const capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const smallLetters = "abcdefghijklmnopqrstuvwxyz";
@@ -39,9 +53,9 @@ const UserAdd = () => {
 
         let password = "";
         password += getRandomChar(capitalLetters);
-        password += getRandomChar(smallLetters); 
-        password += getRandomChar(digits); 
-        password += getRandomChar(specialChars); 
+        password += getRandomChar(smallLetters);
+        password += getRandomChar(digits);
+        password += getRandomChar(specialChars);
 
         for (let i = 4; i < 12; i++) {
             password += getRandomChar(allChars);
@@ -52,11 +66,32 @@ const UserAdd = () => {
         return password;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const generatedPassword = generatePassword();
         setPassword(generatedPassword);
-        console.log("New user:", { name, email, role, gender, password: generatedPassword });
+
+        const userData = {
+            fullname,
+            email,
+            role,
+            gender,
+            password: generatedPassword,
+        };
+
+        try {
+            const response = await axios.post('https://ketrb-backend.onrender.com/users/register', userData);
+
+            if (response.ok) {
+                setDialogMessage('User added successfully!');
+            } else {
+                setDialogMessage(result.message || 'Failed to add user.');
+            }
+        } catch (error) {
+            setLoading(false);
+            setDialogMessage('An error occurred: ' + error.message);
+        }
+
     };
 
     return (
@@ -81,7 +116,7 @@ const UserAdd = () => {
                                             <Label htmlFor="name" className="block text-sm font-medium text-muted-foreground">
                                                 Name
                                             </Label>
-                                            <Input id="name" type="text" value={name} onChange={handleNameChange} className="mt-1 block w-full" />
+                                            <Input id="name" type="text" value={fullname} onChange={handleNameChange} className="mt-1 block w-full" />
                                         </div>
                                         <div>
                                             <Label htmlFor="email" className="block text-sm font-medium text-muted-foreground">
@@ -127,14 +162,40 @@ const UserAdd = () => {
                                             <Label htmlFor="password" className="block text-sm font-medium text-muted-foreground">
                                                 Generated Password
                                             </Label>
-                                            <Input id="password" type="password" value={password} readOnly className="mt-1 block w-full" />
+                                            <Input id="password" type="password" value={password} placeholder="Password generated Automatically" readOnly className="mt-1 block w-full" />
                                         </div>
                                         <div className="flex justify-end gap-2">
                                             <Button variant="outline" type="button">
                                                 Cancel
                                             </Button>
                                             <Button variant="black" type="submit">
-                                                Save User
+                                                {loading ? (
+                                                    <span className="flex items-center">
+                                                        <svg
+                                                            className="animate-spin h-5 w-5 mr-3 text-white"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <circle
+                                                                className="opacity-25"
+                                                                cx="12"
+                                                                cy="12"
+                                                                r="10"
+                                                                stroke="currentColor"
+                                                                strokeWidth="4"
+                                                            ></circle>
+                                                            <path
+                                                                className="opacity-75"
+                                                                fill="currentColor"
+                                                                d="M4 12a8 8 0 018-8v8h8a8 8 0 01-8 8v-8H4z"
+                                                            ></path>
+                                                        </svg>
+                                                        Loading...
+                                                    </span>
+                                                ) : (
+                                                    "Save User"
+                                                )}
                                             </Button>
                                         </div>
                                     </form>
@@ -144,6 +205,23 @@ const UserAdd = () => {
                     </Card>
                 </div>
             </div>
+            {/* AlertDialog component */}
+            <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                <AlertDialogTrigger asChild>
+                    <span></span> {/* Trigger is hidden, dialog is controlled by state */}
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>{dialogMessage}</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            {/* Description can be customized based on the message */}
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel onClick={() => setDialogOpen(false)}>Close</AlertDialogCancel>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 };
