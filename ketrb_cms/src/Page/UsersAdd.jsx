@@ -86,7 +86,7 @@ const UserAdd = () => {
             if (response.ok) {
                 setDialogMessage('User added successfully!');
             } else {
-                setDialogMessage(response.message || 'Failed to add user.');
+                setDialogMessage('Failed to add user.');
             }
         } catch (error) {
             setLoading(false);
