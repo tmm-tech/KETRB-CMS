@@ -2,7 +2,7 @@ import * as React from "react";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import { cn } from "../lib/utils";
 
-// Modify the function to generate a lighter color
+// Function to generate a lighter color
 function stringToColor(string) {
   let hash = 0;
   for (let i = 0; i < string?.length; i++) {
@@ -11,25 +11,33 @@ function stringToColor(string) {
   let color = "#";
   for (let i = 0; i < 3; i++) {
     const value = (hash >> (i * 8)) & 0xff;
-    // Shift the color towards white by averaging with 255
-    const lightValue = Math.floor((value + 255) / 2);
+    const lightValue = Math.floor((value + 255) / 2); // Shift towards a lighter shade
     color += ("00" + lightValue.toString(16)).substr(-2);
   }
   return color;
 }
 
-// Darken the text color to ensure readability
-function getContrastYIQ(color) {
-  const r = parseInt(color.substr(1, 2), 16);
-  const g = parseInt(color.substr(3, 2), 16);
-  const b = parseInt(color.substr(5, 2), 16);
-  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
-  return yiq >= 160 ? "black" : "white"; // Adjust threshold for lighter backgrounds
+// Function to darken the color for text
+function darkenColor(color, percent) {
+  const num = parseInt(color.slice(1), 16);
+  const amt = Math.round(2.55 * percent);
+  const R = (num >> 16) - amt;
+  const G = ((num >> 8) & 0x00ff) - amt;
+  const B = (num & 0x0000ff) - amt;
+
+  return `#${(
+    0x1000000 +
+    (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
+    (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
+    (B < 255 ? (B < 1 ? 0 : B) : 255)
+  )
+    .toString(16)
+    .slice(1)}`;
 }
 
 const Avatar = React.forwardRef(({ className, initials = "N/A", ...props }, ref) => {
   const bgColor = stringToColor(initials);
-  const textColor = getContrastYIQ(bgColor);
+  const textColor = darkenColor(bgColor, 30); // Darken the color for text
 
   return (
     <AvatarPrimitive.Root
@@ -56,7 +64,7 @@ AvatarImage.displayName = AvatarPrimitive.Image.displayName;
 
 const AvatarFallback = React.forwardRef(({ className, initials = "N/A", ...props }, ref) => {
   const bgColor = stringToColor(initials);
-  const textColor = getContrastYIQ(bgColor);
+  const textColor = darkenColor(bgColor, 30); // Darken the color for text
 
   return (
     <AvatarPrimitive.Fallback
