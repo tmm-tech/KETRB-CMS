@@ -15,7 +15,7 @@ module.exports = {
             let hashed_pwd = await bcrypt.hash(value.password, 8);
 
             const insertUserQuery = `
-                INSERT INTO users (fullname, email, password, gender, roles, status)
+                INSERT INTO users (fullname, email, password, gender, role, status)
                 VALUES ($1, $2, $3, $4, $5, $6)
                 RETURNING id;
             `;
@@ -89,22 +89,18 @@ module.exports = {
     },
 
     updateUser: async (req, res) => {
-        const { fullname, password, email, roles } = req.body;
+        const { fullname, password, email, role } = req.body;
         const { id } = req.params;
         try {
             let hashed_pwd = await bcrypt.hash(password, 8);
 
             const updateUserQuery = `
                 UPDATE users
-<<<<<<< HEAD:ketrb_cms_backend/authentication/controllers/UserControllers.js
-                SET fullname = $1, email = $2, password = $3, roles = $4
-=======
-                SET fullname = $1, email = $2, password = $4, roles = $6
->>>>>>> 58254f769087550f00c8850673949a89a68a7654:ketrb_cms_backend/controllers/UserControllers.js
+                SET fullname = $1, email = $2, password = $3, role = $4
                 WHERE id = $7
                 RETURNING *;
             `;
-            const params = [fullname, email, hashed_pwd, roles, id];
+            const params = [fullname, email, hashed_pwd, role, id];
 
             const result = await query(updateUserQuery, params);
 
