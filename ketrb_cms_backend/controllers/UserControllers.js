@@ -2,6 +2,7 @@ const { query } = require('../config/sqlConfig');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const validateCreateUserSchema = require('../services/RegistrationValidation');
+const reportService = require('../services/SendEmailService');
 const { createToken } = require('../services/jwtServices');
 
 module.exports = {
