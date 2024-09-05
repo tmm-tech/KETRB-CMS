@@ -15,7 +15,6 @@ import {
 } from "../Component/select";
 import {
     AlertDialog,
-    AlertDialogTrigger,
     AlertDialogContent,
     AlertDialogHeader,
     AlertDialogTitle,
@@ -39,7 +38,6 @@ const UserAdd = () => {
     const handleEmailChange = (e) => setEmail(e.target.value);
     const handleGenderChange = (e) => setGender(e.target.value);
     const handleRoleChange = (e) => setRole(e.target.value);
-
 
     const generatePassword = () => {
         const capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -80,10 +78,10 @@ const UserAdd = () => {
         };
 
         try {
+            setLoading(true);
             const response = await axios.post('https://ketrb-backend.onrender.com/users/register', userData);
-            // const result = await response.json();
             setLoading(false);
-            if (response.ok) {
+            if (response.status === 200) {
                 setDialogMessage('User added successfully!');
             } else {
                 setDialogMessage('Failed to add user.');
@@ -92,7 +90,7 @@ const UserAdd = () => {
             setLoading(false);
             setDialogMessage('An error occurred: ' + error.message);
         }
-
+        setDialogOpen(true);
     };
 
     return (
@@ -208,9 +206,6 @@ const UserAdd = () => {
             </div>
             {/* AlertDialog component */}
             <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                <AlertDialogTrigger asChild>
-                    <span></span> {/* Trigger is hidden, dialog is controlled by state */}
-                </AlertDialogTrigger>
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle>{dialogMessage}</AlertDialogTitle>
@@ -220,6 +215,7 @@ const UserAdd = () => {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel onClick={() => setDialogOpen(false)}>Close</AlertDialogCancel>
+                        <Link to="/users"><AlertDialogAction>Continue</AlertDialogAction></Link>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
