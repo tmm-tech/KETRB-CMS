@@ -81,7 +81,8 @@ const UserAdd = () => {
 
         try {
             const response = await axios.post('https://ketrb-backend.onrender.com/users/register', userData);
-
+            const result = await response.json();
+            setLoading(false);
             if (response.ok) {
                 setDialogMessage('User added successfully!');
             } else {
