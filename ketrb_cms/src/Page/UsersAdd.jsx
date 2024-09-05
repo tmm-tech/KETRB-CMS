@@ -14,17 +14,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../Component/select";
-import {
-    AlertDialog,
-    AlertDialogContent,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogCancel,
-    AlertDialogAction
-} from "../Component/alert-dialog";
 import { Button } from "../Component/button";
+import AlertDialogComponent from "../Component/AlertDialogComponent";
 
 const UserAdd = () => {
     const [fullname, setName] = useState("");
@@ -206,21 +197,7 @@ const UserAdd = () => {
                     </Card>
                 </div>
             </div>
-            {/* AlertDialog component */}
-            <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                <AlertDialogContent>
-                    <AlertDialogHeader>
-                        <AlertDialogTitle>{dialogMessage}</AlertDialogTitle>
-                        <AlertDialogDescription>
-                            {/* Description can be customized based on the message */}
-                        </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel onClick={() => setDialogOpen(false)}>Close</AlertDialogCancel>
-                        <Link to="/users"><AlertDialogAction>Continue</AlertDialogAction></Link>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
+            <AlertDialogComponent isOpen={dialogOpen} onClose={setDialogOpen} message={dialogMessage} />
         </div>
     );
 };
