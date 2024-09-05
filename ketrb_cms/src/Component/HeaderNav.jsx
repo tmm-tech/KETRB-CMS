@@ -145,7 +145,7 @@ const HeaderNav = () => {
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
             <Avatar>
-  <AvatarFallback initials="CN" />
+  <AvatarFallback initials="TM" />
 </Avatar>
 
           </Button>
