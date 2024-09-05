@@ -8,8 +8,8 @@ const registrationSchema = Joi.object({
         .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'kustoma24'] } }),
     password: Joi.string()
         .min(8)
-        .max(30)
-        .pattern(new RegExp('^(?=. *[a-zA-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,})'))
+        .max(12)
+        .pattern(new RegExp('^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'))
         .required(),
     gender: Joi.string().required(),
     role: Joi.string().required(),
