@@ -4,7 +4,6 @@ import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
 import { Link} from "react-router-dom";
 import { Card, CardHeader, CardTitle, CardContent } from "../Component/card";
-import axios from 'axios';
 import { Label } from "../Component/label";
 import { Input } from "../Component/input";
 import {
@@ -62,19 +61,11 @@ const UserAdd = () => {
         const generatedPassword = generatePassword();
         setPassword(generatedPassword);
 
-        const userData = {
-            fullname,
-            email,
-            role,
-            gender,
-            password: generatedPassword,
-        };
-
         try {
             const response = await fetch('https://ketrb-backend.onrender.com/users/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, role, gender, password: generatedPassword })
+                body: JSON.stringify({ fullname, email, role, gender, password: generatedPassword })
             });
 
             const result = await response.json();
