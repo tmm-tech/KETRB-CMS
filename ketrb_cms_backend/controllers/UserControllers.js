@@ -15,7 +15,7 @@ module.exports = {
             let hashed_pwd = await bcrypt.hash(value.password, 8);
 
             const insertUserQuery = `
-                INSERT INTO users (fullname, email, password, gender, role, status)
+                INSERT INTO users (fullname, email, password, gender, roles, status)
                 VALUES ($1, $2, $3, $4, $5, $6)
                 RETURNING id;
             `;
