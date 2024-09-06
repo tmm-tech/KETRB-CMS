@@ -1,18 +1,18 @@
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const jwt = require('jsonwebtoken');
 const { validateJwtTokenForeign } = require('./middlewares/validateauthentication');
 const UserRoutes = require('./routes/UserRoutes');
 
-
 const app = express();
 
+// Middleware setup
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
+// Middleware to add token to the request
 const addTokenToRequest = async (req, res, next) => {
     const token = req.headers.authorization;
     if (token) {
@@ -28,7 +28,7 @@ const addTokenToRequest = async (req, res, next) => {
 
 app.use(addTokenToRequest);
 
-
+// Proxy middleware (if needed) - adjust or remove if not used
 const redirect = (proxyReq, req, res, options) => {
     const valid = validateJwtTokenForeign(proxyReq, req, res);
     if (valid === true) {
@@ -47,7 +47,7 @@ const redirect = (proxyReq, req, res, options) => {
     }
 };
 
-
+// Route handling
 app.use('/users', UserRoutes);
 
 app.get('/', (req, res) => {
