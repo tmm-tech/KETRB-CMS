@@ -71,13 +71,19 @@ const UserAdd = () => {
         };
 
         try {
-            setLoading(true);
-            const response = await axios.post('https://ketrb-backend.onrender.com/users/register', userData);
+            const response = await fetch('https://ketrb-backend.onrender.com/users/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, role, gender, password: generatedPassword })
+            });
+
+            const result = await response.json();
             setLoading(false);
-            if (response.status === 200) {
+
+            if (response.ok) {
                 setDialogMessage('User added successfully!');
             } else {
-                setDialogMessage('Failed to add user.');
+                setDialogMessage(result.message || 'Failed to add user.');
             }
         } catch (error) {
             setLoading(false);
