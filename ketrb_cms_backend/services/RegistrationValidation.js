@@ -9,7 +9,6 @@ const registrationSchema = Joi.object({
     password: Joi.string()
         .min(8)
         .max(12)
-        .pattern(new RegExp('^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'))
         .required(),
     gender: Joi.string().required(),
     role: Joi.string().required(),
