@@ -60,7 +60,7 @@ const UserAdd = () => {
         e.preventDefault();
         const generatedPassword = generatePassword();
         setPassword(generatedPassword);
-
+        setLoading(true);
         // Create the data object
         const data = {
             fullname,
