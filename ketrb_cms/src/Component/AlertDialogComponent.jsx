@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Button } from "../Component/button";
+
 const AlertDialogComponent = ({ isOpen, onClose, message }) => {
     if (!isOpen) return null;
 
@@ -19,11 +21,11 @@ const AlertDialogComponent = ({ isOpen, onClose, message }) => {
                     <p>{message}</p>
                 </div>
                 <div className="flex justify-end pt-4 border-t border-gray-200 gap-2">
-                    <Button variant="outline" className="py-2 px-4 rounded-md" onClick={() => onClose(false)}>
+                    <Button variant="outline" onClick={() => onClose(false)}>
                         Close
                     </Button>
                     <Link>
-                        <Button variant="black" className="py-2 px-4 rounded-md">
+                        <Button variant="black">
                             Continue
                         </Button>
                     </Link>
