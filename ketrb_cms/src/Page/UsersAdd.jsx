@@ -28,8 +28,6 @@ const UserAdd = () => {
 
     const handleNameChange = (e) => setName(e.target.value);
     const handleEmailChange = (e) => setEmail(e.target.value);
-    const handleGenderChange = (e) => setGender(e.target.value);
-    const handleRoleChange = (e) => setRole(e.target.value);
 
     const generatePassword = () => {
         const capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -54,6 +52,14 @@ const UserAdd = () => {
         password = password.split("").sort(() => 0.5 - Math.random()).join("");
 
         return password;
+    };
+
+    const handleRoleChange = (value) => {
+        setRole(value);
+    };
+
+    const handleGenderChange = (value) => {
+        setGender(value);
     };
 
     const handleSubmit = async (e) => {
