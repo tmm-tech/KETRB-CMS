@@ -11,7 +11,7 @@ const registrationSchema = Joi.object({
         .max(12)
         .required(),
     gender: Joi.string().required(),
-    roles: Joi.string().required(),
+    role: Joi.string().required(),
 }).xor('email');
 
 const validateCreateUserSchema = (payload) => {
