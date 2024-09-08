@@ -24,7 +24,7 @@ const AlertDialogComponent = ({ isOpen, onClose, message }) => {
                     <Button variant="outline" onClick={() => onClose(false)}>
                         Close
                     </Button>
-                    <Link>
+                    <Link to="/users">
                         <Button variant="black">
                             Continue
                         </Button>

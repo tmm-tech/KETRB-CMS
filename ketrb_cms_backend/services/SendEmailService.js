@@ -16,7 +16,7 @@ exports.sendAccountCreation = (email, password, fullname,roles) => {
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: email,
-        subject: 'Account Confirmation',     
+        subject: 'Account Confirmation',    
         html: `<html>
 
         <head>
