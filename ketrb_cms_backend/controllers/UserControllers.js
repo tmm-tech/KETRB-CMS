@@ -1,4 +1,4 @@
-const { query } = require('../config/sqlConfig');
+const { query } = require('../config/sqlConfig');    
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const validateCreateUserSchema = require('../services/RegistrationValidation');
@@ -6,7 +6,7 @@ const reportService = require('../services/SendEmailService');
 const { createToken } = require('../services/jwtServices');
 
 module.exports = {
-    createUser: async (req, res) => {
+    createUser: async (req, res) => {        
         const details = req.body;
         try {
             
@@ -15,7 +15,7 @@ module.exports = {
             let hashed_pwd = await bcrypt.hash(value.password, 8);
 
             const insertUserQuery = `
-                INSERT INTO users (fullname, email, password, gender, role, status)
+                INSERT INTO users (fullname, email, password, gender, roles, status)
                 VALUES ($1, $2, $3, $4, $5, $6)
                 RETURNING id;
             `;
@@ -24,12 +24,12 @@ module.exports = {
                 value.email,
                 hashed_pwd,
                 value.gender,
-                value.role,
-                'active',
+                value.roles,
+                'active',    
             ];
 
             const result = await query(insertUserQuery, params);
-            reportService.sendAccountCreation(value.email, value.passwords, value.fullname, value.role)
+            reportService.sendAccountCreation(value.email, value.passwords, value.fullname, value.roles)
             res.json({ success: true, message: 'Registration successful', userId: result.rows[0].id });
 
         } catch (error) {

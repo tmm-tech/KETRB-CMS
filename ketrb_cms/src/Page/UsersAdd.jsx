@@ -19,7 +19,7 @@ import AlertDialogComponent from "../Component/AlertDialogComponent";
 const UserAdd = () => {
     const [fullname, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [role, setRole] = useState("admin");
+    const [roles, setRole] = useState("admin");
     const [gender, setGender] = useState("male");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -65,7 +65,7 @@ const UserAdd = () => {
         const data = {
             fullname,
             email,
-            role,
+            roles,
             gender,
             password: generatedPassword
         };
@@ -150,7 +150,7 @@ const UserAdd = () => {
                                             <Label htmlFor="role" className="block text-sm font-medium text-muted-foreground">
                                                 Select Role
                                             </Label>
-                                            <Select id="role" value={role} className="mt-1 block w-full" onValueChange={handleRoleChange}>
+                                            <Select id="role" value={roles} className="mt-1 block w-full" onValueChange={handleRoleChange}>
                                                 <SelectTrigger>
                                                     <SelectValue placeholder="Role" />
                                                 </SelectTrigger>
