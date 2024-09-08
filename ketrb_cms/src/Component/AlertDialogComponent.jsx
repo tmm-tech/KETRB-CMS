@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Button } from "../Component/button";
 const AlertDialogComponent = ({ isOpen, onClose, message }) => {
     if (!isOpen) return null;
 
@@ -20,10 +20,16 @@ const AlertDialogComponent = ({ isOpen, onClose, message }) => {
                 </div>
                 <div className="flex justify-end pt-4 border-t border-gray-200">
                     <button
-                        className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                        variant="black"
                         onClick={() => onClose(false)}
                     >
                         Close
+                    </button>
+                    <button
+                        variant="black"
+                        onClick={() => onClose(false)}
+                    >
+                    Continue
                     </button>
                 </div>
             </div>
