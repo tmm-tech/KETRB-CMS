@@ -1,22 +1,23 @@
 const nodemailer = require('nodemailer')
+require('dotenv').config()
 const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false,
-        requireTLS: true,
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
-        },
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    requireTLS: true,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    },
 
-    })
+})
 
 //Account Creation
-exports.sendAccountCreation = (email, password, fullname,roles) => {
+exports.sendAccountCreation = (email, password, fullname, roles) => {
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: email,
-        subject: 'Account Confirmation',    
+        subject: 'Account Confirmation',
         html: `<html>
 
         <head>
@@ -96,7 +97,7 @@ exports.sendAccountCreation = (email, password, fullname,roles) => {
         </html>`
     };
 
-    transporter.sendMail(mailOptions, function(error, info) {
+    transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.error(error);
         } else {
