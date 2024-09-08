@@ -70,7 +70,6 @@ const UserAdd = () => {
             password: generatedPassword
         };
 
-        // Print the data to the console
         console.log('Data being sent:', data);
 
         try {
@@ -86,7 +85,11 @@ const UserAdd = () => {
             if (response.ok) {
                 setDialogMessage('User added successfully!');
             } else {
-                setDialogMessage(result.message || 'Failed to add user.');
+                if (result.message.includes('duplicate key value violates unique constraint')) {
+                    setDialogMessage('Registration failed: This email is already registered.');
+                } else {
+                    setDialogMessage(result.message || 'Failed to add user.');
+                }
             }
         } catch (error) {
             setLoading(false);
