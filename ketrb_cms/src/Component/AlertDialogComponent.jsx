@@ -19,19 +19,13 @@ const AlertDialogComponent = ({ isOpen, onClose, message }) => {
                     <p>{message}</p>
                 </div>
                 <div className="flex justify-end pt-4 border-t border-gray-200 gap-2">
-                    <button
-                        variant="outline"
-                        className="py-2 px-4 rounded-md"
-                        onClick={() => onClose(false)}
-                    >
+                    <Button variant="outline" className="py-2 px-4 rounded-md" onClick={() => onClose(false)}>
                         Close
-                    </button>
+                    </Button>
                     <Link>
-                        <button
-                            variant="black"
-                            className="py-2 px-4 rounded-md ">
+                        <Button variant="black" className="py-2 px-4 rounded-md">
                             Continue
-                        </button>
+                        </Button>
                     </Link>
                 </div>
             </div>
