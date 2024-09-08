@@ -19,8 +19,8 @@ import AlertDialogComponent from "../Component/AlertDialogComponent";
 const UserAdd = () => {
     const [fullname, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [roles, setRole] = useState("admin");
-    const [gender, setGender] = useState("male");
+    const [roles, setRole] = useState("");
+    const [gender, setGender] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [dialogOpen, setDialogOpen] = useState(false);
@@ -144,6 +144,7 @@ const UserAdd = () => {
                                                     <SelectValue placeholder="Gender" />
                                                 </SelectTrigger>
                                                 <SelectContent>
+                                                    <SelectItem value="...">...</SelectItem>
                                                     <SelectItem value="male">Male</SelectItem>
                                                     <SelectItem value="female">Female</SelectItem>
                                                 </SelectContent>
@@ -158,6 +159,7 @@ const UserAdd = () => {
                                                     <SelectValue placeholder="Role" />
                                                 </SelectTrigger>
                                                 <SelectContent>
+                                                    <SelectItem value="...">...</SelectItem>
                                                     <SelectItem value="admin">Admin</SelectItem>
                                                     <SelectItem value="editor">Editor</SelectItem>
                                                 </SelectContent>
