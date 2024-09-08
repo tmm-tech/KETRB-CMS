@@ -12,10 +12,10 @@ const transporter = nodemailer.createTransport({
     })
 
 //Account Creation
-exports.sendAccountCreation = (recipient, password, fullname,roles) => {
+exports.sendAccountCreation = (email, password, fullname,roles) => {
     const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: recipient,
+        to: email,
         subject: 'Account Confirmation',
         html: `<html>
 
@@ -83,7 +83,7 @@ exports.sendAccountCreation = (recipient, password, fullname,roles) => {
                 <p>Dear ${fullname},</p>
                 <p>We are pleased to inform you that your account has been successfully created. Please find below your login credentials:</p>
                 <ul>
-                    <li><strong>Username: </strong> ${recipient}</li>
+                    <li><strong>Username: </strong> ${email}</li>
                     <li><strong>Password: </strong>${password}</li>
                     <li><strong>Role: </strong>${roles}</li>
                 </ul>
