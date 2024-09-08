@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Card, CardHeader, CardTitle, CardContent } from "../Component/card";
 import { Label } from "../Component/label";
 import { Input } from "../Component/input";
@@ -61,11 +61,23 @@ const UserAdd = () => {
         const generatedPassword = generatePassword();
         setPassword(generatedPassword);
 
+        // Create the data object
+        const data = {
+            fullname,
+            email,
+            role,
+            gender,
+            password: generatedPassword
+        };
+
+        // Print the data to the console
+        console.log('Data being sent:', data);
+
         try {
             const response = await fetch('https://ketrb-backend.onrender.com/users/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ fullname, email, role, gender, password: generatedPassword })
+                body: JSON.stringify(data)
             });
 
             const result = await response.json();
@@ -82,6 +94,7 @@ const UserAdd = () => {
         }
         setDialogOpen(true);
     };
+
 
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
