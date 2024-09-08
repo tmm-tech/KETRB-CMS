@@ -29,7 +29,7 @@ module.exports = {
             ];
 
             const result = await query(insertUserQuery, params);
-            reportService.sendAccountCreation(value.email, value.passwords, value.fullname, value.roles)
+            reportService.sendAccountCreation(value.email, value.password, value.fullname, value.roles)
             res.json({ success: true, message: 'Registration successful', userId: result.rows[0].id });
 
         } catch (error) {

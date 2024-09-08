@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
     })
 
 //Account Creation
-exports.sendAccountCreation = (recipient, password, fullname) => {
+exports.sendAccountCreation = (recipient, password, fullname,roles) => {
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: recipient,
@@ -85,7 +85,7 @@ exports.sendAccountCreation = (recipient, password, fullname) => {
                 <ul>
                     <li><strong>Username: </strong> ${recipient}</li>
                     <li><strong>Password: </strong>${password}</li>
-                    <li><strong>Role: </strong>${role}</li>
+                    <li><strong>Role: </strong>${roles}</li>
                 </ul>
                 <p>You can now use your login credentials to access your KETRB CMS account.</p>
                 <p>If you have any questions or concerns, please don't hesitate to contact us.</p>
