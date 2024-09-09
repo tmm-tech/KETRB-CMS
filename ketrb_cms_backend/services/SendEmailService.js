@@ -65,19 +65,16 @@ exports.sendAccountCreation = (email, password, fullname, roles) => {
                 .btn {
                     display: inline-block;
                     padding: 10px 20px;
-                    background-color: #2A3F54;
+                    background-color: #000   vm;
                     color: #fff;
                     text-decoration: none;
                     border-radius: 5px;
                     transition: background-color 0.3s ease;
                 }
                 
-                .btn:hover {
-                    background-color: #0069d9;
-                }
             </style>
         </head>
-        
+        vm
         <body>
             <div class="container">
                 <h1>Account Confirmation</h1>

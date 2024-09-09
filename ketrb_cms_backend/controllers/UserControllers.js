@@ -1,4 +1,4 @@
-const { query } = require('../config/sqlConfig');    
+const { query } = require('../config/sqlConfig');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const validateCreateUserSchema = require('../services/RegistrationValidation');
@@ -6,12 +6,12 @@ const reportService = require('../services/SendEmailService');
 const { createToken } = require('../services/jwtServices');
 
 module.exports = {
-    createUser: async (req, res) => {        
+    createUser: async (req, res) => {
         const details = req.body;
         try {
-            
+
             let value = await validateCreateUserSchema(details);
-            
+
             let hashed_pwd = await bcrypt.hash(value.password, 8);
 
             const insertUserQuery = `
@@ -25,7 +25,7 @@ module.exports = {
                 hashed_pwd,
                 value.gender,
                 value.roles,
-                'active',    
+                'active',
             ];
 
             const result = await query(insertUserQuery, params);
@@ -56,6 +56,8 @@ module.exports = {
                         UPDATE users SET status = $1 WHERE id = $2;
                     `;
                     await query(updateUserStatusQuery, ['active', user.id]);
+
+                    
                     res.json({ success: true, bearer: token, data: user });
                 } else {
                     res.status(401).json({ success: false, message: 'Invalid Credentials' });
@@ -68,6 +70,7 @@ module.exports = {
             res.status(500).json({ success: false, message: 'Error logging in' });
         }
     },
+
 
     getAUser: async (req, res) => {
         const { id } = req.params;
