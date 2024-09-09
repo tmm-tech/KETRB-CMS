@@ -1,5 +1,4 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./Page/Dashboard";
 import NewsPage from "./Page/NewsPage";
 import ImagePage from "./Page/ImagePage";
@@ -14,23 +13,20 @@ import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (
-    <div className="App">
+    <Router>
       <Routes>
-        {/* Public Route */}
         <Route path="/login" element={<LoginPage />} />
-
-        {/* Protected Routes */}
-        <ProtectedRoute path="/" element={<Dashboard />} />
-        <ProtectedRoute path="/news" element={<NewsPage />} />
-        <ProtectedRoute path="/news/add news" element={<NewsAdd />} />
-        <ProtectedRoute path="/images" element={<ImagePage />} />
-        <ProtectedRoute path="/programs" element={<ProgramsPage />} />
-        <ProtectedRoute path="/programs/add program" element={<ProgramsAdd />} />
-        <ProtectedRoute path="/users" element={<UserPage />} />
-        <ProtectedRoute path="/users/add users" element={<UserAdd />} />
-        <ProtectedRoute path="/profile" element={<ProfilePage />} />
+        <Route path="/" element={<ProtectedRoute component={Dashboard} />} />
+        <Route path="/news" element={<ProtectedRoute component={NewsPage} />} />
+        <Route path="/news/add-news" element={<ProtectedRoute component={NewsAdd} />} />
+        <Route path="/images" element={<ProtectedRoute component={ImagePage} />} />
+        <Route path="/programs" element={<ProtectedRoute component={ProgramsPage} />} />
+        <Route path="/programs/add-program" element={<ProtectedRoute component={ProgramsAdd} />} />
+        <Route path="/users" element={<ProtectedRoute component={UserPage} />} />
+        <Route path="/users/add-users" element={<ProtectedRoute component={UserAdd} />} />
+        <Route path="/profile" element={<ProtectedRoute component={ProfilePage} />} />
       </Routes>
-    </div>
+    </Router>
   );
 }
 
