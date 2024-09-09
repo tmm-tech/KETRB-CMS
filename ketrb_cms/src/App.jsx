@@ -1,5 +1,5 @@
-import { Route, Routes } from "react-router-dom";
 import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Dashboard from "./Page/Dashboard";
 import NewsPage from "./Page/NewsPage";
 import ImagePage from "./Page/ImagePage";
@@ -10,21 +10,25 @@ import NewsAdd from "./Page/NewsAdd";
 import ProgramsAdd from "./Page/ProgramsAdd";
 import UserAdd from "./Page/UsersAdd";
 import ProfilePage from "./Page/ProfilePage";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/news" element={<NewsPage />} />
-        <Route path="/news/add news" element={<NewsAdd />} />
-        <Route path="/images" element={<ImagePage />} />
-        <Route path="/programs" element={<ProgramsPage />} />
-        <Route path="/programs/add program" element={<ProgramsAdd />} />
-        <Route path="/users" element={<UserPage />} />
-        <Route path="/users/add users" element={<UserAdd />} />
+        {/* Public Route */}
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+
+        {/* Protected Routes */}
+        <ProtectedRoute path="/" element={<Dashboard />} />
+        <ProtectedRoute path="/news" element={<NewsPage />} />
+        <ProtectedRoute path="/news/add news" element={<NewsAdd />} />
+        <ProtectedRoute path="/images" element={<ImagePage />} />
+        <ProtectedRoute path="/programs" element={<ProgramsPage />} />
+        <ProtectedRoute path="/programs/add program" element={<ProgramsAdd />} />
+        <ProtectedRoute path="/users" element={<UserPage />} />
+        <ProtectedRoute path="/users/add users" element={<UserAdd />} />
+        <ProtectedRoute path="/profile" element={<ProfilePage />} />
       </Routes>
     </div>
   );

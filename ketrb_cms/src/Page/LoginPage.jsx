@@ -8,33 +8,36 @@ const LoginPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setErrorMessage("");
 
     try {
-      const response = await axios.post("/api/login", {
-        email,
-        password,
+      const response = await fetch('https://ketrb-backend.onrender.com/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
       });
 
-      if (response.data.success) {
-        // Save the token and user data in local storage or context
-        localStorage.setItem("token", response.data.bearer);
-        localStorage.setItem("user", JSON.stringify(response.data.data));
-        // Redirect to the dashboard or any other protected route
-        window.location.href = "/dashboard";
+      const data = await response.json();
+
+      if (data.success) {
+       
+        localStorage.setItem('token', data.bearer);
+        localStorage.setItem('user', JSON.stringify(data.data));
+        // Redirect to dashboard or home page
+        window.location.href = '/';
       } else {
-        setErrorMessage(response.data.message || "Login failed");
+        setError(data.message);
       }
     } catch (error) {
-      setErrorMessage("An error occurred. Please try again.");
-      console.error("Login error:", error);
-    } finally {
-      setLoading(false);
+      console.error('Error logging in:', error);
+      setError('An error occurred. Please try again.');
     }
   };
+
+
 
   return (
     <div
