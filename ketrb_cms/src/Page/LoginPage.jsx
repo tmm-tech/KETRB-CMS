@@ -5,25 +5,23 @@ import bgImage from "../Asset/bg.png"; // Make sure to replace this with the act
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
 
     try {
-      const response = await fetch('https://ketrb-backend.onrender.com/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
+      const response = await axios.post('https://ketrb-backend.onrender.com/users/login', {
+        email,
+        password,
       });
 
-      const data = await response.json();
+      const data = response.data;
 
       if (data.success) {
-       
         localStorage.setItem('token', data.bearer);
         localStorage.setItem('user', JSON.stringify(data.data));
         // Redirect to dashboard or home page
@@ -34,10 +32,10 @@ const LoginPage = () => {
     } catch (error) {
       console.error('Error logging in:', error);
       setError('An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
-
-
 
   return (
     <div
@@ -55,8 +53,8 @@ const LoginPage = () => {
             Enter your credentials to access the CMS.
           </p>
         </div>
-        {errorMessage && (
-          <p className="text-red-500 text-center">{errorMessage}</p>
+        {error && (
+          <p className="text-red-500 text-center">{error}</p>
         )}
         <form className="space-y-4" onSubmit={handleLogin}>
           <div className="space-y-2">
