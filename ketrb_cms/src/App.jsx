@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Dashboard from './Page/Dashboard';
 import NewsPage from './Page/NewsPage';
 import ImagePage from './Page/ImagePage';
@@ -9,7 +10,14 @@ import NewsAdd from './Page/NewsAdd';
 import ProgramsAdd from './Page/ProgramsAdd';
 import UserAdd from './Page/UsersAdd';
 import ProfilePage from './Page/ProfilePage';
-import ProtectedRoute from './ProtectedRoute';
+
+// Function to check if the user is authenticated
+const isAuthenticated = () => !!localStorage.getItem('token');
+
+// Helper function to protect routes
+const ProtectedRoute = ({ element }) => (
+    isAuthenticated() ? element : <Navigate to="/login" />
+);
 
 function App() {
     return (
