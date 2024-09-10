@@ -13,11 +13,11 @@ const LoginPage = () => {
     setLoading(true);
     setError(null);
 
-    try {
-      const response = await axios.post('https://ketrb-backend.onrender.com/users/login', {
-        email,
-        password,
-      });
+const response = await fetch('https://ketrb-backend.onrender.com/users/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
 
       const data = response.data;
 
