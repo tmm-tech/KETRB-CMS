@@ -12,7 +12,10 @@ const LoginPage = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-
+const data = {
+            email,
+            password
+        };
 const response = await fetch('https://ketrb-backend.onrender.com/users/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
