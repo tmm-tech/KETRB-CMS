@@ -25,7 +25,7 @@ const LoginPage = () => {
 
       const data = response.data;
 
-      if (data.success) {
+      if (response.ok) {
         localStorage.setItem('token', data.bearer);
         localStorage.setItem('user', JSON.stringify(data.data));
         // Redirect to dashboard or home page
