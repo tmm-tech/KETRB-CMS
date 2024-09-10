@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import bgImage from "../Asset/bg.png"; // Make sure to replace this with the actual path to your background image
 
 const LoginPage = () => {
@@ -12,14 +11,14 @@ const LoginPage = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-const data = {
+const logindata = {
             email,
             password
         };
 const response = await fetch('https://ketrb-backend.onrender.com/users/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
+                body: JSON.stringify(logindata)
             });
 
       const data = response.data;
