@@ -25,7 +25,7 @@ const LoginPage = () => {
     });
 
       const data = await response.json();
-
+      console.log('Data being received:', data);
       if (data.ok) {
         localStorage.setItem('user', JSON.stringify(data.data));
         // Redirect to dashboard or home page
