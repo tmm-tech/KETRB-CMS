@@ -11,9 +11,28 @@ import { Avatar, AvatarFallback, AvatarImage, } from "../Component/avatar";
 const HeaderNav = () => {
   const location = useLocation();
   const getPathname = (path) => path.split('/').filter(Boolean);
-const handleLogout = () => {
-    console.log("Logging out...")
-}
+const handleLogout = async () => {
+  console.log("Logging out...");
+
+  try {
+    const response = await fetch(`https://ketrb-backend.onrender.com/users/logout/${userEmail}`, {
+      method: 'POST',
+      credentials: 'include', // Ensure cookies are included
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log('Logout successful:', data.message);
+      // Optionally redirect to login or another page after logout
+      window.location.href = '/login';
+    } else {
+      console.error('Logout failed:', data.message);
+    }
+  } catch (error) {
+    console.error('Error during logout:', error);
+  }
+};
   const breadcrumbItems = () => {
     const paths = getPathname(location.pathname);
 
