@@ -6,6 +6,7 @@ const {
     SoftDeleteUser,
     loginUser,
     Logout,
+    checkAuth,
 } = require('../controllers/UserControllers');
 
 // create and insert data into the table
@@ -21,6 +22,6 @@ UserRoutes.post('/login', loginUser)
     // logout user
 UserRoutes.post('/logout/:email', Logout)
     //authenticate
-    // UserRoutes.get('/user/authenticate', userAuthenticate)
+UserRoutes.get('/protected', checkAuth);
 
 module.exports = UserRoutes
