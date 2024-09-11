@@ -60,7 +60,7 @@ const App = () => {
             <Route path="/profile" element={<ProfilePage />} />
           </>
         ) : (
-          <Route path="*" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<LoginPage/>} />
         )}
       </Routes>
     </div>
