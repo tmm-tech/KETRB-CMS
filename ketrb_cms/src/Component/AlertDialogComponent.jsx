@@ -36,3 +36,4 @@ const AlertDialogComponent = ({ isOpen, onClose, message }) => {
 };
 
 export default AlertDialogComponent;
+ 
