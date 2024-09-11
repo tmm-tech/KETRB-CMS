@@ -2,7 +2,6 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const { validateJwtTokenForeign } = require('./middlewares/validateauthentication');
 const UserRoutes = require('./routes/UserRoutes');
 const cookieParser = require('cookie-parser');
 
@@ -26,7 +25,7 @@ const addTokenToRequest = async (req, res, next) => {
     if (authHeader && authHeader.startsWith('Bearer ')) {
         const token = authHeader.substring(7); // Remove 'Bearer ' from the beginning
         try {
-            const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
+            const decodedToken = await jwt.verify(token, process.env.SECRET);
             req.token = decodedToken;
         } catch (error) {
             return res.status(401).json({ error: 'Invalid token.' });
