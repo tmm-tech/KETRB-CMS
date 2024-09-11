@@ -22,6 +22,8 @@ UserRoutes.post('/login', loginUser)
     // logout user
 UserRoutes.post('/logout/:email', Logout)
     //authenticate
-UserRoutes.get('/protected', checkAuth);
-
+UserRoutes.get('/protected', checkAuth, (req, res) => {
+  // Handle the request if authenticated
+  res.json({ message: 'Access granted to protected route.' });
+});
 module.exports = UserRoutes
