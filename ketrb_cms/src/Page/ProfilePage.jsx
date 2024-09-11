@@ -8,9 +8,18 @@ import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
 import { Badge } from '../Component/badge';
 
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+  };
+
+
 const ProfilePage = () => {
     const storedUser = localStorage.getItem('user');
     const user = JSON.parse(storedUser);
+    const formattedDate = formatDate(user.registered_at);
+
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
             <SideNav />
@@ -38,16 +47,16 @@ const ProfilePage = () => {
                                     </div>
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Role</div>
-                                        <div className="text-sm">{user.roles}</div>
+                                        <div className="text-sm capitalize-first">{user.roles}</div>
                                     </div>
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Joined</div>
-                                        <div className="text-sm">{user.registered_at}</div>
+                                        <div className="text-sm">{formattedDate}</div>
                                     </div>
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Status</div>
                                         <div className="text-sm">
-                                            <Badge className="bg-green-500 text-green-50">{user.status}</Badge>
+                                            <Badge className="bg-green-500 text-green-50 capitalize-first">{user.status}</Badge>
                                         </div>
                                     </div>
                                 </div>
