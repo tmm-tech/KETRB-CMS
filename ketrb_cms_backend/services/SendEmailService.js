@@ -65,7 +65,7 @@ exports.sendAccountCreation = (email, password, fullname, roles) => {
                 .btn {
                     display: inline-block;
                     padding: 10px 20px;
-                    background-color: #000   vm;
+                    background-color: #000;
                     color: #fff;
                     text-decoration: none;
                     border-radius: 5px;
