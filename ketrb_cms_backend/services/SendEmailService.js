@@ -74,7 +74,7 @@ exports.sendAccountCreation = (email, password, fullname, roles) => {
                 
             </style>
         </head>
-        vm
+        
         <body>
             <div class="container">
                 <h1>Account Confirmation</h1>
