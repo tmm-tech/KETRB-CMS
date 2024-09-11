@@ -149,7 +149,7 @@ checkAuth: (req, res, next) => {
   const token = req.cookies.token;
   if (token) {
     try {
-      const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+      const decodedToken = jwt.verify(token, process.env.SECRET);
       res.status(200).json({ authenticated: true });
     } catch (error) {
       res.status(401).json({ authenticated: false });
