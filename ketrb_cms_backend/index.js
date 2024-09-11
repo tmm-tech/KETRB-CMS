@@ -8,10 +8,11 @@ const UserRoutes = require('./routes/UserRoutes');
 const app = express();
 
 // Middleware setup
-app.use(cors());
 const corsOptions = {
-  origin: 'https://ketrb-cms-one.vercel.app',
-  credentials: true, // Allow cookies
+  origin: 'https://ketrb-cms-one.vercel.app', // Your frontend URL
+  credentials: true, // Allow cookies to be sent
+  methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
+  allowedHeaders: 'Content-Type,Authorization' // Allowed headers
 };
 
 app.use(cors(corsOptions));
