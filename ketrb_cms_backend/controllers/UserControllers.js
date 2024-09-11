@@ -54,12 +54,6 @@ module.exports = {
                     // Create JWT Token
                     let token = await createToken({ email: user.email, id: user.id });
 
-                    // Update user status to active
-                    const updateUserStatusQuery = `
-                        UPDATE users SET status = $1 WHERE id = $2;
-                    `;
-                    await query(updateUserStatusQuery, ['active', user.id]);
-
                     // Set token as a cookie (HttpOnly and valid for 1 hour)
                     res.cookie('token', token, { httpOnly: true, maxAge: 60 * 60 * 1000 });
                     
@@ -167,7 +161,7 @@ module.exports = {
         const { email } = req.params;
         try {
             const updateUserStatusQuery = `
-                UPDATE users SET status = $1 WHERE email = $2;
+                 SELECT * FROM users WHERE id = $1;
             `;
             const result = await query(updateUserStatusQuery, ['inactive', email]);
 
