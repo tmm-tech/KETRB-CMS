@@ -23,10 +23,9 @@ const LoginPage = () => {
                 body: JSON.stringify(logindata)
             });
 
-      const data = response.data;
+      const data = await response.json();
 
-      if (response.ok) {
-        localStorage.setItem('token', data.bearer);
+      if (data.ok) {
         localStorage.setItem('user', JSON.stringify(data.data));
         // Redirect to dashboard or home page
         window.location.href = '/';
