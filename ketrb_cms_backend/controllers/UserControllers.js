@@ -62,7 +62,7 @@ module.exports = {
 
                     // Set token as a cookie (HttpOnly and valid for 1 hour)
                     res.cookie('token', token, { httpOnly: true, maxAge: 60 * 60 * 1000 });
-
+                    console.log('token: ', token);
                     // Respond with user data
                     res.json({ success: true, data: user });
                 } else {
