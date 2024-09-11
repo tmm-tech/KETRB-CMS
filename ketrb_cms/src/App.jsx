@@ -33,7 +33,7 @@ const App = () => {
           setIsAuthenticated(false);
         }
       } catch (error) {
-        console.error('Error checking authentication:', error);
+
         setIsAuthenticated(false);
       } finally {
         setLoading(false);
@@ -44,7 +44,7 @@ const App = () => {
   }, []);
 
   if (loading) {
-    return <LoadingPage/>; 
+    return <LoadingPage />;
   }
 
   return (
