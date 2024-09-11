@@ -10,6 +10,7 @@ import NewsAdd from './Page/NewsAdd';
 import ProgramsAdd from './Page/ProgramsAdd';
 import UserAdd from './Page/UsersAdd';
 import ProfilePage from './Page/ProfilePage';
+import LoadingPage from './Page/LoadingPage';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -43,7 +44,7 @@ const App = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; // Or some loading spinner
+    return <LoadingPage/>; 
   }
 
   return (

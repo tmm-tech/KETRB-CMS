@@ -11,19 +11,19 @@ const {
 
 // create and insert data into the table
 UserRoutes.post('/register', createUser)
-    //read for a specific id
+//read for a specific id
 UserRoutes.get('/user/:id', getAUser)
-    //soft delete item of a specific id
+//soft delete item of a specific id
 UserRoutes.delete('/user/:id', SoftDeleteUser)
-    //update items
+//update items
 UserRoutes.put('/update/:id', updateUser)
-    // login a user
+// login a user
 UserRoutes.post('/login', loginUser)
-    // logout user
+// logout user
 UserRoutes.post('/logout/:email', Logout)
-    //authenticate
+//authenticate
 UserRoutes.get('/protected', checkAuth, (req, res) => {
-  // Handle the request if authenticated
-  res.json({ message: 'Access granted to protected route.' });
+    // Handle the request if authenticated
+    res.json({ message: 'Access granted to protected route.' });
 });
 module.exports = UserRoutes

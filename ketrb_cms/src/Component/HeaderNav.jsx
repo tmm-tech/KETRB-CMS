@@ -5,34 +5,33 @@ import { Button } from '../Component/button';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from '../Component/breadcrumb';
 import { Input } from '../Component/input';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from '../Component/dropdown-menu';
-import image1 from "../Asset/joseph.jpg";
 import logo from "../Asset/Logo/ketrb.ico";
 import { Avatar, AvatarFallback, AvatarImage, } from "../Component/avatar";
 const HeaderNav = () => {
   const location = useLocation();
   const getPathname = (path) => path.split('/').filter(Boolean);
-const handleLogout = async () => {
-  console.log("Logging out...");
+  const handleLogout = async () => {
+    console.log("Logging out...");
 
-  try {
-    const response = await fetch(`https://ketrb-backend.onrender.com/users/logout/${userEmail}`, {
-      method: 'POST',
-      credentials: 'include', // Ensure cookies are included
-    });
+    try {
+      const response = await fetch(`https://ketrb-backend.onrender.com/users/logout/${userEmail}`, {
+        method: 'POST',
+        credentials: 'include', // Ensure cookies are included
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (response.ok) {
-      console.log('Logout successful:', data.message);
-      // Optionally redirect to login or another page after logout
-      window.location.href = '/login';
-    } else {
-      console.error('Logout failed:', data.message);
+      if (response.ok) {
+        console.log('Logout successful:', data.message);
+        // Optionally redirect to login or another page after logout
+        window.location.href = '/login';
+      } else {
+        console.error('Logout failed:', data.message);
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
     }
-  } catch (error) {
-    console.error('Error during logout:', error);
-  }
-};
+  };
   const breadcrumbItems = () => {
     const paths = getPathname(location.pathname);
 
@@ -166,8 +165,8 @@ const handleLogout = async () => {
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
             <Avatar>
-  <AvatarFallback initials="RO" />
-</Avatar>
+              <AvatarFallback initials="TM" bgColor="black" textColor="white" />
+            </Avatar>
 
           </Button>
         </DropdownMenuTrigger>
@@ -175,7 +174,7 @@ const handleLogout = async () => {
           <DropdownMenuLabel><Link to="/profile">My Account</Link></DropdownMenuLabel>
           <DropdownMenuItem><Link to="/profile">Settings</Link></DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem  onClick={handleLogout}><LogOutIcon className="mr-2 h-4 w-4" />Logout</DropdownMenuItem>
+          <DropdownMenuItem onClick={handleLogout}><LogOutIcon className="mr-2 h-4 w-4" />Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>
