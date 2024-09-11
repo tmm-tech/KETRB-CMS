@@ -161,9 +161,9 @@ module.exports = {
         const { email } = req.params;
         try {
             const updateUserStatusQuery = `
-                 SELECT * FROM users WHERE id = $1;
+                 SELECT * FROM users WHERE email = $1;
             `;
-            const result = await query(updateUserStatusQuery, ['inactive', email]);
+            const result = await query(updateUserStatusQuery, [email]);
 
             if (result.rowCount > 0) {
                 // Clear the token cookie
