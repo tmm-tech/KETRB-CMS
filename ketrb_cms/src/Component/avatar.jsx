@@ -7,7 +7,7 @@ const getAvatarStyles = (bgColor, textColor) => ({
   backgroundColor: bgColor,
   color: textColor,
   fontWeight: "bold",
-  padding: "1.5rem",
+  padding: "1rem",
 });
 
 const Avatar = React.forwardRef(({ className, initials = "N/A", ...props }, ref) => {
