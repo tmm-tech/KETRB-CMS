@@ -18,7 +18,7 @@ const App = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('https://ketrb-backend.onrender.com/users/check-auth', {
+        const response = await fetch('https://ketrb-backend.onrender.com/users/protected', {
           method: 'GET',
           credentials: 'include' // Include cookies with the request
         });
