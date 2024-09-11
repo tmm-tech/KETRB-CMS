@@ -144,6 +144,22 @@ module.exports = {
             res.status(500).json({ success: false, message: `Remove User Error: ${error.message}` });
         }
     },
+    // Example check for authentication in your routes (backend)
+checkAuth: (req, res, next) => {
+  const token = req.cookies.token; // Read token from cookie
+  if (token) {
+    try {
+      const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = decodedToken;
+      next();
+    } catch (error) {
+      res.status(401).json({ error: 'Invalid token.' });
+    }
+  } else {
+    res.status(401).json({ error: 'No token provided.' });
+  }
+},
+
 
     // User logout and token invalidation
     Logout: async (req, res) => {
