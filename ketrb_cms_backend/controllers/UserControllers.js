@@ -64,7 +64,7 @@ module.exports = {
                     res.cookie('token', token, { httpOnly: true, maxAge: 60 * 60 * 1000 });
 
                     // Respond with user data
-                    res.json({ success: true, bearer: token, data: user });
+                    res.json({ success: true, data: user });
                 } else {
                     res.status(401).json({ success: false, message: 'Invalid Credentials' });
                 }
