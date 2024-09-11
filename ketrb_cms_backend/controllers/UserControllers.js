@@ -146,16 +146,18 @@ module.exports = {
     },
     // Example check for authentication in your routes (backend)
 checkAuth: (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.cookies ? req.cookies.token : null;
   if (token) {
     try {
-      const decodedToken = jwt.verify(token, process.env.SECRET);
+      const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = decodedToken; // Attach decoded token data to request if needed
       res.status(200).json({ authenticated: true });
     } catch (error) {
-      res.status(401).json({ authenticated: false });
+      console.error('Token verification failed:', error);
+      res.status(401).json({ authenticated: false, message: 'Invalid token.' });
     }
   } else {
-    res.status(401).json({ authenticated: false });
+    res.status(401).json({ authenticated: false, message: 'No token provided.' });
   }
 },
 
