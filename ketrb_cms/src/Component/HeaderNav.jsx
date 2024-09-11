@@ -10,6 +10,23 @@ import { Avatar, AvatarFallback, AvatarImage, } from "../Component/avatar";
 const HeaderNav = () => {
   const location = useLocation();
   const getPathname = (path) => path.split('/').filter(Boolean);
+  const storedUser = localStorage.getItem('user');
+  let fullname = "";
+  let userEmail = "";
+  let initials = "";
+
+  // Ensure the stored user exists before parsing
+  if (storedUser) {
+    const user = JSON.parse(storedUser);
+    fullname = user.fullname || "";
+    userEmail = user.email || "";
+
+    if (fullname) {
+      const nameParts = fullname.split(" ");
+      initials = nameParts.map(part => part[0].toUpperCase()).join("");
+    }
+  }
+
   const handleLogout = async () => {
     console.log("Logging out...");
 
@@ -165,7 +182,7 @@ const HeaderNav = () => {
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
             <Avatar>
-              <AvatarFallback initials="TM" bgColor="black" textColor="white" />
+              <AvatarFallback initials={initials} bgColor="black" textColor="white" />
             </Avatar>
 
           </Button>
