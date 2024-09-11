@@ -14,8 +14,9 @@ app.use(express.json());
 
 // Middleware to add token to the request
 const addTokenToRequest = async (req, res, next) => {
-    const token = req.headers.authorization;
-    if (token) {
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+        const token = authHeader.substring(7); // Remove 'Bearer ' from the beginning
         try {
             const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
             req.token = decodedToken;
