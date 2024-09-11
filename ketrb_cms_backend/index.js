@@ -4,9 +4,10 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const { validateJwtTokenForeign } = require('./middlewares/validateauthentication');
 const UserRoutes = require('./routes/UserRoutes');
+const cookieParser = require('cookie-parser');
 
 const app = express();
-
+app.use(cookieParser());
 // Middleware setup
 const corsOptions = {
   origin: 'https://ketrb-cms-one.vercel.app', // Your frontend URL
