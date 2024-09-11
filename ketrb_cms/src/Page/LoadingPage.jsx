@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../Asset/logo.png';
+import logo from "../Asset/Logo/ketrb.ico";
 
 export default function LoadingPage() {
   return (
