@@ -25,6 +25,9 @@ const App = () => {
 
         if (response.ok) {
           setIsAuthenticated(true);
+        } else if (response.status === 404) {
+          console.error('User not found, redirecting to login.');
+          setIsAuthenticated(false);
         } else {
           setIsAuthenticated(false);
         }
@@ -60,7 +63,7 @@ const App = () => {
             <Route path="/profile" element={<ProfilePage />} />
           </>
         ) : (
-          <Route path="/login" element={<LoginPage/>} />
+          <Route path="*" element={<Navigate to="/login" />} />
         )}
       </Routes>
     </div>
