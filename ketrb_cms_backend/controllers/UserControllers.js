@@ -6,12 +6,11 @@ const reportService = require('../services/SendEmailService');
 const { createToken } = require('../services/jwtServices');
 
 module.exports = {
+    // Create a new user
     createUser: async (req, res) => {
         const details = req.body;
         try {
-
             let value = await validateCreateUserSchema(details);
-
             let hashed_pwd = await bcrypt.hash(value.password, 8);
 
             const insertUserQuery = `
@@ -29,15 +28,16 @@ module.exports = {
             ];
 
             const result = await query(insertUserQuery, params);
-            reportService.sendAccountCreation(value.email, value.password, value.fullname, value.roles)
-            res.json({ success: true, message: 'Registration successful', userId: result.rows[0].id });
+            reportService.sendAccountCreation(value.email, value.password, value.fullname, value.roles);
 
+            res.json({ success: true, message: 'Registration successful', userId: result.rows[0].id });
         } catch (error) {
             console.error('Error registering user:', error);
             res.status(500).json({ success: false, message: `Error registering user: ${error.message}` });
         }
     },
 
+    // User login and JWT token generation
     loginUser: async (req, res) => {
         const details = req.body;
         try {
@@ -51,13 +51,19 @@ module.exports = {
                 const match = await bcrypt.compare(details.password, user.password);
 
                 if (match) {
+                    // Create JWT Token
                     let token = await createToken({ email: user.email, id: user.id });
+
+                    // Update user status to active
                     const updateUserStatusQuery = `
                         UPDATE users SET status = $1 WHERE id = $2;
                     `;
                     await query(updateUserStatusQuery, ['active', user.id]);
 
-                    
+                    // Set token as a cookie (HttpOnly and valid for 1 hour)
+                    res.cookie('token', token, { httpOnly: true, maxAge: 60 * 60 * 1000 });
+
+                    // Respond with user data
                     res.json({ success: true, bearer: token, data: user });
                 } else {
                     res.status(401).json({ success: false, message: 'Invalid Credentials' });
@@ -71,7 +77,7 @@ module.exports = {
         }
     },
 
-
+    // Get a user by ID
     getAUser: async (req, res) => {
         const { id } = req.params;
         try {
@@ -91,6 +97,7 @@ module.exports = {
         }
     },
 
+    // Update user details
     updateUser: async (req, res) => {
         const { fullname, password, email, role } = req.body;
         const { id } = req.params;
@@ -100,7 +107,7 @@ module.exports = {
             const updateUserQuery = `
                 UPDATE users
                 SET fullname = $1, email = $2, password = $3, role = $4
-                WHERE id = $7
+                WHERE id = $5
                 RETURNING *;
             `;
             const params = [fullname, email, hashed_pwd, role, id];
@@ -118,6 +125,7 @@ module.exports = {
         }
     },
 
+    // Soft delete (deactivate) user
     SoftDeleteUser: async (req, res) => {
         const { id } = req.params;
         try {
@@ -137,6 +145,7 @@ module.exports = {
         }
     },
 
+    // User logout and token invalidation
     Logout: async (req, res) => {
         const { email } = req.params;
         try {
@@ -146,6 +155,8 @@ module.exports = {
             const result = await query(updateUserStatusQuery, ['inactive', email]);
 
             if (result.rowCount > 0) {
+                // Clear the token cookie
+                res.clearCookie('token');
                 res.json({ success: true, message: 'User logged out successfully' });
             } else {
                 res.status(404).json({ success: false, message: 'User not found' });
@@ -156,3 +167,4 @@ module.exports = {
         }
     },
 };
+                    
