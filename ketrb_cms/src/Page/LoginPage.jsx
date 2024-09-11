@@ -34,7 +34,7 @@ const LoginPage = () => {
         setError(data.message);
       }
     } catch (error) {
-      console.error('Error logging in:', error);
+      console.log('Error logging in:', error);
       setError('An error occurred. Please try again.');
     } finally {
       setLoading(false);
