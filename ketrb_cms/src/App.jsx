@@ -27,7 +27,7 @@ const App = () => {
         if (response.ok) {
           setIsAuthenticated(true);
         } else if (response.status === 404) {
-          console.error('User not found, redirecting to login.');
+          console.log('User not found, redirecting to login.');
           setIsAuthenticated(false);
         } else {
           setIsAuthenticated(false);
