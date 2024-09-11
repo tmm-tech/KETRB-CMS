@@ -13,3 +13,8 @@
     font-family: 'Raleway', sans-serif;
   }
 }
+
+.capitalize {
+  text-transform: capitalize;
+}
+

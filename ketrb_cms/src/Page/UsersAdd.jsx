@@ -165,7 +165,7 @@ const UserAdd = () => {
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     <SelectItem value="...">...</SelectItem>
-                                                    <SelectItem value="admin">Admin</SelectItem>
+                                                    <SelectItem value="administrator">Administrator</SelectItem>
                                                     <SelectItem value="editor">Editor</SelectItem>
                                                 </SelectContent>
                                             </Select>

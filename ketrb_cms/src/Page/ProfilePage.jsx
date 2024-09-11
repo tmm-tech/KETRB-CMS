@@ -47,7 +47,7 @@ const ProfilePage = () => {
                                     </div>
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Role</div>
-                                        <div className="text-sm capitalize-first">{user.roles}</div>
+                                        <div className="text-sm capitalize">{user.roles}</div>
                                     </div>
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Joined</div>
@@ -56,7 +56,7 @@ const ProfilePage = () => {
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Status</div>
                                         <div className="text-sm">
-                                            <Badge className="bg-green-500 text-green-50 capitalize-first">{user.status}</Badge>
+                                            <Badge className="bg-green-500 text-green-50 capitalize">{user.status}</Badge>
                                         </div>
                                     </div>
                                 </div>
