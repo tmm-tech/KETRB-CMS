@@ -11,7 +11,9 @@ import { Avatar, AvatarFallback, AvatarImage, } from "../Component/avatar";
 const HeaderNav = () => {
   const location = useLocation();
   const getPathname = (path) => path.split('/').filter(Boolean);
-
+const handleLogout = () => {
+    console.log("Logging out...")
+}
   const breadcrumbItems = () => {
     const paths = getPathname(location.pathname);
 
@@ -155,7 +157,7 @@ const HeaderNav = () => {
           <DropdownMenuSeparator />
           <DropdownMenuItem><Link to="/profile">Settings</Link></DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem><Link to="/login" className="flex items-center font-bold text-red-600"><LogOutIcon className="mr-2" />Logout</Link></DropdownMenuItem>
+          <DropdownMenuItem  onClick={handleLogout} className="flex items-center font-bold text-red-600"><LogOutIcon className="mr-2 h-4 w-4" />Logout</Link></DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>
