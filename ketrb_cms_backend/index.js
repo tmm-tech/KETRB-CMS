@@ -9,6 +9,12 @@ const app = express();
 
 // Middleware setup
 app.use(cors());
+const corsOptions = {
+  origin: 'https://ketrb-cms-one.vercel.app',
+  credentials: true, // Allow cookies
+};
+
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
