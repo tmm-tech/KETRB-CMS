@@ -156,7 +156,7 @@ const handleLogout = () => {
           <DropdownMenuLabel><Link to="/profile">My Account</Link></DropdownMenuLabel>
           <DropdownMenuItem><Link to="/profile">Settings</Link></DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem  onClick={handleLogout} className="flex items-center font-bold text-red-600"><LogOutIcon className="mr-2 h-4 w-4" />Logout</Link></DropdownMenuItem>
+          <DropdownMenuItem  onClick={handleLogout} className="flex items-center font-bold text-red-600"><LogOutIcon className="mr-2 h-4 w-4" />Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>
