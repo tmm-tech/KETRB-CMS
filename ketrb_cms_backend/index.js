@@ -28,25 +28,6 @@ const addTokenToRequest = async (req, res, next) => {
 
 app.use(addTokenToRequest);
 
-// Proxy middleware (if needed) - adjust or remove if not used
-const redirect = (proxyReq, req, res, options) => {
-    const valid = validateJwtTokenForeign(proxyReq, req, res);
-    if (valid === true) {
-        if (req.body) {
-            const bodyData = JSON.stringify(req.body);
-            proxyReq.setHeader('Content-Type', 'application/json');
-            proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
-            proxyReq.write(bodyData);
-        } else {
-            proxyReq.setHeader('X-Forwarded-For', req.ip);
-        }
-    } else if (valid === 401) {
-        res.status(401).json({ message: "Authorization header is missing" });
-    } else {
-        res.status(401).json({ message: valid });
-    }
-};
-
 // Route handling
 app.use('/users', UserRoutes);
 
