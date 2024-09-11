@@ -17,12 +17,12 @@ const LoginPage = () => {
         };
     console.log('Data being sent:', logindata);
     try{
-    const response = await fetch('https://ketrb-backend.onrender.com/users/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(logindata),
-    credentials: 'include' // Include cookies with the request
-});
+       const response = await fetch('https://ketrb-backend.onrender.com/users/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(logindata),
+      credentials: 'include' // Include cookies with the request
+    });
 
       const data = await response.json();
 
@@ -40,7 +40,7 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
-
+  
   return (
     <div
       className="flex min-h-screen w-full items-center justify-center"
