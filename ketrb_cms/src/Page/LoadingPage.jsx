@@ -6,12 +6,10 @@ export default function LoadingPage() {
         <div className="flex min-h-screen w-full flex-col bg-transparent">
             <div className="flex h-screen w-full items-center justify-center">
                 <div className="flex flex-col items-center gap-4">
-                    <img src={logo} alt="Logo" className="h-16 w-16" />
-
-                    <LoaderIcon className="animate-spin h-12 w-12 text-black" />
-
+                    <img src={logo} alt="Logo" className="h-20 w-20" />
                     <h1 className="text-2xl font-bold">Loading KETRB CMS...</h1>
                     <p className="text-muted-foreground">Please wait while we load the content for you.</p>
+                    <LoaderIcon className="animate-spin h-12 w-12 text-black" />
                 </div>
             </div>
         </div>
