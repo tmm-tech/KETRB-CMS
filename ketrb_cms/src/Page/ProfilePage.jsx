@@ -9,7 +9,8 @@ import bgImage from "../Asset/bg.png";
 import { Badge } from '../Component/badge';
 
 const ProfilePage = () => {
-
+    const storedUser = localStorage.getItem('user');
+    const user = JSON.parse(storedUser);
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
             <SideNav />
@@ -29,24 +30,24 @@ const ProfilePage = () => {
                                 <div className="grid gap-6">
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Name</div>
-                                        <div className="text-sm">John Doe</div>
+                                        <div className="text-sm">{user.fullname}</div>
                                     </div>
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Email</div>
-                                        <div className="text-sm">john@example.com</div>
+                                        <div className="text-sm">{user.email}</div>
                                     </div>
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Role</div>
-                                        <div className="text-sm">Administrator</div>
+                                        <div className="text-sm">{user.roles}</div>
                                     </div>
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Joined</div>
-                                        <div className="text-sm">June 1, 2021</div>
+                                        <div className="text-sm">{user.registered_at}</div>
                                     </div>
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Status</div>
                                         <div className="text-sm">
-                                            <Badge className="bg-green-500 text-green-50">Active</Badge>
+                                            <Badge className="bg-green-500 text-green-50">{user.status}</Badge>
                                         </div>
                                     </div>
                                 </div>
@@ -64,11 +65,11 @@ const ProfilePage = () => {
                                 <div className="grid gap-4">
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Username</div>
-                                        <div className="text-sm">johndoe</div>
+                                        <div className="text-sm">{user.fullname}</div>
                                     </div>
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Email</div>
-                                        <div className="text-sm">john@example.com</div>
+                                        <div className="text-sm">{user.email}</div>
                                     </div>
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-4">
                                         <div className="text-sm font-medium text-muted-foreground">Language</div>
