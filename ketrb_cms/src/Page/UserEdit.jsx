@@ -26,13 +26,14 @@ const UserEdit = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [dialogMessage, setDialogMessage] = useState("");
 
-    const { userId } = useParams(); // Get user ID from route parameters
+    const { id } = useParams(); // Get user ID from route parameters
+
     const navigate = useNavigate(); // For navigation
 
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await fetch(`https://ketrb-backend.onrender.com/users/user/${userId}`);
+                const response = await fetch(`https://ketrb-backend.onrender.com/users/user/${id}`);
                 const userData = await response.json();
                 setName(userData.fullname);
                 setEmail(userData.email);
