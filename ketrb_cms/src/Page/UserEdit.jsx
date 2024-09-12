@@ -206,7 +206,7 @@ const UserEdit = () => {
                                                     id="password"
                                                     type="password"
                                                     value={password}
-                                                    placeholder={password}
+                                                    placeholder="Password Generated Automatically"
                                                     readOnly
                                                     className="mt-1 block w-full"
                                                 />
