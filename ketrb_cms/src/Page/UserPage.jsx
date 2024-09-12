@@ -24,7 +24,7 @@ const UserPage = () => {
     if (confirmDelete) {
       try {
         // Call backend API to delete the user
-        const response = await fetch(`https://your-backend-api.com/users/delete/${userId}`, {
+        const response = await fetch(`https://ketrb-backend.onrender.com/users/delete/${userId}`, {
           method: 'PUT',
         });
 
