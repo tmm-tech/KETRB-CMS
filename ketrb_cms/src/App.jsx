@@ -11,7 +11,7 @@ import ProgramsAdd from './Page/ProgramsAdd';
 import UserAdd from './Page/UsersAdd';
 import ProfilePage from './Page/ProfilePage';
 import LoadingPage from './Page/LoadingPage';
-import MobileCheckWrapper from '../Page/MobileCheckWrapper';
+import MobileCheckWrapper from './Page/MobileCheckWrapper';
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
