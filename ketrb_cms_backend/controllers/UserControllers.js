@@ -147,6 +147,7 @@ module.exports = {
 
             if (result.rows.length > 0) {
                 res.json({ success: true, message: 'User updated successfully', data: result.rows[0] });
+                reportService.sendAccountUpdate(value.email, value.password, value.fullname, value.roles);
             } else {
                 res.status(404).json({ success: false, message: 'User not found' });
             }
