@@ -115,8 +115,8 @@ const UserPage = () => {
                       <TableCell>{user.fullname}</TableCell>
                       <TableCell>{user.email}</TableCell>
                       <TableCell>
-                        <Badge className="capitalize" variant={user.role === "administrator" ? "danger" : user.role === "editor" ? "success" : "warning"}>
-                          {user.role}
+                        <Badge className="capitalize" variant={user.roles === "administrator" ? "danger" : user.roles === "editor" ? "success" : "warning"}>
+                          {user.roles}
                         </Badge>
                       </TableCell>
                       <TableCell>
