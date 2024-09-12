@@ -137,17 +137,16 @@ module.exports = {
 
     // Update user details
     updateUser: async (req, res) => {
-        const { fullname, password, email, role } = req.body;
+        const { fullname, email, role } = req.body;
         const { id } = req.params;
         try {
-            let hashed_pwd = await bcrypt.hash(password, 8);
 
             const updateUserQuery = `
                 UPDATE users
-                SET fullname = $1, email = $2, password = $3, roles = $4
+                SET fullname = $1, email = $2, roles = $4
                 WHERE id = $5;
             `;
-            const params = [fullname, email, hashed_pwd, role, id];
+            const params = [fullname, email, role, id];
 
             const result = await query(updateUserQuery, params);
 
