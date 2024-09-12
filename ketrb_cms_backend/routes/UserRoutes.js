@@ -12,7 +12,7 @@ const {
 // create and insert data into the table
 UserRoutes.post('/register', createUser)
 //read for a specific id
-UserRoutes.get('/users', getAllUser)
+UserRoutes.get('/allusers', getAllUser)
 //soft delete item of a specific id
 UserRoutes.delete('/user/:id', SoftDeleteUser)
 //update items
