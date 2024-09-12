@@ -1,7 +1,7 @@
 const UserRoutes = require('express').Router();
 const {
     createUser,
-    getAUser,
+    getAllUser,
     updateUser,
     SoftDeleteUser,
     loginUser,
@@ -12,7 +12,7 @@ const {
 // create and insert data into the table
 UserRoutes.post('/register', createUser)
 //read for a specific id
-UserRoutes.get('/user/:id', getAUser)
+UserRoutes.get('/users', getAllUser)
 //soft delete item of a specific id
 UserRoutes.delete('/user/:id', SoftDeleteUser)
 //update items

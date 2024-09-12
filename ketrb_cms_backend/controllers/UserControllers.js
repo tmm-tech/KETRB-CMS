@@ -56,11 +56,11 @@ module.exports = {
 
                     // Set token as a cookie (HttpOnly and valid for 1 hour)
                     res.cookie('token', token, {
-  httpOnly: true,
-  secure: true, // Ensures cookie is sent only over HTTPS
-  sameSite: 'None', // Allows cross-site cookies
-  maxAge: 60 * 60 * 1000 // 1 hour
-});
+                        httpOnly: true,
+                        secure: true, // Ensures cookie is sent only over HTTPS
+                        sameSite: 'None', // Allows cross-site cookies
+                        maxAge: 60 * 60 * 1000 // 1 hour
+                    });
                     // Respond with user data
                     res.json({ success: true, data: user });
                 } else {
@@ -75,23 +75,32 @@ module.exports = {
         }
     },
 
-    // Get a user by ID
-    getAUser: async (req, res) => {
-        const { id } = req.params;
+    // Get all Users
+    getAllUser: async (req, res) => {
         try {
             const getUserQuery = `
-                SELECT * FROM users WHERE id = $1;
-            `;
-            const userResult = await query(getUserQuery, [id]);
+            SELECT * FROM users;
+        `;
+            const userResult = await query(getUserQuery); // Remove the [id] parameter
 
             if (userResult.rows.length > 0) {
-                res.json({ success: true, message: 'User retrieved successfully', data: userResult.rows[0] });
+                res.json({
+                    success: true,
+                    message: 'Users retrieved successfully',
+                    data: userResult.rows // Send all user data, not just the first row
+                });
             } else {
-                res.status(404).json({ success: false, message: 'User not found' });
+                res.status(404).json({
+                    success: false,
+                    message: 'No users found'
+                });
             }
         } catch (error) {
-            console.error('Error getting user:', error);
-            res.status(500).json({ success: false, message: `Get User Details Error: ${error.message}` });
+            console.error('Error getting users:', error);
+            res.status(500).json({
+                success: false,
+                message: `Get User Details Error: ${error.message}`
+            });
         }
     },
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SideNav from "../Component/SideNav";
 import { Link } from "react-router-dom";
 import HeaderNav from "../Component/HeaderNav";
@@ -10,30 +10,15 @@ import { Tabs, TabsList, TabsTrigger } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../Component/card';
 import { Badge } from '../Component/badge';
 const UserPage = () => {
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      role: "Admin",
-      status:"Active",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-      role: "Editor",
-      status:"Active",
-    },
-    {
-      id: 3,
-      name: "Bob Johnson",
-      email: "bob@example.com",
-      role: "User",
-      status:"Active",
-    },
-  ])
+  const [users, setUsers] = useState([]);
 
+  useEffect(() => {
+    // Fetch users from backend
+    fetch("https://your-backend-api.com/users/allusers")
+      .then(response => response.json())
+      .then(data => setUsers(data))
+      .catch(error => console.error('Error fetching users:', error));
+  }, []);
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
@@ -48,7 +33,7 @@ const UserPage = () => {
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between">
-                  <div className="text-4xl font-bold">89</div>
+                  <div className="text-4xl font-bold">{users.length}</div>
 
                 </div>
               </CardContent>
@@ -57,9 +42,6 @@ const UserPage = () => {
                   <div className="flex items-center gap-2">
                     <Badge variant="outline" className="bg-green-500 text-green-50">
                       Published
-                    </Badge>
-                    <Badge variant="outline" className="bg-yellow-500 text-yellow-50">
-                      Pending
                     </Badge>
                   </div>
                 </div>
@@ -107,7 +89,7 @@ const UserPage = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {users.map((user) => (
+                  {users.map(user => (
                     <TableRow key={user.id}>
                       <TableCell>{user.name}</TableCell>
                       <TableCell>{user.email}</TableCell>
@@ -117,17 +99,17 @@ const UserPage = () => {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <Badge variant={user.status === "Deactivate" ? "danger" : "success"}>
+                        <Badge variant={user.status === "Inactive" ? "danger" : "success"}>
                           {user.status}
                         </Badge>
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          <Button variant="outline" size="icon" /*onClick={() => handleEditUser(user.id)}*/>
+                          <Button variant="outline" size="icon">
                             <FilePenIcon className="h-4 w-4" />
                             <span className="sr-only">Edit</span>
                           </Button>
-                          <Button variant="outline" size="icon" /*onClick={() => handleDeleteUser(user.id)}*/>
+                          <Button variant="outline" size="icon">
                             <TrashIcon className="h-4 w-4" />
                             <span className="sr-only">Delete</span>
                           </Button>
