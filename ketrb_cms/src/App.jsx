@@ -49,7 +49,7 @@ const App = () => {
 
   return (
     <div className="App">
-      {/*<MobileCheckWrapper>*\}
+      //<MobileCheckWrapper>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         {isAuthenticated ? (
@@ -69,7 +69,7 @@ const App = () => {
       
         )}  
       </Routes>
-     {/*</MobileCheckWrapper>*/}
+     //</MobileCheckWrapper>
     </div>
   );
 };
