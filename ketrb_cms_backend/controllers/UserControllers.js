@@ -80,7 +80,7 @@ module.exports = {
         try {
             // SQL query to get all users where isdeleted is TRUE
             const getUserQuery = `
-                SELECT * FROM users WHERE isdeleted = TRUE;
+                SELECT * FROM users WHERE isdeleted = FALSE;
             `;
             const userResult = await query(getUserQuery); // Execute the query
 
