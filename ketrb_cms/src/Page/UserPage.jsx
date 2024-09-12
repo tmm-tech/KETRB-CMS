@@ -14,11 +14,32 @@ const UserPage = () => {
 
   useEffect(() => {
     // Fetch users from backend
-    fetch("https://your-backend-api.com/users/allusers")
-      .then(response => response.json())
-      .then(data => setUsers(data))
-      .catch(error => console.error('Error fetching users:', error));
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch("https://your-backend-api.com/users/allusers");
+        
+        // Check if the response is OK (status code 200–299)
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        
+        // Assuming the users' data is inside `data.data`
+        if (data.success) {
+          setUsers(data.data);
+        } else {
+          console.error('Error fetching users:', data.message);
+        }
+        
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+  
+    fetchUsers();  // Call the async function
   }, []);
+  
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
