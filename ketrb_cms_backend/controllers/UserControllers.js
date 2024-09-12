@@ -78,24 +78,28 @@ module.exports = {
     // Get all Users
     getAllUser: async (req, res) => {
         try {
+            // SQL query to get all users where isdeleted is TRUE
             const getUserQuery = `
-            SELECT * FROM users;
-        `;
-            const userResult = await query(getUserQuery); // Remove the [id] parameter
+                SELECT * FROM users WHERE isdeleted = TRUE;
+            `;
+            const userResult = await query(getUserQuery); // Execute the query
 
             if (userResult.rows.length > 0) {
+                // Send the user data if found
                 res.json({
                     success: true,
                     message: 'Users retrieved successfully',
-                    data: userResult.rows // Send all user data, not just the first row
+                    data: userResult.rows // Send all user data
                 });
             } else {
+                // No users found, send a 404 response
                 res.status(404).json({
                     success: false,
                     message: 'No users found'
                 });
             }
         } catch (error) {
+            // Log the error and send a 500 response
             console.error('Error getting users:', error);
             res.status(500).json({
                 success: false,
@@ -103,7 +107,8 @@ module.exports = {
             });
         }
     },
-    
+
+
     getAUser: async (req, res) => {
         const { id } = req.params;
         try {
@@ -115,7 +120,7 @@ module.exports = {
 
             if (userResult.rows.length > 0) {
                 const user = userResult.rows[0];
-            user.password = decryptPassword(user.password); // Decrypt password
+                user.password = decryptPassword(user.password); // Decrypt password
                 res.json({ success: true, message: 'User retrieved successfully', data: user });
 
 
