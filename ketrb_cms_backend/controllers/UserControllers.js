@@ -137,7 +137,7 @@ module.exports = {
 
             const updateUserQuery = `
                 UPDATE users
-                SET fullname = $1, email = $2, password = $3, role = $4
+                SET fullname = $1, email = $2, password = $3, roles = $4
                 WHERE id = $5
                 RETURNING *;
             `;
