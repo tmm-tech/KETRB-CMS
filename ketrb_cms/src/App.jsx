@@ -56,12 +56,12 @@ const App = () => {
           <>
             <Route path="/" element={<Dashboard />} />
             <Route path="/news" element={<NewsPage />} />
-            <Route path="/news/add-news" element={<NewsAdd />} />
+            <Route path="/news/add news" element={<NewsAdd />} />
             <Route path="/images" element={<ImagePage />} />
             <Route path="/programs" element={<ProgramsPage />} />
-            <Route path="/programs/add-program" element={<ProgramsAdd />} />
+            <Route path="/programs/add program" element={<ProgramsAdd />} />
             <Route path="/users" element={<UserPage />} />
-            <Route path="/users/add-users" element={<UserAdd />} />
+            <Route path="/users/add users" element={<UserAdd />} />
             <Route path="/profile" element={<ProfilePage />} />
           </>
         ) : (
