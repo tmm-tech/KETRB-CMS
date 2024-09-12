@@ -103,7 +103,18 @@ module.exports = {
             });
         }
     },
+    getAUser: async (req, res) => {
+        const { id } = req.params;
+        try {
+            await pool.connect();
+            const result = await pool.request()
+                .input("id", id).execute('GetUser');
+            if (result.rowsAffected.length) res.json({ success: true, message: 'user retrieved successfully', data: result.recordset[0] })
+        } catch (error) {
+            res.status(500).json(`Get User Details Error: ${error}`);
+        }
 
+    },
     // Update user details
     updateUser: async (req, res) => {
         const { fullname, password, email, role } = req.body;

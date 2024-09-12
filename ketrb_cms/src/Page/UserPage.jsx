@@ -9,37 +9,62 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLab
 import { Tabs, TabsList, TabsTrigger } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../Component/card';
 import { Badge } from '../Component/badge';
+import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
+
 const UserPage = () => {
   const [users, setUsers] = useState([]);
+  const handleEdit = (userId) => {
+    navigate(`/users/edit user/${userId}`); // Redirect to the edit page
+  };
+  const handleDelete = async (userId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+    if (confirmDelete) {
+      try {
+        // Call backend API to delete the user
+        const response = await fetch(`https://your-backend-api.com/users/delete/${userId}`, {
+          method: 'DELETE',
+        });
 
+        if (response.ok) {
+          // Remove the user from state after successful deletion
+          setUsers(users.filter((user) => user.id !== userId));
+          alert('User deleted successfully');
+        } else {
+          alert('Failed to delete user');
+        }
+      } catch (error) {
+        console.error("Error deleting user:", error);
+      }
+    }
+  };
   useEffect(() => {
     // Fetch users from backend
     const fetchUsers = async () => {
       try {
         const response = await fetch("https://ketrb-backend.onrender.com/users/allusers");
-        
+
         // Check if the response is OK (status code 200–299)
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-  
+
         const data = await response.json();
-        
+
         // Assuming the users' data is inside `data.data`
         if (data.success) {
           setUsers(data.data);
         } else {
           console.error('Error fetching users:', data.message);
         }
-        
+
       } catch (error) {
         console.error('Error fetching users:', error);
       }
     };
-  
+
     fetchUsers();  // Call the async function
   }, []);
-  
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
@@ -126,11 +151,11 @@ const UserPage = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          <Button variant="outline" size="icon">
+                          <Button variant="outline" size="icon" onClick={() => handleEdit(user.id)}>
                             <FilePenIcon className="h-4 w-4" />
                             <span className="sr-only">Edit</span>
                           </Button>
-                          <Button variant="outline" size="icon">
+                          <Button variant="outline" size="icon" onClick={() => handleDelete(user.id)}>
                             <TrashIcon className="h-4 w-4" />
                             <span className="sr-only">Delete</span>
                           </Button>
