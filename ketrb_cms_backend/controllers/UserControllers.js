@@ -119,9 +119,8 @@ module.exports = {
 
 
             if (userResult.rows.length > 0) {
-                const user = userResult.rows[0];
-                user.password = decryptPassword(user.password); // Decrypt password
-                res.json({ success: true, message: 'User retrieved successfully', data: user });
+
+                res.json({ success: true, message: 'User retrieved successfully', data: userResult.rows[0] });
 
 
             } else {
