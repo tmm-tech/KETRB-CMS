@@ -156,7 +156,7 @@ const UserEdit = () => {
                                             <Label htmlFor="name" className="block text-sm font-medium text-muted-foreground">
                                                 Name
                                             </Label>
-                                            <Input id="name" type="text" value={fullname} onChange={handleNameChange} className="mt-1 block w-full" placeholder={fullname}/>
+                                            <Input id="name" type="text" value={fullname} onChange={handleNameChange} className="mt-1 block w-full" placeholder={fullname} />
                                         </div>
                                         <div>
                                             <Label htmlFor="email" className="block text-sm font-medium text-muted-foreground">
@@ -191,7 +191,7 @@ const UserEdit = () => {
                                             </Label>
                                             <Select id="role" value={roles} className="mt-1 block w-full" onValueChange={handleRoleChange}>
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder={roles}/>
+                                                    <SelectValue placeholder={roles} />
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     <SelectItem value="administrator">Administrator</SelectItem>
@@ -205,11 +205,10 @@ const UserEdit = () => {
                                                     Generated Password
                                                 </Label>
                                                 <Input id="password" type="password" value={password} placeholder={password} readOnly className="mt-1 block w-full" />
-                                                <Button variant="black" type="button" onClick={handleChangePassword}>
-                                                    Change Password
-                                                </Button>
                                             </div>
-
+                                            <Button variant="black" type="button" onClick={handleChangePassword}>
+                                                Change Password
+                                            </Button>
                                         </div>
                                         <div className="flex justify-end gap-2">
                                             <Button variant="outline" type="button" onClick={handleCancel}>
