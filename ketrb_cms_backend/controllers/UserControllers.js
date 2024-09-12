@@ -106,15 +106,27 @@ module.exports = {
     getAUser: async (req, res) => {
         const { id } = req.params;
         try {
-            await pool.connect();
-            const result = await pool.request()
-                .input("id", id).execute('GetUser');
-            if (result.rowsAffected.length) res.json({ success: true, message: 'user retrieved successfully', data: result.recordset[0] })
-        } catch (error) {
-            res.status(500).json(`Get User Details Error: ${error}`);
-        }
+            const getUserQuery = `
+                SELECT * FROM users WHERE id = $1;
+            `;
+            const userResult = await query(getUserQuery, [id]);
 
+
+            if (userResult.rows.length > 0) {
+                res.json({ success: true, message: 'User retrieved successfully', data: userResult.rows[0] });
+
+
+            } else {
+                res.status(404).json({ success: false, message: 'User not found' });
+
+            }
+        } catch (error) {
+            console.error('Error getting user:', error);
+            res.status(500).json({ success: false, message: `Get User Details Error: ${error.message}` });
+
+        }
     },
+
     // Update user details
     updateUser: async (req, res) => {
         const { fullname, password, email, role } = req.body;
@@ -148,9 +160,9 @@ module.exports = {
         const { id } = req.params;
         try {
             const deleteUserQuery = `
-                UPDATE users SET status = $1 WHERE id = $2;
+                UPDATE users SET isdeleted = $1 WHERE id = $2;
             `;
-            const result = await query(deleteUserQuery, ['inactive', id]);
+            const result = await query(deleteUserQuery, ['TRUE', id]);
 
             if (result.rowCount > 0) {
                 res.json({ success: true, message: 'User deleted successfully' });

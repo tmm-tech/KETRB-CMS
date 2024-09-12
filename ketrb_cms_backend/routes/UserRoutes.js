@@ -17,7 +17,7 @@ UserRoutes.get('/allusers', getAllUser)
 //read for a specific id
 UserRoutes.get('/user/:id', getAUser)
 //soft delete item of a specific id
-UserRoutes.delete('/user/:id', SoftDeleteUser)
+UserRoutes.delete('/delete/:id', SoftDeleteUser)
 //update items
 UserRoutes.put('/update/:id', updateUser)
 // login a user
