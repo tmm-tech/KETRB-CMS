@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 
 export default function MobileCheckWrapper({ children }) {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 640);
+  const [isMobile, setIsMobile] = useState(false); // Initially set to false
 
   // Update the mobile state on window resize
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 640);
     };
+
+    // Run the resize handler once during the initial render
+    handleResize();
 
     window.addEventListener("resize", handleResize);
 
