@@ -35,11 +35,11 @@ const UserEdit = () => {
             try {
                 const response = await fetch(`https://ketrb-backend.onrender.com/users/user/${id}`);
                 const userData = await response.json();
-                setName(userData.fullname);
-                setEmail(userData.email);
-                setRole(userData.roles);
-                setGender(userData.gender);
-                setPassword(userData.password);
+                setName(userData.data.fullname);
+                setEmail(userData.data.email);
+                setRole(userData.data.roles);
+                setGender(userData.data.gender);
+                setPassword(userData.data.password);
                 console.log(userData);
                 // Password should not be set here; typically you do not show it in edit forms
             } catch (error) {
