@@ -112,7 +112,7 @@ const UserPage = () => {
                 <TableBody>
                   {users.map(user => (
                     <TableRow key={user.id}>
-                      <TableCell>{user.name}</TableCell>
+                      <TableCell>{user.fullname}</TableCell>
                       <TableCell>{user.email}</TableCell>
                       <TableCell>
                         <Badge variant={user.role === "Admin" ? "danger" : user.role === "Editor" ? "warning" : "success"}>
