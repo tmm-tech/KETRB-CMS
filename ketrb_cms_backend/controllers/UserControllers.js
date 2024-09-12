@@ -142,8 +142,8 @@ module.exports = {
 
             const updateUserQuery = `
                 UPDATE users
-                SET fullname = $1, email = $2, roles = $4
-                WHERE id = $5;
+                SET fullname = $1, email = $2, roles = $3
+                WHERE id = $4;
             `;
             const params = [fullname, email, role, id];
 
@@ -151,7 +151,7 @@ module.exports = {
 
             if (result.rows.length > 0) {
                 res.json({ success: true, message: 'User updated successfully', data: result.rows[0] });
-                reportService.sendAccountUpdate(value.email, value.password, value.fullname, value.roles);
+                // reportService.sendAccountUpdate(value.email, value.password, value.fullname, value.roles);
             } else {
                 res.status(404).json({ success: false, message: 'User not found' });
             }
