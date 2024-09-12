@@ -204,12 +204,25 @@ const UserEdit = () => {
                                                 <Label htmlFor="password" className="block text-sm font-medium text-muted-foreground">
                                                     Generated Password
                                                 </Label>
-                                                <Input id="password" type="password" value={password} placeholder={password} readOnly className="mt-1 block w-full" />
+                                                <Input
+                                                    id="password"
+                                                    type="password"
+                                                    value={password}
+                                                    placeholder={password}
+                                                    readOnly
+                                                    className="mt-1 block w-full"
+                                                />
                                             </div>
-                                            <Button variant="black" type="button" onClick={handleChangePassword}>
+                                            <Button
+                                                variant="black"
+                                                type="button"
+                                                onClick={handleChangePassword}
+                                                className="flex-shrink-0"
+                                            >
                                                 Change Password
                                             </Button>
                                         </div>
+
                                         <div className="flex justify-end gap-2">
                                             <Button variant="outline" type="button" onClick={handleCancel}>
                                                 Cancel
