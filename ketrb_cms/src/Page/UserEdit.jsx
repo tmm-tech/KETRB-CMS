@@ -45,7 +45,7 @@ const UserEdit = () => {
             }
         };
         fetchUserDetails();
-    }, [userId]);
+    }, [id]);
 
     const handleNameChange = (e) => setName(e.target.value);
     const handleEmailChange = (e) => setEmail(e.target.value);
@@ -97,7 +97,7 @@ const UserEdit = () => {
         };
 
         try {
-            const response = await fetch(`https://ketrb-backend.onrender.com/users/${userId}`, {
+            const response = await fetch(`https://ketrb-backend.onrender.com/users/${id}`, {
                 method: 'PUT', // Change to PUT for editing
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
