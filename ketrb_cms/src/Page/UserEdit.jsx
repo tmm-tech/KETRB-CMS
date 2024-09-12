@@ -40,8 +40,6 @@ const UserEdit = () => {
                 setRole(userData.data.roles);
                 setGender(userData.data.gender);
                 setPassword(userData.data.password);
-                console.log(userData);
-                // Password should not be set here; typically you do not show it in edit forms
             } catch (error) {
                 console.error('Error fetching user details:', error);
             }
@@ -217,7 +215,7 @@ const UserEdit = () => {
                                                 variant="black"
                                                 type="button"
                                                 onClick={handleChangePassword}
-                                                className="flex-shrink-0"
+                                                className="mt-1 flex-shrink-0"
                                             >
                                                 Change Password
                                             </Button>
