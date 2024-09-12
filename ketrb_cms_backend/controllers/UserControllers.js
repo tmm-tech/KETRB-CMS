@@ -114,7 +114,9 @@ module.exports = {
 
 
             if (userResult.rows.length > 0) {
-                res.json({ success: true, message: 'User retrieved successfully', data: userResult.rows[0] });
+                const user = userResult.rows[0];
+            user.password = decryptPassword(user.password); // Decrypt password
+                res.json({ success: true, message: 'User retrieved successfully', data: user });
 
 
             } else {
@@ -138,8 +140,7 @@ module.exports = {
             const updateUserQuery = `
                 UPDATE users
                 SET fullname = $1, email = $2, password = $3, roles = $4
-                WHERE id = $5
-                RETURNING *;
+                WHERE id = $5;
             `;
             const params = [fullname, email, hashed_pwd, role, id];
 
