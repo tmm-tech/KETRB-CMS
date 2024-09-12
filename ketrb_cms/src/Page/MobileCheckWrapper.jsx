@@ -29,7 +29,7 @@ export default function MobileCheckWrapper({ children }) {
       {isMobile && (
         <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4 py-12">
           <div className="text-center">
-            <SmartphoneIcon className="mx-auto h-12 w-12 text-primary" />
+            <SmartphoneIcon className="mx-auto h-12 w-12 text-black" />
             <h1 className="mt-4 text-3xl font-bold text-gray-800">
               Oops, this site is not mobile-friendly!
             </h1>
