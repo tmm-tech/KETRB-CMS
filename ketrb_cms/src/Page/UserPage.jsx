@@ -10,9 +10,12 @@ import { Tabs, TabsList, TabsTrigger } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../Component/card';
 import { Badge } from '../Component/badge';
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
+import { useNavigate } from "react-router-dom";
 
 const UserPage = () => {
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
+
   const handleEdit = (userId) => {
     navigate(`/users/edit user/${userId}`); // Redirect to the edit page
   };
@@ -22,7 +25,7 @@ const UserPage = () => {
       try {
         // Call backend API to delete the user
         const response = await fetch(`https://your-backend-api.com/users/delete/${userId}`, {
-          method: 'DELETE',
+          method: 'PUT',
         });
 
         if (response.ok) {

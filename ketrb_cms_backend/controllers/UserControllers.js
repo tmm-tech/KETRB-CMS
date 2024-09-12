@@ -103,6 +103,7 @@ module.exports = {
             });
         }
     },
+    
     getAUser: async (req, res) => {
         const { id } = req.params;
         try {
