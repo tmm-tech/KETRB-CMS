@@ -136,7 +136,7 @@ module.exports = {
 
     // Update user details
     updateUser: async (req, res) => {
-        const { fullname, email, role } = req.body;
+        const { fullname, email, roles } = req.body;
         const { id } = req.params;
         try {
 
@@ -145,7 +145,7 @@ module.exports = {
                 SET fullname = $1, email = $2, roles = $3
                 WHERE id = $4;
             `;
-            const params = [fullname, email, role, id];
+            const params = [fullname, email, roles, id];
 
             const result = await query(updateUserQuery, params);
 
