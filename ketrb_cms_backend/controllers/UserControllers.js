@@ -55,8 +55,12 @@ module.exports = {
                     let token = await createToken({ email: user.email, id: user.id });
 
                     // Set token as a cookie (HttpOnly and valid for 1 hour)
-                    res.cookie('token', token, { httpOnly: true, maxAge: 60 * 60 * 1000 });
-                    
+                    res.cookie('token', token, {
+  httpOnly: true,
+  secure: true, // Ensures cookie is sent only over HTTPS
+  sameSite: 'None', // Allows cross-site cookies
+  maxAge: 60 * 60 * 1000 // 1 hour
+});
                     // Respond with user data
                     res.json({ success: true, data: user });
                 } else {
