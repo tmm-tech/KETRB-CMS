@@ -155,7 +155,7 @@ const UserEdit = () => {
                                             <Label htmlFor="name" className="block text-sm font-medium text-muted-foreground">
                                                 Name
                                             </Label>
-                                            <Input id="name" type="text" value={fullname} onChange={handleNameChange} className="mt-1 block w-full" placeholder={userData.fullname}/>
+                                            <Input id="name" type="text" value={fullname} onChange={handleNameChange} className="mt-1 block w-full" placeholder={fullname}/>
                                         </div>
                                         <div>
                                             <Label htmlFor="email" className="block text-sm font-medium text-muted-foreground">
@@ -167,7 +167,7 @@ const UserEdit = () => {
                                                 value={email}
                                                 onChange={handleEmailChange}
                                                 className="mt-1 block w-full"
-                                                placeholder={userData.email}
+                                                placeholder={email}
                                             />
                                         </div>
                                         <div>
@@ -176,7 +176,7 @@ const UserEdit = () => {
                                             </Label>
                                             <Select id="gender" value={gender} className="mt-1 block w-full" onValueChange={handleGenderChange}>
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder={userData.gender} />
+                                                    <SelectValue placeholder={gender} />
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     <SelectItem value="male">Male</SelectItem>
@@ -190,7 +190,7 @@ const UserEdit = () => {
                                             </Label>
                                             <Select id="role" value={roles} className="mt-1 block w-full" onValueChange={handleRoleChange}>
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder={userData.roles}/>
+                                                    <SelectValue placeholder={roles}/>
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     <SelectItem value="administrator">Administrator</SelectItem>
@@ -203,7 +203,7 @@ const UserEdit = () => {
                                                 <Label htmlFor="password" className="block text-sm font-medium text-muted-foreground">
                                                     Generated Password
                                                 </Label>
-                                                <Input id="password" type="password" value={password} placeholder={userData.password} readOnly className="mt-1 block w-full" />
+                                                <Input id="password" type="password" value={password} placeholder={password} readOnly className="mt-1 block w-full" />
                                                 <Button variant="black" type="button" onClick={handleChangePassword}>
                                                     Change Password
                                                 </Button>
