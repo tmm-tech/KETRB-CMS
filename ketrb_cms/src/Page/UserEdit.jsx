@@ -40,6 +40,7 @@ const UserEdit = () => {
                 setRole(userData.roles);
                 setGender(userData.gender);
                 setPassword(userData.password);
+                console.log(userData);
                 // Password should not be set here; typically you do not show it in edit forms
             } catch (error) {
                 console.error('Error fetching user details:', error);
