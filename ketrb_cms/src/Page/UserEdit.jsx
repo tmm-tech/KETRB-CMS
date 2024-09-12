@@ -39,6 +39,7 @@ const UserEdit = () => {
                 setEmail(userData.email);
                 setRole(userData.roles);
                 setGender(userData.gender);
+                setPassword(userData.password);
                 // Password should not be set here; typically you do not show it in edit forms
             } catch (error) {
                 console.error('Error fetching user details:', error);
@@ -97,7 +98,7 @@ const UserEdit = () => {
         };
 
         try {
-            const response = await fetch(`https://ketrb-backend.onrender.com/users/${id}`, {
+            const response = await fetch(`https://ketrb-backend.onrender.com/users/update/${id}`, {
                 method: 'PUT', // Change to PUT for editing
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -154,7 +155,7 @@ const UserEdit = () => {
                                             <Label htmlFor="name" className="block text-sm font-medium text-muted-foreground">
                                                 Name
                                             </Label>
-                                            <Input id="name" type="text" value={fullname} onChange={handleNameChange} className="mt-1 block w-full" />
+                                            <Input id="name" type="text" value={fullname} onChange={handleNameChange} className="mt-1 block w-full" placeholder={userData.fullname}/>
                                         </div>
                                         <div>
                                             <Label htmlFor="email" className="block text-sm font-medium text-muted-foreground">
@@ -166,6 +167,7 @@ const UserEdit = () => {
                                                 value={email}
                                                 onChange={handleEmailChange}
                                                 className="mt-1 block w-full"
+                                                placeholder={userData.email}
                                             />
                                         </div>
                                         <div>
@@ -174,7 +176,7 @@ const UserEdit = () => {
                                             </Label>
                                             <Select id="gender" value={gender} className="mt-1 block w-full" onValueChange={handleGenderChange}>
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder="Gender" />
+                                                    <SelectValue placeholder={userData.gender} />
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     <SelectItem value="male">Male</SelectItem>
@@ -188,7 +190,7 @@ const UserEdit = () => {
                                             </Label>
                                             <Select id="role" value={roles} className="mt-1 block w-full" onValueChange={handleRoleChange}>
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder="Role" />
+                                                    <SelectValue placeholder={userData.roles}/>
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     <SelectItem value="administrator">Administrator</SelectItem>
@@ -201,11 +203,12 @@ const UserEdit = () => {
                                                 <Label htmlFor="password" className="block text-sm font-medium text-muted-foreground">
                                                     Generated Password
                                                 </Label>
-                                                <Input id="password" type="password" value={password} placeholder="Password generated Automatically" readOnly className="mt-1 block w-full" />
+                                                <Input id="password" type="password" value={password} placeholder={userData.password} readOnly className="mt-1 block w-full" />
+                                                <Button variant="black" type="button" onClick={handleChangePassword}>
+                                                    Change Password
+                                                </Button>
                                             </div>
-                                            <Button variant="outline" type="button" onClick={handleChangePassword}>
-                                                Change Password
-                                            </Button>
+
                                         </div>
                                         <div className="flex justify-end gap-2">
                                             <Button variant="outline" type="button" onClick={handleCancel}>
