@@ -179,6 +179,7 @@ module.exports = {
             res.status(500).json({ success: false, message: `Remove User Error: ${error.message}` });
         }
     },
+
     // Example check for authentication in your routes (backend)
     checkAuth: (req, res, next) => {
         const token = req.cookies ? req.cookies.token : null;

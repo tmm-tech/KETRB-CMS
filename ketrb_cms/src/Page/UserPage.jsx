@@ -21,25 +21,31 @@ const UserPage = () => {
   };
   const handleDelete = async (userId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+
     if (confirmDelete) {
       try {
-        // Call backend API to delete the user
+        // Call backend API to soft delete the user
         const response = await fetch(`https://ketrb-backend.onrender.com/users/delete/${userId}`, {
           method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         });
 
         if (response.ok) {
-          // Remove the user from state after successful deletion
-          setUsers(users.filter((user) => user.id !== userId));
+          // Remove the user from the users state after successful deletion
+          setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
           alert('User deleted successfully');
         } else {
           alert('Failed to delete user');
         }
       } catch (error) {
         console.error("Error deleting user:", error);
+        alert('An error occurred while deleting the user.');
       }
     }
   };
+
   useEffect(() => {
     // Fetch users from backend
     const fetchUsers = async () => {
