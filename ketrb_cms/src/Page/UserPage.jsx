@@ -19,6 +19,11 @@ const UserPage = () => {
   const handleEdit = (userId) => {
     navigate(`/users/edit user/${userId}`); // Redirect to the edit page
   };
+  const handleRefresh = (userId) => {
+    // Implement the refresh logic here
+    console.log(`Refreshing user with ID: ${userId}`);
+  };
+
   const handleDelete = async (userId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this user?");
 
