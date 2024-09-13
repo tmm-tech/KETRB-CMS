@@ -42,7 +42,7 @@ const UserEdit = () => {
                 setPassword(userData.data.password);
             } catch (error) {
                 console.error('Error fetching user details:', error);
-            } vm
+            } 
         };
         fetchUserDetails();
     }, [id]);
