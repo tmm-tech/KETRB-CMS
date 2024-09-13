@@ -165,12 +165,12 @@ module.exports = {
         const { id } = req.params;
         try {
             const deleteUserQuery = `
-                UPDATE users SET isdeleted = $1 WHERE id = $2;
+                UPDATE users SET isdeleted = $1 WHERE id = $2 RETURNING *;
             `;
-            const result = await query(deleteUserQuery, ['TRUE', id]);
+            const result = await query(deleteUserQuery, [true, id]); // Store true as a boolean, not a string
 
             if (result.rowCount > 0) {
-                res.json({ success: true, message: 'User deleted successfully' });
+                res.json({ success: true, message: 'User deleted successfully', user: result.rows[0] }); // Optional: return deleted user data
             } else {
                 res.status(404).json({ success: false, message: 'User not found' });
             }
