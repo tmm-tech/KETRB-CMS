@@ -139,19 +139,18 @@ module.exports = {
         const { fullname, email, roles } = req.body;
         const { id } = req.params;
         try {
-
             const updateUserQuery = `
-                UPDATE users
-                SET fullname = $1, email = $2, roles = $3
-                WHERE id = $4;
-            `;
+            UPDATE users
+            SET fullname = $1, email = $2, roles = $3
+            WHERE id = $4
+            RETURNING *;
+        `;
             const params = [fullname, email, roles, id];
 
             const result = await query(updateUserQuery, params);
 
-            if (result.rows.length > 0) {
+            if (result.rowCount > 0) {
                 res.json({ success: true, message: 'User updated successfully', data: result.rows[0] });
-                // reportService.sendAccountUpdate(value.email, value.password, value.fullname, value.roles);
             } else {
                 res.status(404).json({ success: false, message: 'User not found' });
             }
@@ -220,4 +219,3 @@ module.exports = {
         }
     },
 };
-

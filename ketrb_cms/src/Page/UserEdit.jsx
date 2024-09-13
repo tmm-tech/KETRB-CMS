@@ -14,7 +14,8 @@ import {
     SelectValue,
 } from "../Component/select";
 import { Button } from "../Component/button";
-import AlertDialogComponent from "../Component/AlertDialogComponent";
+import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
+
 
 const UserEdit = () => {
     const [fullname, setName] = useState("");
@@ -23,8 +24,7 @@ const UserEdit = () => {
     const [gender, setGender] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const [dialogOpen, setDialogOpen] = useState(false);
-    const [dialogMessage, setDialogMessage] = useState("");
+
 
     const { id } = useParams(); // Get user ID from route parameters
 
@@ -42,7 +42,7 @@ const UserEdit = () => {
                 setPassword(userData.data.password);
             } catch (error) {
                 console.error('Error fetching user details:', error);
-            }
+            } vm
         };
         fetchUserDetails();
     }, [id]);
@@ -80,6 +80,7 @@ const UserEdit = () => {
     };
 
     const handleGenderChange = (value) => {
+        vm
         setGender(value);
     };
 
@@ -98,7 +99,7 @@ const UserEdit = () => {
 
         try {
             const response = await fetch(`https://ketrb-backend.onrender.com/users/update/${id}`, {
-                method: 'PUT', // Change to PUT for editing
+                method: 'PUT', // Use PUT for updating
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
@@ -107,24 +108,25 @@ const UserEdit = () => {
             setLoading(false);
 
             if (response.ok) {
-                setDialogMessage('User updated successfully!');
-                navigate('/users'); // Navigate back to user list
+                // setDialogMessage('User updated successfully!');
+                // Redirect or refresh the page to show the updated users list
+                window.location.href = '/users';  
             } else {
                 if (result.message.includes('duplicate key value violates unique constraint')) {
-                    setDialogMessage('Update failed: This email is already registered.');
+                    // setDialogMessage('Update failed: This email is already registered.');
                 } else {
-                    setDialogMessage(result.message || 'Failed to update user.');
+                    // setDialogMessage(result.message || 'Failed to update user.');
                 }
             }
         } catch (error) {
             setLoading(false);
-            setDialogMessage('An error occurred: ' + error.message);
+            // setDialogMessage('An error occurred: ' + error.message);?
         }
-        setDialogOpen(true);
+        // setDialogOpen(true);
     };
 
     const handleCancel = () => {
-        navigate('/users'); // Navigate back to user list
+        window.location.href = '/users'; 
     };
 
     const handleChangePassword = () => {
@@ -262,12 +264,6 @@ const UserEdit = () => {
                     </Card>
                 </div>
             </div>
-            <AlertDialogComponent
-                open={dialogOpen}
-                onOpenChange={(open) => setDialogOpen(open)}
-                title="User Edit"
-                message={dialogMessage}
-            />
         </div>
     );
 };
