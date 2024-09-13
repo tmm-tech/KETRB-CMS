@@ -162,12 +162,12 @@ module.exports = {
 
     // Soft delete (deactivate) user
     SoftDeleteUser: async (req, res) => {
-        const { id } = req.params;
+        const { userId } = req.params;
         try {
             const deleteUserQuery = `
                 UPDATE users SET isdeleted = $1 WHERE id = $2 RETURNING *;
             `;
-            const result = await query(deleteUserQuery, [true, id]); // Store true as a boolean, not a string
+            const result = await query(deleteUserQuery, [true, userId]); // Store true as a boolean, not a string
 
             if (result.rowCount > 0) {
                 res.json({ success: true, message: 'User deleted successfully', user: result.rows[0] }); // Optional: return deleted user data
