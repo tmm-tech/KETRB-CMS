@@ -80,7 +80,7 @@ const UserEdit = () => {
     };
 
     const handleGenderChange = (value) => {
-        vm
+        
         setGender(value);
     };
 
