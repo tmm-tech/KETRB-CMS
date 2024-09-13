@@ -85,7 +85,7 @@ exports.sendAccountCreation = (email, password, fullname, roles) => {
                 <ul>
                     <li><strong>Username: </strong> ${email}</li>
                     <li><strong>Password: </strong>${password}</li>
-                    <li style={{ textTransform: 'capitalize' }}><strong>Role: </strong>${roles}</li>
+                    <li><strong>Role: </strong>${roles.charAt(0).toUpperCase() + roles.slice(1)}</li>
                 </ul>
                 <p>You can now use your login credentials to access your KETRB CMS account.</p>
                 <p>If you have any questions or concerns, please don't hesitate to contact us.</p>
