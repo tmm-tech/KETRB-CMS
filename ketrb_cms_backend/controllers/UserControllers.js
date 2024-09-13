@@ -80,7 +80,7 @@ module.exports = {
         try {
             // SQL query to get all users where isdeleted is TRUE
             const getUserQuery = `
-                SELECT * FROM users WHERE isdeleted = FALSE;
+                SELECT * FROM users;
             `;
             const userResult = await query(getUserQuery); // Execute the query
 
@@ -165,10 +165,12 @@ module.exports = {
         const { userId } = req.params;
         try {
             const deleteUserQuery = `
-                UPDATE users SET isdeleted = TRUE WHERE id = $1 RETURNING *;
+                UPDATE users 
+                SET isdeleted = TRUE, status = 'inactive' 
+                WHERE id = $1 RETURNING *;
             `;
             const result = await query(deleteUserQuery, [userId]);
-    
+
             if (result.rowCount > 0) {
                 res.json({ success: true, message: 'User deleted successfully', user: result.rows[0] });
             } else {
@@ -179,7 +181,6 @@ module.exports = {
             res.status(500).json({ success: false, message: `Remove User Error: ${error.message}` });
         }
     },
-    
 
     // Example check for authentication in your routes (backend)
     checkAuth: (req, res, next) => {
