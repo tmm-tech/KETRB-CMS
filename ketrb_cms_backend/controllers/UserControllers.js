@@ -162,15 +162,15 @@ module.exports = {
 
     // Soft delete (deactivate) user
     SoftDeleteUser: async (req, res) => {
-        const { userId } = req.params;
+        const { id } = req.params;
         try {
             const deleteUserQuery = `
-                UPDATE users SET isdeleted = $1 WHERE id = $2 RETURNING *;
+                UPDATE users SET isdeleted = TRUE WHERE id = $1 RETURNING *;
             `;
-            const result = await query(deleteUserQuery, [true, userId]); // Store true as a boolean, not a string
-
+            const result = await query(deleteUserQuery, [id]);
+    
             if (result.rowCount > 0) {
-                res.json({ success: true, message: 'User deleted successfully', user: result.rows[0] }); // Optional: return deleted user data
+                res.json({ success: true, message: 'User deleted successfully', user: result.rows[0] });
             } else {
                 res.status(404).json({ success: false, message: 'User not found' });
             }
@@ -179,6 +179,7 @@ module.exports = {
             res.status(500).json({ success: false, message: `Remove User Error: ${error.message}` });
         }
     },
+    
 
     // Example check for authentication in your routes (backend)
     checkAuth: (req, res, next) => {
