@@ -95,7 +95,7 @@ module.exports = {
             // Map over the results to construct the full image URL
             const imagesWithUrl = result.map(image => ({
                 ...image,
-                url: image.image, // Extract the file name and construct the full URL
+                url: `${req.protocol}://${req.get('host')}/uploads/${path.basename(image.image)}`, // Construct the full URL
                 status: image.status,   // Include the status
                 registered_at: image.registered_at, // Include the registration date
                 title: image.fullname
