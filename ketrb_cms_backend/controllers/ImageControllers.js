@@ -1,32 +1,37 @@
 const { query } = require('../config/sqlConfig');
+const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-
+const upload = multer({ dest: 'uploads/' });
 
 module.exports = {
     // Add an image
-    AddImage: async (req, res) => {
-        const { status } = req.body;
-        const image = req.file;
+    AddImage: [
+        upload.single('image'), // 'image' should match the name used in FormData
+        async (req, res) => {
+            const { status } = req.body;
+            const image = req.file;
 
-        if (!image) {
-            return res.status(400).send('No image uploaded.');
+            if (!image) {
+                return res.status(400).send('No image uploaded.');
+            }
+
+            const imageName = `ketrb_img${Date.now()}${path.extname(image.originalname)}`;
+            const imagePath = path.join(__dirname, '../uploads', imageName);
+
+            try {
+                fs.renameSync(image.path, imagePath);
+
+                // Save image info to database
+                await query('INSERT INTO images (name, status, path) VALUES (?, ?, ?)', [imageName, status, imagePath]);
+
+                res.status(201).json({ message: 'Image uploaded successfully', imageName, status });
+            } catch (error) {
+                res.status(500).json({ message: 'Error uploading image', error });
+            }
         }
+    ],
 
-        const imageName = `ketrb_img${Date.now()}${path.extname(image.originalname)}`;
-        const imagePath = path.join(__dirname, '../uploads', imageName);
-
-        try {
-            fs.renameSync(image.path, imagePath);
-
-            // Save image info to database (example query)
-            await query('INSERT INTO images (name, status, path) VALUES (?, ?, ?)', [imageName, status, imagePath]);
-
-            res.status(201).json({ message: 'Image uploaded successfully', imageName, status });
-        } catch (error) {
-            res.status(500).json({ message: 'Error uploading image', error });
-        }
-    },
 
     // Update an image's status
     UpdateImage: async (req, res) => {
