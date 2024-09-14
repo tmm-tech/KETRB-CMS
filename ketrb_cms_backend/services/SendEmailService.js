@@ -12,6 +12,7 @@ const transporter = nodemailer.createTransport({
 
 })
 
+
 //Account Creation
 exports.sendAccountCreation = (email, password, fullname, roles) => {
     const mailOptions = {
@@ -19,7 +20,6 @@ exports.sendAccountCreation = (email, password, fullname, roles) => {
         to: email,
         subject: 'Account Confirmation',
         html: `<html>
-
         <head>
             <title>Account Created Confirmation</title>
             <meta charset="UTF-8">
@@ -106,13 +106,14 @@ exports.sendAccountCreation = (email, password, fullname, roles) => {
 };
 
 // Password Update
-exports.sendPasswordUpdate = (email, fullname, roles, password) => {
+exports.sendPasswordUpdate = (userData) => {
+    const { email, fullname, roles, password } = userData;
+    console.log('Sending email to:', email);
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: email,
         subject: 'Account Update Confirmation',
         html: `<html>
-
         <head>
             <title>Account Update</title>
             <meta charset="UTF-8">
@@ -159,19 +160,18 @@ exports.sendPasswordUpdate = (email, fullname, roles, password) => {
             </style>
         </head>
         <body>
-          <div class="container">
-        <h1>Account Updated</h1>
-        <p>Dear ${fullname},</p>
-        <p>Your account has been successfully updated. Please find your new login details below:</p>
-        <ul>
-            <li><strong>Email:</strong> ${email}</li>
-            <li><strong>Password:</strong> ${password}</li>
-            <li><strong>Role:</strong> ${roles.charAt(0).toUpperCase() + roles.slice(1)}</li>
-        </ul>
-        <p>You can now log in to your account using your new password.</p>
-        <p>If you have any questions, feel free to contact us.</p>
-        <a href="https://ketrb-cms-one.vercel.app/" class="btn">Go to Website</a>
-    </div>
+              <div class="container">
+                    <h1>Account Updated</h1>
+                    <p>Dear ${fullname},</p>
+                    <p>Your account has been successfully updated. ${password ? 'Your password has been changed.' : ''} Please find your updated details below:</p>
+                    <ul>
+                        <li><strong>Email:</strong> ${email}</li>
+                        <li><strong>Role:</strong> ${roles.charAt(0).toUpperCase() + roles.slice(1)}</li>
+                    </ul>
+                    <p>You can now log in to your account using your updated details.</p>
+                    <p>If you have any questions, feel free to contact us.</p>
+                    <a href="https://ketrb-cms-one.vercel.app/" class="btn">Go to Website</a>
+                </div>
         </body>
         </html>`
     };
@@ -186,12 +186,12 @@ exports.sendPasswordUpdate = (email, fullname, roles, password) => {
 };
 // Account Deactivation
 exports.sendAccountDeactivation = (email, fullname) => {
+    console.log('Sending email to:', email);
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: email,
         subject: 'Account Deactivation',
         html: `<html>
-
         <head>
             <title>Account Deactivation</title>
             <meta charset="UTF-8">
@@ -262,12 +262,12 @@ exports.sendAccountDeactivation = (email, fullname) => {
 
 // Account Activation
 exports.sendAccountActivation = (email, fullname) => {
+    console.log('Sending email to:', email);     vm
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: email,
         subject: 'Account Activation',
         html: `<html>
-
         <head>
             <title>Account Activation</title>
             <meta charset="UTF-8">
