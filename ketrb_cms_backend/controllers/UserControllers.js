@@ -269,7 +269,7 @@ module.exports = {
             }
         } catch (error) {
             console.error('Error activating user:', error);
-            res.status(500).json({ success: false, message: `Account Activation Error: ${error.message}` });
+            res.status(500).json({ error: 'Internal Server Error' });
         }
     },
     // User logout and token invalidation
