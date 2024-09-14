@@ -70,7 +70,7 @@ const ImagePage = () => {
     formData.append('image', imageFile);
 
     try {
-      const response = await fetch('https://ketrb-backend.onrender.com/images/upload', {
+      const response = await fetch('https://ketrb-backend.onrender.com/images/add', {
         method: 'POST',
         body: formData,
       });
