@@ -1,4 +1,4 @@
-   import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import SideNav from "../Component/SideNav";
 import { Link } from "react-router-dom";
 import HeaderNav from "../Component/HeaderNav";
@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 const UserPage = () => {
   const [users, setUsers] = useState([]);
+  const [alertMessage, setAlertMessage] = useState("");
   const navigate = useNavigate();
 
   const handleEdit = (userId) => {
@@ -21,20 +22,20 @@ const UserPage = () => {
   }
   const handleRefresh = async (userId) => {
     try {
-       const response = await fetch(`https://ketrb-backend.onrender.com/users/activate/${userId}`, {
+      const response = await fetch(`https://ketrb-backend.onrender.com/users/activate/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
       });
-  
+
       if (!response.ok) {
-        throw new Error('Failed to refresh user');
+        setAlertMessage('Failed to activate user');
       }
-  
+
       const data = await response.json();
       if (data.success) {
-        alert('User status refreshed successfully');
+        setAlertMessage('User account activated successfully');
         // Optionally, update the users list in the frontend to reflect the changes
         setUsers((prevUsers) =>
           prevUsers.map((user) =>
@@ -42,11 +43,11 @@ const UserPage = () => {
           )
         );
       } else {
-        alert('Error refreshing user status');
+        setAlertMessage('Error activating user');
       }
     } catch (error) {
-      console.error('Error refreshing user status:', error);
-      alert('An error occurred while refreshing the user.');
+      console.error('Error activating user:', error);
+      setAlertMessage('An error occurred while activating the user.');
     }
   };
 
@@ -67,13 +68,13 @@ const UserPage = () => {
         if (response.ok) {
           // Remove the user from the users state after successful deletion
           setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
-          alert('User deleted successfully');
+          setAlertMessage('User deleted successfully');
         } else {
-          alert('Failed to delete user');
+          setAlertMessage('Failed to delete user');
         }
       } catch (error) {
         console.error("Error deleting user:", error);
-        alert('An error occurred while deleting the user.');
+        setAlertMessage('An error occurred while deleting the user.');
       }
     }
   };
@@ -219,6 +220,13 @@ const UserPage = () => {
           </Tabs>
         </main>
       </div>
+      {alertMessage && (
+        <Alert>
+          <AlertTitle>Notification</AlertTitle>
+          <AlertDescription>{alertMessage}</AlertDescription>
+        </Alert>
+      )}
+
     </div>
   );
 };
