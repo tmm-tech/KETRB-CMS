@@ -7,26 +7,31 @@ const upload = multer({ dest: 'uploads/' });
 module.exports = {
     // Add an image
     AddImage: async (req, res) => {
-            const { status } = req.body;
-            const image = req.file;
-            console.log('Uploaded file:', image); // Debugging line
+        const { status } = req.body;
+        const image = req.file;
+        console.log('Request body:', req.body); // Debugging line
+        console.log('Uploaded file:', image); // Debugging line
 
-            const imageName = `ketrb_img${Date.now()}`;
-            const imagePath = path.join(__dirname, '../uploads', imageName);
-            console.log('File uploaded to:', imagePath);
-            try {
-                await fs.promises.rename(image.path, imagePath);
+        if (!image) {
+            return res.status(400).send('No image uploaded.');
+        }
 
-                // Save image info to the database
-                await query('INSERT INTO images (name, status, image) VALUES (?, ?, ?)', [imageName, status, imagePath]);
+        const imageName = `ketrb_img${Date.now()}${path.extname(image.originalname)}`;
+        const imagePath = path.join(__dirname, '../uploads', imageName);
+        console.log('File uploaded to:', imagePath);
 
-                res.status(201).json({ message: 'Image uploaded successfully', imageName, status });
-            } catch (error) {
-                console.log('Error uploading image:', error);
-                res.status(500).json({ message: 'Error uploading image', error });
-            }
-        },
+        try {
+            await fs.promises.rename(image.path, imagePath);
 
+            // Save image info to the database
+            await query('INSERT INTO images (name, status, image) VALUES (?, ?, ?)', [imageName, status, imagePath]);
+
+            res.status(201).json({ message: 'Image uploaded successfully', imageName, status });
+        } catch (error) {
+            console.log('Error uploading image:', error);
+            res.status(500).json({ message: 'Error uploading image', error });
+        }
+    },
     // Update an image's status
     UpdateImage: async (req, res) => {
         const { id } = req.params;
