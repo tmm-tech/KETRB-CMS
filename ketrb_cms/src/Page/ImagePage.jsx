@@ -258,7 +258,9 @@ const ImagePage = () => {
                   </div>
                 ))
               ) : (
+                <div className="col-span-full flex items-center justify-center">
                 <p className="text-center text-gray-500">No images available.</p>
+              </div>
               )}
 
             </div>
