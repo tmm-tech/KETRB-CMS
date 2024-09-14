@@ -27,7 +27,7 @@ const ImagePage = () => {
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-
+  const [message, setMessage] = useState('');
   useEffect(() => {
     const fetchImages = async () => {
       try {
