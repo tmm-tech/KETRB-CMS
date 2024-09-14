@@ -18,6 +18,7 @@ import {
   DialogTrigger,
 } from "../Component/dialog";
 import { Input } from "../Component/input";
+import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 const ImagePage = () => {
   const storedUser = localStorage.getItem('user');
   const user = JSON.parse(storedUser);
@@ -25,6 +26,8 @@ const ImagePage = () => {
   const [status, setStatus] = useState(user.roles === 'editor' ? 'Pending' : 'Published');
   const [images, setImages] = useState([]);
   const [imageFile, setImageFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -32,7 +35,7 @@ const ImagePage = () => {
         const response = await fetch('https://ketrb-backend.onrender.com/images/allimages');
         const result = await response.json();
         console.log('Fetched images:', result); // Log the result to inspect the structure
-        setImages(Array.isArray(result) ? result : []); 
+        setImages(Array.isArray(result) ? result : []);
       } catch (error) {
         console.error('Error fetching images:', error);
       }
@@ -41,7 +44,7 @@ const ImagePage = () => {
     fetchImages();
   }, []);
 
-const handleImageSelect = (event) => {
+  const handleImageSelect = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -54,37 +57,53 @@ const handleImageSelect = (event) => {
   const handleCancel = () => {
     setSelectedImage(null);
   };
-  const handleUpload = async () => {
-    if (!imageFile) return;
+  const handleUpload = async (event) => {
+    event.preventDefault();
+    if (!imageFile) {
+      setAlertMessage("No file selected.");
+      return;
+    }
+
+    setLoading(true);
+    setAlertMessage("");
 
     const formData = new FormData();
     formData.append('image', imageFile);
-    formData.append('status', status);
 
     try {
-      const response = await fetch('https://ketrb-backend.onrender.com/images/add', { // Replace with your backend URL
+      const response = await fetch('https://ketrb-backend.onrender.com/images/upload', {
         method: 'POST',
         body: formData,
       });
-      const result = await response.json();
-      if (result.success) {
-        alert('Image uploaded successfully!');
-        setSelectedImage(null);
-        setImageFile(null);
+
+      if (response.ok) {
+        const result = await response.json();
+        setAlertMessage("Image uploaded successfully!");
+   
+        setImageFile(null); // Clear file input
       } else {
-        alert('Image upload failed.');
+        setAlertMessage("Failed to upload image.");
       }
     } catch (error) {
       console.error('Error uploading image:', error);
-      alert('Error uploading image.');
+      setAlertMessage("An error occurred while uploading the image.");
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: "center" }}>
         <HeaderNav />
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+          {alertMessage && (
+            <Alert>
+              <AlertTitle>Notification</AlertTitle>
+              <AlertDescription>{alertMessage}</AlertDescription>
+            </Alert>
+          )}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <Card>
               <CardHeader>
@@ -171,7 +190,18 @@ const handleImageSelect = (event) => {
                       {selectedImage && (
                         <Button onClick={handleCancel} variant="outline">Cancel</Button>
                       )}
-                      <Button type="submit" variant="black" onClick={handleUpload}>Save Image</Button>
+                      <Button
+                        type="submit"
+                        variant="black"
+                        onClick={handleUpload}
+                        disabled={loading}
+                      >
+                        {loading ? (
+                          <span>Loading...</span>
+                        ) : (
+                          'Save Image'
+                        )}
+                      </Button>
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>
