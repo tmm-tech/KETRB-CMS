@@ -12,8 +12,8 @@ module.exports = {
         async (req, res) => {
             const { status } = req.body;
             const image = req.file;
-            console.log(req.file); 
-            console.log(req.body); 
+            console.log("file: ",req.file); 
+            console.log("body: ",req.body); 
             
             if (!image) {
                 return res.status(400).send('No image uploaded.');
