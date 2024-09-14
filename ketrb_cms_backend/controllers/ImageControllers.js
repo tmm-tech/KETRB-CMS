@@ -26,7 +26,7 @@ module.exports = {
     
                 res.status(201).json({ message: 'Image uploaded successfully', imageName, status });
             } catch (error) {
-                console.error('Error uploading image:', error);
+                console.log('Error uploading image:', error);
                 res.status(500).json({ message: 'Error uploading image', error });
             }
         }
