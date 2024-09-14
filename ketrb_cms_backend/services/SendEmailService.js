@@ -110,11 +110,11 @@ exports.sendPasswordUpdate = (email, fullname, roles, password) => {
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: email,
-        subject: 'Password Update Confirmation',
+        subject: 'Account Update Confirmation',
         html: `<html>
 
         <head>
-            <title>Update</title>
+            <title>Account Update</title>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
@@ -159,19 +159,19 @@ exports.sendPasswordUpdate = (email, fullname, roles, password) => {
             </style>
         </head>
         <body>
-           <div class="container">
-                <h1>Password Updated</h1>
-                <p>Dear ${fullname},</p>
-                <p>Your password has been successfully updated. Please find your new login details below:</p>
-                <ul>
-                    <li><strong>Email: </strong>${email}</li>
-                    <li><strong>Password: </strong>${password}</li>
-                    <li><strong>Role: </strong>${roles.charAt(0).toUpperCase() + roles.slice(1)}</li>
-                </ul>
-                <p>You can now log in to your account using your new password.</p>
-                <p>If you have any questions, feel free to contact us.</p>
-                <a href="https://ketrb-cms-one.vercel.app/" class="btn">Go to Website</a>
-            </div>
+          <div class="container">
+        <h1>Account Updated</h1>
+        <p>Dear ${fullname},</p>
+        <p>Your account has been successfully updated. Please find your new login details below:</p>
+        <ul>
+            <li><strong>Email:</strong> ${email}</li>
+            <li><strong>Password:</strong> ${password}</li>
+            <li><strong>Role:</strong> ${roles.charAt(0).toUpperCase() + roles.slice(1)}</li>
+        </ul>
+        <p>You can now log in to your account using your new password.</p>
+        <p>If you have any questions, feel free to contact us.</p>
+        <a href="https://ketrb-cms-one.vercel.app/" class="btn">Go to Website</a>
+    </div>
         </body>
         </html>`
     };
