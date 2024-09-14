@@ -15,13 +15,11 @@ module.exports = {
             console.log("file: ",req.file); 
             console.log("body: ",req.body); 
             
-            if (!image) {
-                return res.status(400).send('No image uploaded.');
-            }
+     
     
             const imageName = `ketrb_img${Date.now()}${path.extname(image.originalname)}`;
             const imagePath = path.join(__dirname, '../uploads', imageName);
-    
+            console.log('File uploaded to:', imagePath);
             try {
                 await fs.promises.rename(image.path, imagePath);
     
