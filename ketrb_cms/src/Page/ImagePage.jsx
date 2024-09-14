@@ -48,13 +48,13 @@ const ImagePage = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImages(reader.result);
+        setImageFile(reader.result);
       };
       reader.readAsDataURL(file);
     }
   };
   const handleCancel = () => {
-    setImages(null);
+    setImageFile(null);
   };
   const handleUpload = async (event) => {
     event.preventDefault();
@@ -174,7 +174,7 @@ const ImagePage = () => {
                         onChange={handleImageSelect}
                         className="block w-full"
                       />
-                      {selectedImage && (
+                      {imageFile && (
                         <img
                           src={images}
                           alt="Selected Image"
@@ -186,7 +186,7 @@ const ImagePage = () => {
                       )}
                     </div>
                     <DialogFooter>
-                      {image && (
+                      {imageFile && (
                         <Button onClick={handleCancel} variant="outline">Cancel</Button>
                       )}
                       <Button
