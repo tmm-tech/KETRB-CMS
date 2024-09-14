@@ -41,7 +41,7 @@ const ImagePage = () => {
           console.error(result.message);
         }
       } catch (error) {
-        console.error('Error fetching images:', error);
+        console.log('Error fetching images:', error);
       }
     };
 
