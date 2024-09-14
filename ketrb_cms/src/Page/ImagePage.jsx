@@ -27,7 +27,10 @@ const ImagePage = () => {
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
- 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -37,7 +40,6 @@ const ImagePage = () => {
 
         if (response.ok) {
           setImages(result.images);
-          console.log("Answer: ",images);
         } else {
           console.log("Error");
         }
@@ -238,8 +240,11 @@ const ImagePage = () => {
                     <div className="p-4">
                       <div className="flex items-center justify-between">
                         <div className="text-sm font-medium">{image.title || "Untitled"}</div>
-                        <Badge variant={image.status === 'Pending' ? 'pending' : 'approved'} className={image.status === 'Pending' ? 'bg-yellow-500 text-yellow-50' : 'bg-green-500 text-green-50'}>
-                          {image.status}
+                        <Badge
+                          variant={image.status === 'pending' ? 'pending' : 'approved'}
+                          className={image.status === 'pending' ? 'bg-yellow-500 text-yellow-50' : 'bg-green-500 text-green-50'}
+                        >
+                          {capitalizeFirstLetter(image.status)}
                         </Badge>
                       </div>
                       <div className="text-muted-foreground text-sm mt-1">
