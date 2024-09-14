@@ -12,19 +12,20 @@ module.exports = {
         if (!image) {
             return res.status(400).json({ message: 'No image data provided' });
         }
-
+    
         try {
-            // Decode base64 image (assuming it's a PNG)
-            const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
+            // Decode base64 image
+            const base64Data = image.replace(/^data:image\/png;base64,/, "");
             const fileName = `${Date.now()}.png`;
-            const filePath = path.join(__dirname, '../uploads', fileName);
-
+            const filePath = path.join(__dirname, 'uploads', fileName);
+    
             // Save the image to the server
             await fs.promises.writeFile(filePath, base64Data, 'base64');
-
-            // Save image info to the database (only store the file name)
-            await query('INSERT INTO images (name, status) VALUES (?, ?)', [fileName, status]);
-
+    
+            // Save image info to the database
+            const queryText = 'INSERT INTO images (name, status, image) VALUES ($1, $2, $3)';
+            await query(queryText, [fileName, status, filePath]);
+    
             res.status(201).json({ message: 'Image uploaded successfully!', filePath });
         } catch (error) {
             console.error('Error uploading image:', error);
@@ -82,7 +83,11 @@ module.exports = {
     getAllImage: async (req, res) => {
         try {
             const result = await query('SELECT * FROM images');
-
+            if (result.length === 0) {
+                // No images found
+                return res.status(200).json({ message: 'No images found', images: [] });
+            }
+    
             // Map over the results to construct the full image URL
             const imagesWithUrl = result.map(image => ({
                 ...image,

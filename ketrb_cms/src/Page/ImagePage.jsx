@@ -33,6 +33,15 @@ const ImagePage = () => {
       try {
         const response = await fetch('https://ketrb-backend.onrender.com/images/allimages');
         const result = await response.json();
+        if (result.message) {
+          // Display the message from the backend if no images are found
+          setMessage(result.message);
+          setImages([]);
+        } else {
+          // Set images from the result
+          setImages(result);
+          setMessage('');
+        }
         setImages(Array.isArray(result) ? result : []);
       } catch (error) {
         console.error('Error fetching images:', error);
@@ -216,38 +225,42 @@ const ImagePage = () => {
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {images.map((image) => (
-                <div key={image.id} className="bg-background rounded-lg shadow-lg overflow-hidden">
-                  <img
-                    src={image.url}
-                    alt={image.title || "Image"}
-                    width={400}
-                    height={300}
-                    className="w-full h-48 object-cover"
-                    style={{ aspectRatio: "400/300", objectFit: "cover" }}
-                  />
-                  <div className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm font-medium">{image.title || "Untitled"}</div>
-                      <Badge variant={image.status === 'Pending' ? 'pending' : 'approved'} className={image.status === 'Pending' ? 'bg-yellow-500 text-yellow-50' : 'bg-green-500 text-green-50'}>
-                        {image.status}
-                      </Badge>
-                    </div>
-                    <div className="text-muted-foreground text-sm mt-1">
-                      {`Uploaded ${new Date(image.registered_at).toLocaleDateString()}`}
-                    </div>
-                    <div className="flex items-center justify-end gap-2 mt-4">
-                      <Button variant="outline" size="sm">
-                        <TrashIcon className="h-4 w-4" />
-                      </Button>
-                      {user.roles === 'administrator' && image.status === 'pending' && (
-                        <Button size="sm" variant="black">Approve</Button>
-                      )}
-
+              {images.length > 0 ? (
+                images.map((image) => (
+                  <div key={image.id} className="bg-background rounded-lg shadow-lg overflow-hidden">
+                    <img
+                      src={image.url}
+                      alt={image.title || "Image"}
+                      width={400}
+                      height={300}
+                      className="w-full h-48 object-cover"
+                      style={{ aspectRatio: "400/300", objectFit: "cover" }}
+                    />
+                    <div className="p-4">
+                      <div className="flex items-center justify-between">
+                        <div className="text-sm font-medium">{image.title || "Untitled"}</div>
+                        <Badge variant={image.status === 'Pending' ? 'pending' : 'approved'} className={image.status === 'Pending' ? 'bg-yellow-500 text-yellow-50' : 'bg-green-500 text-green-50'}>
+                          {image.status}
+                        </Badge>
+                      </div>
+                      <div className="text-muted-foreground text-sm mt-1">
+                        {`Uploaded ${new Date(image.registered_at).toLocaleDateString()}`}
+                      </div>
+                      <div className="flex items-center justify-end gap-2 mt-4">
+                        <Button variant="outline" size="sm">
+                          <TrashIcon className="h-4 w-4" />
+                        </Button>
+                        {user.roles === 'administrator' && image.status === 'Pending' && (
+                          <Button size="sm" variant="black">Approve</Button>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p className="text-center text-gray-500">No images available.</p>
+              )}
+
             </div>
           </Tabs>
         </main >
