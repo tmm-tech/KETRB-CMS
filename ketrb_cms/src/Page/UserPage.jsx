@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+   import React, { useState, useEffect } from "react";
 import SideNav from "../Component/SideNav";
 import { Link } from "react-router-dom";
 import HeaderNav from "../Component/HeaderNav";
@@ -18,11 +18,38 @@ const UserPage = () => {
 
   const handleEdit = (userId) => {
     navigate(`/users/edit user/${userId}`); // Redirect to the edit page
+  }
+  const handleRefresh = async (userId) => {
+    try {
+       const response = await fetch(`https://ketrb-backend.onrender.com/users/activate/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to refresh user');
+      }
+  
+      const data = await response.json();
+      if (data.success) {
+        alert('User status refreshed successfully');
+        // Optionally, update the users list in the frontend to reflect the changes
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            user.id === userId ? { ...user, status: 'active', isDeleted: false } : user
+          )
+        );
+      } else {
+        alert('Error refreshing user status');
+      }
+    } catch (error) {
+      console.error('Error refreshing user status:', error);
+      alert('An error occurred while refreshing the user.');
+    }
   };
-  const handleRefresh = (userId) => {
-    // Implement the refresh logic here
-    console.log(`Refreshing user with ID: ${userId}`);
-  };
+
 
   const handleDelete = async (userId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this user?");

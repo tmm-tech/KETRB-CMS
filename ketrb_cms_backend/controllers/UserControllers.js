@@ -136,20 +136,34 @@ module.exports = {
 
     // Update user details
     updateUser: async (req, res) => {
-        const { fullname, email, roles } = req.body;
+        const { fullname, email, roles, password } = req.body;
         const { id } = req.params;
+    
         try {
-            const updateUserQuery = `
-            UPDATE users
-            SET fullname = $1, email = $2, roles = $3
-            WHERE id = $4
-            RETURNING *;
-        `;
-            const params = [fullname, email, roles, id];
-
+            // Build the query and parameters
+            let updateUserQuery = `
+                UPDATE users
+                SET fullname = $1, email = $2, roles = $3
+            `;
+            let params = [fullname, email, roles];
+    
+            // Check if the password is being updated
+            if (password) {
+                // You should hash the password before updating it in the database
+                const hashedPassword = await hashPassword(password); // hashPassword is a hypothetical function to hash the password
+                updateUserQuery += `, password = $4`;
+                params.push(hashedPassword); // Add the hashed password to the parameters
+            }
+    
+            // Finalize the query
+            updateUserQuery += ` WHERE id = $${params.length + 1} RETURNING *;`;
+            params.push(id);
+    
+            // Execute the query
             const result = await query(updateUserQuery, params);
-
+    
             if (result.rowCount > 0) {
+                reportService.sendPasswordUpdate(fullname,email,roles,password);
                 res.json({ success: true, message: 'User updated successfully', data: result.rows[0] });
             } else {
                 res.status(404).json({ success: false, message: 'User not found' });
@@ -160,25 +174,47 @@ module.exports = {
         }
     },
 
+   
     // Soft delete (deactivate) user
     SoftDeleteUser: async (req, res) => {
         const { userId } = req.params;
         try {
+            // Query to get the user's email and full name before deleting
+            const getUserQuery = `
+            SELECT email, fullname 
+            FROM users 
+            WHERE id = $1;
+        `;
+            const userResult = await query(getUserQuery, [userId]);
+
+            if (userResult.rowCount === 0) {
+                return res.status(404).json({ success: false, message: 'User not found' });
+            }
+
+            // Store the email and full name from the database result
+            const { email, fullname } = userResult.rows[0];
+
+            // Perform the soft delete
             const deleteUserQuery = `
-                UPDATE users 
-                SET isdeleted = TRUE, status = 'inactive' 
-                WHERE id = $1 RETURNING *;
-            `;
+            UPDATE users 
+            SET isdeleted = TRUE, status = 'inactive' 
+            WHERE id = $1 
+            RETURNING *;
+        `;
             const result = await query(deleteUserQuery, [userId]);
 
             if (result.rowCount > 0) {
-                res.json({ success: true, message: 'User deleted successfully', user: result.rows[0] });
+                // Send the account deactivation email
+                reportService.sendAccountDeactivation(email, fullname);
+
+                // Return success response
+                return res.json({ success: true, message: 'User deleted successfully', user: result.rows[0] });
             } else {
-                res.status(404).json({ success: false, message: 'User not found' });
+                return res.status(404).json({ success: false, message: 'User not found' });
             }
         } catch (error) {
             console.error('Error deleting user:', error);
-            res.status(500).json({ success: false, message: `Remove User Error: ${error.message}` });
+            return res.status(500).json({ success: false, message: `Remove User Error: ${error.message}` });
         }
     },
 
@@ -199,7 +235,43 @@ module.exports = {
         }
     },
 
+    refreshUserStatus: async (req, res) => {
+        const { id } = req.params;
 
+        try {
+            // Query to get the user's email and full name before deleting
+            const getUserQuery = `
+             SELECT email, fullname 
+             FROM users 
+             WHERE id = $1;
+         `;
+            const userResult = await query(getUserQuery, [userId]);
+
+            if (userResult.rowCount === 0) {
+                return res.status(404).json({ success: false, message: 'User not found' });
+            }
+
+            // Store the email and full name from the database result
+            const { email, fullname } = userResult.rows[0];
+
+            const activateUserQuery = `
+                UPDATE users 
+                SET isdeleted = FALSE, status = 'active' 
+                WHERE id = $1 RETURNING *;
+            `;
+            const result = await query(activateUserQuery, [id]);
+
+            if (result.rowCount > 0) {
+                res.json({ success: true, message: 'Account Activated successfully', user: result.rows[0] });
+                reportService.sendAccountCreation(email, fullname);
+            } else {
+                res.status(404).json({ success: false, message: 'User not found' });
+            }
+        } catch (error) {
+            console.error('Error activating user:', error);
+            res.status(500).json({ success: false, message: `Account Activation Error: ${error.message}` });
+        }
+    },
     // User logout and token invalidation
     Logout: async (req, res) => {
         const { email } = req.params;

@@ -8,6 +8,8 @@ const {
     getAUser,
     Logout,
     checkAuth,
+    refreshUserStatus,
+    updatePassword,
 } = require('../controllers/UserControllers');
 
 // create and insert data into the table
@@ -18,6 +20,8 @@ UserRoutes.get('/allusers', getAllUser)
 UserRoutes.get('/user/:id', getAUser)
 //soft delete item of a specific id
 UserRoutes.put('/delete/:userId', SoftDeleteUser)
+//activate user
+UserRoutes.put('/activate/:id', refreshUserStatus);
 //update items
 UserRoutes.put('/update/:id', updateUser)
 // login a user

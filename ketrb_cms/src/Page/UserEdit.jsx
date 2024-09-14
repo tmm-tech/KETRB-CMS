@@ -24,11 +24,9 @@ const UserEdit = () => {
     const [gender, setGender] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-
+    const [alertMessage, setAlertMessage] = useState(""); 
 
     const { id } = useParams(); // Get user ID from route parameters
-
-    const navigate = useNavigate(); // For navigation
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -39,7 +37,6 @@ const UserEdit = () => {
                 setEmail(userData.data.email);
                 setRole(userData.data.roles);
                 setGender(userData.data.gender);
-                setPassword(userData.data.password);
             } catch (error) {
                 console.error('Error fetching user details:', error);
             } 
@@ -93,8 +90,7 @@ const UserEdit = () => {
             email,
             roles,
             gender,
-            // Only include password if it's being changed
-            ...(password && { password })
+            ...(password && { password }) // Only include password if it's set
         };
 
         try {
@@ -108,30 +104,28 @@ const UserEdit = () => {
             setLoading(false);
 
             if (response.ok) {
-                // setDialogMessage('User updated successfully!');
+                setAlertMessage('User updated successfully!');
                 // Redirect or refresh the page to show the updated users list
-                window.location.href = '/users';  
+                navigate('/users');
             } else {
                 if (result.message.includes('duplicate key value violates unique constraint')) {
-                    // setDialogMessage('Update failed: This email is already registered.');
+                    setAlertMessage('Update failed: This email is already registered.');
                 } else {
-                    // setDialogMessage(result.message || 'Failed to update user.');
+                    setAlertMessage(result.message || 'Failed to update user.');
                 }
             }
         } catch (error) {
             setLoading(false);
-            // setDialogMessage('An error occurred: ' + error.message);?
+            setAlertMessage('An error occurred: ' + error.message);
         }
-        // setDialogOpen(true);
+    };
+    const handleChangePassword = () => {
+        const newPassword = generatePassword();
+        setPassword(newPassword);
     };
 
     const handleCancel = () => {
         window.location.href = '/users'; 
-    };
-
-    const handleChangePassword = () => {
-        const newPassword = generatePassword();
-        setPassword(newPassword);
     };
 
     return (
@@ -151,6 +145,12 @@ const UserEdit = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div>
                                     <h2 className="text-xl font-bold mb-4">Edit User Information</h2>
+                                    {alertMessage && (
+                                        <Alert>
+                                            <AlertTitle>Notification</AlertTitle>
+                                            <AlertDescription>{alertMessage}</AlertDescription>
+                                        </Alert>
+                                    )}
                                     <form className="space-y-6 w-[600px] mx-auto" onSubmit={handleSubmit}>
                                         <div>
                                             <Label htmlFor="name" className="block text-sm font-medium text-muted-foreground">
