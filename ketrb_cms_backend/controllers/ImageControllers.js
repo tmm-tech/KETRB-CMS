@@ -21,7 +21,7 @@ module.exports = {
 
             // Save the image to the server
             await fs.promises.writeFile(filePath, base64Data, 'base64');
-             vm
+             
             // Save image info to the database
             await query('INSERT INTO images (name, status, image) VALUES (?, ?, ?)', [fileName, status, filePath]);
 
