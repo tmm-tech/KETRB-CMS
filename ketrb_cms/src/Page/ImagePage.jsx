@@ -56,29 +56,29 @@ const ImagePage = () => {
     setImageFile(null);
   };
 
-  
+
   const handleUpload = async (event) => {
     event.preventDefault();
+
     if (!imageFile) {
       setAlertMessage("No file selected.");
       return;
     }
-  
+
     setLoading(true);
     setAlertMessage("");
-  
-    
-    const data = {
-      imageFile,
-      status
-  };
-    console.log('Fetched images:', data); // Log the result to inspect the structure
+
+    // Create FormData and append image and status
+    const formData = new FormData();
+    formData.append('image', imageFile);  // 'image' should match the field name in multer
+    formData.append('status', status);
+
     try {
       const response = await fetch('https://ketrb-backend.onrender.com/images/add', {
         method: 'POST',
-        body: data,
+        body: formData, // Use FormData
       });
-  
+
       if (response.ok) {
         const result = await response.json();
         setAlertMessage("Image uploaded successfully!");
@@ -93,7 +93,6 @@ const ImagePage = () => {
       setLoading(false);
     }
   };
-  
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -178,7 +177,7 @@ const ImagePage = () => {
                         onChange={handleImageSelect}
                         className="block w-full"
                       />
-                       {imageFile && (
+                      {imageFile && (
                         <img
                           src={imageFile} // Use imageFile here for preview
                           alt="Selected Image"
@@ -215,7 +214,7 @@ const ImagePage = () => {
                 <div key={image.id} className="bg-background rounded-lg shadow-lg overflow-hidden">
                   <img
                     src={image.url}
-                    alt={image.title || "Image"} 
+                    alt={image.title || "Image"}
                     width={400}
                     height={300}
                     className="w-full h-48 object-cover"
