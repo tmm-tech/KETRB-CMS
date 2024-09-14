@@ -22,7 +22,7 @@ import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 const ImagePage = () => {
   const storedUser = localStorage.getItem('user');
   const user = JSON.parse(storedUser);
-  const [status, setStatus] = useState(user.roles === 'editor' ? 'Pending' : 'Published');
+  const [status, setStatus] = useState(user.roles === 'editor' ? 'pending' : 'published');
   const [images, setImages] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -69,7 +69,7 @@ const ImagePage = () => {
     setAlertMessage("");
 
     const payload = {
-      image: imageFile, 
+      image: imageFile,
       status: status
     };
 
@@ -185,7 +185,7 @@ const ImagePage = () => {
                       />
                       {imageFile && (
                         <img
-                          src={`data:image/png;base64,${imageFile}`} 
+                          src={`data:image/png;base64,${imageFile}`}
                           alt="Selected Image"
                           width={300}
                           height={300}
@@ -234,15 +234,16 @@ const ImagePage = () => {
                       </Badge>
                     </div>
                     <div className="text-muted-foreground text-sm mt-1">
-                      {`Uploaded ${new Date(image.uploadDate).toLocaleDateString()}`}
+                      {`Uploaded ${new Date(image.registered_at).toLocaleDateString()}`}
                     </div>
                     <div className="flex items-center justify-end gap-2 mt-4">
                       <Button variant="outline" size="sm">
                         <TrashIcon className="h-4 w-4" />
                       </Button>
-                      {user.roles === 'administrator' && (
+                      {user.roles === 'administrator' && image.status === 'pending' && (
                         <Button size="sm" variant="black">Approve</Button>
                       )}
+
                     </div>
                   </div>
                 </div>
