@@ -23,11 +23,13 @@ const ImagePage = () => {
   const user = JSON.parse(storedUser);
   const [selectedImage, setSelectedImage] = useState(null);
   const [status, setStatus] = useState(user.roles === 'editor' ? 'Pending' : 'Published');
+  const [images, setImages] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await fetch('https://ketrb-backend.onrender.com/images/allimages'); // Replace with your backend URL
+        const response = await fetch('https://ketrb-backend.onrender.com/images/allimages');
         const result = await response.json();
         setImages(result);
       } catch (error) {
