@@ -15,7 +15,7 @@ module.exports = {
             console.log('Request file:', req.file); // Check if the file is present
             console.log('Request body:', req.body); // Check if other fields are present
             
-            const imageName = `ketrb_img${Date.now()}${path.extname(image.originalname)}`;
+            const imageName = `ketrb_img${Date.now()}`;
             const imagePath = path.join(__dirname, '../uploads', imageName);
             console.log('File uploaded to:', imagePath);
             try {
