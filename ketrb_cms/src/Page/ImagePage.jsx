@@ -67,14 +67,16 @@ const ImagePage = () => {
     setLoading(true);
     setAlertMessage("");
   
-    const formData = new FormData();
-    formData.append('image', imageFile); // Make sure 'image' matches the backend field name
-    formData.append('status', status); // Assuming you want to send status as well
-    console.log('Fetched images:', formData); // Log the result to inspect the structure
+    
+    const data = {
+      imageFile,
+      status
+  };
+    console.log('Fetched images:', data); // Log the result to inspect the structure
     try {
       const response = await fetch('https://ketrb-backend.onrender.com/images/add', {
         method: 'POST',
-        body: formData,
+        body: data,
       });
   
       if (response.ok) {
