@@ -8,10 +8,13 @@ module.exports = {
     // Add an image
     AddImage: [
         upload.single('image'), // 'image' should match the name in FormData
+        
         async (req, res) => {
             const { status } = req.body;
             const image = req.file;
-    
+            console.log(req.file); 
+            console.log(req.body); 
+            
             if (!image) {
                 return res.status(400).send('No image uploaded.');
             }
