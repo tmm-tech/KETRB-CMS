@@ -140,9 +140,7 @@ module.exports = {
         const { id } = req.params;
 
         try {
-            // Store the email and full name from the database result
-            const { email, fullname } = userResult.rows[0];
-
+            
             // Build the query and parameters
             let updateUserQuery = `
                 UPDATE users
