@@ -83,23 +83,22 @@ module.exports = {
     getAllImage: async (req, res) => {
         try {
             const result = await query('SELECT * FROM images');
-            console.log('Query result:', result); // Log result for debugging
 
-            // Adjust based on the actual result structure
-            const images = result.rows || result; // Access the correct property if necessary
+            // Extract the rows from the result
+            const images = result.rows;
 
-            if (!Array.isArray(images) || images.length === 0) {
-                // No images found
+            // Check if images array is empty
+            if (images.length === 0) {
                 return res.status(200).json({ message: 'No images found', images: [] });
             }
 
             // Map over the results to construct the full image URL
-            const imagesWithUrl = result.map(image => ({
+            const imagesWithUrl = images.map(image => ({
                 ...image,
                 url: `${req.protocol}://${req.get('host')}/uploads/${path.basename(image.image)}`, // Construct the full URL
-                status: image.status,   // Include the status
-                registered_at: image.registered_at, // Include the registration date
-                title: image.fullname
+                status: image.status,
+                registered_at: image.registered_at,
+                title: image.fullname // Include the title
             }));
 
             res.status(200).json({
