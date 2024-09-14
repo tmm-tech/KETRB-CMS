@@ -23,7 +23,7 @@ module.exports = {
                 await fs.promises.rename(image.path, imagePath);
     
                 // Save image info to the database
-                await query('INSERT INTO images (name, status, path) VALUES (?, ?, ?)', [imageName, status, imagePath]);
+                await query('INSERT INTO images (name, status, image) VALUES (?, ?, ?)', [imageName, status, imagePath]);
     
                 res.status(201).json({ message: 'Image uploaded successfully', imageName, status });
             } catch (error) {
