@@ -106,7 +106,7 @@ const UserEdit = () => {
             if (response.ok) {
                 setAlertMessage('User updated successfully!');
                 // Redirect or refresh the page to show the updated users list
-                navigate('/users');
+                window.location.href = '/users'; 
             } else {
                 if (result.message.includes('duplicate key value violates unique constraint')) {
                     setAlertMessage('Update failed: This email is already registered.');
