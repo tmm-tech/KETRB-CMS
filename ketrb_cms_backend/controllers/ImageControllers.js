@@ -6,10 +6,7 @@ const upload = multer({ dest: 'uploads/' });
 
 module.exports = {
     // Add an image
-    AddImage: [
-        upload.single('image'), // 'image' should match the name in FormData
-
-        async (req, res) => {
+    AddImage: async (req, res) => {
             const { status } = req.body;
             const image = req.file;
             console.log('Uploaded file:', image); // Debugging line
@@ -28,8 +25,7 @@ module.exports = {
                 console.log('Error uploading image:', error);
                 res.status(500).json({ message: 'Error uploading image', error });
             }
-        }
-    ],
+        },
 
     // Update an image's status
     UpdateImage: async (req, res) => {

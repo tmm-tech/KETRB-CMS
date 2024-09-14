@@ -6,9 +6,10 @@ const {
     getAImage,
     getAllImage
 } = require('../controllers/ImageControllers');
+const upload = require('../config/multerConfig');
 
 // Add a new image
-ImageRoutes.post('/add', AddImage);
+ImageRoutes.post('/add',upload.single('image'), AddImage);
 
 // Update an image's status
 ImageRoutes.put('/update/:id', UpdateImage);

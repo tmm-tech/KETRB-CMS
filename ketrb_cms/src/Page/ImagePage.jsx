@@ -176,6 +176,7 @@ const ImagePage = () => {
                         accept="image/*"
                         onChange={handleImageSelect}
                         className="block w-full"
+                        name="image"
                       />
                       {imageFile && (
                         <img
