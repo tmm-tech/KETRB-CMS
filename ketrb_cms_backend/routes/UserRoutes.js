@@ -1,6 +1,6 @@
 const UserRoutes = require('express').Router();
 const {
-    createUser,
+    createUser,  
     getAllUser,
     updateUser,
     SoftDeleteUser,
@@ -21,7 +21,7 @@ UserRoutes.get('/user/:id', getAUser)
 //soft delete item of a specific id
 UserRoutes.put('/delete/:userId', SoftDeleteUser)
 //activate user
-UserRoutes.put('/activate/:id', refreshUserStatus);
+UserRoutes.put('/activate/:userId', refreshUserStatus);
 //update items
 UserRoutes.put('/update/:id', updateUser)
 // login a user

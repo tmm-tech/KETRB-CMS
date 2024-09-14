@@ -174,7 +174,7 @@ module.exports = {
         }
     },
 
-   
+    
     // Soft delete (deactivate) user
     SoftDeleteUser: async (req, res) => {
         const { userId } = req.params;
@@ -236,7 +236,7 @@ module.exports = {
     },
 
     refreshUserStatus: async (req, res) => {
-        const { id } = req.params;
+        const { userId } = req.params;
 
         try {
             // Query to get the user's email and full name before deleting
