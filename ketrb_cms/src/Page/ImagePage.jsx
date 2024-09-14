@@ -95,6 +95,7 @@ const ImagePage = () => {
         const result = await response.json();
         setAlertMessage("Image uploaded successfully!");
         setImageFile(null); // Clear file input
+        window.location.href = '/images'; 
       } else {
         setAlertMessage("Failed to upload image.");
       }
