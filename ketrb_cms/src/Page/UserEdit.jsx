@@ -92,7 +92,7 @@ const UserEdit = () => {
             gender,
             ...(password && { password }) // Only include password if it's set
         };
-
+        console.log('Data being received:', data);
         try {
             const response = await fetch(`https://ketrb-backend.onrender.com/users/update/${id}`, {
                 method: 'PUT', // Use PUT for updating

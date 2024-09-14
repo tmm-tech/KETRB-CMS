@@ -138,15 +138,18 @@ module.exports = {
     updateUser: async (req, res) => {
         const { fullname, email, roles, password } = req.body;
         const { id } = req.params;
-    
+
         try {
+            // Store the email and full name from the database result
+            const { email, fullname } = userResult.rows[0];
+
             // Build the query and parameters
             let updateUserQuery = `
                 UPDATE users
                 SET fullname = $1, email = $2, roles = $3
             `;
             let params = [fullname, email, roles];
-    
+
             // Check if the password is being updated
             if (password) {
                 // You should hash the password before updating it in the database
@@ -154,16 +157,16 @@ module.exports = {
                 updateUserQuery += `, password = $4`;
                 params.push(hashedPassword); // Add the hashed password to the parameters
             }
-    
+
             // Finalize the query
             updateUserQuery += ` WHERE id = $${params.length + 1} RETURNING *;`;
             params.push(id);
-    
+
             // Execute the query
             const result = await query(updateUserQuery, params);
-    
+
             if (result.rowCount > 0) {
-                reportService.sendPasswordUpdate(fullname,email,roles,password);
+                reportService.sendPasswordUpdate(fullname, email, roles, password);
                 res.json({ success: true, message: 'User updated successfully', data: result.rows[0] });
             } else {
                 res.status(404).json({ success: false, message: 'User not found' });
@@ -174,7 +177,7 @@ module.exports = {
         }
     },
 
-    
+
     // Soft delete (deactivate) user
     SoftDeleteUser: async (req, res) => {
         const { userId } = req.params;

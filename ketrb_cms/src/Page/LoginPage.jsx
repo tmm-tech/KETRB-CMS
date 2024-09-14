@@ -15,7 +15,7 @@ const LoginPage = () => {
             email,
             password
         };
-    console.log('Data being sent:', logindata);
+   
     try{
        const response = await fetch('https://ketrb-backend.onrender.com/users/login', {
       method: 'POST',
@@ -25,7 +25,7 @@ const LoginPage = () => {
     });
 
       const data = await response.json();
-      console.log('Data being received:', data);
+    
       if (data.success) {
         localStorage.setItem('user', JSON.stringify(data.data));
         // Redirect to dashboard or home page
