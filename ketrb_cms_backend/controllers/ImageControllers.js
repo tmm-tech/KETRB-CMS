@@ -7,20 +7,22 @@ const fs = require('fs');
 module.exports = {
     // Add an image
     AddImage: async (req, res) => {
-        const { status, image } = req.body; // Expecting base64 string in 'image'
+        const { status } = req.body;
+        const image = req.file; // Multer adds the file object here
+
+        console.log('Uploaded file:', image); // Debugging line
 
         if (!image) {
-            return res.status(400).send('No image provided.');
+            return res.status(400).send('No image uploaded.');
         }
 
-        try {
-            // Extract base64 data
-            const base64Data = image.replace(/^data:image\/png;base64,/, "");
-            const imageName = `ketrb_img${Date.now()}.png`;
-            const imagePath = path.join(__dirname, '../uploads', imageName);
+        const imageName = `ketrb_img${Date.now()}${path.extname(image.originalname)}`;
+        const imagePath = path.join(__dirname, '../uploads', imageName);
+        console.log('File uploaded to:', imagePath);
 
-            // Write image to file
-            await fs.promises.writeFile(imagePath, base64Data, 'base64');
+        try {
+            // Rename or move file if necessary
+            await fs.promises.rename(image.path, imagePath);
 
             // Save image info to the database
             await query('INSERT INTO images (name, status, image) VALUES (?, ?, ?)', [imageName, status, imagePath]);
