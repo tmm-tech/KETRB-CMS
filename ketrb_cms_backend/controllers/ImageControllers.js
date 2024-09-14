@@ -12,20 +12,20 @@ module.exports = {
         if (!image) {
             return res.status(400).json({ message: 'No image data provided' });
         }
-    
+
         try {
             // Decode base64 image
             const base64Data = image.replace(/^data:image\/png;base64,/, "");
             const fileName = `${Date.now()}.png`;
-            const filePath = path.join(__dirname, '../uploads', fileName);
-    
+            const filePath = path.join(__dirname, '/uploads', fileName);
+
             // Save the image to the server
             await fs.promises.writeFile(filePath, base64Data, 'base64');
-    
+
             // Save image info to the database
             const queryText = 'INSERT INTO images (filename, status, image) VALUES ($1, $2, $3)';
             await query(queryText, [fileName, status, filePath]);
-    
+
             res.status(201).json({ message: 'Image uploaded successfully!', filePath });
         } catch (error) {
             console.error('Error uploading image:', error);
@@ -83,15 +83,16 @@ module.exports = {
     getAllImage: async (req, res) => {
         try {
             const result = await query('SELECT * FROM images');
-            
-            if (result.length === 0) {
+            console.log('Query result:', result); // Log result for debugging
+
+            // Adjust based on the actual result structure
+            const images = result.rows || result; // Access the correct property if necessary
+
+            if (!Array.isArray(images) || images.length === 0) {
                 // No images found
-                return res.status(200).json({
-                    message: 'No images found',
-                    images: []
-                });
+                return res.status(200).json({ message: 'No images found', images: [] });
             }
-        
+            console.log(`${req.protocol}://${req.get('host')}/uploads/${path.basename(image.image)}`);
             // Map over the results to construct the full image URL
             const imagesWithUrl = result.map(image => ({
                 ...image,
@@ -100,7 +101,7 @@ module.exports = {
                 registered_at: image.registered_at, // Include the registration date
                 title: image.fullname
             }));
-    
+
             res.status(200).json({
                 message: 'Images retrieved successfully',
                 images: imagesWithUrl
@@ -108,7 +109,7 @@ module.exports = {
         } catch (error) {
             res.status(500).json({
                 message: 'Error retrieving images'
-                
+
             });
             console.log("Error:", error);
         }
