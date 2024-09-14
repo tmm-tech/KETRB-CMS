@@ -7,10 +7,7 @@ const fs = require('fs');
 module.exports = {
     // Add an image
     AddImage: async (req, res) => {
-        const { status } = req.body;
-        const image = req.file; // Multer adds the file object here
-
-        console.log('Uploaded file:', image); // Debugging line
+        const { status, image } = req.body;
 
         if (!image) {
             return res.status(400).send('No image uploaded.');
