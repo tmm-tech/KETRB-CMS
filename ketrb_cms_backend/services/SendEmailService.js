@@ -262,7 +262,7 @@ exports.sendAccountDeactivation = (email, fullname) => {
 
 // Account Activation
 exports.sendAccountActivation = (email, fullname) => {
-    console.log('Sending email to:', email);     vm
+    console.log('Sending email to:', email);     
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: email,

@@ -270,7 +270,7 @@ module.exports = {
 
             if (result.rowCount > 0) {
                 res.json({ success: true, message: 'Account Activated successfully', user: result.rows[0] });
-                reportService.sendAccountCreation(email, fullname);
+                reportService.sendAccountActivation(email, fullname);
             } else {
                 res.status(404).json({ success: false, message: 'User not found' });
             }
