@@ -8,7 +8,7 @@ module.exports = {
     // Add an image
     AddImage: async (req, res) => {
         const { status } = req.body;
-        console.log('Uploaded file:', req.file); // Debugging line
+        console.log('Uploaded file:', req.body); // Debugging line
 
         if (!image) {
             return res.status(400).send('No image uploaded.');
