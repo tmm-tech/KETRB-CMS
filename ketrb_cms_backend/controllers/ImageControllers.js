@@ -17,7 +17,7 @@ module.exports = {
             // Decode base64 image
             const base64Data = image.replace(/^data:image\/png;base64,/, "");
             const fileName = `${Date.now()}.png`;
-            const filePath = path.join(__dirname, 'uploads', fileName);
+            const filePath = path.join(__dirname, '../uploads', fileName);
     
             // Save the image to the server
             await fs.promises.writeFile(filePath, base64Data, 'base64');
