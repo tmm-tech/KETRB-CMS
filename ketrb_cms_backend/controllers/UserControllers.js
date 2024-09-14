@@ -259,7 +259,7 @@ module.exports = {
                 SET isdeleted = FALSE, status = 'active' 
                 WHERE id = $1 RETURNING *;
             `;
-            const result = await query(activateUserQuery, [id]);
+            const result = await query(activateUserQuery, [userId]);
 
             if (result.rowCount > 0) {
                 res.json({ success: true, message: 'Account Activated successfully', user: result.rows[0] });
