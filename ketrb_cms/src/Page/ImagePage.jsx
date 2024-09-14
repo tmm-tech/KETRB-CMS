@@ -31,12 +31,7 @@ const ImagePage = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        
-        const response = await fetch('https://ketrb-backend.onrender.com/images/add', {
-          method: 'POST',
-          body: formData,
-        });
-
+        const response = await fetch('https://ketrb-backend.onrender.com/images/allimages');
         const result = await response.json();
         console.log('Fetched images:', result); // Log the result to inspect the structure
         setImages(Array.isArray(result) ? result : []);
@@ -62,27 +57,27 @@ const ImagePage = () => {
     setImageFile(null);
   };
 
-
+  
   const handleUpload = async (event) => {
     event.preventDefault();
     if (!imageFile) {
       setAlertMessage("No file selected.");
       return;
     }
-
+  
     setLoading(true);
     setAlertMessage("");
-
+  
     const formData = new FormData();
     formData.append('image', imageFile); // Make sure 'image' matches the backend field name
     formData.append('status', status); // Assuming you want to send status as well
-
+  
     try {
       const response = await fetch('https://ketrb-backend.onrender.com/images/add', {
         method: 'POST',
         body: formData,
       });
-
+  
       if (response.ok) {
         const result = await response.json();
         setAlertMessage("Image uploaded successfully!");
@@ -97,7 +92,7 @@ const ImagePage = () => {
       setLoading(false);
     }
   };
-
+  
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -182,7 +177,7 @@ const ImagePage = () => {
                         onChange={handleImageSelect}
                         className="block w-full"
                       />
-                      {imageFile && (
+                       {imageFile && (
                         <img
                           src={imageFile} // Use imageFile here for preview
                           alt="Selected Image"
@@ -219,7 +214,7 @@ const ImagePage = () => {
                 <div key={image.id} className="bg-background rounded-lg shadow-lg overflow-hidden">
                   <img
                     src={image.url}
-                    alt={image.title || "Image"}
+                    alt={image.title || "Image"} 
                     width={400}
                     height={300}
                     className="w-full h-48 object-cover"
