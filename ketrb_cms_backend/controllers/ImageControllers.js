@@ -12,11 +12,7 @@ module.exports = {
         async (req, res) => {
             const { status } = req.body;
             const image = req.file;
-            console.log("file: ",req.file); 
-            console.log("body: ",req.body); 
-            
-     
-    
+   
             const imageName = `ketrb_img${Date.now()}${path.extname(image.originalname)}`;
             const imagePath = path.join(__dirname, '../uploads', imageName);
             console.log('File uploaded to:', imagePath);
