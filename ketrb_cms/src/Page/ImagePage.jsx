@@ -22,7 +22,6 @@ import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 const ImagePage = () => {
   const storedUser = localStorage.getItem('user');
   const user = JSON.parse(storedUser);
-  const [selectedImage, setSelectedImage] = useState(null);
   const [status, setStatus] = useState(user.roles === 'editor' ? 'Pending' : 'Published');
   const [images, setImages] = useState([]);
   const [imageFile, setImageFile] = useState(null);
@@ -49,13 +48,13 @@ const ImagePage = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setSelectedImage(reader.result);
+        setImages(reader.result);
       };
       reader.readAsDataURL(file);
     }
   };
   const handleCancel = () => {
-    setSelectedImage(null);
+    setImages(null);
   };
   const handleUpload = async (event) => {
     event.preventDefault();
@@ -177,7 +176,7 @@ const ImagePage = () => {
                       />
                       {selectedImage && (
                         <img
-                          src={selectedImage}
+                          src={images}
                           alt="Selected Image"
                           width={300}
                           height={300}
@@ -187,7 +186,7 @@ const ImagePage = () => {
                       )}
                     </div>
                     <DialogFooter>
-                      {selectedImage && (
+                      {image && (
                         <Button onClick={handleCancel} variant="outline">Cancel</Button>
                       )}
                       <Button
@@ -211,8 +210,8 @@ const ImagePage = () => {
               {images.map((image) => (
                 <div key={image.id} className="bg-background rounded-lg shadow-lg overflow-hidden">
                   <img
-                    src={image.url} // Assuming `image.url` holds the image URL
-                    alt={image.title || "Image"} // Assuming `image.title` holds the image title
+                    src={image.url}
+                    alt={image.title || "Image"} 
                     width={400}
                     height={300}
                     className="w-full h-48 object-cover"
