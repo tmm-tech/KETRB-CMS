@@ -11,6 +11,8 @@ import { Badge } from '../Component/badge';
 import bgImage from "../Asset/bg.png";
 
 const Dashboard = () => {
+  const storedUser = localStorage.getItem('user');
+  const user = JSON.parse(storedUser);
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
@@ -97,9 +99,11 @@ const Dashboard = () => {
                 <TabsTrigger value="news">News</TabsTrigger>
                 <TabsTrigger value="images">Images</TabsTrigger>
                 <TabsTrigger value="programs">Programs</TabsTrigger>
-                <TabsTrigger value="users" className="hidden sm:flex">
-                  Users
-                </TabsTrigger>
+                {user.roles === 'administrator' && (
+                  <TabsTrigger value="users" className="hidden sm:flex">
+                    Users
+                  </TabsTrigger>
+                )}
               </TabsList>
               <div className="ml-auto flex items-center gap-2">
                 <DropdownMenu>

@@ -62,7 +62,7 @@ const App = () => {
             <Route path="/images" element={<ImagePage />} />
             <Route path="/programs" element={<ProgramsPage />} />
             <Route path="/programs/add program" element={<ProgramsAdd />} />
-            {userRole === 'administrator' && (
+            {user.roles === 'administrator' && (
                 <>
                   <Route path="/users" element={<UserPage />} />
                   <Route path="/users/add users" element={<UserAdd />} />

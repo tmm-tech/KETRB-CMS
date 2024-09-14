@@ -12,7 +12,8 @@ import logo from "../Asset/Logo/ketrb.ico";
 const isActive = (pathname, link) => pathname === link;
 const SideNav = () => {
   const { pathname } = useLocation();
-
+  const storedUser = localStorage.getItem('user');
+  const user = JSON.parse(storedUser);
   return (
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-white sm:flex">
       <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
@@ -34,8 +35,8 @@ const SideNav = () => {
               <Link
                 to="/"
                 className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/')
-                    ? "bg-black text-white"
-                    : "text-muted-foreground hover:text-foreground"
+                  ? "bg-black text-white"
+                  : "text-muted-foreground hover:text-foreground"
                   }`}
               >
                 <LayoutGridIcon className="h-5 w-5" />
@@ -50,8 +51,8 @@ const SideNav = () => {
               <Link
                 to="/news"
                 className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/news')
-                    ? "bg-black text-white"
-                    : "text-muted-foreground hover:text-foreground"
+                  ? "bg-black text-white"
+                  : "text-muted-foreground hover:text-foreground"
                   }`}
               >
                 <NewspaperIcon className="h-5 w-5" />
@@ -66,8 +67,8 @@ const SideNav = () => {
               <Link
                 to="/images"
                 className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/images')
-                    ? "bg-black text-white"
-                    : "text-muted-foreground hover:text-foreground"
+                  ? "bg-black text-white"
+                  : "text-muted-foreground hover:text-foreground"
                   }`}
               >
                 <ImageIcon className="h-5 w-5" />
@@ -82,8 +83,8 @@ const SideNav = () => {
               <Link
                 to="/programs"
                 className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/programs')
-                    ? "bg-black text-white"
-                    : "text-muted-foreground hover:text-foreground"
+                  ? "bg-black text-white"
+                  : "text-muted-foreground hover:text-foreground"
                   }`}
               >
                 <CalendarIcon className="h-5 w-5" />
@@ -92,22 +93,24 @@ const SideNav = () => {
             </TooltipTrigger>
             <TooltipContent side="right">Programs</TooltipContent>
           </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                to="/users"
-                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/users')
+          {user.roles === 'administrator' && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  to="/users"
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/users')
                     ? "bg-black text-white"
                     : "text-muted-foreground hover:text-foreground"
-                  }`}
-              >
-                <UsersIcon className="h-5 w-5" />
-                <span className="sr-only">Users</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side="right">Users</TooltipContent>
-          </Tooltip>
+                    }`}
+                >
+                  <UsersIcon className="h-5 w-5" />
+                  <span className="sr-only">Users</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">Users</TooltipContent>
+
+            </Tooltip>
+          )}
         </TooltipProvider>
       </nav>
       <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
@@ -117,8 +120,8 @@ const SideNav = () => {
               <Link
                 to="/profile"
                 className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/settings')
-                    ? "bg-black text-white"
-                    : "text-muted-foreground hover:text-foreground"
+                  ? "bg-black text-white"
+                  : "text-muted-foreground hover:text-foreground"
                   }`}
               >
                 <SettingsIcon className="h-5 w-5" />
