@@ -16,7 +16,8 @@ import UserEdit from './Page/UserEdit';
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const storedUser = localStorage.getItem('user');
+  const user = JSON.parse(storedUser);
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -61,9 +62,13 @@ const App = () => {
             <Route path="/images" element={<ImagePage />} />
             <Route path="/programs" element={<ProgramsPage />} />
             <Route path="/programs/add program" element={<ProgramsAdd />} />
-            <Route path="/users" element={<UserPage />} />
-            <Route path="/users/add users" element={<UserAdd />} />
-            <Route path="/users/edit user/:id" element={<UserEdit />} />
+            {userRole === 'administrator' && (
+                <>
+                  <Route path="/users" element={<UserPage />} />
+                  <Route path="/users/add users" element={<UserAdd />} />
+                  <Route path="/users/edit user/:id" element={<UserEdit />} />
+                </>
+              )}
             <Route path="/profile" element={<ProfilePage />} />
           </>
         ) : (
