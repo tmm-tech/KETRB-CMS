@@ -31,7 +31,8 @@ const ImagePage = () => {
       try {
         const response = await fetch('https://ketrb-backend.onrender.com/images/allimages');
         const result = await response.json();
-        setImages(result);
+        console.log('Fetched images:', result); // Log the result to inspect the structure
+        setImages(Array.isArray(result) ? result : []); 
       } catch (error) {
         console.error('Error fetching images:', error);
       }
@@ -40,7 +41,7 @@ const ImagePage = () => {
     fetchImages();
   }, []);
 
-  const handleImageSelect = (event) => {
+const handleImageSelect = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
