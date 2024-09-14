@@ -19,7 +19,9 @@ import {
 } from "../Component/dialog";
 import { Input } from "../Component/input";
 const ImagePage = () => {
-  const [selectedImage, setSelectedImage] = useState(null)
+  const storedUser = localStorage.getItem('user');
+  const user = JSON.parse(storedUser);
+  const [selectedImage, setSelectedImage] = useState(null);
   const handleImageSelect = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -151,7 +153,9 @@ const ImagePage = () => {
                     <Button variant="outline" size="sm">
                       <TrashIcon className="h-4 w-4" />
                     </Button>
-                    <Button size="sm" variant="black">Approve</Button>
+                    {user.roles === 'administrator' && (
+                      <Button size="sm" variant="black">Approve</Button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -196,7 +200,9 @@ const ImagePage = () => {
                     <Button variant="outline" size="sm">
                       <TrashIcon className="h-4 w-4" />
                     </Button>
-                    <Button size="sm" variant="black">Approve</Button>
+                    {user.roles === 'administrator' && (
+                      <Button size="sm" variant="black">Approve</Button>
+                    )}
                   </div>
                 </div>
               </div>
