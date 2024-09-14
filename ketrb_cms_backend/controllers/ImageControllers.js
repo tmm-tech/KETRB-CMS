@@ -8,15 +8,13 @@ module.exports = {
     // Add an image
     AddImage: async (req, res) => {
         const { status } = req.body;
-        const image = req.file;
-        console.log('Request body:', req.body); // Debugging line
-        console.log('Uploaded file:', image); // Debugging line
+        console.log('Uploaded file:', req.file); // Debugging line
 
         if (!image) {
             return res.status(400).send('No image uploaded.');
         }
 
-        const imageName = `ketrb_img${Date.now()}${path.extname(image.originalname)}`;
+        const imageName = `ketrb_img${Date.now()}${path.extname(req.file.originalname)}`;
         const imagePath = path.join(__dirname, '../uploads', imageName);
         console.log('File uploaded to:', imagePath);
 
