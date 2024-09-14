@@ -83,22 +83,33 @@ module.exports = {
     getAllImage: async (req, res) => {
         try {
             const result = await query('SELECT * FROM images');
+            
             if (result.length === 0) {
                 // No images found
-                return res.status(200).json({ message: 'No images found', images: [] });
+                return res.status(200).json({
+                    message: 'No images found',
+                    images: []
+                });
             }
-    
+        
             // Map over the results to construct the full image URL
             const imagesWithUrl = result.map(image => ({
                 ...image,
-                url: `${req.protocol}://${req.get('host')}/uploads/${image.name}`, // Construct the full URL for each image
+                url: `${req.protocol}://${req.get('host')}/uploads/${path.basename(image.image)}`, // Extract the file name and construct the full URL
                 status: image.status,   // Include the status
-                registered_at: image.registered_at  // Include the registration date
+                registered_at: image.registered_at, // Include the registration date
+                title: image.fullname
             }));
-
-            res.status(200).json(imagesWithUrl);
+    
+            res.status(200).json({
+                message: 'Images retrieved successfully',
+                images: imagesWithUrl
+            });
         } catch (error) {
-            res.status(500).json({ message: 'Error retrieving images', error });
+            res.status(500).json({
+                message: 'Error retrieving images',
+                error
+            });
         }
     },
 }

@@ -27,28 +27,26 @@ const ImagePage = () => {
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [message, setMessage] = useState('');
+ 
+
   useEffect(() => {
     const fetchImages = async () => {
       try {
         const response = await fetch('https://ketrb-backend.onrender.com/images/allimages');
         const result = await response.json();
-        if (result.message) {
-          // Display the message from the backend if no images are found
-          setMessage(result.message);
-          setImages([]);
+
+        if (response.ok) {
+          setImages(result.images);
         } else {
-          // Set images from the result
-          setImages(result);
-          setMessage('');
+          console.error(result.message);
         }
-        setImages(Array.isArray(result) ? result : []);
       } catch (error) {
         console.error('Error fetching images:', error);
       }
     };
 
     fetchImages();
+
   }, []);
 
   const handleImageSelect = (event) => {
@@ -94,8 +92,7 @@ const ImagePage = () => {
       if (response.ok) {
         const result = await response.json();
         setAlertMessage("Image uploaded successfully!");
-        setImageFile(null); // Clear file input
-        window.location.href = '/images'; 
+        window.location.href = '/images';
       } else {
         setAlertMessage("Failed to upload image.");
       }
@@ -260,8 +257,8 @@ const ImagePage = () => {
                 ))
               ) : (
                 <div className="col-span-full flex items-center justify-center">
-                <p className="text-center text-gray-500">No images available.</p>
-              </div>
+                  <p className="text-center text-gray-500">No images available.</p>
+                </div>
               )}
 
             </div>
