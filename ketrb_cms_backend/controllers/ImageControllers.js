@@ -7,19 +7,20 @@ const upload = multer({ dest: 'uploads/' });
 module.exports = {
     // Add an image
     AddImage: async (req, res) => {
-        const { status } = req.body;
-        console.log('Uploaded file:', req.body); // Debugging line
+        const { status, image } = req.body; // Expecting base64 string in 'image'
 
         if (!image) {
-            return res.status(400).send('No image uploaded.');
+            return res.status(400).send('No image provided.');
         }
 
-        const imageName = `ketrb_img${Date.now()}${path.extname(req.file.originalname)}`;
-        const imagePath = path.join(__dirname, '../uploads', imageName);
-        console.log('File uploaded to:', imagePath);
-
         try {
-            await fs.promises.rename(image.path, imagePath);
+            // Extract base64 data
+            const base64Data = image.replace(/^data:image\/png;base64,/, "");
+            const imageName = `ketrb_img${Date.now()}.png`;
+            const imagePath = path.join(__dirname, '../uploads', imageName);
+
+            // Write image to file
+            await fs.promises.writeFile(imagePath, base64Data, 'base64');
 
             // Save image info to the database
             await query('INSERT INTO images (name, status, image) VALUES (?, ?, ?)', [imageName, status, imagePath]);

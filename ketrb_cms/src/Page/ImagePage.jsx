@@ -68,15 +68,18 @@ const ImagePage = () => {
     setLoading(true);
     setAlertMessage("");
 
-    // Create FormData and append image and status
-    const formData = new FormData();
-    formData.append('image', imageFile);  // 'image' should match the field name in multer
-    formData.append('status', status);
+    const payload = {
+      image: imageFile, 
+      status: status
+    };
 
     try {
       const response = await fetch('https://ketrb-backend.onrender.com/images/add', {
         method: 'POST',
-        body: formData, // Use FormData
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
       });
 
       if (response.ok) {
@@ -93,6 +96,8 @@ const ImagePage = () => {
       setLoading(false);
     }
   };
+
+
 
   return (
     <div className="flex min-h-screen w-full flex-col">

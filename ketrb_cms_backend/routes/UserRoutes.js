@@ -8,8 +8,7 @@ const {
     getAUser,
     Logout,
     checkAuth,
-    refreshUserStatus,
-    updatePassword,
+    refreshUserStatus
 } = require('../controllers/UserControllers');
 
 // create and insert data into the table
