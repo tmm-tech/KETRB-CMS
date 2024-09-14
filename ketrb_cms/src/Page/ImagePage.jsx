@@ -37,6 +37,7 @@ const ImagePage = () => {
 
         if (response.ok) {
           setImages(result.images);
+          console.log("Answer: ",images);
         } else {
           console.log("Error");
         }

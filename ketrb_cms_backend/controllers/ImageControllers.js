@@ -92,7 +92,7 @@ module.exports = {
                 // No images found
                 return res.status(200).json({ message: 'No images found', images: [] });
             }
-            console.log(`${req.protocol}://${req.get('host')}/uploads/${path.basename(image.image)}`);
+
             // Map over the results to construct the full image URL
             const imagesWithUrl = result.map(image => ({
                 ...image,
