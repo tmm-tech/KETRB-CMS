@@ -38,7 +38,7 @@ const ImagePage = () => {
         if (response.ok) {
           setImages(result.images);
         } else {
-          console.log(result.message);
+          console.log("Error");
         }
       } catch (error) {
         console.log('Error fetching images:', error);

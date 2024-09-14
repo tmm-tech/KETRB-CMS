@@ -107,9 +107,10 @@ module.exports = {
             });
         } catch (error) {
             res.status(500).json({
-                message: 'Error retrieving images',
-                error
+                message: 'Error retrieving images'
+                
             });
+            console.log("Error:", error);
         }
     },
 }
