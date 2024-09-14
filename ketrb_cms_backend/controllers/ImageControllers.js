@@ -98,7 +98,7 @@ module.exports = {
                 url: `${req.protocol}://${req.get('host')}/uploads/${path.basename(image.image)}`, // Construct the full URL
                 status: image.status,
                 registered_at: image.registered_at,
-                title: image.fullname // Include the title
+                title: image.filename // Include the title
             }));
 
             res.status(200).json({
