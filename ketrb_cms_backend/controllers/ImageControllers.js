@@ -2,28 +2,27 @@ const { query } = require('../config/sqlConfig');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const upload = multer({ dest: 'uploads/' }); 
+const upload = multer({ dest: 'uploads/' });
 
 module.exports = {
     // Add an image
     AddImage: [
         upload.single('image'), // 'image' should match the name in FormData
-        
+
         async (req, res) => {
             const { status } = req.body;
             const image = req.file;
-            console.log('Request file:', req.file); // Check if the file is present
-            console.log('Request body:', req.body); // Check if other fields are present
-            
+            console.log('Uploaded file:', image); // Debugging line
+
             const imageName = `ketrb_img${Date.now()}`;
             const imagePath = path.join(__dirname, '../uploads', imageName);
             console.log('File uploaded to:', imagePath);
             try {
                 await fs.promises.rename(image.path, imagePath);
-    
+
                 // Save image info to the database
                 await query('INSERT INTO images (name, status, image) VALUES (?, ?, ?)', [imageName, status, imagePath]);
-    
+
                 res.status(201).json({ message: 'Image uploaded successfully', imageName, status });
             } catch (error) {
                 console.log('Error uploading image:', error);
@@ -31,7 +30,7 @@ module.exports = {
             }
         }
     ],
-    
+
     // Update an image's status
     UpdateImage: async (req, res) => {
         const { id } = req.params;
