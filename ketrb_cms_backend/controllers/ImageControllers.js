@@ -23,7 +23,7 @@ module.exports = {
             await fs.promises.writeFile(filePath, base64Data, 'base64');
              
             // Save image info to the database
-            await query('INSERT INTO images (name, status, image) VALUES (?, ?, ?)', [fileName, status, filePath]);
+            await query('INSERT INTO images (name, status, image) VALUES ($1, $2, $3)', [fileName, status, filePath]);
 
             res.status(201).json({ message: 'Image uploaded successfully!', filePath });
         } catch (error) {
