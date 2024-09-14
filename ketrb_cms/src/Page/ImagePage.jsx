@@ -33,7 +33,6 @@ const ImagePage = () => {
       try {
         const response = await fetch('https://ketrb-backend.onrender.com/images/allimages');
         const result = await response.json();
-        console.log('Fetched images:', result); // Log the result to inspect the structure
         setImages(Array.isArray(result) ? result : []);
       } catch (error) {
         console.error('Error fetching images:', error);
@@ -71,7 +70,7 @@ const ImagePage = () => {
     const formData = new FormData();
     formData.append('image', imageFile); // Make sure 'image' matches the backend field name
     formData.append('status', status); // Assuming you want to send status as well
-  
+    console.log('Fetched images:', formData); // Log the result to inspect the structure
     try {
       const response = await fetch('https://ketrb-backend.onrender.com/images/add', {
         method: 'POST',
