@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
@@ -22,6 +22,22 @@ const ImagePage = () => {
   const storedUser = localStorage.getItem('user');
   const user = JSON.parse(storedUser);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [status, setStatus] = useState(user.roles === 'editor' ? 'Pending' : 'Published');
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch('https://ketrb-backend.onrender.com/images/allimages'); // Replace with your backend URL
+        const result = await response.json();
+        setImages(result);
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    };
+
+    fetchImages();
+  }, []);
+
   const handleImageSelect = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -34,6 +50,31 @@ const ImagePage = () => {
   };
   const handleCancel = () => {
     setSelectedImage(null);
+  };
+  const handleUpload = async () => {
+    if (!imageFile) return;
+
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    formData.append('status', status);
+
+    try {
+      const response = await fetch('https://ketrb-backend.onrender.com/images/add', { // Replace with your backend URL
+        method: 'POST',
+        body: formData,
+      });
+      const result = await response.json();
+      if (result.success) {
+        alert('Image uploaded successfully!');
+        setSelectedImage(null);
+        setImageFile(null);
+      } else {
+        alert('Image upload failed.');
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Error uploading image.');
+    }
   };
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -127,107 +168,44 @@ const ImagePage = () => {
                       {selectedImage && (
                         <Button onClick={handleCancel} variant="outline">Cancel</Button>
                       )}
-                      <Button type="submit" variant="black">Save Image</Button>
+                      <Button type="submit" variant="black" onClick={handleUpload}>Save Image</Button>
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              <div className="bg-background rounded-lg shadow-lg overflow-hidden">
-                <img
-                  src="https://via.placeholder.com/150"
-                  alt="Image"
-                  width={400}
-                  height={300}
-                  className="w-full h-48 object-cover"
-                  style={{ aspectRatio: "400/300", objectFit: "cover" }}
-                />
-                <div className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm font-medium">Image 1</div>
-                    <Badge variant="pending" className="bg-yellow-500 text-yellow-50">Pending</Badge>
-                  </div>
-                  <div className="text-muted-foreground text-sm mt-1">Uploaded 2 days ago</div>
-                  <div className="flex items-center justify-end gap-2 mt-4">
-                    <Button variant="outline" size="sm">
-                      <TrashIcon className="h-4 w-4" />
-                    </Button>
-                    {user.roles === 'administrator' && (
-                      <Button size="sm" variant="black">Approve</Button>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className="bg-background rounded-lg shadow-lg overflow-hidden">
-                <img
-                  src="https://via.placeholder.com/150"
-                  alt="Image"
-                  width={400}
-                  height={300}
-                  className="w-full h-48 object-cover"
-                  style={{ aspectRatio: "400/300", objectFit: "cover" }}
-                />
-                <div className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm font-medium">Image 2</div>
-                    <Badge variant="published" className="bg-green-500 text-green-50">Published</Badge>
-                  </div>
-                  <div className="text-muted-foreground text-sm mt-1">Uploaded 1 week ago</div>
-                  <div className="flex items-center justify-end gap-2 mt-4">
-                    <Button variant="outline" size="sm">
-                      <TrashIcon className="h-4 w-4" />
-                    </Button>
+              {images.map((image) => (
+                <div key={image.id} className="bg-background rounded-lg shadow-lg overflow-hidden">
+                  <img
+                    src={image.url} // Assuming `image.url` holds the image URL
+                    alt={image.title || "Image"} // Assuming `image.title` holds the image title
+                    width={400}
+                    height={300}
+                    className="w-full h-48 object-cover"
+                    style={{ aspectRatio: "400/300", objectFit: "cover" }}
+                  />
+                  <div className="p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm font-medium">{image.title || "Untitled"}</div>
+                      <Badge variant={image.status === 'Pending' ? 'pending' : 'approved'} className={image.status === 'Pending' ? 'bg-yellow-500 text-yellow-50' : 'bg-green-500 text-green-50'}>
+                        {image.status}
+                      </Badge>
+                    </div>
+                    <div className="text-muted-foreground text-sm mt-1">
+                      {`Uploaded ${new Date(image.uploadDate).toLocaleDateString()}`}
+                    </div>
+                    <div className="flex items-center justify-end gap-2 mt-4">
+                      <Button variant="outline" size="sm">
+                        <TrashIcon className="h-4 w-4" />
+                      </Button>
+                      {user.roles === 'administrator' && (
+                        <Button size="sm" variant="black">Approve</Button>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="bg-background rounded-lg shadow-lg overflow-hidden">
-                <img
-                  src="https://via.placeholder.com/150"
-                  alt="Image"
-                  width={400}
-                  height={300}
-                  className="w-full h-48 object-cover"
-                  style={{ aspectRatio: "400/300", objectFit: "cover" }}
-                />
-                <div className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm font-medium">Image 3</div>
-                    <Badge variant="pending" className="bg-yellow-500 text-yellow-50">Pending</Badge>
-                  </div>
-                  <div className="text-muted-foreground text-sm mt-1">Uploaded 3 days ago</div>
-                  <div className="flex items-center justify-end gap-2 mt-4">
-                    <Button variant="outline" size="sm">
-                      <TrashIcon className="h-4 w-4" />
-                    </Button>
-                    {user.roles === 'administrator' && (
-                      <Button size="sm" variant="black">Approve</Button>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className="bg-background rounded-lg shadow-lg overflow-hidden">
-                <img
-                  src="https://via.placeholder.com/150"
-                  alt="Image"
-                  width={400}
-                  height={300}
-                  className="w-full h-48 object-cover"
-                  style={{ aspectRatio: "400/300", objectFit: "cover" }}
-                />
-                <div className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm font-medium">Image 4</div>
-                    <Badge variant="published" className="bg-green-500 text-green-50">Published</Badge>
-                  </div>
-                  <div className="text-muted-foreground text-sm mt-1">Uploaded 2 weeks ago</div>
-                  <div className="flex items-center justify-end gap-2 mt-4">
-                    <Button variant="outline" size="sm">
-                      <TrashIcon className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </Tabs>
         </main >
