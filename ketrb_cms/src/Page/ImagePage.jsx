@@ -174,9 +174,9 @@ const ImagePage = () => {
                         onChange={handleImageSelect}
                         className="block w-full"
                       />
-                      {imageFile && (
+                       {imageFile && (
                         <img
-                          src={images}
+                          src={imageFile} // Use imageFile here for preview
                           alt="Selected Image"
                           width={300}
                           height={300}
