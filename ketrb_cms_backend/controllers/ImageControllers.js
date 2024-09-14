@@ -7,26 +7,27 @@ const fs = require('fs');
 module.exports = {
     // Add an image
     AddImage: async (req, res) => {
-        const { status, image } = req.body;
+        const { image, status } = req.body;
 
         if (!image) {
-            return res.status(400).send('No image uploaded.');
+            return res.status(400).json({ message: 'No image data provided' });
         }
 
-        const imageName = `ketrb_img${Date.now()}${path.extname(image.originalname)}`;
-        const imagePath = path.join(__dirname, '../uploads', imageName);
-        console.log('File uploaded to:', imagePath);
-
         try {
-            // Rename or move file if necessary
-            await fs.promises.rename(image.path, imagePath);
+            // Decode base64 image
+            const base64Data = image.replace(/^data:image\/png;base64,/, "");
+            const fileName = `${Date.now()}.png`;
+            const filePath = path.join(__dirname, 'uploads', fileName);
 
+            // Save the image to the server
+            await fs.promises.writeFile(filePath, base64Data, 'base64');
+             vm
             // Save image info to the database
-            await query('INSERT INTO images (name, status, image) VALUES (?, ?, ?)', [imageName, status, imagePath]);
+            await query('INSERT INTO images (name, status, image) VALUES (?, ?, ?)', [fileName, status, filePath]);
 
-            res.status(201).json({ message: 'Image uploaded successfully', imageName, status });
+            res.status(201).json({ message: 'Image uploaded successfully!', filePath });
         } catch (error) {
-            console.log('Error uploading image:', error);
+            console.error('Error uploading image:', error);
             res.status(500).json({ message: 'Error uploading image', error });
         }
     },

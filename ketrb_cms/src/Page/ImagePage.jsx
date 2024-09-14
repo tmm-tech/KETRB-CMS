@@ -47,7 +47,7 @@ const ImagePage = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImageFile(reader.result);
+        setImageFile(reader.result.split(',')[1]);
       };
       reader.readAsDataURL(file);
     }
@@ -185,7 +185,7 @@ const ImagePage = () => {
                       />
                       {imageFile && (
                         <img
-                          src={imageFile} // Use imageFile here for preview
+                          src={`data:image/png;base64,${imageFile}`} 
                           alt="Selected Image"
                           width={300}
                           height={300}
