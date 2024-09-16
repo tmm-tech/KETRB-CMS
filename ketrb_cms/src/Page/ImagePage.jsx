@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
@@ -8,17 +7,10 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLab
 import { Tabs, TabsList, TabsTrigger } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../Component/card';
 import { Badge } from '../Component/badge';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../Component/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../Component/dialog";
 import { Input } from "../Component/input";
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
+
 const ImagePage = () => {
   const storedUser = localStorage.getItem('user');
   const user = JSON.parse(storedUser);
@@ -27,10 +19,10 @@ const ImagePage = () => {
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
-
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -41,21 +33,20 @@ const ImagePage = () => {
         if (response.ok) {
           setImages(result.images);
         } else {
-          console.log("Error");
+          setAlertMessage("Failed to fetch images.");
         }
       } catch (error) {
         console.log('Error fetching images:', error);
+        setAlertMessage("An error occurred while fetching images.");
       }
     };
 
     fetchImages();
-
   }, []);
 
   const handleCancel = () => {
     setImageFile(null);
   };
-
 
   const handleUpload = async (event) => {
     event.preventDefault();
@@ -68,10 +59,10 @@ const ImagePage = () => {
     setLoading(true);
     setAlertMessage("");
 
-    // Create FormData to send the image file
     const formData = new FormData();
     formData.append('image', imageFile);
     formData.append('status', status);
+
     try {
       const response = await fetch('https://ketrb-backend.onrender.com/images/add', {
         method: 'POST',
@@ -79,7 +70,6 @@ const ImagePage = () => {
       });
 
       if (response.ok) {
-        const result = await response.json();
         setAlertMessage("Image uploaded successfully!");
         window.location.href = '/images';
       } else {
@@ -96,11 +86,7 @@ const ImagePage = () => {
   const handleImageSelect = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImageFile(reader.result);
-      };
-      reader.readAsDataURL(file);
+      setImageFile(URL.createObjectURL(file)); 
     }
   };
 
@@ -125,7 +111,6 @@ const ImagePage = () => {
               <CardContent>
                 <div className="flex items-center justify-between">
                   <div className="text-4xl font-bold">89</div>
-
                 </div>
               </CardContent>
               <CardFooter>
@@ -179,7 +164,7 @@ const ImagePage = () => {
                       <DialogTitle>Upload Image</DialogTitle>
                       <DialogDescription>Select an image to upload for the user profile.</DialogDescription>
                     </DialogHeader>
-                    <form onSubmit={handleUpload} enctype="multipart/form-data">
+                    <form onSubmit={handleUpload}>
                       <div className="grid gap-4 py-4">
                         <Input
                           id="image"
@@ -226,113 +211,27 @@ const ImagePage = () => {
                 images.map((image) => (
                   <div key={image.id} className="bg-background rounded-lg shadow-lg overflow-hidden">
                     <img
-                      src={image.url}
-                      alt={image.title || "Image"}
+                      src={image.filepath}
+                      alt={image.image || "Image"}
                       width={400}
                       height={300}
                       className="w-full h-48 object-cover"
-                      style={{ aspectRatio: "400/300", objectFit: "cover" }}
                     />
                     <div className="p-4">
-                      <div className="flex items-center justify-between">
-                        <div className="text-sm font-medium">{image.title || "Untitled"}</div>
-                        <Badge
-                          variant={image.status === 'pending' ? 'pending' : 'approved'}
-                          className={image.status === 'pending' ? 'bg-yellow-500 text-yellow-50' : 'bg-green-500 text-green-50'}
-                        >
-                          {capitalizeFirstLetter(image.status)}
-                        </Badge>
-                      </div>
-                      <div className="text-muted-foreground text-sm mt-1">
-                        {`Uploaded ${new Date(image.registered_at).toLocaleDateString()}`}
-                      </div>
-                      <div className="flex items-center justify-end gap-2 mt-4">
-                        <Button variant="outline" size="sm">
-                          <TrashIcon className="h-4 w-4" />
-                        </Button>
-                        {user.roles === 'administrator' && image.status === 'Pending' && (
-                          <Button size="sm" variant="black">Approve</Button>
-                        )}
-                      </div>
+                      <h3 className="text-lg font-bold">{image.image}</h3>
+                      <p className="text-sm text-muted-foreground">{capitalizeFirstLetter(image.status)}</p>
                     </div>
                   </div>
                 ))
               ) : (
-                <div className="col-span-full flex items-center justify-center">
-                  <p className="text-center text-gray-500">No images available.</p>
-                </div>
+                <p>No images available</p>
               )}
-
             </div>
           </Tabs>
-        </main >
-      </div >
-    </div >
+        </main>
+      </div>
+    </div>
   );
 };
 
 export default ImagePage;
-
-
-
-function FilterIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
-    </svg>
-  )
-}
-
-
-function PlusIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M5 12h14" />
-      <path d="M12 5v14" />
-    </svg>
-  )
-}
-
-
-function TrashIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M3 6h18" />
-      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-    </svg>
-  )
-}
