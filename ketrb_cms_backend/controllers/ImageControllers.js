@@ -22,7 +22,7 @@ module.exports = {
 
         try {
             // Insert image details into PostgreSQL
-            const result = await pool.query(
+            const result = await query(
                 'INSERT INTO images (filepath, image, status, registered_at) VALUES ($1, $2, $3, $4) RETURNING *',
                 [imageUrl, filename, status, registeredAt]
             );
@@ -88,7 +88,7 @@ module.exports = {
     getAllImage: async (req, res) => {
         try {
             // Query to retrieve all images from the database
-            const result = await pool.query('SELECT * FROM images');
+            const result = await query('SELECT * FROM images');
 
             // Extract the rows from the result
             const images = result.rows;
