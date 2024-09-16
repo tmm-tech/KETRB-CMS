@@ -8,21 +8,23 @@ module.exports = {
     AddImage: async (req, res) => {
         const { status } = req.body;
         const file = req.file;
-        console.log("File: ", req.file)
+        console.log("File: ", req.file);
+
         // Check if a file is uploaded
         if (!file) {
             return res.status(400).json({ message: 'No file uploaded' });
         }
 
         // Ensure the correct file path is saved
-        const imageUrl = `uploads/${file.filename}`; // File path relative to the root directory
+        const imageUrl = `gallery/${file.filename}`; // Updated to use the correct 'gallery' folder
         const registeredAt = new Date(); // Get the current timestamp
+        const filename = file.filename;
 
         try {
             // Insert image details into PostgreSQL
             const result = await pool.query(
-                'INSERT INTO images (file_path, status, registered_at) VALUES ($1, $2, $3) RETURNING *',
-                [imageUrl, status, registeredAt]
+                'INSERT INTO images (filepath, image, status, registered_at) VALUES ($1, $2, $3, $4) RETURNING *',
+                [imageUrl, filename, status, registeredAt]
             );
 
             // Return success message and the newly inserted image data
@@ -99,7 +101,7 @@ module.exports = {
             // Map over the images and construct the full image URL
             const imagesWithUrl = images.map(image => ({
                 ...image,
-                url: `${req.protocol}://${req.get('host')}/uploads/${path.basename(image.filepath)}`, // Construct the full URL for each image
+                url: `${req.protocol}://${req.get('host')}/gallery/${path.basename(image.filepath)}`, // Correct URL path to 'gallery'
                 status: image.status,
                 registered_at: image.registered_at,
                 title: image.image // Assuming 'filename' refers to the title

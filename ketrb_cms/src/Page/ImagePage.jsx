@@ -68,10 +68,10 @@ const ImagePage = () => {
     setLoading(true);
     setAlertMessage("");
 
-       // Create FormData to send the image file
-       const formData = new FormData();
-       formData.append('image', imageFile);
-       formData.append('status', status);
+    // Create FormData to send the image file
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    formData.append('status', status);
     try {
       const response = await fetch('https://ketrb-backend.onrender.com/images/add', {
         method: 'POST',
@@ -179,43 +179,44 @@ const ImagePage = () => {
                       <DialogTitle>Upload Image</DialogTitle>
                       <DialogDescription>Select an image to upload for the user profile.</DialogDescription>
                     </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                      <Input
-                        id="image"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageSelect}
-                        className="block w-full"
-                        name="image"
-                      />
-                      {imageFile && (
-                        <img
-                          src={imageFile}
-                          alt="Selected Image"
-                          width={300}
-                          height={300}
-                          className="rounded-md"
-                          style={{ aspectRatio: "1 / 1", objectFit: "cover" }}
+                    <form onSubmit={handleUpload} enctype="multipart/form-data">
+                      <div className="grid gap-4 py-4">
+                        <Input
+                          id="image"
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageSelect}
+                          className="block w-full"
+                          name="image"
                         />
-                      )}
-                    </div>
-                    <DialogFooter>
-                      {imageFile && (
-                        <Button onClick={handleCancel} variant="outline">Cancel</Button>
-                      )}
-                      <Button
-                        type="submit"
-                        variant="black"
-                        onClick={handleUpload}
-                        disabled={loading}
-                      >
-                        {loading ? (
-                          <span>Loading...</span>
-                        ) : (
-                          'Save Image'
+                        {imageFile && (
+                          <img
+                            src={imageFile}
+                            alt="Selected Image"
+                            width={300}
+                            height={300}
+                            className="rounded-md"
+                            style={{ aspectRatio: "1 / 1", objectFit: "cover" }}
+                          />
                         )}
-                      </Button>
-                    </DialogFooter>
+                      </div>
+                      <DialogFooter>
+                        {imageFile && (
+                          <Button onClick={handleCancel} variant="outline">Cancel</Button>
+                        )}
+                        <Button
+                          type="submit"
+                          variant="black"
+                          disabled={loading}
+                        >
+                          {loading ? (
+                            <span>Loading...</span>
+                          ) : (
+                            'Save Image'
+                          )}
+                        </Button>
+                      </DialogFooter>
+                    </form>
                   </DialogContent>
                 </Dialog>
               </div>

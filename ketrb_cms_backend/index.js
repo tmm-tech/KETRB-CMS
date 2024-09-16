@@ -6,19 +6,29 @@ const jwt = require('jsonwebtoken');
 const UserRoutes = require('./routes/UserRoutes');
 const cookieParser = require('cookie-parser');
 const ImageRoutes = require('./routes/ImageRoutes');
-const app = express();
-app.use(cookieParser());
+const app = express(); 
+
 // Middleware setup
+app.use(cookieParser());
+
 const corsOptions = {
   origin: 'https://ketrb-cms-one.vercel.app', // Your frontend URL
   credentials: true, // Allow cookies to be sent
   methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
   allowedHeaders: 'Content-Type,Authorization' // Allowed headers
 };
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(cors(corsOptions));
-app.use(express.urlencoded({ extended: true }));
+
+
+
+// Static files and views
+app.use(express.static(path.join(__dirname, 'public')));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "resources/views"));
+
+// Body parsing
 app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true }));
 
 // Middleware to add token to the request
 const addTokenToRequest = async (req, res, next) => {
