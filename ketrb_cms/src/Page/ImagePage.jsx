@@ -60,6 +60,7 @@ const ImagePage = () => {
     setAlertMessage("");
 
     const formData = new FormData();
+    console.log("Image: ", imageFile)
     formData.append('image', imageFile);
     formData.append('status', status);
 
@@ -164,10 +165,9 @@ const ImagePage = () => {
                       <DialogTitle>Upload Image</DialogTitle>
                       <DialogDescription>Select an image to upload for the user profile.</DialogDescription>
                     </DialogHeader>
-                    <form onSubmit={handleUpload}>
+                    <form onSubmit={handleUpload} encType="multipart/form-data">
                       <div className="grid gap-4 py-4">
                         <Input
-                          id="image"
                           type="file"
                           accept="image/*"
                           onChange={handleImageSelect}
@@ -211,8 +211,8 @@ const ImagePage = () => {
                 images.map((image) => (
                   <div key={image.id} className="bg-background rounded-lg shadow-lg overflow-hidden">
                     <img
-                      src={image.url}
-                      alt={image.title || "Image"}
+                      src={image.filepath}
+                      alt={image.image || "Image"}
                       width={400}
                       height={300}
                       className="w-full h-48 object-cover"
@@ -220,7 +220,7 @@ const ImagePage = () => {
                     />
                     <div className="p-4">
                       <div className="flex items-center justify-between">
-                        <div className="text-sm font-medium">{image.title || "Untitled"}</div>
+                        <div className="text-sm font-medium">{image.image || "Untitled"}</div>
                         <Badge
                           variant={image.status === 'pending' ? 'pending' : 'approved'}
                           className={image.status === 'pending' ? 'bg-yellow-500 text-yellow-50' : 'bg-green-500 text-green-50'}
@@ -235,7 +235,7 @@ const ImagePage = () => {
                         <Button variant="outline" size="sm">
                           <TrashIcon className="h-4 w-4" />
                         </Button>
-                        {user.roles === 'administrator' && image.status === 'Pending' && (
+                        {user.roles === 'administrator' && image.status === 'pending' && (
                           <Button size="sm" variant="black">Approve</Button>
                         )}
                       </div>
