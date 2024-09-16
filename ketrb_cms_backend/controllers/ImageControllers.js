@@ -1,5 +1,4 @@
 const { query } = require('../config/sqlConfig');
-const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
@@ -9,7 +8,7 @@ module.exports = {
     AddImage: async (req, res) => {
         const { status } = req.body;
         const file = req.file;
-
+        console.log("File: ", req.file)
         // Check if a file is uploaded
         if (!file) {
             return res.status(400).json({ message: 'No file uploaded' });
@@ -86,37 +85,37 @@ module.exports = {
     // Get all images
     getAllImage: async (req, res) => {
         try {
-                   // Query to retrieve all images from the database
-        const result = await pool.query('SELECT * FROM images');
+            // Query to retrieve all images from the database
+            const result = await pool.query('SELECT * FROM images');
 
-        // Extract the rows from the result
-        const images = result.rows;
+            // Extract the rows from the result
+            const images = result.rows;
 
-        // Check if the images array is empty
-        if (images.length === 0) {
-            return res.status(200).json({ message: 'No images found', images: [] });
+            // Check if the images array is empty
+            if (images.length === 0) {
+                return res.status(200).json({ message: 'No images found', images: [] });
+            }
+
+            // Map over the images and construct the full image URL
+            const imagesWithUrl = images.map(image => ({
+                ...image,
+                url: `${req.protocol}://${req.get('host')}/uploads/${path.basename(image.filepath)}`, // Construct the full URL for each image
+                status: image.status,
+                registered_at: image.registered_at,
+                title: image.image // Assuming 'filename' refers to the title
+            }));
+
+            // Return the response with the retrieved images and full URLs
+            res.status(200).json({
+                message: 'Images retrieved successfully',
+                images: imagesWithUrl
+            });
+        } catch (error) {
+            console.error("Error retrieving images:", error);
+            res.status(500).json({
+                message: 'Error retrieving images',
+                error: error.message // Include error details for debugging
+            });
         }
-
-        // Map over the images and construct the full image URL
-        const imagesWithUrl = images.map(image => ({
-            ...image,
-            url: `${req.protocol}://${req.get('host')}/uploads/${path.basename(image.filepath)}`, // Construct the full URL for each image
-            status: image.status,
-            registered_at: image.registered_at,
-            title: image.image // Assuming 'filename' refers to the title
-        }));
-
-        // Return the response with the retrieved images and full URLs
-        res.status(200).json({
-            message: 'Images retrieved successfully',
-            images: imagesWithUrl
-        });
-    } catch (error) {
-        console.error("Error retrieving images:", error);
-        res.status(500).json({
-            message: 'Error retrieving images',
-            error: error.message // Include error details for debugging
-        });
-    }
     },
 }
