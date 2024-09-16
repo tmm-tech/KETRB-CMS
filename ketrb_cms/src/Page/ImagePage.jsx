@@ -113,7 +113,7 @@ const ImagePage = () => {
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between">
-                  <div className="text-4xl font-bold">89</div>
+                  <div className="text-4xl font-bold">{images.length}</div>
                 </div>
               </CardContent>
               <CardFooter>
