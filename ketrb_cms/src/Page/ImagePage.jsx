@@ -19,7 +19,7 @@ const ImagePage = () => {
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-
+  const [previewUrl, setPreviewUrl] = useState("");
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
@@ -87,7 +87,9 @@ const ImagePage = () => {
   const handleImageSelect = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setImageFile(URL.createObjectURL(file));
+      setImageFile(file); // Save the actual file
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
     }
   };
 
@@ -174,9 +176,9 @@ const ImagePage = () => {
                           className="block w-full"
                           name="image"
                         />
-                        {imageFile && (
+                        {previewUrl && (
                           <img
-                            src={imageFile}
+                            src={previewUrl}
                             alt="Selected Image"
                             width={300}
                             height={300}
@@ -186,7 +188,7 @@ const ImagePage = () => {
                         )}
                       </div>
                       <DialogFooter>
-                        {imageFile && (
+                        {previewUrl && (
                           <Button onClick={handleCancel} variant="outline">Cancel</Button>
                         )}
                         <Button
