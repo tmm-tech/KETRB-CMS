@@ -213,8 +213,8 @@ const ImagePage = () => {
                 images.map((image) => (
                   <div key={image.id} className="bg-background rounded-lg shadow-lg overflow-hidden">
                     <img
-                      src={image.filepath}
-                      alt={image.image || "Image"}
+                      src={image.url}
+                      alt={image.title || "Image"}
                       width={400}
                       height={300}
                       className="w-full h-48 object-cover"
@@ -222,7 +222,7 @@ const ImagePage = () => {
                     />
                     <div className="p-4">
                       <div className="flex items-center justify-between">
-                        <div className="text-sm font-medium">{image.image || "Untitled"}</div>
+                        <div className="text-sm font-medium">{image.title || "Untitled"}</div>
                         <Badge
                           variant={image.status === 'pending' ? 'pending' : 'approved'}
                           className={image.status === 'pending' ? 'bg-yellow-500 text-yellow-50' : 'bg-green-500 text-green-50'}
