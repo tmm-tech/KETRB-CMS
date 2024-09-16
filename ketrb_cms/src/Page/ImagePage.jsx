@@ -52,16 +52,6 @@ const ImagePage = () => {
 
   }, []);
 
-  const handleImageSelect = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImageFile(reader.result.split(',')[1]);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
   const handleCancel = () => {
     setImageFile(null);
   };
@@ -78,18 +68,14 @@ const ImagePage = () => {
     setLoading(true);
     setAlertMessage("");
 
-    const payload = {
-      image: imageFile,
-      status: status
-    };
-
+       // Create FormData to send the image file
+       const formData = new FormData();
+       formData.append('image', imageFile);
+       formData.append('status', status);
     try {
       const response = await fetch('https://ketrb-backend.onrender.com/images/add', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
+        body: formData,
       });
 
       if (response.ok) {
@@ -107,7 +93,16 @@ const ImagePage = () => {
     }
   };
 
-
+  const handleImageSelect = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageFile(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -195,7 +190,7 @@ const ImagePage = () => {
                       />
                       {imageFile && (
                         <img
-                          src={`data:image/png;base64,${imageFile}`}
+                          src={imageFile}
                           alt="Selected Image"
                           width={300}
                           height={300}

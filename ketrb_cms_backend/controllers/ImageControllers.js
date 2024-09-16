@@ -7,29 +7,33 @@ const fs = require('fs');
 module.exports = {
     // Add an image
     AddImage: async (req, res) => {
-        const { image, status } = req.body;
+        const { status } = req.body;
+        const file = req.file;
 
-        if (!image) {
-            return res.status(400).json({ message: 'No image data provided' });
+        // Check if a file is uploaded
+        if (!file) {
+            return res.status(400).json({ message: 'No file uploaded' });
         }
 
+        // Ensure the correct file path is saved
+        const imageUrl = `uploads/${file.filename}`; // File path relative to the root directory
+        const registeredAt = new Date(); // Get the current timestamp
+
         try {
-            // Decode base64 image
-            const base64Data = image.replace(/^data:image\/png;base64,/, "");
-            const fileName = `${Date.now()}.png`;
-            const filePath = path.join(__dirname, '/uploads', fileName);
+            // Insert image details into PostgreSQL
+            const result = await pool.query(
+                'INSERT INTO images (file_path, status, registered_at) VALUES ($1, $2, $3) RETURNING *',
+                [imageUrl, status, registeredAt]
+            );
 
-            // Save the image to the server
-            await fs.promises.writeFile(filePath, base64Data, 'base64');
-
-            // Save image info to the database
-            const queryText = 'INSERT INTO images (filename, status, image) VALUES ($1, $2, $3)';
-            await query(queryText, [fileName, status, filePath]);
-
-            res.status(201).json({ message: 'Image uploaded successfully!', filePath });
+            // Return success message and the newly inserted image data
+            res.json({
+                message: 'Image uploaded successfully',
+                image: result.rows[0], // Return the inserted row
+            });
         } catch (error) {
-            console.error('Error uploading image:', error);
-            res.status(500).json({ message: 'Error uploading image', error });
+            console.error('Error saving image to database:', error);
+            res.status(500).json({ message: 'Error saving image details to database' });
         }
     },
     // Update an image's status
@@ -82,35 +86,37 @@ module.exports = {
     // Get all images
     getAllImage: async (req, res) => {
         try {
-            const result = await query('SELECT * FROM images');
+                   // Query to retrieve all images from the database
+        const result = await pool.query('SELECT * FROM images');
 
-            // Extract the rows from the result
-            const images = result.rows;
+        // Extract the rows from the result
+        const images = result.rows;
 
-            // Check if images array is empty
-            if (images.length === 0) {
-                return res.status(200).json({ message: 'No images found', images: [] });
-            }
-
-            // Map over the results to construct the full image URL
-            const imagesWithUrl = images.map(image => ({
-                ...image,
-                url: `${req.protocol}://${req.get('host')}/uploads/${path.basename(image.image)}`, // Construct the full URL
-                status: image.status,
-                registered_at: image.registered_at,
-                title: image.filename // Include the title
-            }));
-
-            res.status(200).json({
-                message: 'Images retrieved successfully',
-                images: imagesWithUrl
-            });
-        } catch (error) {
-            res.status(500).json({
-                message: 'Error retrieving images'
-
-            });
-            console.log("Error:", error);
+        // Check if the images array is empty
+        if (images.length === 0) {
+            return res.status(200).json({ message: 'No images found', images: [] });
         }
+
+        // Map over the images and construct the full image URL
+        const imagesWithUrl = images.map(image => ({
+            ...image,
+            url: `${req.protocol}://${req.get('host')}/uploads/${path.basename(image.filepath)}`, // Construct the full URL for each image
+            status: image.status,
+            registered_at: image.registered_at,
+            title: image.image // Assuming 'filename' refers to the title
+        }));
+
+        // Return the response with the retrieved images and full URLs
+        res.status(200).json({
+            message: 'Images retrieved successfully',
+            images: imagesWithUrl
+        });
+    } catch (error) {
+        console.error("Error retrieving images:", error);
+        res.status(500).json({
+            message: 'Error retrieving images',
+            error: error.message // Include error details for debugging
+        });
+    }
     },
 }
