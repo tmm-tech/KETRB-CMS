@@ -16,6 +16,7 @@ const ProgramsAdd = () => {
     const [content, setContent] = useState("")
     const [publishedDate, setPublishedDate] = useState(new Date())
     const [author, setAuthor] = useState("")
+	const [status, setStatus] = useState(user.roles === 'editor' ? 'pending' : 'published');
     const [isDraft, setIsDraft] = useState(true)
     const handleTitleChange = (e) => setTitle(e.target.value)
     const handleImageChange = (e) => setImage(e.target.files[0])
@@ -24,6 +25,41 @@ const ProgramsAdd = () => {
     const handleAuthorChange = (e) => setAuthor(e.target.value)
     const handleSaveDraft = () => setIsDraft(true)
     const handlePublish = () => setIsDraft(false)
+	
+	const handleSaveDraft = async () => {
+  setIsDraft(true);
+  await handleSubmit('draft'); // Pass 'draft' as status
+};
+
+
+
+const handleSubmit = async (status) => {
+  const formData = new FormData();
+  formData.append('title', title);
+  formData.append('content', content);
+  formData.append('publishedDate', publishedDate.toISOString().split('T')[0]); // Format date
+  formData.append('author', author);
+  formData.append('status', status);
+  formData.append('image', image); // Image file
+
+  try {
+    const response = await fetch('https://ketrb-backend.onrender.com/programs/add', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (response.ok) {
+      setAlertMessage("Program added successfully!");
+      window.location.href = '/programs'; // Redirect after success
+    } else {
+      setAlertMessage("Failed to add program.");
+    }
+  } catch (error) {
+    console.error('Error adding program:', error);
+    setAlertMessage("An error occurred while adding the program.");
+  }
+};
+
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
             <SideNav />
@@ -117,7 +153,7 @@ const ProgramsAdd = () => {
                                             <Button variant="outline" onClick={handleSaveDraft}>
                                                 Save as Draft
                                             </Button>
-                                            <Button variant="black" onClick={handlePublish}>Publish</Button>
+                                            <Button variant="black" onClick={handleSubmit}>Publish</Button>
                                         </div>
                                     </form>
                                 </div>

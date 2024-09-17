@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const UserRoutes = require('./routes/UserRoutes');
 const cookieParser = require('cookie-parser');
 const ImageRoutes = require('./routes/ImageRoutes');
+const ProgramRoutes = require('./routes/ProgramRoutes');
+
 const app = express(); 
 
 // Middleware setup
@@ -50,7 +52,7 @@ app.use(addTokenToRequest);
 // Route handling
 app.use('/users', UserRoutes);
 app.use('/images', ImageRoutes);
-
+app.use('/programs', ProgramRoutes);
 app.get('/', (req, res) => {
     res.json({ message: "Confirmed Connection to KETRB CMS" });
 });

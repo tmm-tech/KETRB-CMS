@@ -49,10 +49,10 @@ const ImagePage = () => {
   };
 
 // Handle image approval
-const handleApprove = async (imageId) => {
-  try {
-    const response = await fetch(`https://ketrb-backend.onrender.com/images/update/${imageId}`, {
-      method: 'PUT',
+const handleApprove = async (id) => {
+  try {                      
+    const response = await fetch(`https://ketrb-backend.onrender.com/images/update/${id}`, {
+      method: 'PUT',                                                                 
       headers: {
         'Content-Type': 'application/json',
       },
@@ -73,9 +73,9 @@ const handleApprove = async (imageId) => {
 };
 
 // Handle image deletion
-const handleDelete = async (imageId) => {
-  try {
-    const response = await fetch(`https://ketrb-backend.onrender.com/images/delete/${imageId}`, {
+const handleDelete = async (id) => {
+  try {                     
+    const response = await fetch(`https://ketrb-backend.onrender.com/images/delete/${id}`, {
       method: 'DELETE',
     });
 
