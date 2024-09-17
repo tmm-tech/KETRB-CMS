@@ -7,7 +7,7 @@ module.exports = {
     // Add an image
     AddImage: async (req, res) => {
         const { status } = req.body;
-        const files = req.files;
+        const file = req.file;
         console.log("File: ", req.file);
 
         // Check if a file is uploaded
