@@ -48,46 +48,41 @@ const ImagePage = () => {
     setImageFile(null);
   };
 
- const handleUpload = async (event) => {
-  event.preventDefault();
+  const handleUpload = async (event) => {
+    event.preventDefault();
 
-  if (!imageFile || imageFile.length === 0) {
-    setAlertMessage("No file selected.");
-    return;
-  }
-
-  setLoading(true);
-  setAlertMessage("");
-
-  const formData = new FormData();
-  
-  // Append each selected file to the formData (use 'images' key for consistency with the backend)
-  for (let i = 0; i < imageFile.length; i++) {
-    formData.append('image', imageFile[i]); // Must match backend field name
-  }
-
-  // Append status if necessary
-  formData.append('status', status);
-
-  try {
-    const response = await fetch('https://ketrb-backend.onrender.com/images/add', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (response.ok) {
-      setAlertMessage("Images uploaded successfully!");
-      window.location.href = '/images';
-    } else {
-      setAlertMessage("Failed to upload images.");
+    if (!imageFile) {
+      setAlertMessage("No file selected.");
+      return;
     }
-  } catch (error) {
-    console.error('Error uploading images:', error);
-    setAlertMessage("An error occurred while uploading the images.");
-  } finally {
-    setLoading(false);
-  }
-};
+
+    setLoading(true);
+    setAlertMessage("");
+
+    const formData = new FormData();
+    console.log("Image: ", imageFile)
+    formData.append('image', imageFile);
+    formData.append('status', status);
+
+    try {
+      const response = await fetch('https://ketrb-backend.onrender.com/images/add', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        setAlertMessage("Image uploaded successfully!");
+        window.location.href = '/images';
+      } else {
+        setAlertMessage("Failed to upload image.");
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      setAlertMessage("An error occurred while uploading the image.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleImageSelect = (event) => {
     const file = event.target.files[0];

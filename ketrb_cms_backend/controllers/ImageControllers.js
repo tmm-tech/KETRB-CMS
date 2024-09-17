@@ -5,42 +5,37 @@ const fs = require('fs');
 
 module.exports = {
     // Add an image
-   AddImage: async (req, res) => {
-		const { status } = req.body;
-		const files = req.files; // This will be an array of files
-		const registeredAt = new Date(); // Get the current timestamp
+    AddImage: async (req, res) => {
+        const { status } = req.body;
+        const files = req.files;
+        console.log("File: ", req.file);
 
-		// Check if any files are uploaded
-		if (!files || files.length === 0) {
-			return res.status(400).json({ message: 'No files uploaded' });
-		}
+        // Check if a file is uploaded
+        if (!file) {
+            return res.status(400).json({ message: 'No file uploaded' });
+        }
 
-		try {
-			// Loop through each file and insert its details into the database
-			const insertPromises = files.map(async (file) => {
-				const imageUrl = `gallery/${file.filename}`; // Path to the uploaded file
-				const filename = file.filename;
+        // Ensure the correct file path is saved
+        const imageUrl = `gallery/${file.filename}`; // Updated to use the correct 'gallery' folder
+        const registeredAt = new Date(); // Get the current timestamp
+        const filename = file.filename;
 
-				// Insert each file into the database
-				return query(
-					'INSERT INTO images (filepath, image, status, registered_at) VALUES ($1, $2, $3, $4) RETURNING *',
-					[imageUrl, filename, status, registeredAt]
-				);
-			});
+        try {
+            // Insert image details into PostgreSQL
+            const result = await query(
+                'INSERT INTO images (filepath, image, status, registered_at) VALUES ($1, $2, $3, $4) RETURNING *',
+                [imageUrl, filename, status, registeredAt]
+            );
 
-			// Wait for all file insertions to complete
-			const results = await Promise.all(insertPromises);
-
-			// Return success message and the newly inserted images
-			res.json({
-				message: 'Images uploaded successfully',
-				images: results.map(result => result.rows[0]), // Return the inserted rows
-			});
-		} catch (error) {
-			console.error('Error saving images to the database:', error);
-			res.status(500).json({ message: 'Error saving image details to database' });
-		}
-
+            // Return success message and the newly inserted image data
+            res.json({
+                message: 'Image uploaded successfully',
+                image: result.rows[0], // Return the inserted row
+            });
+        } catch (error) {
+            console.error('Error saving image to database:', error);
+            res.status(500).json({ message: 'Error saving image details to database' });
+        }
     },
     // Update an image's status
     UpdateImage: async (req, res) => {
