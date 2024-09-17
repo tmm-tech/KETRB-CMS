@@ -51,8 +51,8 @@ const ImagePage = () => {
  const handleUpload = async (event) => {
   event.preventDefault();
 
-  if (!selectedFiles || selectedFiles.length === 0) {
-    setAlertMessage("No files selected.");
+  if (!imageFile || imageFile.length === 0) {
+    setAlertMessage("No file selected.");
     return;
   }
 
@@ -62,8 +62,8 @@ const ImagePage = () => {
   const formData = new FormData();
   
   // Append each selected file to the formData (use 'images' key for consistency with the backend)
-  for (let i = 0; i < selectedFiles.length; i++) {
-    formData.append('image', selectedFiles[i]); // Must match backend field name
+  for (let i = 0; i < imageFile.length; i++) {
+    formData.append('image', imageFile[i]); // Must match backend field name
   }
 
   // Append status if necessary
