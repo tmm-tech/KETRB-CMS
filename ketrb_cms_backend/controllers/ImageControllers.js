@@ -54,19 +54,12 @@ module.exports = {
     DeleteImage: async (req, res) => {
         const { id } = req.params;
 
-        try {
-            const result = await query('SELECT image FROM images WHERE id = $1', [id]);
-            const imagePath = result[0].path;
-
-            if (fs.existsSync(imagePath)) {
-                fs.unlinkSync(imagePath);
-            }
-
-            await query('DELETE FROM images WHERE id = $1', [id]);
-            res.status(200).json({ message: 'Image deleted successfully' });
-        } catch (error) {
-            res.status(500).json({ message: 'Error deleting image', error });
-        }
+		  try {
+			await query('DELETE FROM images WHERE id = $1', [id]);
+			res.status(200).json({ message: 'Image deleted successfully' });
+		  } catch (error) {
+			res.status(500).json({ message: 'Error deleting image', error });
+		  }
     },
     // Get a specific image by ID
     getAImage: async (req, res) => {
