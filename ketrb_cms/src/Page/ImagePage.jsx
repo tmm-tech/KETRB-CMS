@@ -48,6 +48,50 @@ const ImagePage = () => {
     setImageFile(null);
   };
 
+// Handle image approval
+const handleApprove = async (imageId) => {
+  try {
+    const response = await fetch(`https://ketrb-backend.onrender.com/images/update/${imageId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status: 'published' }), // Update status to 'published'
+    });
+
+    if (response.ok) {
+      setAlertMessage("Image approved successfully!");
+      // Optionally, you can refetch images or update UI state
+      window.location.reload(); // Refresh the page or refetch images
+    } else {
+      setAlertMessage("Failed to approve the image.");
+    }
+  } catch (error) {
+    console.error('Error approving image:', error);
+    setAlertMessage("An error occurred while approving the image.");
+  }
+};
+
+// Handle image deletion
+const handleDelete = async (imageId) => {
+  try {
+    const response = await fetch(`https://ketrb-backend.onrender.com/images/delete/${imageId}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      setAlertMessage("Image deleted successfully!");
+      // Optionally, you can refetch images or update UI state
+      window.location.reload(); // Refresh the page or refetch images
+    } else {
+      setAlertMessage("Failed to delete the image.");
+    }
+  } catch (error) {
+    console.error('Error deleting image:', error);
+    setAlertMessage("An error occurred while deleting the image.");
+  }
+};
+
   const handleUpload = async (event) => {
     event.preventDefault();
 
@@ -235,11 +279,11 @@ const ImagePage = () => {
                         {`Uploaded ${new Date(image.registered_at).toLocaleDateString()}`}
                       </div>
                       <div className="flex items-center justify-end gap-2 mt-4">
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" onClick={() => handleDelete(image.id)}>
                           <TrashIcon className="h-4 w-4" />
                         </Button>
                         {user.roles === 'administrator' && image.status === 'pending' && (
-                          <Button size="sm" variant="black">Approve</Button>
+                          <Button size="sm" variant="black" onClick={() => handleApprove(image.id)}>Approve</Button>
                         )}
                       </div>
                     </div>
