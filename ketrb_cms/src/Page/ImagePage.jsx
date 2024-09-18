@@ -144,10 +144,12 @@ const handleDelete = async (id) => {
         <HeaderNav />
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
           {alertMessage && (
-            <Alert>
-              <AlertTitle>Notification</AlertTitle>
-              <AlertDescription>{alertMessage}</AlertDescription>
-            </Alert>
+            <div className="fixed top-0 left-0 w-full z-50">
+				<Alert className="max-w-md mx-auto mt-4">
+				  <AlertTitle>Notification</AlertTitle>
+				  <AlertDescription>{alertMessage}</AlertDescription>
+				</Alert>
+			</div>
           )}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <Card>
