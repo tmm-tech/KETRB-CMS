@@ -9,7 +9,7 @@ const {
   UpdateProgram,
   ApproveProgram,
   DeleteProgram,
-} = require('../controllers/ProgramController');
+} = require('../controllers/ProgramControllers');
 const ProgramRoutes = express.Router();
 
 // Define the root directory and the upload folder path
