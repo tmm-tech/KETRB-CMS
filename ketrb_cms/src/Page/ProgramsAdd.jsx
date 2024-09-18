@@ -53,8 +53,8 @@ const ProgramsAdd = () => {
 			} catch (error) {
 				console.error("Error parsing user data from localStorage", error);
 			}
-		}
-	};
+		};
+
 
 
 	const handleSubmit = async (status) => {
