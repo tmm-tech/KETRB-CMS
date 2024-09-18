@@ -23,8 +23,7 @@ const ProgramsAdd = () => {
     const handleContentChange = (value) => setContent(value)
     const handlePublishedDateChange = (date) => setPublishedDate(date)
     const handleAuthorChange = (e) => setAuthor(e.target.value)
-    const handleSaveDraft = () => setIsDraft(true)
-    const handlePublish = () => setIsDraft(false)
+
 	
 	const handleSaveDraft = async () => {
 		setIsDraft(true);
