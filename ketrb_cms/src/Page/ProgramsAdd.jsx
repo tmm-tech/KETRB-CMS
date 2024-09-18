@@ -110,7 +110,7 @@ const ProgramsAdd = () => {
 							)}
 							<div>
                                     <h2 className="text-xl font-bold mb-4">Add Programs</h2>
-                                    <form className="space-y-6 w-[600px] mx-auto">
+                                    <form className="space-y-6 w-[600px] mx-auto" encType="multipart/form-data">
                                         <div>
                                             <label htmlFor="title" className="block text-sm font-medium text-muted-foreground">
                                                 Title
@@ -128,10 +128,10 @@ const ProgramsAdd = () => {
                                                 Image
                                             </label>
                                             <div className="mt-1">
-                                                <Input id="image" type="file" onChange={handleImageChange} className="block w-full" />
+                                                <Input id="image" type="file" onChange={handleImageChange} className="block w-full" name="program" />
                                                 {image && (
                                                     <img
-                                                        src="/placeholder.svg"
+                                                        src={URL.createObjectURL(image)}
                                                         alt="Uploaded Image"
                                                         width={300}
                                                         height={200}
