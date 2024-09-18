@@ -25,6 +25,7 @@ const ProgramsAdd = () => {
     const handleAuthorChange = (e) => setAuthor(e.target.value)
 	const storedUser = localStorage.getItem('user');
 	const user = JSON.parse(storedUser);
+	
 	const handleSaveDraft = async () => {
 		setIsDraft(true);
 			 
@@ -35,7 +36,7 @@ const ProgramsAdd = () => {
 				
 			} catch (error) {
 				console.error("Error parsing user data from localStorage", error);
-			
+			}
 	};
 
 	const handlePublish = async () => {
