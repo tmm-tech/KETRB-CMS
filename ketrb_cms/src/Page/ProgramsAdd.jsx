@@ -27,10 +27,43 @@ const ProgramsAdd = () => {
     const handlePublish = () => setIsDraft(false)
 	
 	const handleSaveDraft = async () => {
-  setIsDraft(true);
-  await handleSubmit('draft'); // Pass 'draft' as status
-};
+		setIsDraft(true);
+			 
+		const storedUser = localStorage.getItem('user');
+		if (storedUser) {
+			try {
+				const user = JSON.parse(storedUser);
+				setAuthor(user.name || "Unknown Author");
+				await handleSubmit('draft'); // Pass 'draft' as status
+				
+			} catch (error) {
+				console.error("Error parsing user data from localStorage", error);
+			}
+		}
+	};
 
+const handlePublish = async () => {
+    setIsDraft(false);
+    
+    // Retrieve the user information from localStorage or state
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+        try {
+            const user = JSON.parse(storedUser);
+
+            // Ensure `roles` can handle either a string or an array
+            const isEditor = Array.isArray(user.roles)
+                ? user.roles.includes('editor')
+                : user.roles === 'editor';
+
+            const status = isEditor ? 'pending' : 'published'; // Set status based on role
+			setAuthor(user.name || "Unknown Author");
+            await handleSubmit(status); // Pass dynamic status to handleSubmit
+        } catch (error) {
+            console.error("Error parsing user data from localStorage", error);
+        }
+    }
+};
 
 
 const handleSubmit = async (status) => {
@@ -146,6 +179,7 @@ const handleSubmit = async (status) => {
                                                     value={author}
                                                     onChange={handleAuthorChange}
                                                     className="mt-1 block w-full"
+													placeholder={user.fullname}
                                                 />
                                             </div>
                                         </div>
@@ -153,7 +187,7 @@ const handleSubmit = async (status) => {
                                             <Button variant="outline" onClick={handleSaveDraft}>
                                                 Save as Draft
                                             </Button>
-                                            <Button variant="black" onClick={handleSubmit}>Publish</Button>
+                                            <Button variant="black" onClick={handlePublish}>Publish</Button>
                                         </div>
                                     </form>
                                 </div>
