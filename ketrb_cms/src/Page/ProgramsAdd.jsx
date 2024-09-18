@@ -16,81 +16,72 @@ const ProgramsAdd = () => {
     const [content, setContent] = useState("")
     const [publishedDate, setPublishedDate] = useState(new Date())
     const [author, setAuthor] = useState("")
-	const [status, setStatus] = useState(user.roles === 'editor' ? 'pending' : 'published');
+	const [alertMessage, setAlertMessage] = useState("");
     const [isDraft, setIsDraft] = useState(true)
     const handleTitleChange = (e) => setTitle(e.target.value)
     const handleImageChange = (e) => setImage(e.target.files[0])
     const handleContentChange = (value) => setContent(value)
     const handlePublishedDateChange = (date) => setPublishedDate(date)
     const handleAuthorChange = (e) => setAuthor(e.target.value)
-
-	
+	const storedUser = localStorage.getItem('user');
+	const user = JSON.parse(storedUser);
 	const handleSaveDraft = async () => {
 		setIsDraft(true);
 			 
-		const storedUser = localStorage.getItem('user');
-		if (storedUser) {
 			try {
-				const user = JSON.parse(storedUser);
+				
 				setAuthor(user.name || "Unknown Author");
 				await handleSubmit('draft'); // Pass 'draft' as status
 				
+			} catch (error) {
+				console.error("Error parsing user data from localStorage", error);
+			
+	};
+
+	const handlePublish = async () => {
+		setIsDraft(false)
+			try {
+				// Ensure `roles` can handle either a string or an array
+				const isEditor = Array.isArray(user.roles)
+					? user.roles.includes('editor')
+					: user.roles === 'editor';
+
+				const status = isEditor ? 'pending' : 'published'; // Set status based on role
+				setAuthor(user.name || "Unknown Author");
+				await handleSubmit(status); // Pass dynamic status to handleSubmit
 			} catch (error) {
 				console.error("Error parsing user data from localStorage", error);
 			}
 		}
 	};
 
-const handlePublish = async () => {
-    setIsDraft(false);
-    
-    // Retrieve the user information from localStorage or state
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-        try {
-            const user = JSON.parse(storedUser);
 
-            // Ensure `roles` can handle either a string or an array
-            const isEditor = Array.isArray(user.roles)
-                ? user.roles.includes('editor')
-                : user.roles === 'editor';
+	const handleSubmit = async (status) => {
+	  const formData = new FormData();
+	  formData.append('title', title);
+	  formData.append('content', content);
+	  formData.append('publishedDate', publishedDate.toISOString().split('T')[0]); // Format date
+	  formData.append('author', author);
+	  formData.append('status', status);
+	  formData.append('image', image); // Image file
 
-            const status = isEditor ? 'pending' : 'published'; // Set status based on role
-			setAuthor(user.name || "Unknown Author");
-            await handleSubmit(status); // Pass dynamic status to handleSubmit
-        } catch (error) {
-            console.error("Error parsing user data from localStorage", error);
-        }
-    }
-};
+	  try {
+		const response = await fetch('https://ketrb-backend.onrender.com/programs/add', {
+		  method: 'POST',
+		  body: formData,
+		});
 
-
-const handleSubmit = async (status) => {
-  const formData = new FormData();
-  formData.append('title', title);
-  formData.append('content', content);
-  formData.append('publishedDate', publishedDate.toISOString().split('T')[0]); // Format date
-  formData.append('author', author);
-  formData.append('status', status);
-  formData.append('image', image); // Image file
-
-  try {
-    const response = await fetch('https://ketrb-backend.onrender.com/programs/add', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (response.ok) {
-      setAlertMessage("Program added successfully!");
-      window.location.href = '/programs'; // Redirect after success
-    } else {
-      setAlertMessage("Failed to add program.");
-    }
-  } catch (error) {
-    console.error('Error adding program:', error);
-    setAlertMessage("An error occurred while adding the program.");
-  }
-};
+		if (response.ok) {
+		  setAlertMessage("Program added successfully!");
+		  window.location.href = '/programs'; // Redirect after success
+		} else {
+		  setAlertMessage("Failed to add program.");
+		}
+	  } catch (error) {
+		console.error('Error adding program:', error);
+		setAlertMessage("An error occurred while adding the program.");
+	  }
+	};
 
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -107,7 +98,16 @@ const handleSubmit = async (status) => {
                         </CardHeader>
                         <CardContent>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div>
+							
+							{alertMessage && (
+							  <div className="fixed top-0 left-0 w-full z-50">
+								<Alert className="max-w-md mx-auto mt-4">
+								  <AlertTitle>Notification</AlertTitle>
+								  <AlertDescription>{alertMessage}</AlertDescription>
+								</Alert>
+							  </div>
+							)}
+							<div>
                                     <h2 className="text-xl font-bold mb-4">Add Programs</h2>
                                     <form className="space-y-6 w-[600px] mx-auto">
                                         <div>

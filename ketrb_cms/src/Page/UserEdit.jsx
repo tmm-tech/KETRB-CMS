@@ -146,11 +146,13 @@ const UserEdit = () => {
                                 <div>
                                     <h2 className="text-xl font-bold mb-4">Edit User Information</h2>
                                     {alertMessage && (
-                                        <Alert>
-                                            <AlertTitle>Notification</AlertTitle>
-                                            <AlertDescription>{alertMessage}</AlertDescription>
-                                        </Alert>
-                                    )}
+								  <div className="fixed top-0 left-0 w-full z-50">
+									<Alert className="max-w-md mx-auto mt-4">
+									  <AlertTitle>Notification</AlertTitle>
+									  <AlertDescription>{alertMessage}</AlertDescription>
+									</Alert>
+								  </div>
+							)}	
                                     <form className="space-y-6 w-[600px] mx-auto" onSubmit={handleSubmit}>
                                         <div>
                                             <Label htmlFor="name" className="block text-sm font-medium text-muted-foreground">
