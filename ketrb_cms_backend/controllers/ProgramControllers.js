@@ -12,7 +12,7 @@ module.exports = {
 	  }
 
 	  try {
-		const imagePath = `/uploads/programs/${image.filename}`;
+		const imagePath = `programs/${image.filename}`;
 		const result = await query(
 		  'INSERT INTO programs (title, content, image, published_date, author, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
 		  [title, content, imagePath, publishedDate, author, status]

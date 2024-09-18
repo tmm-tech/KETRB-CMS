@@ -14,7 +14,7 @@ const ProgramRoutes = express.Router();
 
 // Define the root directory and the upload folder path
 const rootDirectory = path.resolve(__dirname, '../public');
-const uploadFolderPath = path.join(rootDirectory, 'uploads/programs');
+const uploadFolderPath = path.join(rootDirectory, 'programs');
 
 // Create the 'uploads/programs' folder inside 'public' if it doesn't exist
 if (!fs.existsSync(uploadFolderPath)) {
