@@ -7,10 +7,6 @@ module.exports = {
 	  const { title, content, publishedDate, author, status } = req.body;
 	  const image = req.file;
 
-	  if (!title || !content || !publishedDate || !author || !image) {
-		return res.status(400).json({ message: 'All fields are required.' });
-	  }
-
 	  try {
 		const imagePath = `programs/${image.filename}`;
 		const result = await query(

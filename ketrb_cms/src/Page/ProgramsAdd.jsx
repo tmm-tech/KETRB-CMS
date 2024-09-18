@@ -121,6 +121,7 @@ const ProgramsAdd = () => {
                                                 value={title}
                                                 onChange={handleTitleChange}
                                                 className="mt-1 block w-full"
+												required
                                             />
                                         </div>
                                         <div>
@@ -128,7 +129,7 @@ const ProgramsAdd = () => {
                                                 Image
                                             </label>
                                             <div className="mt-1">
-                                                <Input id="image" type="file" onChange={handleImageChange} className="block w-full" name="program" />
+                                                <Input type="file" onChange={handleImageChange} className="block w-full" name="program"  required/>
                                                 {image && (
                                                     <img
                                                         src={URL.createObjectURL(image)}
@@ -151,6 +152,7 @@ const ProgramsAdd = () => {
                                                 onChange={(e) => handleContentChange(e.target.value)}
                                                 className="mt-1 block w-full"
                                                 rows={5}
+												required
                                             />
                                         </div>
                                         <div className="grid grid-cols-2 gap-4">
