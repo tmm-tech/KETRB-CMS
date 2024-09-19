@@ -1,82 +1,87 @@
-import React,{ useState } from "react"
+import React, { useState, useEffect } from "react";
 import { Popover, PopoverTrigger, PopoverContent } from "../Component/popover";
 import { Calendar } from "../Component/calendar";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
 import { Button } from '../Component/button';
-import { Card, CardHeader, CardTitle,CardContent} from '../Component/card';
+import { Card, CardHeader, CardTitle, CardContent } from '../Component/card';
 import { Input } from '../Component/input';
 import { Textarea } from "../Component/textarea";
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 
 const ProgramsAdd = () => {
-    const [title, setTitle] = useState("")
-    const [image, setImage] = useState(null)
-    const [content, setContent] = useState("")
-    const [publishedDate, setPublishedDate] = useState(new Date())
-    const [author, setAuthor] = useState("")
-	const [alertMessage, setAlertMessage] = useState("");
-    const [isDraft, setIsDraft] = useState(true)
-    const handleTitleChange = (e) => setTitle(e.target.value)
-    const handleImageChange = (e) => setImage(e.target.files[0])
-    const handleContentChange = (value) => setContent(value)
-    const handlePublishedDateChange = (date) => setPublishedDate(date)
-    const handleAuthorChange = (e) => setAuthor(e.target.value)
-	const storedUser = localStorage.getItem('user');
-	const user = JSON.parse(storedUser);
-	
-	const handleSaveDraft = async () => {
-		setIsDraft(true);
-			 
-			try {
-				
-				setAuthor(user.name || "Unknown Author");
-				await handleSubmit('draft'); // Pass 'draft' as status
-				
-			} catch (error) {
-				console.error("Error parsing user data from localStorage", error);
-			}
-	};
+    const [title, setTitle] = useState("");
+    const [image, setImage] = useState(null);
+    const [content, setContent] = useState("");
+    const [publishedDate, setPublishedDate] = useState(new Date());
+    const [author, setAuthor] = useState("Unknown Author");
+    const [alertMessage, setAlertMessage] = useState("");
+    const [isDraft, setIsDraft] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const storedUser = localStorage.getItem('user');
+    const user = JSON.parse(storedUser);
 
-	const handlePublish = async () => {
-		setIsDraft(false)
-			try {
-				setAuthor(user.name || "Unknown Author");
-				await handleSubmit(user.roles === 'editor' ? 'pending' : 'published'); // Pass dynamic status to handleSubmit
-			} catch (error) {
-				console.error("Error parsing user data from localStorage", error);
-			}
-		};
+    useEffect(() => {
+        if (user && user.name) {
+            setAuthor(user.name);
+        }
+    }, [user]);
 
+    const handleTitleChange = (e) => setTitle(e.target.value);
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file && file.type.startsWith("image/")) {
+            setImage(file);
+			console.log("File: ", image);
+        } else {
+            setAlertMessage("Please upload a valid image file.");
+        }
+    };
 
-	const handleSubmit = async (status) => {
-	  const formData = new FormData();
-	  formData.append('title', title);
-	  formData.append('content', content);
-	  formData.append('publishedDate', publishedDate.toISOString().split('T')[0]); // Format date
-	  formData.append('author', author);
-	  formData.append('status', status);
-	  formData.append('image', image); // Image file
+    const handleContentChange = (value) => setContent(value);
+    const handlePublishedDateChange = (date) => setPublishedDate(date);
 
-	  try {
-		const response = await fetch('https://ketrb-backend.onrender.com/programs/add', {
-		  method: 'POST',
-		  body: formData,
-		});
+    const handleSaveDraft = async () => {
+        setIsDraft(true);
+        await handleSubmit('draft');
+    };
 
-		if (response.ok) {
-		  setAlertMessage("Program added successfully!");
-		  window.location.href = '/programs'; // Redirect after success
-		} else {
-		  setAlertMessage("Failed to add program.");
-		}
-	  } catch (error) {
-		console.error('Error adding program:', error);
-		setAlertMessage("An error occurred while adding the program.");
-	  }
-	};
+    const handlePublish = async () => {
+        setIsDraft(false);
+        await handleSubmit(user?.roles === 'editor' ? 'pending' : 'published');
+    };
+
+    const handleSubmit = async (status) => {
+        setLoading(true);
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('content', content);
+        formData.append('publishedDate', publishedDate.toISOString().split('T')[0]);
+        formData.append('author', author);
+        formData.append('status', status);
+        formData.append('image', image);
+
+        try {
+            const response = await fetch('https://ketrb-backend.onrender.com/programs/add', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                setAlertMessage("Program added successfully!");
+                setTimeout(() => window.location.href = '/programs', 2000);
+            } else {
+                setAlertMessage("Failed to add program.");
+            }
+        } catch (error) {
+            console.error('Error adding program:', error);
+            setAlertMessage("An error occurred while adding the program.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -93,16 +98,15 @@ const ProgramsAdd = () => {
                         </CardHeader>
                         <CardContent>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-							
-							{alertMessage && (
-							  <div className="fixed top-0 left-0 w-full z-50">
-								<Alert className="max-w-md mx-auto mt-4">
-								  <AlertTitle>Notification</AlertTitle>
-								  <AlertDescription>{alertMessage}</AlertDescription>
-								</Alert>
-							  </div>
-							)}
-							<div>
+                                {alertMessage && (
+                                    <div className="fixed top-0 left-0 w-full z-50">
+                                        <Alert className="max-w-md mx-auto mt-4">
+                                            <AlertTitle>Notification</AlertTitle>
+                                            <AlertDescription>{alertMessage}</AlertDescription>
+                                        </Alert>
+                                    </div>
+                                )}
+                                <div>
                                     <h2 className="text-xl font-bold mb-4">Add Programs</h2>
                                     <form className="space-y-6 w-[600px] mx-auto" encType="multipart/form-data">
                                         <div>
@@ -115,7 +119,7 @@ const ProgramsAdd = () => {
                                                 value={title}
                                                 onChange={handleTitleChange}
                                                 className="mt-1 block w-full"
-												required
+                                                required
                                             />
                                         </div>
                                         <div>
@@ -123,7 +127,7 @@ const ProgramsAdd = () => {
                                                 Image
                                             </label>
                                             <div className="mt-1">
-                                                <Input type="file" onChange={handleImageChange} className="block w-full" name="program"  required/>
+                                                <Input type="file" onChange={handleImageChange} className="block w-full" required />
                                                 {image && (
                                                     <img
                                                         src={URL.createObjectURL(image)}
@@ -146,7 +150,7 @@ const ProgramsAdd = () => {
                                                 onChange={(e) => handleContentChange(e.target.value)}
                                                 className="mt-1 block w-full"
                                                 rows={5}
-												required
+                                                required
                                             />
                                         </div>
                                         <div className="grid grid-cols-2 gap-4">
@@ -169,21 +173,24 @@ const ProgramsAdd = () => {
                                                 <label htmlFor="author" className="block text-sm font-medium text-muted-foreground">
                                                     Author
                                                 </label>
-                                                <Input
-                                                    id="author"
-                                                    type="text"
-                                                    value={author}
-                                                    onChange={handleAuthorChange}
-                                                    className="mt-1 block w-full"
-													placeholder={user.fullname}
-                                                />
+                                                <p>{author}</p>
                                             </div>
                                         </div>
-                                        <div className="flex justify-end gap-2">
-                                            <Button variant="outline" onClick={handleSaveDraft}>
-                                                Save as Draft
+                                        <div className="mt-6 flex justify-between">
+                                            <Button
+                                                onClick={handleSaveDraft}
+                                                disabled={loading}
+                                                className="w-full mr-2"
+                                            >
+                                                {loading ? "Saving..." : "Save as Draft"}
                                             </Button>
-                                            <Button variant="black" onClick={handlePublish}>Publish</Button>
+                                            <Button
+                                                onClick={handlePublish}
+                                                disabled={loading}
+                                                className="w-full ml-2"
+                                            >
+                                                {loading ? "Publishing..." : "Publish"}
+                                            </Button>
                                         </div>
                                     </form>
                                 </div>
