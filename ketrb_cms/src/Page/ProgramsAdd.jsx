@@ -42,14 +42,8 @@ const ProgramsAdd = () => {
 	const handlePublish = async () => {
 		setIsDraft(false)
 			try {
-				// Ensure `roles` can handle either a string or an array
-				const isEditor = Array.isArray(user.roles)
-					? user.roles.includes('editor')
-					: user.roles === 'editor';
-
-				const status = isEditor ? 'pending' : 'published'; // Set status based on role
 				setAuthor(user.name || "Unknown Author");
-				await handleSubmit(status); // Pass dynamic status to handleSubmit
+				await handleSubmit(user.roles === 'editor' ? 'pending' : 'published'); // Pass dynamic status to handleSubmit
 			} catch (error) {
 				console.error("Error parsing user data from localStorage", error);
 			}
