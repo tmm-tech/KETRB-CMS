@@ -22,9 +22,10 @@ const ProgramsAdd = () => {
     const storedUser = localStorage.getItem('user');
     const user = JSON.parse(storedUser);
 
+	
     useEffect(() => {
-        if (user && user.name) {
-            setAuthor(user.name);
+        if (user && user.fullname) {
+            setAuthor(user.fullname);
         }
     }, [user]);
 
