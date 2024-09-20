@@ -34,12 +34,13 @@ const ProgramsAdd = () => {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        if (file && file.type.startsWith("image/")) {
-            setImage(file);
-			console.log("File: ", image);
-        } else {
-            setAlertMessage("Please upload a valid image file.");
-        }
+       if (file && file.size > 0) {
+	  setImage(file);
+	  console.log("File: ", image);
+	} else {
+	  setAlertMessage("Please upload a valid image file.");
+	}
+
     };
 
     const handleContentChange = (value) => setContent(value);
@@ -131,7 +132,7 @@ const ProgramsAdd = () => {
                                                 Image
                                             </label>
                                             <div className="mt-1">
-                                                <Input type="file" onChange={handleImageChange} className="block w-full" required />
+                                                <Input type="file" onChange={handleImageChange} value={image} className="block w-full" required />
                                                 {image && (
                                                     <img
                                                         src={URL.createObjectURL(image)}
