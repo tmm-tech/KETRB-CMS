@@ -15,7 +15,7 @@ const ProgramsAdd = () => {
     const [image, setImage] = useState(null);
     const [content, setContent] = useState("");
     const [publishedDate, setPublishedDate] = useState(new Date());
-    const [author, setAuthor] = useState("Unknown Author");
+    const [author, setAuthor] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
     const [isDraft, setIsDraft] = useState(true);
     const [loading, setLoading] = useState(false);
