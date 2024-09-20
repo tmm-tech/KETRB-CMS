@@ -218,7 +218,7 @@ const handleDelete = async (id) => {
                         <Input
                           type="file"
                           accept="image/*"
-						  multiple
+						 
                           onChange={handleImageSelect}
                           className="block w-full"
                           name="image"
