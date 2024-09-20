@@ -180,14 +180,14 @@ const ProgramsAdd = () => {
                                             <Button
                                                 onClick={handleSaveDraft}
                                                 disabled={loading}
-                                                className="w-full mr-2"
+                                               variant="outline"
                                             >
                                                 {loading ? "Saving..." : "Save as Draft"}
                                             </Button>
                                             <Button
                                                 onClick={handlePublish}
                                                 disabled={loading}
-                                                className="w-full ml-2"
+                                                variant="black"
                                             >
                                                 {loading ? "Publishing..." : "Publish"}
                                             </Button>
