@@ -176,7 +176,7 @@ const ProgramsAdd = () => {
                                                 <p>{author}</p>
                                             </div>
                                         </div>
-                                        <div className="mt-6 flex justify-between">
+                                        <div className="flex justify-end gap-2">
                                             <Button
                                                 onClick={handleSaveDraft}
                                                 disabled={loading}
