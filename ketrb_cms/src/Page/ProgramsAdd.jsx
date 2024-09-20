@@ -132,7 +132,7 @@ const ProgramsAdd = () => {
                                                 Image
                                             </label>
                                             <div className="mt-1">
-                                                <Input type="file" onChange={handleImageChange} value={image} className="block w-full" required />
+                                                <Input type="file" onChange={handleImageChange} className="block w-full" required />
                                                 {image && (
                                                     <img
                                                         src={URL.createObjectURL(image)}
