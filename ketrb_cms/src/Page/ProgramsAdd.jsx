@@ -19,6 +19,7 @@ const ProgramsAdd = () => {
     const [alertMessage, setAlertMessage] = useState("");
     const [isDraft, setIsDraft] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [draftloading, setdraftLoading] = useState(false);
     const storedUser = localStorage.getItem('user');
     const user = JSON.parse(storedUser);
 
@@ -55,6 +56,7 @@ const ProgramsAdd = () => {
     };
 
     const handleSubmit = async (status) => {
+	setdraftLoading(true);
         setLoading(true);
         const formData = new FormData();
         formData.append('title', title);
@@ -72,7 +74,7 @@ const ProgramsAdd = () => {
 
             if (response.ok) {
                 setAlertMessage("Program added successfully!");
-                setTimeout(() => window.location.href = '/programs', 2000);
+                window.location.href = '/programs';
             } else {
                 setAlertMessage("Failed to add program.");
             }
@@ -81,6 +83,7 @@ const ProgramsAdd = () => {
             setAlertMessage("An error occurred while adding the program.");
         } finally {
             setLoading(false);
+	   setdraftLoading(false);
         }
     };
 
@@ -180,10 +183,10 @@ const ProgramsAdd = () => {
                                         <div className="flex justify-end gap-2">
                                             <Button
                                                 onClick={handleSaveDraft}
-                                                disabled={loading}
+                                                disabled={draftloading}
                                                variant="outline"
                                             >
-                                                {loading ? "Saving..." : "Save as Draft"}
+                                                {draftloading ? "Saving..." : "Save as Draft"}
                                             </Button>
                                             <Button
                                                 onClick={handlePublish}
