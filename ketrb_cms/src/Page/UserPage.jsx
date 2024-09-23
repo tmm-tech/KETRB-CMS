@@ -11,12 +11,16 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Badge } from '../Component/badge';
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 import { useNavigate } from "react-router-dom";
+import LoadingPage from '../Page/LoadingPage';
 
 const UserPage = () => {
   const [users, setUsers] = useState([]);
   const [alertMessage, setAlertMessage] = useState("");
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+ if (loading) {
+    return <LoadingPage />;
+  }
   const handleEdit = (userId) => {
     navigate(`/users/edit user/${userId}`); // Redirect to the edit page
   }
@@ -102,6 +106,9 @@ const UserPage = () => {
       } catch (error) {
         console.error('Error fetching users:', error);
       }
+	     finally {
+                setLoading(false);
+            }
     };
 
     fetchUsers();  // Call the async function
