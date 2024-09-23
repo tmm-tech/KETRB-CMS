@@ -18,9 +18,6 @@ const UserPage = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
- if (loading) {
-    return <LoadingPage />;
-  }
   const handleEdit = (userId) => {
     navigate(`/users/edit user/${userId}`); // Redirect to the edit page
   }
@@ -113,7 +110,9 @@ const UserPage = () => {
 
     fetchUsers();  // Call the async function
   }, []);
-
+ if (loading) {
+    return <LoadingPage />;
+  }
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
