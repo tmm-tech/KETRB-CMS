@@ -68,7 +68,7 @@ const ProgramsAdd = () => {
         formData.append('publishedDate', publishedDate.toISOString().split('T')[0]);
         formData.append('author', author);
         formData.append('status', status);
-        formData.append('image', image);
+        formData.append('program', image);
 
         try {
             const response = await fetch('https://ketrb-backend.onrender.com/programs/add', {
