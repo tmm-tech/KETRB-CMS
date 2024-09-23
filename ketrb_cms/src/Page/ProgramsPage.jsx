@@ -80,7 +80,7 @@ const ProgramsPage = () => {
                                         <DropdownMenuLabel>Filter by</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuCheckboxItem checked>Published</DropdownMenuCheckboxItem>
-                                        <DropdownMenuCheckboxItem     vm>Draft</DropdownMenuCheckboxItem>
+                                        <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
                                         <DropdownMenuCheckboxItem>Pending</DropdownMenuCheckboxItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
@@ -110,14 +110,14 @@ const ProgramsPage = () => {
                                                 </CardDescription>
                                             </CardHeader>
                                             <CardContent>
-                                                <p>{program.description}</p>
+                                                <p>{program.content}</p>
                                             </CardContent>     
                                             <CardFooter>
                                                 <div className="flex items-center justify-between">
                                                    <Badge
     variant="outline"
     className={`${
-        program.status === "Published"
+        program.status === "published"
             ? "bg-green-500 text-green-50"
             : program.status === "Pending"
             ? "bg-yellow-500 text-yellow-50"
