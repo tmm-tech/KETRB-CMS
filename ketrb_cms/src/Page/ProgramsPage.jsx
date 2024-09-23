@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";     vm
+import React, { useEffect, useState } from "react";     
 import { Link } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
@@ -8,6 +8,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLab
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter} from '../Component/card';
 import { Badge } from '../Component/badge';
+import LoadingPage from './Page/LoadingPage';
 const ProgramsPage = () => {
     const [programs, setPrograms] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -41,7 +42,7 @@ const ProgramsPage = () => {
                             </CardHeader>
                             <CardContent>
                                 <div className="flex items-center justify-between">
-                                    <div className="text-4xl font-bold"></div>
+                                    <div className="text-4xl font-bold">{programs.length}</div>
                                     
                                 </div>
                             </CardContent>
@@ -94,16 +95,16 @@ const ProgramsPage = () => {
                         <TabsContent value="program">
                             <div className="grid gap-4">
                                 {loading ? (
-                                    <LoadingComponent />
+                                    <LoadingPage />
                                 ) : programs.length === 0 ? (
-                                    <div>No programs available</div>
+                                    <div className="col-span-full flex items-center justify-center"> <p className="text-center text-gray-500">No programs available.</p></div>
                                 ) : (
                                     programs.map((program) => (
                                         <Card key={program.id}>
                                             <CardHeader>
                                                 <CardTitle>{program.title}</CardTitle>
                                                 <CardDescription>
-                                                    {program.status === "Published"
+                                                    {program.status === "published"
                                                         ? `Published on ${new Date(program.publishDate).toLocaleDateString()}`
                                                         : "Pending approval"}
                                                 </CardDescription>
