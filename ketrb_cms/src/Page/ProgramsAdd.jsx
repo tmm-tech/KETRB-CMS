@@ -33,7 +33,7 @@ const ProgramsAdd = () => {
 
     const handleTitleChange = (e) => setTitle(e.target.value);
 
-    const handleImageChange = (e) => {
+    const handleImageChange = (event) => {
 	      const file = event.target.files[0];
     if (file) {
       setImage(file); // Save the actual file
@@ -136,7 +136,7 @@ const ProgramsAdd = () => {
                                             </label>
                                             <div className="mt-1">
                                                 <Input type="file" onChange={handleImageChange} className="block w-full"  accept="image/*" name="program" required />
-                                                {image && (
+                                                {previewUrl && (
                                                     <img
                                                         src={previewUrl}
                                                         alt="Uploaded Image"
