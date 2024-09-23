@@ -12,7 +12,7 @@ import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 
 const ProgramsAdd = () => {
     const [title, setTitle] = useState("");
-    const [image, setImage] = useState(null);	 vm
+    const [image, setImage] = useState(null);	 
 	const [previewUrl, setPreviewUrl] = useState("");
     const [content, setContent] = useState("");
     const [publishedDate, setPublishedDate] = useState(new Date());
@@ -39,7 +39,7 @@ const ProgramsAdd = () => {
       setImage(file); // Save the actual file
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
-    	 vm
+    	 
 	} else {
 	  setAlertMessage("Please upload a valid image file.");
 	}
