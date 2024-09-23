@@ -28,6 +28,9 @@ const ProgramsPage = () => {
 
         fetchPrograms();
     }, []);
+     if (loading) {
+    return <LoadingPage />;
+  }
     return (
         <div className="flex min-h-screen w-full flex-col">
             <SideNav />
@@ -94,9 +97,7 @@ const ProgramsPage = () => {
                         </div>
                         <TabsContent value="program">
                             <div className="grid gap-4">
-                                {loading ? (
-                                    <LoadingPage />
-                                ) : programs.length === 0 ? (
+                                { programs.length === 0 ? (
                                     <div className="col-span-full flex items-center justify-center"> <p className="text-center text-gray-500">No programs available.</p></div>
                                 ) : (
                                     programs.map((program) => (
