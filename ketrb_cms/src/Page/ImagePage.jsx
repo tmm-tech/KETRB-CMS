@@ -10,6 +10,7 @@ import { Badge } from '../Component/badge';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../Component/dialog";
 import { Input } from "../Component/input";
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
+import LoadingPage from '../Page/LoadingPage';
 
 const ImagePage = () => {
   const storedUser = localStorage.getItem('user');
@@ -18,6 +19,7 @@ const ImagePage = () => {
   const [images, setImages] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
+ const [imageloading, setimageLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
   const capitalizeFirstLetter = (string) => {
@@ -38,7 +40,9 @@ const ImagePage = () => {
       } catch (error) {
         console.log('Error fetching images:', error);
         setAlertMessage("An error occurred while fetching images.");
-      }
+      }finally {
+                setimageLoading(false);
+            }
     };
 
     fetchImages();
@@ -256,7 +260,11 @@ const handleDelete = async (id) => {
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {images.length > 0 ? (
+              { {loading ? (
+		    <LoadingPage />
+	      ): images.length === 0 ? (
+		<div className="col-span-full flex items-center justify-center"> <p className="text-center text-gray-500">No images available.</p></div>
+	) : (
                 images.map((image) => (
                   <div key={image.id} className="bg-background rounded-lg shadow-lg overflow-hidden">
                     <img
@@ -291,10 +299,7 @@ const handleDelete = async (id) => {
                     </div>
                   </div>
                 ))
-              ) : (
-                <div className="col-span-full flex items-center justify-center">
-                  <p className="text-center text-gray-500">No images available.</p>
-                </div>
+              
               )}
             </div>
           </Tabs>
