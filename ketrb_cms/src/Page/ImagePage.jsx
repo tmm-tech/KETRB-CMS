@@ -19,7 +19,7 @@ const ImagePage = () => {
   const [images, setImages] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
- const [imageloading, setimageLoading] = useState(false);
+ const [imageloading, setimageLoading] = useState(true);
   const [alertMessage, setAlertMessage] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
   const capitalizeFirstLetter = (string) => {
