@@ -8,7 +8,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLab
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter} from '../Component/card';
 import { Badge } from '../Component/badge';
-import LoadingPage from './Page/LoadingPage';
+import LoadingPage from '../Page/LoadingPage';
 const ProgramsPage = () => {
     const [programs, setPrograms] = useState([]);
     const [loading, setLoading] = useState(true);
