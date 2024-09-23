@@ -16,7 +16,7 @@ const ProgramsPage = () => {
     useEffect(() => {
         const fetchPrograms = async () => {
             try {
-                const response = await fetch('https://your-api-endpoint/programs'); // Update with your API endpoint
+                const response = await fetch('https://ketrb-backend.onrender.com/programs/'); // Update with your API endpoint
                 const data = await response.json();
                 setPrograms(data); // Adjust according to your data structure
             } catch (error) {
