@@ -116,7 +116,7 @@ const ProgramsPage = () => {
                                                 <div className="flex items-center justify-between">
                                                    <Badge
     variant="outline"
-    className={`${
+    className={`capitalize ${
         program.status === "published"
             ? "bg-green-500 text-green-50"
             : program.status === "Pending"
