@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";     vm
 import { Link } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
@@ -9,6 +9,24 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter} from '../Component/card';
 import { Badge } from '../Component/badge';
 const ProgramsPage = () => {
+    const [programs, setPrograms] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPrograms = async () => {
+            try {
+                const response = await fetch('https://your-api-endpoint/programs'); // Update with your API endpoint
+                const data = await response.json();
+                setPrograms(data); // Adjust according to your data structure
+            } catch (error) {
+                console.error("Error fetching programs:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPrograms();
+    }, []);
     return (
         <div className="flex min-h-screen w-full flex-col">
             <SideNav />
@@ -23,7 +41,7 @@ const ProgramsPage = () => {
                             </CardHeader>
                             <CardContent>
                                 <div className="flex items-center justify-between">
-                                    <div className="text-4xl font-bold">89</div>
+                                    <div className="text-4xl font-bold"></div>
                                     
                                 </div>
                             </CardContent>
@@ -75,67 +93,46 @@ const ProgramsPage = () => {
                         </div>
                         <TabsContent value="program">
                             <div className="grid gap-4">
-                                <Card>
-                                    <CardHeader>
-                                        <CardTitle>New Product Launch</CardTitle>
-                                        <CardDescription>Published on August 15, 2023</CardDescription>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <p>
-                                            We are excited to announce the launch of our new product, the Acme Pro Controller. This
-                                            cutting-edge device offers enhanced features and improved performance for the ultimate gaming
-                                            experience.
-                                        </p>
-                                    </CardContent>
-                                    <CardFooter>
-                                        <div className="flex items-center justify-between">
-                                            <Badge variant="outline" className="bg-green-500 text-green-50">
-                                                Published
-                                            </Badge>
-                                            <div className="flex items-center gap-2">
-                                                <Button variant="outline" size="sm" className="h-8 gap-1">
-                                                    <FilePenIcon className="h-3.5 w-3.5" />
-                                                    <span>Edit</span>
-                                                </Button>
-                                                <Button variant="outline" size="sm" className="h-8 gap-1">
-                                                    <TrashIcon className="h-3.5 w-3.5" />
-                                                    <span>Delete</span>
-                                                </Button>
-                                            </div>
-                                        </div>
-                                    </CardFooter>
-                                </Card>
-                                <Card>
-                                    <CardHeader>
-                                        <CardTitle>New Partnership Announcement</CardTitle>
-                                        <CardDescription>Pending approval</CardDescription>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <p>
-                                            We are thrilled to announce our new partnership with Acme Inc. Together, we will be launching a
-                                            series of innovative products that will revolutionize the industry.
-                                        </p>
-                                    </CardContent>
-                                    <CardFooter>
-                                        <div className="flex items-center justify-between">
-                                            <Badge variant="outline" className="bg-yellow-500 text-yellow-50">
-                                                Pending
-                                            </Badge>
-                                            <div className="flex items-center gap-2">
-                                                <Button variant="outline" size="sm" className="h-8 gap-1">
-                                                    <FilePenIcon className="h-3.5 w-3.5" />
-                                                    <span>Edit</span>
-                                                </Button>
-                                                <Button variant="outline" size="sm" className="h-8 gap-1">
-                                                    <TrashIcon className="h-3.5 w-3.5" />
-                                                    <span>Delete</span>
-                                                </Button>
-                                            </div>
-                                        </div>
-                                    </CardFooter>
-                                </Card>
+                                {loading ? (
+                                    <LoadingComponent />
+                                ) : programs.length === 0 ? (
+                                    <div>No programs available</div>
+                                ) : (
+                                    programs.map((program) => (
+                                        <Card key={program.id}>
+                                            <CardHeader>
+                                                <CardTitle>{program.title}</CardTitle>
+                                                <CardDescription>
+                                                    {program.status === "Published"
+                                                        ? `Published on ${new Date(program.publishDate).toLocaleDateString()}`
+                                                        : "Pending approval"}
+                                                </CardDescription>
+                                            </CardHeader>
+                                            <CardContent>
+                                                <p>{program.description}</p>
+                                            </CardContent>
+                                            <CardFooter>
+                                                <div className="flex items-center justify-between">
+                                                    <Badge
+                                                                     vm
+                                                    <div className="flex items-center gap-2">
+                                                        <Button variant="outline" size="sm" className="h-8 gap-1">
+                                                            <FilePenIcon className="h-3.5 w-3.5" />
+                                                            <span>Edit</span>
+                                                        </Button>
+                                                        <Button variant="outline" size="sm" className="h-8 gap-1">
+                                                            <TrashIcon className="h-3.5 w-3.5" />
+                                                            <span>Delete</span>
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            </CardFooter>
+                                        </Card>
+                                    ))
+                                )}
                             </div>
                         </TabsContent>
+
                     </Tabs>
                 </main>
             </div>
