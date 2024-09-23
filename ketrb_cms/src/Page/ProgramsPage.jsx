@@ -80,7 +80,7 @@ const ProgramsPage = () => {
                                         <DropdownMenuLabel>Filter by</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuCheckboxItem checked>Published</DropdownMenuCheckboxItem>
-                                        <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
+                                        <DropdownMenuCheckboxItem     vm>Draft</DropdownMenuCheckboxItem>
                                         <DropdownMenuCheckboxItem>Pending</DropdownMenuCheckboxItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
@@ -111,11 +111,22 @@ const ProgramsPage = () => {
                                             </CardHeader>
                                             <CardContent>
                                                 <p>{program.description}</p>
-                                            </CardContent>
+                                            </CardContent>     
                                             <CardFooter>
                                                 <div className="flex items-center justify-between">
-                                                    <Badge
-                                                                     vm
+                                                   <Badge
+    variant="outline"
+    className={`${
+        program.status === "Published"
+            ? "bg-green-500 text-green-50"
+            : program.status === "Pending"
+            ? "bg-yellow-500 text-yellow-50"
+            : "bg-gray-500 text-gray-50"
+    }`}
+>
+    {program.status}
+</Badge>
+
                                                     <div className="flex items-center gap-2">
                                                         <Button variant="outline" size="sm" className="h-8 gap-1">
                                                             <FilePenIcon className="h-3.5 w-3.5" />
