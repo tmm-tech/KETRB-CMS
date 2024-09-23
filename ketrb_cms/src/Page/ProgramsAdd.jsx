@@ -63,6 +63,7 @@ const ProgramsAdd = () => {
 	setdraftLoading(true);
         setLoading(true);
         const formData = new FormData();
+	     console.log("Image: ", image);
         formData.append('title', title);
         formData.append('content', content);
         formData.append('publishedDate', publishedDate.toISOString().split('T')[0]);
