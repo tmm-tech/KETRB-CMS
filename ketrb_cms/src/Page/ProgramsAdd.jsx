@@ -12,7 +12,8 @@ import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 
 const ProgramsAdd = () => {
     const [title, setTitle] = useState("");
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(null);	 vm
+	const [previewUrl, setPreviewUrl] = useState("");
     const [content, setContent] = useState("");
     const [publishedDate, setPublishedDate] = useState(new Date());
     const [author, setAuthor] = useState("");
@@ -33,10 +34,12 @@ const ProgramsAdd = () => {
     const handleTitleChange = (e) => setTitle(e.target.value);
 
     const handleImageChange = (e) => {
-        const file = e.target.files[0];
-       if (file && file.size > 0) {
-	  setImage(file);
-	  console.log("File: ", image);
+	      const file = event.target.files[0];
+    if (file) {
+      setImage(file); // Save the actual file
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+    	 vm
 	} else {
 	  setAlertMessage("Please upload a valid image file.");
 	}
@@ -132,10 +135,10 @@ const ProgramsAdd = () => {
                                                 Image
                                             </label>
                                             <div className="mt-1">
-                                                <Input type="file" onChange={handleImageChange} className="block w-full" name="program" required />
+                                                <Input type="file" onChange={handleImageChange} className="block w-full"  accept="image/*" name="program" required />
                                                 {image && (
                                                     <img
-                                                        src={URL.createObjectURL(image)}
+                                                        src={previewUrl}
                                                         alt="Uploaded Image"
                                                         width={300}
                                                         height={200}
