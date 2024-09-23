@@ -105,7 +105,7 @@ const ProgramsPage = () => {
                                                 <CardTitle>{program.title}</CardTitle>
                                                 <CardDescription>
                                                     {program.status === "published"
-                                                        ? `Published on ${new Date(program.publishDate).toLocaleDateString()}`
+                                                        ? `Published on ${new Date(program.published_date).toLocaleDateString()}`
                                                         : "Pending approval"}
                                                 </CardDescription>
                                             </CardHeader>
@@ -113,7 +113,7 @@ const ProgramsPage = () => {
                                                 <p>{program.content}</p>
                                             </CardContent>     
                                             <CardFooter>
-                                                <div className="flex items-center justify-between">
+                                                <div className="flex items-center justify-between gap-2">
                                                    <Badge
     variant="outline"
     className={`capitalize ${
