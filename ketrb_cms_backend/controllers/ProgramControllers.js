@@ -50,9 +50,10 @@ module.exports = {
 	            ...image,
 	            url: `${req.protocol}://${req.get('host')}/program/${path.basename(image.image)}`,
 	            status: image.status,
-	            registered_at: image.published_date,
-	           content: image.content,
-		   title: image.title,
+	            published_date: image.published_date,
+	            content: image.content,
+		    title: image.title,
+		    author:image.author,
 	        }));
 	
 	        res.status(200).json({ ...program, images: imagesWithUrl }); // Return program with images
