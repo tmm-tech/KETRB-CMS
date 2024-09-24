@@ -43,7 +43,7 @@ module.exports = {
 	
 	        // Assuming you want to include the images with the program response
 	        const program = result.rows[0];
-	        const images = await query('SELECT * FROM images WHERE program_id = $1', [id]); // Fetch associated images
+	        const images = await query('SELECT * FROM images WHERE id = $1', [id]); // Fetch associated images
 	
 	        // Construct full image URLs
 	        const imagesWithUrl = images.rows.map(image => ({
