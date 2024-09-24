@@ -41,7 +41,7 @@ const ProgramsEdit = () => {
                 setContent(data.content);
                     setPublishedDate(new Date(data.published_date));
                 setAuthor(data.author);
-                setPreviewUrl(data.image); // Assuming backend returns an image URL
+                setPreviewUrl(data.url); // Assuming backend returns an image URL
             } catch (error) {
                 console.error("Error fetching program:", error);
                 setAlertMessage("Failed to load program data.");
