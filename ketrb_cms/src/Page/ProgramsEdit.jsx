@@ -10,7 +10,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '../Component/card';
 import { Input } from '../Component/input';
 import { Textarea } from "../Component/textarea";
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
-import Modal from '../Component/Modal';
+
 
 
 const ProgramsEdit = () => {
