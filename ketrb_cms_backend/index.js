@@ -24,7 +24,11 @@ app.use(cors(corsOptions));
 
 
 // Static files and views
+// Serve static files from the public folder
 app.use(express.static(path.join(__dirname, 'public')));
+// Serve images from 'gallery' and 'program' folders inside public
+app.use('/gallery', express.static(path.join(__dirname, 'public', 'gallery')));
+app.use('/program', express.static(path.join(__dirname, 'public', 'program')));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "resources/views"));
 
