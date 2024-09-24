@@ -48,6 +48,6 @@ ProgramRoutes.put('/:id', upload.single('image'), UpdateProgram);
 ProgramRoutes.patch('/:id/approve', ApproveProgram);
 
 // Delete a program
-ProgramRoutes.delete('/:id', DeleteProgram);
+ProgramRoutes.delete('/delete/:id', DeleteProgram);
 
 module.exports = ProgramRoutes;
