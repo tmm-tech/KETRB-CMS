@@ -31,6 +31,35 @@ const ProgramsPage = () => {
      if (loading) {
     return <LoadingPage />;
   }
+ const handleEdit = (id) => {
+    navigate(`/programs/edit program/${id}`); // Redirect to the edit page
+  }
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this program?");
+
+    if (confirmDelete) {
+      try {
+        // Call backend API to soft delete the user
+        const response = await fetch(`https://ketrb-backend.onrender.com/programs/delete/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          // Remove the user from the users state after successful deletion
+          setUsers((prevUsers) => prevUsers.filter((id) => user.id !== id));
+          setAlertMessage('User deleted successfully');
+        } else {
+          setAlertMessage('Failed to delete user');
+        }
+      } catch (error) {
+        console.error("Error deleting user:", error);
+        setAlertMessage('An error occurred while deleting the user.');
+      }
+    }
+  };
     return (
         <div className="flex min-h-screen w-full flex-col">
             <SideNav />
@@ -129,11 +158,11 @@ const ProgramsPage = () => {
 </Badge>
 
                                                     <div className="flex items-center gap-2">
-                                                        <Button variant="outline" size="sm" className="h-8 gap-1">
+                                                        <Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(program.id)}>
                                                             <FilePenIcon className="h-3.5 w-3.5" />
                                                             <span>Edit</span>
                                                         </Button>
-                                                        <Button variant="outline" size="sm" className="h-8 gap-1">
+                                                        <Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleDelete(program.id)}>
                                                             <TrashIcon className="h-3.5 w-3.5" />
                                                             <span>Delete</span>
                                                         </Button>
