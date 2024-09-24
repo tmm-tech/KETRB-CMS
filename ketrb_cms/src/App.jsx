@@ -8,6 +8,7 @@ import UserPage from './Page/UserPage';
 import LoginPage from './Page/LoginPage';
 import NewsAdd from './Page/NewsAdd';
 import ProgramsAdd from './Page/ProgramsAdd';
+import ProgramsEdit from './Page/ProgramsEdit';
 import UserAdd from './Page/UsersAdd';
 import ProfilePage from './Page/ProfilePage';
 import LoadingPage from './Page/LoadingPage';
@@ -62,6 +63,7 @@ const App = () => {
             <Route path="/images" element={<ImagePage />} />
             <Route path="/programs" element={<ProgramsPage />} />
             <Route path="/programs/add program" element={<ProgramsAdd />} />
+             <Route path="/programs/edit program/:id" element={<ProgramsEdit />} />
             {user.roles === 'administrator' && (
                 <>
                   <Route path="/users" element={<UserPage />} />
