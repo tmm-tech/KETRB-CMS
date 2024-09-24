@@ -11,7 +11,7 @@ import { Input } from '../Component/input';
 import { Textarea } from "../Component/textarea";
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 import Modal from '../Component/Modal';
-import { FiEdit2 } from "react-icons/fi"; // Importing the edit icon
+
 
 const ProgramsEdit = () => {
     const { id } = useParams(); // Get program ID from route params
@@ -39,7 +39,7 @@ const ProgramsEdit = () => {
                 setProgram(data);
                 setTitle(data.title);
                 setContent(data.content);
-                setPublishedDate(new Date(data.publishedDate));
+                    setPublishedDate(new Date(data.published_date));
                 setAuthor(data.author);
                 setPreviewUrl(data.image); // Assuming backend returns an image URL
             } catch (error) {
@@ -161,7 +161,7 @@ const ProgramsEdit = () => {
                                             className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
                                             onClick={() => setEditMode(true)}
                                         >
-                                            <FiEdit2 size={24} />
+                                           <FilePenIcon className="h-4 w-4" />
                                         </button>
                                     </div>
                                 ) : (
@@ -265,3 +265,24 @@ const ProgramsEdit = () => {
 };
 
 export default ProgramsEdit;
+
+function FilePenIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 22h6a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v10" />
+      <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+      <path d="M10.4 12.6a2 2 0 1 1 3 3L8 21l-4 1 1-4Z" />
+    </svg>
+  )
+}
