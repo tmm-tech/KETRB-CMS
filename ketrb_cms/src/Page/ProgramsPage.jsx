@@ -41,28 +41,29 @@ const ProgramsPage = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this program?");
 
     if (confirmDelete) {
-      try {
-        // Call backend API to soft delete the user
-        const response = await fetch(`https://ketrb-backend.onrender.com/programs/delete/${id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        try {
+            // Call backend API to soft delete the program
+            const response = await fetch(`https://ketrb-backend.onrender.com/programs/delete/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
 
-        if (response.ok) {
-          // Remove the user from the users state after successful deletion
-          setUsers((prevUsers) => prevUsers.filter((id) => user.id !== id));
-          setAlertMessage('User deleted successfully');
-        } else {
-          setAlertMessage('Failed to delete user');
+            if (response.ok) {
+                // Remove the deleted program from the programs state
+                setPrograms((prevPrograms) => prevPrograms.filter((program) => program.id !== id));
+                setAlertMessage('Program deleted successfully');
+            } else {
+                setAlertMessage('Failed to delete program');
+            }
+        } catch (error) {
+            console.error("Error deleting program:", error);
+            setAlertMessage('An error occurred while deleting the program.');
         }
-      } catch (error) {
-        console.error("Error deleting user:", error);
-        setAlertMessage('An error occurred while deleting the user.');
-      }
     }
-  };
+};
+
     return (
         <div className="flex min-h-screen w-full flex-col">
             <SideNav />
