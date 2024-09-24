@@ -61,6 +61,19 @@ app.get('/', (req, res) => {
     res.json({ message: "Confirmed Connection to KETRB CMS" });
 });
 
+app.get('/check-file/:folder/:filename', (req, res) => {
+    const { folder, filename } = req.params;
+    const filePath = path.join(__dirname, 'public', folder, filename);
+
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) {
+            // File does not exist
+            return res.status(404).json({ message: 'File not found' });
+        }
+        // File exists
+        return res.status(200).json({ message: 'File exists', filePath });
+    });
+});
 // Server setup
 const port = process.env.PORT || 4080;
 app.listen(port, () => {
