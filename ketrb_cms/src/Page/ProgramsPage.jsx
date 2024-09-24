@@ -8,11 +8,14 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLab
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter} from '../Component/card';
 import { Badge } from '../Component/badge';
+import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
+import { useNavigate } from "react-router-dom";
 import LoadingPage from '../Page/LoadingPage';
 const ProgramsPage = () => {
     const [programs, setPrograms] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const [alertMessage, setAlertMessage] = useState("");
+      const navigate = useNavigate();
     useEffect(() => {
         const fetchPrograms = async () => {
             try {
@@ -65,6 +68,14 @@ const ProgramsPage = () => {
             <SideNav />
             <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: "center" }}>
                 <HeaderNav />
+                {alertMessage && (
+		  <div className="fixed top-0 left-0 w-full z-50">
+			<Alert className="max-w-md mx-auto mt-4">
+			  <AlertTitle>Notification</AlertTitle>
+			  <AlertDescription>{alertMessage}</AlertDescription>
+			</Alert>
+		  </div>
+		)}
                 <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
                         <Card>
