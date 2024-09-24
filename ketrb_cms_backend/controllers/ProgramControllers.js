@@ -33,19 +33,34 @@ module.exports = {
 
 	// Get a single program by ID
 	GetProgramById: async (req, res) => {
-	  const { id } = req.params;
-
-	  try {
-		const result = await query('SELECT * FROM programs WHERE id = $1', [id]);
-		if (result.rows.length === 0) {
-		  return res.status(404).json({ message: 'Program not found.' });
-		}
-		res.status(200).json(result.rows[0]);
-	  } catch (error) {
-		console.error('Error fetching program:', error);
-		res.status(500).json({ message: 'Error fetching the program.' });
-	  }
-	},
+	    const { id } = req.params;
+	
+	    try {
+	        const result = await query('SELECT * FROM programs WHERE id = $1', [id]);
+	        if (result.rows.length === 0) {
+	            return res.status(404).json({ message: 'Program not found.' });
+	        }
+	
+	        // Assuming you want to include the images with the program response
+	        const program = result.rows[0];
+	        const images = await query('SELECT * FROM images WHERE program_id = $1', [id]); // Fetch associated images
+	
+	        // Construct full image URLs
+	        const imagesWithUrl = images.rows.map(image => ({
+	            ...image,
+	            url: `${req.protocol}://${req.get('host')}/gallery/${path.basename(image.image)}`,
+	            status: image.status,
+	            registered_at: image.published_date,
+	           content: image.content,
+		   title: image.title,
+	        }));
+	
+	        res.status(200).json({ ...program, images: imagesWithUrl }); // Return program with images
+	    } catch (error) {
+	        console.error('Error fetching program:', error);
+	        res.status(500).json({ message: 'Error fetching the program.' });
+	    }
+},
 
 	// Update an existing program
 	UpdateProgram: async (req, res) => {
