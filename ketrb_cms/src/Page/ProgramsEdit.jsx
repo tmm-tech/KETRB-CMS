@@ -118,7 +118,7 @@ const ProgramsEdit = () => {
             >
                 <HeaderNav />
                 <div className="flex items-center justify-center min-h-screen bg-muted">
-                    <Card className="w-full max-w-4xl bg-white relative">
+                    <Card className="w-full max-w-4xl bg-white">
                         <CardHeader>
                             <CardTitle>Edit Program</CardTitle>
                         </CardHeader>
@@ -135,36 +135,34 @@ const ProgramsEdit = () => {
 
                                 {/* Preview mode (default view) */}
                                 {!editMode ? (
-                                    <div className="relative">
-                                        <Card className="p-6 bg-white rounded-md w-[700px]">
-                                            <CardHeader>
-                                                <CardTitle className="text-2xl font-bold mb-4">Program Preview</CardTitle>
-                                            </CardHeader>
-                                            <CardContent>
-                                                <div className="mb-4">
-                                                  
-                                                        <img
-                                                            src={previewUrl}
-                                                            alt="Preview"
-                                                            className="w-full h-auto rounded-lg object-cover"
-                                                        />
-                                                  
-                                                </div>
-                                                <h3 className="text-xl font-semibold">{title}</h3>
-                                                <p className="text-muted-foreground my-2">{content}</p>
-                                                <p className="text-sm mt-4">Published Date: {publishedDate.toLocaleDateString()}</p>
-                                                <p className="text-sm">Author: {author}</p>
-                                            </CardContent>
-                                        </Card>
+                           <div className="relative">
+                        <Card className="p-6 bg-white rounded-md w-[700px]">
+                            <CardHeader>
+                                <CardTitle className="text-2xl font-bold mb-4">Program Preview</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="mb-4">
+                                    <img
+                                        src={previewUrl}
+                                        alt="Preview"
+                                        className="w-full h-auto rounded-lg object-cover"
+                                    />
+                                </div>
+                                <h3 className="text-xl font-semibold">{title}</h3>
+                                <p className="text-muted-foreground my-2">{content}</p>
+                                <p className="text-sm mt-4">Published Date: {publishedDate.toLocaleDateString()}</p>
+                                <p className="text-sm">Author: {author}</p>
+                            </CardContent>
+                        </Card>
 
-                                        {/* Edit icon */}
-                                        <button
-                                            className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-                                            onClick={() => setEditMode(true)}
-                                        >
-                                           <FilePenIcon className="h-4 w-4" />
-                                        </button>
-                                    </div>
+                        {/* Edit icon */}
+                        <button
+                            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 bg-white p-2 rounded-full shadow-md"
+                            onClick={() => setEditMode(true)}
+                        >
+                            <FilePenIcon className="h-6 w-6" />
+                        </button>
+                    </div>
                                 ) : (
                                     /* Edit mode (form view) */
                                     <div>
