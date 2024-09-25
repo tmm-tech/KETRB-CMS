@@ -11,8 +11,6 @@ import { Input } from '../Component/input';
 import { Textarea } from "../Component/textarea";
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 
-
-
 const ProgramsEdit = () => {
     const { id } = useParams(); // Get program ID from route params
     const [program, setProgram] = useState(null);
@@ -39,10 +37,10 @@ const ProgramsEdit = () => {
                 setProgram(data);
                 setTitle(data.title);
                 setContent(data.content);
-                    setPublishedDate(new Date(data.published_date));
+                setPublishedDate(new Date(data.published_date));
                 setAuthor(data.author);
-                setPreviewUrl(data. imageUrl); // Assuming backend returns an image URL
-                console.log("url: ",previewUrl);
+                setPreviewUrl(data.imageUrl); // Assuming backend returns an image URL
+                console.log("url: ", previewUrl);
             } catch (error) {
                 console.error("Error fetching program:", error);
                 setAlertMessage("Failed to load program data.");
@@ -52,7 +50,6 @@ const ProgramsEdit = () => {
     }, [id]);
 
     const handleTitleChange = (e) => setTitle(e.target.value);
-
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -135,39 +132,36 @@ const ProgramsEdit = () => {
 
                                 {/* Preview mode (default view) */}
                                 {!editMode ? (
-                           <div className="relative">
-                               
-                        {/* Edit icon */}
-                           <div className="absolute w-full flex justify-end mb-2"> 
-                                <button
-                                    className="text-gray-500 hover:text-gray-700 mr-2" 
-                                    onClick={() => setEditMode(true)}
-                                >
-                                    <FilePenIcon className="h-4 w-4" />
-                                </button>
-</div>
+                                    <div className="relative">
+                                        {/* Edit icon */}
+                                        <div className="absolute flex justify-end mb-2">
+                                            <button
+                                                className="text-gray-500 hover:text-gray-700"
+                                                onClick={() => setEditMode(true)}
+                                            >
+                                                <FilePenIcon className="h-4 w-4" />
+                                            </button>
+                                        </div>
 
-
-                        <Card className="p-6 bg-white rounded-md w-[700px]">
-                            <CardHeader>
-                                <CardTitle className="text-2xl font-bold mb-4">Program Preview</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="mb-4">
-                                    <img
-                                        src={previewUrl}
-                                        alt="Preview"
-                                        className="w-full h-auto rounded-lg object-cover"
-                                    />
-                                </div>
-                                <h3 className="text-xl font-semibold">{title}</h3>
-                                <p className="text-muted-foreground my-2">{content}</p>
-                                <p className="text-sm mt-4">Published Date: {publishedDate.toLocaleDateString()}</p>
-                                <p className="text-sm">Author: {author}</p>
-                            </CardContent>
-                        </Card>
-
-                    </div>
+                                        <Card className="p-6 bg-white rounded-md w-[700px]">
+                                            <CardHeader>
+                                                <CardTitle className="text-2xl font-bold mb-4">Program Preview</CardTitle>
+                                            </CardHeader>
+                                            <CardContent>
+                                                <div className="mb-4">
+                                                    <img
+                                                        src={previewUrl}
+                                                        alt="Preview"
+                                                        className="w-full h-auto rounded-lg object-cover"
+                                                    />
+                                                </div>
+                                                <h3 className="text-xl font-semibold">{title}</h3>
+                                                <p className="text-muted-foreground my-2">{content}</p>
+                                                <p className="text-sm mt-4">Published Date: {publishedDate.toLocaleDateString()}</p>
+                                                <p className="text-sm">Author: {author}</p>
+                                            </CardContent>
+                                        </Card>
+                                    </div>
                                 ) : (
                                     /* Edit mode (form view) */
                                     <div>
@@ -237,26 +231,25 @@ const ProgramsEdit = () => {
                                                     <label htmlFor="author" className="block text-sm font-medium text-muted-foreground">
                                                         Author
                                                     </label>
-                                                    <p>{author}</p>
+                                                    <Input
+                                                        id="author"
+                                                        type="text"
+                                                        value={author}
+                                                        onChange={(e) => setAuthor(e.target.value)}
+                                                        className="mt-1 block w-full"
+                                                        required
+                                                    />
                                                 </div>
                                             </div>
-                                            <div className="flex justify-end gap-2">
-                                                <Button
-                                                    onClick={handleSaveDraft}
-                                                    disabled={draftLoading}
-                                                    variant="outline"
-                                                >
-                                                    {draftLoading ? "Saving..." : "Save as Draft"}
-                                                </Button>
-                                                <Button
-                                                    onClick={handlePublish}
-                                                    disabled={loading}
-                                                    variant="black"
-                                                >
-                                                    {loading ? "Publishing..." : "Publish"}
-                                                </Button>
-                                            </div>
                                         </form>
+                                        <div className="flex justify-end mt-6">
+                                            <Button onClick={handleSaveDraft} className="mr-2" disabled={draftLoading}>
+                                                {draftLoading ? "Saving Draft..." : "Save Draft"}
+                                            </Button>
+                                            <Button onClick={handlePublish} disabled={loading}>
+                                                {loading ? "Publishing..." : "Publish"}
+                                            </Button>
+                                        </div>
                                     </div>
                                 )}
                             </div>
@@ -271,22 +264,22 @@ const ProgramsEdit = () => {
 export default ProgramsEdit;
 
 function FilePenIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 22h6a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v10" />
-      <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-      <path d="M10.4 12.6a2 2 0 1 1 3 3L8 21l-4 1 1-4Z" />
-    </svg>
-  )
+    return (
+        <svg
+            {...props}
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        >
+            <path d="M12 22h6a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v10" />
+            <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+            <path d="M10.4 12.6a2 2 0 1 1 3 3L8 21l-4 1 1-4Z" />
+        </svg>
+    );
 }
