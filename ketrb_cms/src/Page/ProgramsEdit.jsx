@@ -118,7 +118,7 @@ const ProgramsEdit = () => {
             >
                 <HeaderNav />
                 <div className="flex items-center justify-center min-h-screen bg-muted">
-                    <Card className="w-full max-w-[1000px] bg-white">
+                    <Card className="w-full h-full max-w-none bg-white flex-grow">
                         <CardHeader>
                             <CardTitle>Edit Program</CardTitle>
                         </CardHeader>
