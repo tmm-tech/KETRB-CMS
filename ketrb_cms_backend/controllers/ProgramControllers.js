@@ -48,7 +48,7 @@ module.exports = {
 	        // Construct full image URLs
 	        const imagesWithUrl = images.rows.map(image => ({
 	            ...image,
-	            url: `${req.protocol}://${req.get('host')}/program/${path.basename(image.image)}`,
+	            url: `${req.protocol}://${req.get('host')}/programs/${path.basename(image.image)}`,
 	            status: image.status,
 	            published_date: image.published_date,
 	            content: image.content,
