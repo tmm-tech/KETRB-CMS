@@ -33,30 +33,30 @@ module.exports = {
 
 	// Get a single program by ID
 	GetProgramById: async (req, res) => {
-	    const { id } = req.params;
+	    const { id } = req.params; // Program ID from the URL
 	
 	    try {
+	        // Query to get the program details, including the image path
 	        const result = await query('SELECT * FROM programs WHERE id = $1', [id]);
+	
 	        if (result.rows.length === 0) {
 	            return res.status(404).json({ message: 'Program not found.' });
 	        }
 	
-	        // Assuming you want to include the images with the program response
 	        const program = result.rows[0];
-	        const images = await query('SELECT * FROM images WHERE id = $1', [id]); // Fetch associated images
 	
-	        // Construct full image URLs
-	        const imagesWithUrl = images.rows.map(image => ({
-	            ...image,
-	            url: `${req.protocol}://${req.get('host')}/programs/${path.basename(image.image)}`,
-	            status: image.status,
-	            published_date: image.published_date,
-	            content: image.content,
-		    title: image.title,
-		    author:image.author,
-	        }));
+	        // Construct the full image URL using the stored image path in the 'image' column
+	        const imageUrl = `${req.protocol}://${req.get('host')}/${program.image}`; // Assuming 'program.image' has a value like 'programs/1727282992685-IMG_0026.JPG'
 	
-	        res.status(200).json({ ...program, images: imagesWithUrl }); // Return program with images
+	        // Add the full image URL to the program object
+	        const programWithImageUrl = {
+	            ...program,
+	            imageUrl // Adding the full image URL to the response
+	        };
+	
+	        // Return the program data with the constructed image URL
+	        res.status(200).json(programWithImageUrl);
+	
 	    } catch (error) {
 	        console.error('Error fetching program:', error);
 	        res.status(500).json({ message: 'Error fetching the program.' });
