@@ -46,8 +46,8 @@ module.exports = {
 	        const program = result.rows[0];
 	
 	        // Construct the full image URL using the stored image path in the 'image' column
-	        const imageUrl = `${req.protocol}://${req.get('host')}/${program.image}`; // Assuming 'program.image' has a value like 'programs/1727282992685-IMG_0026.JPG'
-		console.log(imageUrl);
+	        const imageUrl = `${req.protocol}://${req.get('host')}/${program.image}`; 
+		
 	        // Add the full image URL to the program object
 	        const programWithImageUrl = {
 	            ...program,
