@@ -136,7 +136,7 @@ const ProgramsEdit = () => {
                                 {/* Preview mode (default view) */}
                                 {!editMode ? (
                                     <div className="relative">
-                                        <Card className="p-6 bg-white rounded-md">
+                                        <Card className="p-6 bg-white rounded-md w-full">
                                             <CardHeader>
                                                 <CardTitle className="text-2xl font-bold mb-4">Program Preview</CardTitle>
                                             </CardHeader>
