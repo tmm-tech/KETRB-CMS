@@ -136,7 +136,7 @@ const ProgramsEdit = () => {
                                 {/* Preview mode (default view) */}
                                 {!editMode ? (
                                     <div className="relative">
-                                        <Card className="p-6 bg-white rounded-md w-full">
+                                        <Card className="p-6 bg-white rounded-md w-full max-w-4xl">
                                             <CardHeader>
                                                 <CardTitle className="text-2xl font-bold mb-4">Program Preview</CardTitle>
                                             </CardHeader>
@@ -169,7 +169,7 @@ const ProgramsEdit = () => {
                                     /* Edit mode (form view) */
                                     <div>
                                         <h2 className="text-xl font-bold mb-4">Edit Program</h2>
-                                        <form className="space-y-6 w-[600px] mx-auto" encType="multipart/form-data">
+                                        <form className="space-y-6 max-w-4xl mx-auto" encType="multipart/form-data">
                                             <div>
                                                 <label htmlFor="title" className="block text-sm font-medium text-muted-foreground">
                                                     Title
