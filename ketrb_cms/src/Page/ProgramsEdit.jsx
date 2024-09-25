@@ -138,7 +138,7 @@ const ProgramsEdit = () => {
                            <div className="relative">
                                
                         {/* Edit icon */}
-                           <div className="flex justify-end mb-2"> 
+                           <div className="absolute flex justify-end mb-2"> 
                                 <button
                                     className="text-gray-500 hover:text-gray-700 mr-2" 
                                     onClick={() => setEditMode(true)}
