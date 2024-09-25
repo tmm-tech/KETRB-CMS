@@ -138,12 +138,16 @@ const ProgramsEdit = () => {
                            <div className="relative">
                                
                         {/* Edit icon */}
-                                        <button
-                                            className="absolute top-2 left-4 text-gray-500 hover:text-gray-700"
-                                            onClick={() => setEditMode(true)}
-                                        >
-                                           <FilePenIcon className="h-4 w-4" />
-                                        </button>
+                           <div className="flex justify-end mb-2"> 
+                                <button
+                                    className="text-gray-500 hover:text-gray-700 mr-2" 
+                                    onClick={() => setEditMode(true)}
+                                >
+                                    <FilePenIcon className="h-4 w-4" />
+                                </button>
+</div>
+
+
                         <Card className="p-6 bg-white rounded-md w-[700px]">
                             <CardHeader>
                                 <CardTitle className="text-2xl font-bold mb-4">Program Preview</CardTitle>
