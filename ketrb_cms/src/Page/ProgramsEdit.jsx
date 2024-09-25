@@ -42,6 +42,7 @@ const ProgramsEdit = () => {
                     setPublishedDate(new Date(data.published_date));
                 setAuthor(data.author);
                 setPreviewUrl(data.url); // Assuming backend returns an image URL
+                console.log("url: ",previewUrl);
             } catch (error) {
                 console.error("Error fetching program:", error);
                 setAlertMessage("Failed to load program data.");
@@ -141,13 +142,13 @@ const ProgramsEdit = () => {
                                             </CardHeader>
                                             <CardContent>
                                                 <div className="mb-4">
-                                                    {previewUrl && (
+                                                  
                                                         <img
                                                             src={previewUrl}
                                                             alt="Preview"
                                                             className="w-full h-auto rounded-lg object-cover"
                                                         />
-                                                    )}
+                                                  
                                                 </div>
                                                 <h3 className="text-xl font-semibold">{title}</h3>
                                                 <p className="text-muted-foreground my-2">{content}</p>
