@@ -19,7 +19,28 @@ module.exports = {
 		res.status(500).json({ message: 'Server error while adding the program.' });
 	  }
 	},
-
+	CancelProgram: async (req, res) => {
+	    const { id } = req.params; // Get the program ID from the request parameters
+	
+	    try {
+	     const result = await query(
+	        'UPDATE programs SET isdeleted = FALSE WHERE id = $1 RETURNING *',
+	        [id]
+	      );
+	
+	
+	     // Check if a program was returned (i.e., it exists)
+	        if (result.rowCount === 0) {
+	            return res.status(404).json({ message: 'Program not found' });
+	        }
+	
+	        const updatedProgram = result.rows[0]; // Get the updated program from the result
+	        res.status(200).json(updatedProgram); // Return the updated program
+	    } catch (error) {
+	        console.error("Error canceling program:", error);
+	        res.status(500).json({ message: 'Internal server error' });
+	    }
+	},
 	// Get all programs
 	GetPrograms: async (req, res) => {
 	  try {
