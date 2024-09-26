@@ -65,30 +65,39 @@ module.exports = {
 
 	// Update an existing program
 	UpdateProgram: async (req, res) => {
-	  const { id } = req.params;
-	  const { title, content, publishedDate, author, status } = req.body;
-	  const image = req.file;
+    const { id } = req.params;
+    const { title, content, publishedDate, author, status } = req.body; // Ensure `status` comes from the client
+    const image = req.file;
+    const userRole = req.user.role; // Assuming you have user role available in the request
 
-	  try {
-		// Check if program exists
-		const existingProgram = await query('SELECT * FROM programs WHERE id = $1', [id]);
-		if (existingProgram.rows.length === 0) {
-		  return res.status(404).json({ message: 'Program not found.' });
-		}
+    try {
+        // Check if program exists
+        const existingProgram = await query('SELECT * FROM programs WHERE id = $1', [id]);
+        if (existingProgram.rows.length === 0) {
+            return res.status(404).json({ message: 'Program not found.' });
+        }
 
-		// Update fields, including the image if uploaded
-		const imagePath = image ? `/uploads/programs/${image.filename}` : existingProgram.rows[0].image;
-		const result = await query(
-		  'UPDATE programs SET title = $1, content = $2, image = $3, published_date = $4, author = $5, status = $6 WHERE id = $7 RETURNING *',
-		  [title, content, imagePath, publishedDate, author, status, id]
-		);
+        // Determine the new status
+        let newStatus = status; // Default to the status provided in the request
+        if (userRole === 'editor') {
+            // If the user is an editor, set status to 'Pending'
+            newStatus = 'Pending';
+        }
 
-		res.status(200).json({ message: 'Program updated successfully', program: result.rows[0] });
-	  } catch (error) {
-		console.error('Error updating program:', error);
-		res.status(500).json({ message: 'Error updating the program.' });
-	  }
-	},
+        // Update fields, including the image if uploaded
+        const imagePath = image ? `programs/${image.filename}` : existingProgram.rows[0].image;
+        const result = await query(
+            'UPDATE programs SET title = $1, content = $2, image = $3, published_date = $4, author = $5, status = $6 WHERE id = $7 RETURNING *',
+            [title, content, imagePath, publishedDate, author, newStatus, id]
+        );
+
+        res.status(200).json({ message: 'Program updated successfully', program: result.rows[0] });
+    } catch (error) {
+        console.error('Error updating program:', error);
+        res.status(500).json({ message: 'Error updating the program.' });
+    }
+},
+
 
 	// Approve a program (set its status to 'approved')
 	ApproveProgram: async (req, res) => {
@@ -97,7 +106,7 @@ module.exports = {
 	  try {
 		const result = await query(
 		  'UPDATE programs SET status = $1 WHERE id = $2 RETURNING *',
-		  ['approved', id]
+		  ['published', id]
 		);
 
 		if (result.rows.length === 0) {
