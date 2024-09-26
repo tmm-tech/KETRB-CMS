@@ -42,7 +42,7 @@ const storedUser = localStorage.getItem('user');
 const handleApprove = async (id) => {
     try {
         const response = await fetch(`https://ketrb-backend.onrender.com/programs/delete/${id}`, {
-            method: 'DELETE', // Assuming PATCH for updating approval
+            method: 'DELETE', 
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -64,8 +64,8 @@ const handleApprove = async (id) => {
 };
 const handlePublish = async (id) => {
     try {
-        const response = await fetch(`https://ketrb-backend.onrender.com/programs/publish/${id}`, {
-            method: 'PUT', // Assuming PATCH for updating the publish status
+        const response = await fetch(`https://ketrb-backend.onrender.com/programs/approve/${id}`, {
+            method: 'PUT', 
             headers: {
                 'Content-Type': 'application/json',
             },
