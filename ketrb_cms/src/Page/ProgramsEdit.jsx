@@ -158,7 +158,7 @@ const ProgramsEdit = () => {
                                             <p className="text-sm mt-4">Published Date: {publishedDate.toLocaleDateString()}</p>
                                             <p className="text-sm">Author: {author}</p>
                                         </CardContent>
-                                    </Card
+                                    </Card>
                                 ) : (
                                     /* Edit mode (form view) */
                                     <div>
