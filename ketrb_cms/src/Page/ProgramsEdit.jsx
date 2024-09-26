@@ -117,7 +117,7 @@ const ProgramsEdit = () => {
                 <div className="flex items-center justify-center min-h-screen bg-muted">
                     <Card className="w-[900px] bg-white">
                         <CardHeader>
-                            <CardTitle>Edit Program</CardTitle>
+                            <CardTitleProgram</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -162,7 +162,9 @@ const ProgramsEdit = () => {
                                 ) : (
                                     /* Edit mode (form view) */
                                     <Card className="relative p-6 bg-white rounded-md w-[800px]">
-                                       
+                                         <CardHeader>
+                                            <CardTitle className="text-2xl font-bold mb-4">Edit Program</CardTitle>
+                                        </CardHeader>
                                         <CardContent>
                                             {/* Form for editing the program */}
                                             <div>
