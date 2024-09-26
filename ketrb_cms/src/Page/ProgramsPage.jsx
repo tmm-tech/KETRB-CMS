@@ -230,25 +230,27 @@ const handlePublish = async (id) => {
 							{/* Conditionally display buttons */}
 							{user?.roles === 'administrator' && program.isDeleted === "TRUE" ? (
 							// Show Approve Delete button if the program is pending delete and user is an admin
-							<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleApprove(program.id)}>
-							<CheckIcon className="h-3.5 w-3.5" />
-							<span>Approve Delete</span>
-							</Button>
-							<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(program.id)}>
-							<FilePenIcon className="h-3.5 w-3.5" />
-							<span>View</span>
-							</Button>
+							<>
+								<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(program.id)} >
+									<FilePenIcon className="h-3.5 w-3.5" />
+									<span>View</span>
+								</Button>
+								<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleApprove(program.id)}>
+									<CheckIcon className="h-3.5 w-3.5" />
+									<span>Approve Delete</span>
+								</Button>
+							</>
 							) : (
 							// Otherwise, show Edit and Delete buttons
 							<>
-							<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(program.id)}>
-							<FilePenIcon className="h-3.5 w-3.5" />
-							<span>View</span>
-							</Button>
-							<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleDelete(program.id)}>
-							<TrashIcon className="h-3.5 w-3.5" />
-							<span>Delete</span>
-							</Button>
+								<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(program.id)}>
+									<FilePenIcon className="h-3.5 w-3.5" />
+									<span>View</span>
+								</Button>
+								<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleDelete(program.id)}>
+									<TrashIcon className="h-3.5 w-3.5" />
+									<span>Delete</span>
+								</Button>
 							</>
 						)}
 						
