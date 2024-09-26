@@ -105,7 +105,7 @@ const handlePublish = async (id) => {
 
       if (response.ok) {
         const data = await response.json();
-        if (user?.roles === 'editor') {
+        if (user.roles === 'editor') {
           setAlertMessage('Program marked for deletion. Admin approval required.');
 	 
         } else {
