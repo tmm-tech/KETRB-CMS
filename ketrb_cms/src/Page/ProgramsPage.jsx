@@ -15,6 +15,7 @@ const ProgramsPage = () => {
     const [programs, setPrograms] = useState([]);
     const [loading, setLoading] = useState(true);
     const [alertMessage, setAlertMessage] = useState("");
+
 const storedUser = localStorage.getItem('user');
   const user = JSON.parse(storedUser);
       const navigate = useNavigate();
@@ -106,6 +107,7 @@ const handlePublish = async (id) => {
         const data = await response.json();
         if (user?.roles === 'editor') {
           setAlertMessage('Program marked for deletion. Admin approval required.');
+	 
         } else {
           setPrograms((prevPrograms) => prevPrograms.filter((program) => program.id !== id));
           setAlertMessage('Program deleted successfully');
@@ -198,7 +200,7 @@ const handlePublish = async (id) => {
                                     <div className="col-span-full flex items-center justify-center"> <p className="text-center text-gray-500">No programs available.</p></div>
                                 ) : (
                                     programs.map((program) => (
-                                        <Card key={program.id}>
+                                        <Card key={program.id} className={(program.isDeleted && user?.roles === "editor") ? "opacity-50 pointer-events-none" : ""}>
                                             <CardHeader>
                                                 <CardTitle>{program.title}</CardTitle>
                                                 <CardDescription>
@@ -231,6 +233,10 @@ const handlePublish = async (id) => {
 							<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleApprove(program.id)}>
 							<CheckIcon className="h-3.5 w-3.5" />
 							<span>Approve Delete</span>
+							</Button>
+							<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(program.id)}>
+							<FilePenIcon className="h-3.5 w-3.5" />
+							<span>View</span>
 							</Button>
 							) : (
 							// Otherwise, show Edit and Delete buttons
