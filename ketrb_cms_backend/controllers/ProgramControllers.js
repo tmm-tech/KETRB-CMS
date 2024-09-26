@@ -113,19 +113,44 @@ module.exports = {
 
 	// Delete a program
 	DeleteProgram: async (req, res) => {
-	  const { id } = req.params;
+  const { id } = req.params;
+  const { role } = req.body; // Get the user role from the request body
 
-	  try {
-		const result = await query('DELETE FROM programs WHERE id = $1 RETURNING *', [id]);
+  try {
+    if (role === 'editor') {
+      // Soft delete: Set isDeleted to true, requiring admin approval for final deletion
+      const result = await query(
+        'UPDATE programs SET isDeleted = true WHERE id = $1 RETURNING *',
+        [id]
+      );
 
-		if (result.rows.length === 0) {
-		  return res.status(404).json({ message: 'Program not found.' });
-		}
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: 'Program not found.' });
+      }
 
-		res.status(200).json({ message: 'Program deleted successfully', program: result.rows[0] });
-	  } catch (error) {
-		console.error('Error deleting program:', error);
-		res.status(500).json({ message: 'Error deleting the program.' });
-	  }
-	},
+      return res.status(200).json({
+        message: 'Program marked for deletion. Admin approval required.',
+        program: result.rows[0],
+      });
+    } else if (role === 'administrator') {
+      // Hard delete: Permanently delete the program
+      const result = await query('DELETE FROM programs WHERE id = $1 RETURNING *', [id]);
+
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: 'Program not found.' });
+      }
+
+      return res.status(200).json({
+        message: 'Program deleted successfully',
+        program: result.rows[0],
+      });
+    } else {
+      return res.status(403).json({ message: 'Insufficient permissions.' });
+    }
+  } catch (error) {
+    console.error('Error deleting program:', error);
+    return res.status(500).json({ message: 'Error deleting the program.' });
+  }
+},
+
 }
