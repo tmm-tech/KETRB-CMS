@@ -55,6 +55,7 @@ const storedUser = localStorage.getItem('user');
                 const updatedProgram = await response.json();
               
                 setAlertMessage('Program Delete Canceled successfully');
+		window.location.href = '/programs';
             } else {
                 setAlertMessage('Failed to Cancel Program Delete');
             }
@@ -79,6 +80,7 @@ const handleApprove = async (id) => {
                 prevPrograms.map((program) => (program.id === id ? updatedProgram : program))
             );
             setAlertMessage('Program delete approved');
+	 window.location.href = '/programs';
         } else {
             setAlertMessage('Failed to approve delete');
         }
@@ -102,6 +104,7 @@ const handlePublish = async (id) => {
                 prevPrograms.map((program) => (program.id === id ? updatedProgram : program))
             );
             setAlertMessage('Program published successfully');
+		window.location.href = '/programs';
         } else {
             setAlertMessage('Failed to publish program');
         }
@@ -136,6 +139,7 @@ const handlePublish = async (id) => {
         } else {
           setPrograms((prevPrograms) => prevPrograms.filter((program) => program.id !== id));
           setAlertMessage('Program deleted successfully');
+	window.location.href = '/programs';
         }
       } else {
         setAlertMessage('Failed to delete program');
