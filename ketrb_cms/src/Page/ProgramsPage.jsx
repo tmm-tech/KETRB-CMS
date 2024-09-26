@@ -217,7 +217,7 @@ const handlePublish = async (id) => {
 						    className={`capitalize ${
 							program.status === "published"
 							    ? "bg-green-500 text-green-50"
-							    : program.status === "Pending"
+							    : program.status === "pending"
 							    ? "bg-yellow-500 text-yellow-50"
 							    : "bg-gray-500 text-gray-50"
 						    }`}
