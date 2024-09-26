@@ -15,6 +15,8 @@ const ProgramsPage = () => {
     const [programs, setPrograms] = useState([]);
     const [loading, setLoading] = useState(true);
     const [alertMessage, setAlertMessage] = useState("");
+const storedUser = localStorage.getItem('user');
+  const user = JSON.parse(storedUser);
       const navigate = useNavigate();
     useEffect(() => {
         const fetchPrograms = async () => {
@@ -40,28 +42,34 @@ const ProgramsPage = () => {
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this program?");
 
-    if (confirmDelete) {
-        try {
-            // Call backend API to soft delete the program
-            const response = await fetch(`https://ketrb-backend.onrender.com/programs/delete/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
 
-            if (response.ok) {
-                // Remove the deleted program from the programs state
-                setPrograms((prevPrograms) => prevPrograms.filter((program) => program.id !== id));
-                setAlertMessage('Program deleted successfully');
-            } else {
-                setAlertMessage('Failed to delete program');
-            }
-        } catch (error) {
-            console.error("Error deleting program:", error);
-            setAlertMessage('An error occurred while deleting the program.');
+  if (confirmDelete) {
+    try {
+      // Call backend API to delete or soft-delete the program
+      const response = await fetch(`https://ketrb-backend.onrender.com/programs/delete/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ role: user?.roles }) // Pass user role to the backend
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (user?.roles === 'editor') {
+          setAlertMessage('Program marked for deletion. Admin approval required.');
+        } else {
+          setPrograms((prevPrograms) => prevPrograms.filter((program) => program.id !== id));
+          setAlertMessage('Program deleted successfully');
         }
+      } else {
+        setAlertMessage('Failed to delete program');
+      }
+    } catch (error) {
+      console.error("Error deleting program:", error);
+      setAlertMessage('An error occurred while deleting the program.');
     }
+  }
 };
 
     return (
@@ -157,28 +165,47 @@ const ProgramsPage = () => {
                                             <CardFooter>
                                                 <div className="flex items-center justify-between gap-2">
                                                    <Badge
-    variant="outline"
-    className={`capitalize ${
-        program.status === "published"
-            ? "bg-green-500 text-green-50"
-            : program.status === "Pending"
-            ? "bg-yellow-500 text-yellow-50"
-            : "bg-gray-500 text-gray-50"
-    }`}
->
-    {program.status}
-</Badge>
+						    variant="outline"
+						    className={`capitalize ${
+							program.status === "published"
+							    ? "bg-green-500 text-green-50"
+							    : program.status === "Pending"
+							    ? "bg-yellow-500 text-yellow-50"
+							    : "bg-gray-500 text-gray-50"
+						    }`}
+						>
+						    {program.status}
+						</Badge>
 
-                                                    <div className="flex items-center gap-2">
-                                                        <Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(program.id)}>
-                                                            <FilePenIcon className="h-3.5 w-3.5" />
-                                                            <span>Edit</span>
-                                                        </Button>
-                                                        <Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleDelete(program.id)}>
-                                                            <TrashIcon className="h-3.5 w-3.5" />
-                                                            <span>Delete</span>
-                                                        </Button>
-                                                    </div>
+	   <div className="flex items-center gap-2">
+			    {/* Conditionally display buttons */}
+			    {user?.roles === 'administrator' && program.isDeleted === "TRUE" ? (
+				// Show Approve button if the program is pending and user is an admin
+				<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleApprove(program.id)}>
+				    <CheckIcon className="h-3.5 w-3.5" />
+				    <span>Approve</span>
+				</Button>
+			    ) : (
+				// Otherwise, show Edit and Delete buttons
+				<>
+				    <Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(program.id)}>
+					<FilePenIcon className="h-3.5 w-3.5" />
+					<span>Edit</span>
+				    </Button>
+				    <Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleDelete(program.id)}>
+					<TrashIcon className="h-3.5 w-3.5" />
+					<span>Delete</span>
+				    </Button>
+				</>
+						{/* Only show approve button for pending images and if the user is an admin */}
+            {user.roles === "administrator" && image.status === "pending" && (
+              <Button size="sm" variant="black" onClick={() => handleApprove(image.id)}>
+                Approve
+              </Button>
+            )}
+			    )}
+	</div>
+
                                                 </div>
                                             </CardFooter>
                                         </Card>
