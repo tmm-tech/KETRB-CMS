@@ -200,7 +200,7 @@ const handlePublish = async (id) => {
                                     <div className="col-span-full flex items-center justify-center"> <p className="text-center text-gray-500">No programs available.</p></div>
                                 ) : (
                                     programs.map((program) => (
-                                        <Card key={program.id} className={(program.isDeleted && user?.roles === "editor") ? "opacity-50 pointer-events-none" : ""}>
+                                        <Card key={program.id} className={(programs.isdeleted === "TRUE" && user?.roles === "editor") ? "opacity-50 pointer-events-none" : ""}>
                                             <CardHeader>
                                                 <CardTitle>{program.title}</CardTitle>
                                                 <CardDescription>
