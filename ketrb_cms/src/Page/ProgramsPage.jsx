@@ -237,7 +237,7 @@ const handlePublish = async (id) => {
 							<>
 							<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(program.id)}>
 							<FilePenIcon className="h-3.5 w-3.5" />
-							<span>Edit</span>
+							<span>View</span>
 							</Button>
 							<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleDelete(program.id)}>
 							<TrashIcon className="h-3.5 w-3.5" />
