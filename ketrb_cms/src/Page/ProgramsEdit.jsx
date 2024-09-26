@@ -134,7 +134,7 @@ const ProgramsEdit = () => {
                                 {!editMode ? (
                                     <div className="relative">
                                         {/* Edit icon */}
-                                        <div className="absolute  top-2">
+                                        <div style={{ position: "absolute", right: "8px", top: "8px" }}>
                                             <button
                                                 className="text-gray-500 hover:text-gray-700"
                                                 onClick={() => setEditMode(true)}
