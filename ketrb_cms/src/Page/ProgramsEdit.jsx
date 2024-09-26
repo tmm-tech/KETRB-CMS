@@ -117,7 +117,7 @@ const ProgramsEdit = () => {
                 <div className="flex items-center justify-center min-h-screen bg-muted">
                     <Card className="w-[900px] bg-white">
                         <CardHeader>
-                            <CardTitleProgram</CardTitle>
+                            <CardTitle>Program</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
