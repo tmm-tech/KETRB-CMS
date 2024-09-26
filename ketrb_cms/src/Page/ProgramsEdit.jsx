@@ -161,96 +161,127 @@ const ProgramsEdit = () => {
                                     </Card>
                                 ) : (
                                     /* Edit mode (form view) */
-                                    <div>
-                                        <h2 className="text-xl font-bold mb-4">Edit Program</h2>
-                                        <form className="space-y-6 w-[700px]" encType="multipart/form-data">
+                                    <Card className="relative p-6 bg-white rounded-md w-[700px]">
+                                        <CardHeader>
+                                            <CardTitle className="text-2xl font-bold mb-4">Edit Program</CardTitle>
+                                        </CardHeader>
+                                        <CardContent>
+                                            {/* Form for editing the program */}
                                             <div>
-                                                <label htmlFor="title" className="block text-sm font-medium text-muted-foreground">
-                                                    Title
-                                                </label>
-                                                <Input
-                                                    id="title"
-                                                    type="text"
-                                                    value={title}
-                                                    onChange={handleTitleChange}
-                                                    className="mt-1 block w-full"
-                                                    required
-                                                />
-                                            </div>
-                                            <div>
-                                                <label htmlFor="image" className="block text-sm font-medium text-muted-foreground">
-                                                    Image
-                                                </label>
-                                                <div className="mt-1">
-                                                    <Input type="file" onChange={handleImageChange} className="block w-full" accept="image/*" name="program" />
-                                                    {previewUrl && (
-                                                        <img
-                                                            src={previewUrl}
-                                                            alt="Uploaded Image"
-                                                            width={300}
-                                                            height={200}
-                                                            className="mt-4 rounded-md"
-                                                            style={{ aspectRatio: "300/200", objectFit: "cover" }}
+                                                <h2 className="text-xl font-bold mb-4">Edit Program</h2>
+                                                <form className="space-y-6 w-[700px]" encType="multipart/form-data">
+                                                    {/* Title Input */}
+                                                    <div>
+                                                        <label htmlFor="title" className="block text-sm font-medium text-muted-foreground">
+                                                            Title
+                                                        </label>
+                                                        <Input
+                                                            id="title"
+                                                            type="text"
+                                                            value={title}
+                                                            onChange={handleTitleChange}
+                                                            className="mt-1 block w-full"
+                                                            required
                                                         />
-                                                    )}
+                                                    </div>
+                                    
+                                                    {/* Image Upload */}
+                                                    <div>
+                                                        <label htmlFor="image" className="block text-sm font-medium text-muted-foreground">
+                                                            Image
+                                                        </label>
+                                                        <div className="mt-1">
+                                                            <Input
+                                                                type="file"
+                                                                onChange={handleImageChange}
+                                                                className="block w-full"
+                                                                accept="image/*"
+                                                                name="program"
+                                                            />
+                                                            {previewUrl && (
+                                                                <img
+                                                                    src={previewUrl}
+                                                                    alt="Uploaded Image"
+                                                                    width={300}
+                                                                    height={200}
+                                                                    className="mt-4 rounded-md"
+                                                                    style={{ aspectRatio: "300/200", objectFit: "cover" }}
+                                                                />
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                    
+                                                    {/* Content Textarea */}
+                                                    <div>
+                                                        <label htmlFor="content" className="block text-sm font-medium text-muted-foreground">
+                                                            Content
+                                                        </label>
+                                                        <Textarea
+                                                            id="content"
+                                                            value={content}
+                                                            onChange={(e) => handleContentChange(e.target.value)}
+                                                            className="mt-1 block w-full"
+                                                            rows={5}
+                                                            required
+                                                        />
+                                                    </div>
+                                    
+                                                    {/* Published Date and Author Fields */}
+                                                    <div className="grid grid-cols-2 gap-4">
+                                                        {/* Published Date */}
+                                                        <div>
+                                                            <label htmlFor="publishedDate" className="block text-sm font-medium text-muted-foreground">
+                                                                Published Date
+                                                            </label>
+                                                            <Popover>
+                                                                <PopoverTrigger asChild>
+                                                                    <Button variant="outline" className="w-full text-left">
+                                                                        {publishedDate.toLocaleDateString()}
+                                                                    </Button>
+                                                                </PopoverTrigger>
+                                                                <PopoverContent className="p-0">
+                                                                    <Calendar
+                                                                        mode="single"
+                                                                        selected={publishedDate}
+                                                                        onSelect={handlePublishedDateChange}
+                                                                    />
+                                                                </PopoverContent>
+                                                            </Popover>
+                                                        </div>
+                                    
+                                                        {/* Author Field */}
+                                                        <div>
+                                                            <label htmlFor="author" className="block text-sm font-medium text-muted-foreground">
+                                                                Author
+                                                            </label>
+                                                            <Input
+                                                                id="author"
+                                                                type="text"
+                                                                value={author}
+                                                                onChange={(e) => setAuthor(e.target.value)}
+                                                                className="mt-1 block w-full"
+                                                                required
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                    
+                                                {/* Action Buttons */}
+                                                <div className="flex justify-end gap-2 mt-6">
+                                                    <Button onClick={() => setEditMode(false)} variant="outline">
+                                                        Cancel
+                                                    </Button>
+                                                    <Button onClick={handleSaveDraft} disabled={draftLoading} variant="black">
+                                                        {draftLoading ? "Saving Draft..." : "Save Draft"}
+                                                    </Button>
+                                                    <Button onClick={handlePublish} variant="black" disabled={loading}>
+                                                        {loading ? "Publishing..." : "Publish"}
+                                                    </Button>
                                                 </div>
                                             </div>
-                                            <div>
-                                                <label htmlFor="content" className="block text-sm font-medium text-muted-foreground">
-                                                    Content
-                                                </label>
-                                                <Textarea
-                                                    id="content"
-                                                    value={content}
-                                                    onChange={(e) => handleContentChange(e.target.value)}
-                                                    className="mt-1 block w-full"
-                                                    rows={5}
-                                                    required
-                                                />
-                                            </div>
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <div>
-                                                    <label htmlFor="publishedDate" className="block text-sm font-medium text-muted-foreground">
-                                                        Published Date
-                                                    </label>
-                                                    <Popover>
-                                                        <PopoverTrigger asChild>
-                                                            <Button variant="outline" className="w-full text-left">
-                                                                {publishedDate.toLocaleDateString()}
-                                                            </Button>
-                                                        </PopoverTrigger>
-                                                        <PopoverContent className="p-0">
-                                                            <Calendar mode="single" selected={publishedDate} onSelect={handlePublishedDateChange} />
-                                                        </PopoverContent>
-                                                    </Popover>
-                                                </div>
-                                                <div>
-                                                    <label htmlFor="author" className="block text-sm font-medium text-muted-foreground">
-                                                        Author
-                                                    </label>
-                                                    <Input
-                                                        id="author"
-                                                        type="text"
-                                                        value={author}
-                                                        onChange={(e) => setAuthor(e.target.value)}
-                                                        className="mt-1 block w-full"
-                                                        required
-                                                    />
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <div className="flex justify-end gap-2">
-                                              <Button onClick={() => setEditMode(false)} variant="outline">
-                                                Cancle
-                                            </Button>
-                                            <Button onClick={handleSaveDraft}  disabled={draftLoading} variant="black">
-                                                {draftLoading ? "Saving Draft..." : "Save Draft"}
-                                            </Button>
-                                            <Button onClick={handlePublish} variant="black">
-                                                {loading ? "Publishing..." : "Publish"}
-                                            </Button>
-                                        </div>
-                                    </div>
+                                        </CardContent>
+                                    </Card>
+
                                 )}
                             </div>
                         </CardContent>
