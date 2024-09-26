@@ -100,13 +100,13 @@ const handlePublish = async (id) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ role: user?.roles }) // Pass user role to the backend
+        body: JSON.stringify({ role: user.roles }) // Pass user role to the backend
       });
 
       if (response.ok) {
         const data = await response.json();
         if (user.roles === 'editor') {
-		console.log("Status: " programs.isdeleted);
+		console.log("Status: ", programs.isdeleted);
           setAlertMessage('Program marked for deletion. Admin approval required.');
 	 
         } else {
