@@ -39,6 +39,54 @@ const storedUser = localStorage.getItem('user');
  const handleEdit = (id) => {
     navigate(`/programs/edit program/${id}`); // Redirect to the edit page
   }
+const handleApprove = async (id) => {
+    try {
+        const response = await fetch(`https://ketrb-backend.onrender.com/programs/delete/${id}`, {
+            method: 'DELETE', // Assuming PATCH for updating approval
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (response.ok) {
+            const updatedProgram = await response.json();
+            // Update state to reflect the approved program
+            setPrograms((prevPrograms) => 
+                prevPrograms.map((program) => (program.id === id ? updatedProgram : program))
+            );
+            setAlertMessage('Program delete approved');
+        } else {
+            setAlertMessage('Failed to approve delete');
+        }
+    } catch (error) {
+        console.error("Error approving delete:", error);
+        setAlertMessage('An error occurred while approving delete.');
+    }
+};
+const handlePublish = async (id) => {
+    try {
+        const response = await fetch(`https://ketrb-backend.onrender.com/programs/publish/${id}`, {
+            method: 'PUT', // Assuming PATCH for updating the publish status
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (response.ok) {
+            const updatedProgram = await response.json();
+            // Update state to reflect the published program
+            setPrograms((prevPrograms) => 
+                prevPrograms.map((program) => (program.id === id ? updatedProgram : program))
+            );
+            setAlertMessage('Program published successfully');
+        } else {
+            setAlertMessage('Failed to publish program');
+        }
+    } catch (error) {
+        console.error("Error publishing program:", error);
+        setAlertMessage('An error occurred while publishing the program.');
+    }
+};
+
+
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this program?");
 
@@ -176,36 +224,36 @@ const storedUser = localStorage.getItem('user');
 						>
 						    {program.status}
 						</Badge>
-
-	   <div className="flex items-center gap-2">
-			    {/* Conditionally display buttons */}
-			    {user?.roles === 'administrator' && program.isDeleted === "TRUE" ? (
-				// Show Approve button if the program is pending and user is an admin
-				<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleApprove(program.id)}>
-				    <CheckIcon className="h-3.5 w-3.5" />
-				    <span>Approve</span>
-				</Button>
-			    ) : (
-				// Otherwise, show Edit and Delete buttons
-				<>
-				    <Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(program.id)}>
-					<FilePenIcon className="h-3.5 w-3.5" />
-					<span>Edit</span>
-				    </Button>
-				    <Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleDelete(program.id)}>
-					<TrashIcon className="h-3.5 w-3.5" />
-					<span>Delete</span>
-				    </Button>
-				</>
-						{/* Only show approve button for pending images and if the user is an admin */}
-            {user.roles === "administrator" && image.status === "pending" && (
-              <Button size="sm" variant="black" onClick={() => handleApprove(image.id)}>
-                Approve
-              </Button>
-            )}
-			    )}
-	</div>
-
+						<div className="flex items-center gap-2">
+							{/* Conditionally display buttons */}
+							{user?.roles === 'administrator' && program.isDeleted === "TRUE" ? (
+							// Show Approve Delete button if the program is pending delete and user is an admin
+							<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleApprove(program.id)}>
+							<CheckIcon className="h-3.5 w-3.5" />
+							<span>Approve Delete</span>
+							</Button>
+							) : (
+							// Otherwise, show Edit and Delete buttons
+							<>
+							<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(program.id)}>
+							<FilePenIcon className="h-3.5 w-3.5" />
+							<span>Edit</span>
+							</Button>
+							<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleDelete(program.id)}>
+							<TrashIcon className="h-3.5 w-3.5" />
+							<span>Delete</span>
+							</Button>
+							</>
+						)}
+						
+						{/* Show Approve Publish button only for pending programs if user is admin */}
+						{user.roles === "administrator" && program.status === "pending" && (
+						<Button size="sm" variant="black" onClick={() => handlePublish(program.id)}>
+						Approve Publish
+						</Button>
+						)}
+					</div>
+									
                                                 </div>
                                             </CardFooter>
                                         </Card>
