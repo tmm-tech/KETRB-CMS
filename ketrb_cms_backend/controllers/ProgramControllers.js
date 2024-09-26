@@ -162,7 +162,7 @@ module.exports = {
         message: 'Program marked for deletion. Admin approval required.',
         program: result.rows[0],
       });
-    } else if (role === 'administrator') {
+    } else {
       // Hard delete: Permanently delete the program
       const result = await query('DELETE FROM programs WHERE id = $1 RETURNING *', [id]);
 
@@ -174,8 +174,6 @@ module.exports = {
         message: 'Program deleted successfully',
         program: result.rows[0],
       });
-    } else {
-      return res.status(403).json({ message: 'Insufficient permissions.' });
     }
   } catch (error) {
     console.error('Error deleting program:', error);
