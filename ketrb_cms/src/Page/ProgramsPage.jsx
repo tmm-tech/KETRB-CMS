@@ -40,6 +40,32 @@ const storedUser = localStorage.getItem('user');
  const handleEdit = (id) => {
     navigate(`/programs/edit program/${id}`); // Redirect to the edit page
   }
+	// New handleCancel function
+    const handleCancel = async (id) => {
+        try {
+            const response = await fetch(`https://ketrb-backend.onrender.com/programs/cancledelete/${id}`, {
+                method: 'PUT', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ isdeleted: false }), // Set isDeleted to true
+            });
+
+            if (response.ok) {
+                const updatedProgram = await response.json();
+                setPrograms((prevPrograms) => 
+                    prevPrograms.map((program) => (program.id === id ? updatedProgram : program))
+                );
+                setAlertMessage('Program Delete Canceled successfully');
+            } else {
+                setAlertMessage('Failed to Cancel Program Delete');
+            }
+        } catch (error) {
+            console.error("Error canceling program delete:", error);
+            setAlertMessage('An error occurred while canceling the program delete.');
+        }
+    };
+
 const handleApprove = async (id) => {
     try {
         const response = await fetch(`https://ketrb-backend.onrender.com/programs/delete/${id}`, {
@@ -236,9 +262,13 @@ const handlePublish = async (id) => {
 									<FilePenIcon className="h-3.5 w-3.5" />
 									<span>View</span>
 								</Button>
-								<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleApprove(program.id)}>
+								<Button variant="black" size="sm" className="h-8 gap-1" onClick={() => handleApprove(program.id)}>
 									<CheckIcon className="h-3.5 w-3.5" />
 									<span>Approve Delete</span>
+								</Button>
+								<Button variant="black" size="sm" className="h-8 gap-1" onClick={() => handleCancle(program.id)}>
+									<CheckIcon className="h-3.5 w-3.5" />
+									<span>Cancle Delete</span>
 								</Button>
 							</>
 							) : (
