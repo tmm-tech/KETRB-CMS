@@ -9,6 +9,7 @@ const {
   UpdateProgram,
   ApproveProgram,
   DeleteProgram,
+  CancelProgram,
 } = require('../controllers/ProgramControllers');
 const ProgramRoutes = express.Router();
 
@@ -46,6 +47,9 @@ ProgramRoutes.put('/:id', upload.single('image'), UpdateProgram);
 
 // Approve a program (change status to "approved")
 ProgramRoutes.put('/approve/:id', ApproveProgram);
+
+// Approve a program (change status to "approved")
+ProgramRoutes.put('/cancledelete/:id', CancelProgram);
 
 // Delete a program
 ProgramRoutes.delete('/delete/:id', DeleteProgram);
