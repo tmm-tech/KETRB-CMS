@@ -129,7 +129,7 @@ module.exports = {
     if (role === 'editor') {
       // Soft delete: Set isDeleted to true, requiring admin approval for final deletion
       const result = await query(
-        'UPDATE programs SET isDeleted = true WHERE id = $1 RETURNING *',
+        'UPDATE programs SET isdeleted = TRUE WHERE id = $1 RETURNING *',
         [id]
       );
 
