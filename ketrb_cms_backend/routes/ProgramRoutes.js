@@ -45,7 +45,7 @@ ProgramRoutes.get('/:id', GetProgramById);
 ProgramRoutes.put('/:id', upload.single('image'), UpdateProgram);
 
 // Approve a program (change status to "approved")
-ProgramRoutes.patch('/approve/:id', ApproveProgram);
+ProgramRoutes.put('/approve/:id', ApproveProgram);
 
 // Delete a program
 ProgramRoutes.delete('/delete/:id', DeleteProgram);
