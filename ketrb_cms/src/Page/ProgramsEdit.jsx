@@ -161,9 +161,9 @@ const ProgramsEdit = () => {
                                     </Card>
                                 ) : (
                                     /* Edit mode (form view) */
-                                    <Card className="relative p-6 bg-white rounded-md w-[700px]">
+                                    <Card className="relative p-6 bg-white rounded-md w-[850px]">
                                         <CardHeader>
-                                            <CardTitle className="text-2xl font-bold mb-4">Edit Program</CardTitle>
+                                            <CardTitle className="text-2xl font-bold mb-4"></CardTitle>
                                         </CardHeader>
                                         <CardContent>
                                             {/* Form for editing the program */}
