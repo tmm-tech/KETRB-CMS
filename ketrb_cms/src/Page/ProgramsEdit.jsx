@@ -239,11 +239,14 @@ const ProgramsEdit = () => {
                                                 </div>
                                             </div>
                                         </form>
-                                        <div className="flex justify-end mt-6">
-                                            <Button onClick={handleSaveDraft} className="mr-2" disabled={draftLoading}>
+                                        <div className="flex justify-end gap-2">
+                                              <Button onClick={() => setEditMode(false)} variant="outline">
+                                                Cancle
+                                            </Button>
+                                            <Button onClick={handleSaveDraft}  disabled={draftLoading} variant="black">
                                                 {draftLoading ? "Saving Draft..." : "Save Draft"}
                                             </Button>
-                                            <Button onClick={handlePublish} disabled={loading}>
+                                            <Button onClick={handlePublish} variant="black">
                                                 {loading ? "Publishing..." : "Publish"}
                                             </Button>
                                         </div>
