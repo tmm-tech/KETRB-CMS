@@ -94,7 +94,7 @@ const NewsPage = () => {
                       <div className="flex items-center gap-2">
                         <Button variant="outline" size="sm" className="h-8 gap-1">
                           <FilePenIcon className="h-3.5 w-3.5" />
-                          <span>Edit</span>
+                          <span>View</span>
                         </Button>
                         <Button variant="outline" size="sm" className="h-8 gap-1">
                           <TrashIcon className="h-3.5 w-3.5" />
@@ -123,7 +123,7 @@ const NewsPage = () => {
                       <div className="flex items-center gap-2">
                         <Button variant="outline" size="sm" className="h-8 gap-1">
                           <FilePenIcon className="h-3.5 w-3.5" />
-                          <span>Edit</span>
+                          <span>View</span>
                         </Button>
                         <Button variant="outline" size="sm" className="h-8 gap-1">
                           <TrashIcon className="h-3.5 w-3.5" />
