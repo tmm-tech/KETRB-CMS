@@ -84,6 +84,7 @@ const ProgramsEdit = () => {
         formData.append('publishedDate', publishedDate.toISOString().split('T')[0]);
         formData.append('author', author);
         formData.append('status', status);
+        formData.append('role', user.roles);
         if (image) formData.append('program', image); // Append new image if uploaded
 
         try {
