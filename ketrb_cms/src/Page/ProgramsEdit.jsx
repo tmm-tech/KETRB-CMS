@@ -20,8 +20,9 @@ const ProgramsEdit = () => {
     const [content, setContent] = useState("");
     const [publishedDate, setPublishedDate] = useState(new Date());
     const [author, setAuthor] = useState("");
+    const [status, setStatus] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
-    const [isDraft, setIsDraft] = useState(true);
+    const [isDraft, setIsDraft] = useState(false);
     const [loading, setLoading] = useState(false);
     const [draftLoading, setDraftLoading] = useState(false);
     const [editMode, setEditMode] = useState(false); // Handle edit mode toggle
@@ -39,7 +40,8 @@ const ProgramsEdit = () => {
                 setContent(data.content);
                 setPublishedDate(new Date(data.published_date));
                 setAuthor(data.author);
-                setPreviewUrl(data.imageUrl); // Assuming backend returns an image URL
+                setPreviewUrl(data.imageUrl);
+                setStatus(data.status);
                 console.log("url: ", previewUrl);
             } catch (error) {
                 console.error("Error fetching program:", error);
@@ -70,8 +72,9 @@ const ProgramsEdit = () => {
     };
 
     const handlePublish = async () => {
-        setIsDraft(false);
-        await handleSubmit(user?.roles === 'editor' ? 'pending' : 'published');
+        const newStatus = (user?.roles === 'administrator' && status === 'pending') ? 'published' : status;
+
+        await handleSubmit(newStatus);
     };
 
     const handleSubmit = async (status) => {
@@ -276,9 +279,16 @@ const ProgramsEdit = () => {
                                                     <Button onClick={handleSaveDraft} disabled={draftLoading} variant="black">
                                                         {draftLoading ? "Saving Draft..." : "Save Draft"}
                                                     </Button>
-                                                    <Button onClick={handlePublish} variant="black" disabled={loading}>
-                                                        {loading ? "Publishing..." : "Publish"}
-                                                    </Button>
+                                                          {/* Conditionally render Approve & Publish button */}
+            {user.roles === 'administrator' && status === 'pending' ? (
+                <Button onClick={() => handlePublish('published')} variant="black" disabled={loading}>
+                    {loading ? "Approving..." : "Approve & Publish"}
+                </Button>
+            ) : (
+                <Button onClick={handlePublish} variant="black" disabled={loading}>
+                    {loading ? "Publishing..." : "Publish"}
+                </Button>
+            )}
                                                 </div>
                                             </div>
                                         </CardContent>
