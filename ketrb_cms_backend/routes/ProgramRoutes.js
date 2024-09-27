@@ -43,7 +43,7 @@ ProgramRoutes.get('/', GetPrograms);
 ProgramRoutes.get('/:id', GetProgramById);
 
 // Update an existing program
-ProgramRoutes.put('/edit/:id', upload.single('image'), UpdateProgram);
+ProgramRoutes.put('/edit/:id', upload.single('program'), UpdateProgram);
 
 // Approve a program (change status to "approved")
 ProgramRoutes.put('/approve/:id', ApproveProgram);
