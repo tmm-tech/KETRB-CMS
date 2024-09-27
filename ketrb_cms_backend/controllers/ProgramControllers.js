@@ -102,7 +102,7 @@ module.exports = {
         let newStatus = status; // Default to the status provided in the request
         if (userRole === 'editor') {
             // If the user is an editor, set status to 'Pending'
-            newStatus = 'Pending';
+            newStatus = 'pending';
         }
 
         // Update fields, including the image if uploaded
