@@ -78,6 +78,7 @@ const ProgramsEdit = () => {
         setDraftLoading(true);
         setLoading(true);
         const formData = new FormData();
+        console.log("url: ", image);
         formData.append('title', title);
         formData.append('content', content);
         formData.append('publishedDate', publishedDate.toISOString().split('T')[0]);
