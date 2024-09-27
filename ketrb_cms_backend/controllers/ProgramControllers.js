@@ -87,9 +87,9 @@ module.exports = {
 	// Update an existing program
 	UpdateProgram: async (req, res) => {
     const { id } = req.params;
-    const { title, content, publishedDate, author, status } = req.body; // Ensure `status` comes from the client
+    const { title, content, publishedDate, author, status, role} = req.body; // Ensure `status` comes from the client
     const image = req.file;
-    const userRole = req.user.role; // Assuming you have user role available in the request
+    
 
     try {
         // Check if program exists
@@ -100,7 +100,7 @@ module.exports = {
 
         // Determine the new status
         let newStatus = status; // Default to the status provided in the request
-        if (userRole === 'editor') {
+        if (role === 'editor') {
             // If the user is an editor, set status to 'Pending'
             newStatus = 'pending';
         }
