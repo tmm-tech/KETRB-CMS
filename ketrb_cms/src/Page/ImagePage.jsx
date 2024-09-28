@@ -121,7 +121,7 @@ if (imageFile.length === 0) {
     setAlertMessage("");
 
     const formData = new FormData();
-    imageFiles.forEach(file => formData.append('images', file)); // Append each file
+    imageFile.forEach(file => formData.append('images', file)); // Append each file
     formData.append('status', status);
 	  
     setLoading(true);
@@ -248,17 +248,9 @@ if (imageFile.length === 0) {
                           onChange={handleImageSelect}
                           className="block w-full"
                           name="image"
-                        />
-                        {previewUrl && (
-                          <img
-                            src={previewUrl}
-                            alt="Selected Image"
-                            width={300}
-                            height={300}
-                            className="rounded-md"
-                            style={{ aspectRatio: "1 / 1", objectFit: "cover" }}
-                          />
-                        )}
+                        {previewUrl.map((url, index) => (
+    <img key={index} src={url} alt={`Preview ${index}`} className="rounded-md" />
+))}
                       </div>
                       <DialogFooter>
                         {previewUrl && (
@@ -342,34 +334,34 @@ if (imageFile.length === 0) {
 </div>
           </Tabs>
 		<Dialog open={!!selectedImage} onOpenChange={handleCloseDialog}>
-            <DialogContent className="sm:max-w-[500px]">
-              <DialogHeader>
-                <DialogTitle>View Image</DialogTitle>
-              </DialogHeader>
-              {selectedImage && (
-                <img src={selectedImage.url} alt={selectedImage.title} className="w-full h-auto" />
-              )}
-              <DialogFooter>
-                <Button onClick={handleCloseDialog}>Close</Button>
-	        <div className="flex items-center justify-end gap-2 mt-4">
-            <Button variant="outline" onClick={() => handleViewImage(image)}>
-             <FilePenIcon className="h-4 w-4" />         
-	     View
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => handleDelete(image.id)}>
-              <TrashIcon className="h-4 w-4" />
-            </Button>
-
-            {/* Only show approve button for pending images and if the user is an admin */}
-            {user.roles === "administrator" && image.status === "pending" && (
-              <Button size="sm" variant="black" onClick={() => handleApprove(image.id)}>
-                Approve
-              </Button>
-            )}
-          </div>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+  <DialogContent className="sm:max-w-[500px]">
+    <DialogHeader>
+      <DialogTitle>View Image</DialogTitle>
+    </DialogHeader>
+    {selectedImage && (
+      <img src={selectedImage.url} alt={selectedImage.title} className="w-full h-auto" />
+    )}
+    <DialogFooter>
+      <Button onClick={handleCloseDialog}>Close</Button>
+      <div className="flex items-center justify-end gap-2 mt-4">
+        {/* Adjust this part to use selectedImage instead */}
+        <Button variant="outline" onClick={() => handleViewImage(selectedImage)}>
+          <FilePenIcon className="h-4 w-4" />
+          View
+        </Button>
+        <Button variant="outline" size="sm" onClick={() => handleDelete(selectedImage.id)}>
+          <TrashIcon className="h-4 w-4" />
+        </Button>
+        {user.roles === "administrator" && selectedImage.status === "pending" && (
+          <Button size="sm" variant="black" onClick={() => handleApprove(selectedImage.id)}>
+            Approve
+          </Button>
+        )}
+      </div>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+		
         </main>
       </div>
     </div>
