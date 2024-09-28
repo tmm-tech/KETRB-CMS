@@ -31,7 +31,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Add a new image
-ImageRoutes.post('/add', upload.single('image'), AddImage);
+ImageRoutes.post('/add', upload.array('images', 20), AddImage);
 
 // Update an image's status
 ImageRoutes.put('/update/:id', UpdateImage);
