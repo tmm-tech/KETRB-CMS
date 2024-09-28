@@ -323,7 +323,7 @@ if (imageFile.length === 0) {
             </Button>
 
             {/* Only show approve button for pending images and if the user is an admin */}
-            {user.roles === "administrator" && image.status === "pending" && (
+            {user.roles === "administrator" && status === "pending" && (
               <Button size="sm" variant="black" onClick={() => handleApprove(image.id)}>
                 Approve
               </Button>
@@ -354,7 +354,7 @@ if (imageFile.length === 0) {
         <Button variant="outline" size="sm" onClick={() => handleDelete(selectedImage.id)}>
           <TrashIcon className="h-4 w-4" />
         </Button>
-        {user.roles === "administrator" && selectedImage.status === "pending" && (
+        {user.roles === "administrator" && status === "pending" && (
           <Button size="sm" variant="black" onClick={() => handleApprove(selectedImage.id)}>
             Approve
           </Button>
