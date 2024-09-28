@@ -121,9 +121,6 @@ const ProgramsEdit = () => {
         if (response.ok) {
             const updatedProgram = await response.json();
             // Update state to reflect the published program
-            setPrograms((prevPrograms) => 
-                prevPrograms.map((program) => (program.id === id ? updatedProgram : program))
-            );
             setAlertMessage('Program published successfully');
 		window.location.href = '/programs';
         } else {
