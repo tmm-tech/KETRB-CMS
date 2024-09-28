@@ -181,9 +181,9 @@ const ProgramsEdit = () => {
                                             </div>
                                             <h3 className="text-xl font-semibold">{title}</h3>
                                             <p className="text-muted-foreground my-2">{content}</p>
-                                            <p className="text-sm mt-4">{program.status === "published"
+                                            <p className="text-sm mt-4">{status === "published"
                                                         ? `Published on ${publishedDate.toLocaleDateString()}`
-                                                        : program.status === "pending" 
+                                                        : status === "pending" 
 							? "Pending Approval"
 							: "Draft"}</p>
                                             <p className="text-sm">Author: {author}</p>
