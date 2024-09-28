@@ -70,7 +70,7 @@ const NewsAdd = () => {
         formData.append('publishedDate', publishedDate.toISOString().split('T')[0]);
         formData.append('author', author);
         formData.append('status', status);
-        formData.append('program', image);
+        formData.append('news', image);
 
         try {
             const response = await fetch('https://ketrb-backend.onrender.com/news/add', {
