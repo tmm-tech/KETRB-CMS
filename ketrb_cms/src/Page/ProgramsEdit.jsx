@@ -110,7 +110,7 @@ const ProgramsEdit = () => {
             setDraftLoading(false);
         }
     };
-    const handlePublished = async (id) => {
+    const handlePublished = async () => {
     try {
         const response = await fetch(`https://ketrb-backend.onrender.com/programs/approve/${id}`, {
             method: 'PUT', 
@@ -185,7 +185,7 @@ const ProgramsEdit = () => {
                                             <p className="text-sm">Author: {author}</p>
 
 						{/* Show Approve Publish button only for pending programs if user is admin */}
-						{user.roles === "administrator" && program.status === "pending" && (
+						{user.roles === "administrator" && status === "pending" && (
 						<Button size="sm" variant="black" onClick={() => handlePublished(program.id)}>
 						Approve Publish
 						</Button>
