@@ -186,6 +186,13 @@ const ProgramsEdit = () => {
                                             <p className="text-muted-foreground my-2">{content}</p>
                                             <p className="text-sm mt-4">Published Date: {publishedDate.toLocaleDateString()}</p>
                                             <p className="text-sm">Author: {author}</p>
+
+						{/* Show Approve Publish button only for pending programs if user is admin */}
+						{user.roles === "administrator" && program.status === "pending" && (
+						<Button size="sm" variant="black" onClick={() => handlePublish(program.id)}>
+						Approve Publish
+						</Button>
+						)}
                                         </CardContent>
                                     </Card>
                                 ) : (
