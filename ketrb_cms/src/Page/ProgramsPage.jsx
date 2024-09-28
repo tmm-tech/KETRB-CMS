@@ -235,7 +235,9 @@ const handlePublish = async (id) => {
                                                 <CardDescription>
                                                     {program.status === "published"
                                                         ? `Published on ${new Date(program.published_date).toLocaleDateString()}`
-                                                        : "Pending approval"}
+                                                        : program.status === "pending" 
+							? "Pending Approval"
+							: "Draft"}
                                                 </CardDescription>
                                             </CardHeader>
                                             <CardContent>
