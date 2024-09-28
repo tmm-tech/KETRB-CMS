@@ -302,9 +302,9 @@ if (imageFile.length === 0) {
             <Badge
                                                         variant="outline"
                                                         className={`capitalize ${
-                                                            article.status === "published"
+                                                            image.status === "published"
                                                                 ? "bg-green-500 text-green-50"
-                                                                : article.status === "pending"
+                                                                : image.status === "pending"
                                                                 ? "bg-yellow-500 text-yellow-50"
                                                                 : "bg-gray-500 text-gray-50"
                                                         }`}
