@@ -68,18 +68,19 @@ const ProgramsEdit = () => {
 
     const handleSaveDraft = async () => {
         setIsDraft(true);
+	setDraftLoading(true);
         await handleSubmit('draft');
     };
 
     const handlePublish = async () => {
         const newStatus = (user?.roles === 'administrator' && status === 'pending') ? 'published' : status;
-
+        setLoading(true);
         await handleSubmit(newStatus);
     };
 
     const handleSubmit = async (status) => {
-        setDraftLoading(true);
-        setLoading(true);
+        
+        
         const formData = new FormData();
         console.log("url: ", image);
         formData.append('title', title);
