@@ -300,9 +300,16 @@ if (imageFile.length === 0) {
             
             {/* Status Badge */}
             <Badge
-              variant={image.status === "pending" ? "pending" : "approved"}
-              className={image.status === "pending" ? "bg-yellow-500 text-yellow-50" : "bg-green-500 text-green-50"}
-            >
+                                                        variant="outline"
+                                                        className={`capitalize ${
+                                                            article.status === "published"
+                                                                ? "bg-green-500 text-green-50"
+                                                                : article.status === "pending"
+                                                                ? "bg-yellow-500 text-yellow-50"
+                                                                : "bg-gray-500 text-gray-50"
+                                                        }`}
+                                                    >
+                                                        
               {capitalizeFirstLetter(image.status)}
             </Badge>
           </div>
@@ -344,13 +351,10 @@ if (imageFile.length === 0) {
       <img src={selectedImage.url} alt={selectedImage.title} className="w-full h-auto" />
     )}
     <DialogFooter>
-      <Button onClick={handleCloseDialog}>Close</Button>
+      
       <div className="flex items-center justify-end gap-2 mt-4">
         {/* Adjust this part to use selectedImage instead */}
-        <Button variant="outline" onClick={() => handleViewImage(selectedImage)}>
-          <FilePenIcon className="h-4 w-4" />
-          View
-        </Button>
+        <Button variant="black" onClick={handleCloseDialog}>Close</Button>
         <Button variant="outline" size="sm" onClick={() => handleDelete(selectedImage.id)}>
           <TrashIcon className="h-4 w-4" />
         </Button>
