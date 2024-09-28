@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";     
 import { Link } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
@@ -8,163 +8,222 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLab
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../Component/card';
 import { Badge } from '../Component/badge';
+import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
+import { useNavigate } from "react-router-dom";
+import LoadingPage from '../Page/LoadingPage';
+
 const NewsPage = () => {
-  return (
-    <div className="flex min-h-screen w-full flex-col">
-      <SideNav />
-      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: "center" }}>
-        <HeaderNav />
-        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>News</CardTitle>
-                <CardDescription>Manage your news articles</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
-                  <div className="text-4xl font-bold">89</div>
-                </div>
-              </CardContent>
-              <CardFooter>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Badge variant="outline" className="bg-green-500 text-green-50">
-                      Published
-                    </Badge>
-                    <Badge variant="outline" className="bg-yellow-500 text-yellow-50">
-                      Pending
-                    </Badge>
-                    <Badge variant="outline" className="bg-gray-500 text-gray-50">
-                      Draft
-                    </Badge>
-                  </div>
-                </div>
-              </CardFooter>
-            </Card>
-          </div>
-          <Tabs defaultValue="news">
-            <div className="flex items-center">
-              <TabsList>
-                <TabsTrigger value="news">News</TabsTrigger>
-              </TabsList>
-              <div className="ml-auto flex items-center gap-2">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="h-8 gap-1">
-                      <FilterIcon className="h-3.5 w-3.5" />
-                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Filter</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem checked>Published</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>Pending</DropdownMenuCheckboxItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <Link to="/news/add news">
-                  <Button variant="outline" size="sm" className="h-8 gap-1 bg-black text-white">
-                    <PlusIcon className="h-3.5 w-3.5" />
-                    <span>Add News</span>
-                  </Button>
-                </Link>
-              </div>
+    const [newsArticles, setNewsArticles] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [alertMessage, setAlertMessage] = useState("");
+
+    const storedUser = localStorage.getItem('user');
+    const user = JSON.parse(storedUser);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchNews = async () => {
+            try {
+                const response = await fetch('https://ketrb-backend.onrender.com/news/'); // Update with your API endpoint
+                const data = await response.json();
+                setNewsArticles(data); // Adjust according to your data structure
+            } catch (error) {
+                console.error("Error fetching news:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchNews();
+    }, []);
+
+    if (loading) {
+        return <LoadingPage />;
+    }
+
+    const handleEdit = (id) => {
+        navigate(`/news/edit news/${id}`); // Redirect to the edit page
+    };
+
+    const handleDelete = async (id) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this news article?");
+        if (confirmDelete) {
+            try {
+                const response = await fetch(`https://ketrb-backend.onrender.com/news/delete/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ role: user.roles }) // Pass user role to the backend
+                });
+
+                if (response.ok) {
+                    setNewsArticles((prevArticles) => prevArticles.filter((article) => article.id !== id));
+                    setAlertMessage('News article deleted successfully');
+                    window.location.href = '/news';
+                } else {
+                    setAlertMessage('Failed to delete news article');
+                }
+            } catch (error) {
+                console.error("Error deleting news article:", error);
+                setAlertMessage('An error occurred while deleting the news article.');
+            }
+        }
+    };
+
+    return (
+        <div className="flex min-h-screen w-full flex-col">
+            <SideNav />
+            <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: "center" }}>
+                <HeaderNav />
+                {alertMessage && (
+                    <div className="fixed top-0 left-0 w-full z-50">
+                        <Alert className="max-w-md mx-auto mt-4">
+                            <AlertTitle>Notification</AlertTitle>
+                            <AlertDescription>{alertMessage}</AlertDescription>
+                        </Alert>
+                    </div>
+                )}
+                <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>News Articles</CardTitle>
+                                <CardDescription>Manage your news articles</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="flex items-center justify-between">
+                                    <div className="text-4xl font-bold">{newsArticles.length}</div>
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <Badge variant="outline" className="bg-green-500 text-green-50">
+                                            Published
+                                        </Badge>
+                                        <Badge variant="outline" className="bg-yellow-500 text-yellow-50">
+                                            Pending
+                                        </Badge>
+                                        <Badge variant="outline" className="bg-gray-500 text-gray-50">
+                                            Draft
+                                        </Badge>
+                                    </div>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                    </div>
+                    <Tabs defaultValue="news">
+                        <div className="flex items-center">
+                            <TabsList>
+                                <TabsTrigger value="news">News Articles</TabsTrigger>
+                            </TabsList>
+                            <div className="ml-auto flex items-center gap-2">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="outline" size="sm" className="h-8 gap-1">
+                                            <FilterIcon className="h-3.5 w-3.5" />
+                                            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Filter</span>
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end">
+                                        <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuCheckboxItem checked>Published</DropdownMenuCheckboxItem>
+                                        <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
+                                        <DropdownMenuCheckboxItem>Pending</DropdownMenuCheckboxItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                                <Link to="/news/add news">
+                                    <Button variant="outline" size="sm" className="h-8 gap-1 bg-black text-white">
+                                        <PlusIcon className="h-3.5 w-3.5" />
+                                        <span>Add News Article</span>
+                                    </Button>
+                                </Link>
+                            </div>
+                        </div>
+                        <TabsContent value="news">
+                            <div className="grid gap-4">
+                                {newsArticles.length === 0 ? (
+                                    <div className="col-span-full flex items-center justify-center"> 
+                                        <p className="text-center text-gray-500">No news articles available.</p>
+                                    </div>
+                                ) : (
+                                    newsArticles.map((article) => (
+                                        <Card key={article.id}>
+                                            <CardHeader>
+                                                <CardTitle>{article.title}</CardTitle>
+                                                <CardDescription>
+                                                    {article.status === "published"
+                                                        ? `Published on ${new Date(article.published_date).toLocaleDateString()}`
+                                                        : article.status === "pending" 
+                                                            ? "Pending Approval"
+                                                            : "Draft"}
+                                                </CardDescription>
+                                            </CardHeader>
+                                            <CardContent>
+                                                <p>{article.content}</p>
+                                            </CardContent>     
+                                            <CardFooter>
+                                                <div className="flex items-center justify-between gap-2">
+                                                    <Badge
+                                                        variant="outline"
+                                                        className={`capitalize ${
+                                                            article.status === "published"
+                                                                ? "bg-green-500 text-green-50"
+                                                                : article.status === "pending"
+                                                                ? "bg-yellow-500 text-yellow-50"
+                                                                : "bg-gray-500 text-gray-50"
+                                                        }`}
+                                                    >
+                                                        {article.status}
+                                                    </Badge>
+                                                    <div className="flex items-center gap-2">
+                                                        <Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(article.id)}>
+                                                            <FilePenIcon className="h-3.5 w-3.5" />
+                                                            <span>View</span>
+                                                        </Button>
+                                                        <Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleDelete(article.id)}>
+                                                            <TrashIcon className="h-3.5 w-3.5" />
+                                                            <span>Delete</span>
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            </CardFooter>
+                                        </Card>
+                                    ))
+                                )}
+                            </div>
+                        </TabsContent>
+                    </Tabs>
+                </main>
             </div>
-            <TabsContent value="news">
-              <div className="grid gap-4">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>New Product Launch</CardTitle>
-                    <CardDescription>Published on August 15, 2023</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p>
-                      We are excited to announce the launch of our new product, the Acme Pro Controller. This
-                      cutting-edge device offers enhanced features and improved performance for the ultimate gaming
-                      experience.
-                    </p>
-                  </CardContent>
-                  <CardFooter>
-                    <div className="flex items-center justify-between">
-                      <Badge variant="outline" className="bg-green-500 text-green-50">
-                        Published
-                      </Badge>
-                      <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm" className="h-8 gap-1">
-                          <FilePenIcon className="h-3.5 w-3.5" />
-                          <span>View</span>
-                        </Button>
-                        <Button variant="outline" size="sm" className="h-8 gap-1">
-                          <TrashIcon className="h-3.5 w-3.5" />
-                          <span>Delete</span>
-                        </Button>
-                      </div>
-                    </div>
-                  </CardFooter>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>New Partnership Announcement</CardTitle>
-                    <CardDescription>Pending approval</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p>
-                      We are thrilled to announce our new partnership with Acme Inc. Together, we will be launching a
-                      series of innovative products that will revolutionize the industry.
-                    </p>
-                  </CardContent>
-                  <CardFooter>
-                    <div className="flex items-center justify-between">
-                      <Badge variant="outline" className="bg-yellow-500 text-yellow-50">
-                        Pending
-                      </Badge>
-                      <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm" className="h-8 gap-1">
-                          <FilePenIcon className="h-3.5 w-3.5" />
-                          <span>View</span>
-                        </Button>
-                        <Button variant="outline" size="sm" className="h-8 gap-1">
-                          <TrashIcon className="h-3.5 w-3.5" />
-                          <span>Delete</span>
-                        </Button>
-                      </div>
-                    </div>
-                  </CardFooter>
-                </Card>
-              </div>
-            </TabsContent>
-          </Tabs>
-        </main>
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default NewsPage;
 
 function DownloadIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-      <polyline points="7 10 12 15 17 10" />
-      <line x1="12" x2="12" y1="15" y2="3" />
-    </svg>
-  )
+    return (
+        <svg
+            {...props}
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" x2="12" y1="15" y2="3" />
+        </svg>
+    )
 }
-
 
 function FilePenIcon(props) {
   return (
