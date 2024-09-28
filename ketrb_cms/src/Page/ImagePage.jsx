@@ -126,9 +126,6 @@ if (imageFile.length === 0) {
 	  
     setLoading(true);
     setAlertMessage("");
-
-    const formData = new FormData();
-    console.log("Image: ", imageFile)
     formData.append('image', imageFile);
     formData.append('status', status);
 
