@@ -183,14 +183,18 @@ const ProgramsEdit = () => {
                                             <p className="text-muted-foreground my-2">{content}</p>
                                             <p className="text-sm mt-4">Published Date: {publishedDate.toLocaleDateString()}</p>
                                             <p className="text-sm">Author: {author}</p>
-
+					     <div className="flex justify-end gap-2 mt-6">
 						{/* Show Approve Publish button only for pending programs if user is admin */}
 						{user.roles === "administrator" && status === "pending" && (
 						<Button size="sm" variant="black" onClick={() => handlePublished()}>
 						Approve Publish
 						</Button>
 						)}
+					    </div>     
                                         </CardContent>
+					    
+					    
+					
                                     </Card>
                                 ) : (
                                     /* Edit mode (form view) */
