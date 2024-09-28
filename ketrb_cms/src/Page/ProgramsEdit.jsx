@@ -186,7 +186,7 @@ const ProgramsEdit = () => {
 
 						{/* Show Approve Publish button only for pending programs if user is admin */}
 						{user.roles === "administrator" && status === "pending" && (
-						<Button size="sm" variant="black" onClick={() => handlePublished(program.id)}>
+						<Button size="sm" variant="black" onClick={() => handlePublished()}>
 						Approve Publish
 						</Button>
 						)}
