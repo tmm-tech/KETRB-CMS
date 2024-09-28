@@ -181,7 +181,11 @@ const ProgramsEdit = () => {
                                             </div>
                                             <h3 className="text-xl font-semibold">{title}</h3>
                                             <p className="text-muted-foreground my-2">{content}</p>
-                                            <p className="text-sm mt-4">Published Date: {publishedDate.toLocaleDateString()}</p>
+                                            <p className="text-sm mt-4">{program.status === "published"
+                                                        ? `Published on ${publishedDate.toLocaleDateString()}`
+                                                        : program.status === "pending" 
+							? "Pending Approval"
+							: "Draft"}</p>
                                             <p className="text-sm">Author: {author}</p>
 					     <div className="flex justify-end gap-2 mt-6">
 						{/* Show Approve Publish button only for pending programs if user is admin */}
