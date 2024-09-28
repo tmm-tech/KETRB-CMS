@@ -51,19 +51,20 @@ const ProgramsAdd = () => {
 
     const handleSaveDraft = async () => {
         setIsDraft(true);
+	setdraftLoading(true);
         await handleSubmit('draft');
     };
 
     const handlePublish = async () => {
-        setIsDraft(false);
+        setLoading(true);
         await handleSubmit(user?.roles === 'editor' ? 'pending' : 'published');
     };
 
     const handleSubmit = async (status) => {
-	setdraftLoading(true);
-        setLoading(true);
+	
+        
         const formData = new FormData();
-	     console.log("Image: ", image);
+	     
         formData.append('title', title);
         formData.append('content', content);
         formData.append('publishedDate', publishedDate.toISOString().split('T')[0]);
