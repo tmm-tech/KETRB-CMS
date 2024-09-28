@@ -5,9 +5,10 @@ const fs = require('fs');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const UserRoutes = require('./routes/UserRoutes');
-const cookieParser = require('cookie-parser');
 const ImageRoutes = require('./routes/ImageRoutes');
 const ProgramRoutes = require('./routes/ProgramRoutes');
+const NewsRoutes = require('./routes/NewsRoutes'); // Include the NewsRoutes
+const cookieParser = require('cookie-parser');
 
 const app = express(); 
 
@@ -22,14 +23,13 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-
-
 // Static files and views
 // Serve static files from the public folder
 app.use(express.static(path.join(__dirname, 'public')));
-// Serve images from 'gallery' and 'program' folders inside public
+// Serve images from 'gallery', 'program', and 'news' folders inside public
 app.use('/gallery', express.static(path.join(__dirname, 'public', 'gallery')));
 app.use('/program', express.static(path.join(__dirname, 'public', 'program')));
+app.use('/news', express.static(path.join(__dirname, 'public', 'news')));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "resources/views"));
 
@@ -58,6 +58,7 @@ app.use(addTokenToRequest);
 app.use('/users', UserRoutes);
 app.use('/images', ImageRoutes);
 app.use('/programs', ProgramRoutes);
+app.use('/news', NewsRoutes); // Include the news routes
 app.get('/', (req, res) => {
     res.json({ message: "Confirmed Connection to KETRB CMS" });
 });
@@ -75,6 +76,7 @@ app.get('/check-file/:folder/:filename', (req, res) => {
         return res.status(200).json({ message: 'File exists', filePath });
     });
 });
+
 // Server setup
 const port = process.env.PORT || 4080;
 app.listen(port, () => {
