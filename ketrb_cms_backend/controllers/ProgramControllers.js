@@ -103,7 +103,9 @@ module.exports = {
         if (role === 'editor') {
             // If the user is an editor, set status to 'Pending'
             newStatus = 'pending';
-        }
+        }else if (role === 'administrator' && status === 'pending') {
+            newStatus = 'published';
+	}
 
         // Update fields, including the image if uploaded
         const imagePath = image ? `programs/${image.filename}` : existingProgram.rows[0].image;
