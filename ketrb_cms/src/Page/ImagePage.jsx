@@ -241,17 +241,19 @@ if (imageFile.length === 0) {
                     </DialogHeader>
                     <form onSubmit={handleUpload} encType="multipart/form-data">
                       <div className="grid gap-4 py-4">
-                        <Input
-                          type="file"
-                          accept="image/*"
-		          multiple		 
-                          onChange={handleImageSelect}
-                          className="block w-full"
-                          name="image"
-                        {previewUrl.map((url, index) => (
-    <img key={index} src={url} alt={`Preview ${index}`} className="rounded-md" />
-))}
-                      </div>
+      <Input
+        type="file"
+        accept="image/*"
+        multiple
+        onChange={handleImageSelect}
+        className="block w-full"
+        name="image"
+      />
+      {/* Image preview section */}
+      {Array.isArray(previewUrl) && previewUrl.map((url, index) => (
+        <img key={index} src={url} alt={`Preview ${index}`} className="rounded-md" />
+      ))}
+			      </div>
                       <DialogFooter>
                         {previewUrl && (
                           <Button onClick={handleCancel} variant="outline">Cancel</Button>
