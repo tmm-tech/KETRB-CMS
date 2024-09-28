@@ -110,6 +110,30 @@ const ProgramsEdit = () => {
             setDraftLoading(false);
         }
     };
+    const handlePublish = async (id) => {
+    try {
+        const response = await fetch(`https://ketrb-backend.onrender.com/programs/approve/${id}`, {
+            method: 'PUT', 
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (response.ok) {
+            const updatedProgram = await response.json();
+            // Update state to reflect the published program
+            setPrograms((prevPrograms) => 
+                prevPrograms.map((program) => (program.id === id ? updatedProgram : program))
+            );
+            setAlertMessage('Program published successfully');
+		window.location.href = '/programs';
+        } else {
+            setAlertMessage('Failed to publish program');
+        }
+    } catch (error) {
+        console.error("Error publishing program:", error);
+        setAlertMessage('An error occurred while publishing the program.');
+    }
+};
 
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
