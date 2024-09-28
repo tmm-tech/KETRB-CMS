@@ -17,11 +17,11 @@ const ImagePage = () => {
   const user = JSON.parse(storedUser);
   const [status, setStatus] = useState(user.roles === 'editor' ? 'pending' : 'published');
   const [images, setImages] = useState([]);
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFile, setImageFile] = useState([]);
   const [loading, setLoading] = useState(false);
  const [imageloading, setimageLoading] = useState(true);
   const [alertMessage, setAlertMessage] = useState("");
-  const [previewUrl, setPreviewUrl] = useState("");
+  const [previewUrl, setPreviewUrl] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null); 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
@@ -113,7 +113,17 @@ const handleDelete = async (id) => {
       setAlertMessage("No file selected.");
       return;
     }
+if (imageFile.length === 0) {
+      setAlertMessage("No files selected.");
+      return;
+    }
+    setLoading(true);
+    setAlertMessage("");
 
+    const formData = new FormData();
+    imageFiles.forEach(file => formData.append('images', file)); // Append each file
+    formData.append('status', status);
+	  
     setLoading(true);
     setAlertMessage("");
 
