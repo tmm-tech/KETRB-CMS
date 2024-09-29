@@ -20,13 +20,39 @@ const ImagePage = () => {
   const [images, setImages] = useState([]);
   const [imageFile, setImageFile] = useState([]);
   const [loading, setLoading] = useState(false);
- const [imageloading, setimageLoading] = useState(true);
+  const [imageloading, setimageLoading] = useState(true);
   const [alertMessage, setAlertMessage] = useState("");
   const [previewUrl, setPreviewUrl] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null); 
+  const [sortOption, setSortOption] = useState("asc");  // default to ascending
+  const [statusFilter, setStatusFilter] = useState([]);  // track selected status filters
+
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
+const handleSortChange = (value) => {
+  setSortOption(value);
+};
+
+const handleStatusFilterChange = (status) => {
+  setStatusFilter((prev) =>
+    prev.includes(status) ? prev.filter((s) => s !== status) : [...prev, status]
+  );
+};
+const filteredImages = images
+  .filter((image) =>
+    statusFilter.length === 0 ? true : statusFilter.includes(image.status)
+  )
+  .sort((a, b) => {
+    if (sortOption === "asc") {
+      return a.title.localeCompare(b.title);
+    } else if (sortOption === "desc") {
+      return b.title.localeCompare(a.title);
+    } else if (sortOption === "date") {
+      return new Date(b.registered_at) - new Date(a.registered_at);
+    }
+    return 0;
+  });
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -210,21 +236,67 @@ setAlertMessage(""); // Reset any previous alert message
                 <TabsTrigger value="image">Images</TabsTrigger>
               </TabsList>
               <div className="ml-auto flex items-center gap-2">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="h-8 gap-1">
-                      <FilterIcon className="h-3.5 w-3.5" />
-                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Filter</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem checked>Published</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>Pending</DropdownMenuCheckboxItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+               <DropdownMenu>
+			  <DropdownMenuTrigger asChild>
+			    <Button variant="outline" size="sm" className="h-8 gap-1">
+			      <FilterIcon className="h-3.5 w-3.5" />
+			      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Filter</span>
+			    </Button>
+			  </DropdownMenuTrigger>
+			
+			  <DropdownMenuContent align="end">
+			    <DropdownMenuLabel>Sort by</DropdownMenuLabel>
+			    <DropdownMenuSeparator />
+			
+			    {/* Sorting Options with SVG Icons */}
+			    <DropdownMenuRadioGroup value={sortOption} onValueChange={handleSortChange}>
+			      <DropdownMenuRadioItem value="asc">
+			        <span className="flex items-center gap-2">
+			          A-Z (Ascending)
+			          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+			            <path d="M12 19V5M5 12l7-7 7 7" />
+			          </svg>
+			        </span>
+			      </DropdownMenuRadioItem>
+			
+			      <DropdownMenuRadioItem value="desc">
+			        <span className="flex items-center gap-2">
+			          Z-A (Descending)
+			          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+			            <path d="M12 5v14M5 12l7 7 7-7" />
+			          </svg>
+			        </span>
+			      </DropdownMenuRadioItem>
+			
+			      <DropdownMenuRadioItem value="date">
+			        <span className="flex items-center gap-2">
+			          Date
+			          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+			            <path d="M3 3h18M3 8h18M8 12v8m4-8v8m4-8v8M5 5h2m10 0h2" />
+			          </svg>
+			        </span>
+			      </DropdownMenuRadioItem>
+			    </DropdownMenuRadioGroup>
+			
+			    <DropdownMenuSeparator />
+			    
+			    {/* Filter by Status */}
+			    <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+			    <DropdownMenuSeparator />
+			    <DropdownMenuCheckboxItem
+			      checked={statusFilter.includes('published')}
+			      onCheckedChange={() => handleStatusFilterChange('published')}
+			    >
+			      Published
+			    </DropdownMenuCheckboxItem>
+			    <DropdownMenuCheckboxItem
+			      checked={statusFilter.includes('pending')}
+			      onCheckedChange={() => handleStatusFilterChange('pending')}
+			    >
+			      Pending
+			    </DropdownMenuCheckboxItem>
+			  </DropdownMenuContent>
+		</DropdownMenu>
                 <Dialog>
                   <DialogTrigger asChild>
                     <div className="flex items-center gap-4">
@@ -284,12 +356,12 @@ setAlertMessage(""); // Reset any previous alert message
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
-  {images.length === 0 ? (
+  {filteredImages.length === 0 ? (
     <div className="col-span-full flex items-center justify-center">
       <p className="text-center text-gray-500">No images available.</p>
     </div>
   ) : (
-    images.map((image) => (
+    filteredImages.length((image) => (
       <div key={image.id} className="bg-background rounded-lg shadow-lg overflow-hidden">
         {/* Display the image */}
         <img
