@@ -300,7 +300,7 @@ if (imageFile.length === 0) {
             <div className="text-sm font-medium">{image.title || "Untitled"}</div>
             
              <Badge
-                                                        variant="outline"
+                                                         variant={image.status === "pending" ? "pending" : "approved"}
                                                         className={`capitalize ${
                                                             image.status === "published"
                                                                 ? "bg-green-500 text-green-50"
@@ -320,6 +320,10 @@ if (imageFile.length === 0) {
 
           {/* Action Buttons */}
           <div className="flex items-center justify-end gap-2 mt-4">
+		    <Button variant="outline" onClick={() => handleViewImage(image)}>
+             <FilePenIcon className="h-4 w-4" />         
+	     View
+            </Button>
             <Button variant="outline" size="sm" onClick={() => handleDelete(image.id)}>
               <TrashIcon className="h-4 w-4" />
             </Button>
