@@ -20,7 +20,41 @@ const UserPage = () => {
   const [sortOption, setSortOption] = useState("date"); // default sorting by date
    const [statusFilter, setStatusFilter] = useState([]); // filter by status
  const[roleFilter,setRoleFilter]=useState([]); // filter by role
+
   const navigate = useNavigate();
+  useEffect(() => {
+    // Fetch users from backend
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch("https://ketrb-backend.onrender.com/users/allusers");
+
+        // Check if the response is OK (status code 200–299)
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Assuming the users' data is inside `data.data`
+        if (data.success) {
+          setUsers(data.data);
+        } else {
+          console.error('Error fetching users:', data.message);
+        }
+
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+	     finally {
+                setLoading(false);
+            }
+    };
+
+    fetchUsers();  // Call the async function
+  }, []);
+ if (loading) {
+    return <LoadingPage />;
+  }
   const handleEdit = (userId) => {
     navigate(`/users/edit user/${userId}`); // Redirect to the edit page
   }
@@ -62,9 +96,9 @@ const UserPage = () => {
 // Handle status filter change
   const handleRoleFilterChange = (role) => {
     if (roleFilter.includes(role)) {
-      setRoleFilter(statusFilter.filter((item) => item !== role));
+      setRoleFilter(roleFilter.filter((item) => item !== role));
     } else {
-      setRoleFilter([...statusFilter, role]);
+      setRoleFilter([...roleFilter, role]);
     }
   };
 
@@ -118,39 +152,7 @@ const UserPage = () => {
     }
   };
 
-  useEffect(() => {
-    // Fetch users from backend
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch("https://ketrb-backend.onrender.com/users/allusers");
 
-        // Check if the response is OK (status code 200–299)
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        // Assuming the users' data is inside `data.data`
-        if (data.success) {
-          setUsers(data.data);
-        } else {
-          console.error('Error fetching users:', data.message);
-        }
-
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-	     finally {
-                setLoading(false);
-            }
-    };
-
-    fetchUsers();  // Call the async function
-  }, []);
- if (loading) {
-    return <LoadingPage />;
-  }
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
