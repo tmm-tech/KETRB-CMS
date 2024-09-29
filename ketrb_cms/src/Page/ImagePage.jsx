@@ -24,36 +24,44 @@ const ImagePage = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [previewUrl, setPreviewUrl] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null); 
-  const [sortOption, setSortOption] = useState("asc");  // default to ascending
-  const [statusFilter, setStatusFilter] = useState([]);  // track selected status filters
-
+  const [sortOption, setSortOption] = useState("date"); // default sorting by date
+  const [statusFilter, setStatusFilter] = useState([]); // filter by status
+	
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
-const handleSortChange = (value) => {
-  setSortOption(value);
-};
+ const filteredImages = images
+    .filter((image) =>
+      statusFilter.length === 0 ? true : statusFilter.includes(image.status)
+    )
+    .sort((a, b) => {
+      if (sortOption === "asc") {
+        return a.title.localeCompare(b.title);
+      } else if (sortOption === "desc") {
+        return b.title.localeCompare(a.title);
+      } else if (sortOption === "date") {
+        return new Date(b.registered_at) - new Date(a.registered_at);
+      }
+      return 0;
+    });
 
-const handleStatusFilterChange = (status) => {
-  setStatusFilter((prev) =>
-    prev.includes(status) ? prev.filter((s) => s !== status) : [...prev, status]
-  );
-};
-const filteredImages = images
-  .filter((image) =>
-    statusFilter.length === 0 ? true : statusFilter.includes(image.status)
-  )
-  .sort((a, b) => {
-    if (sortOption === "asc") {
-      return a.title.localeCompare(b.title);
-    } else if (sortOption === "desc") {
-      return b.title.localeCompare(a.title);
-    } else if (sortOption === "date") {
-      return new Date(b.registered_at) - new Date(a.registered_at);
+  // Handle status filter change
+  const handleStatusFilterChange = (status) => {
+    if (statusFilter.includes(status)) {
+      setStatusFilter(statusFilter.filter((item) => item !== status));
+    } else {
+      setStatusFilter([...statusFilter, status]);
     }
-    return 0;
-  });
+  };
 
+  // Handle sorting option change
+  const handleSortChange = (sortOption) => {
+    setSortOption(sortOption);
+  };
+
+  if (imageloading) {
+    return <LoadingPage />;
+  }
   useEffect(() => {
     const fetchImages = async () => {
       try {
