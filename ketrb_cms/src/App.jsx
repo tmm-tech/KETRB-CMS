@@ -14,6 +14,7 @@ import ProfilePage from './Page/ProfilePage';
 import LoadingPage from './Page/LoadingPage';
 import MobileCheckWrapper from './Page/MobileCheckWrapper';
 import UserEdit from './Page/UserEdit';
+import NewsEdit from './Page/NewsEdit';
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -60,6 +61,7 @@ const App = () => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/news" element={<NewsPage />} />
             <Route path="/news/add news" element={<NewsAdd />} />
+             <Route path="/news/edit news/:id" element={<NewsEdit />} />
             <Route path="/images" element={<ImagePage />} />
             <Route path="/programs" element={<ProgramsPage />} />
             <Route path="/programs/add program" element={<ProgramsAdd />} />
