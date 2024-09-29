@@ -276,7 +276,7 @@ if (imageFile.length === 0) {
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
- <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
   {images.length === 0 ? (
     <div className="col-span-full flex items-center justify-center">
       <p className="text-center text-gray-500">No images available.</p>
