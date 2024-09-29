@@ -253,7 +253,7 @@ const handlePublish = async (id) => {
                                                     </Badge>
                                                     <div className="flex items-center gap-2">
                                 							{/* Conditionally display buttons */}
-                                							{user.roles === 'administrator' && program.isdeleted === true ? (
+                                							{user.roles === 'administrator' && article.isdeleted === true ? (
                                 							// Show Approve Delete button if the program is pending delete and user is an admin
                                 							<>
                                 								<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(article.id)} >
@@ -276,7 +276,7 @@ const handlePublish = async (id) => {
                                 									<FilePenIcon className="h-3.5 w-3.5" />
                                 									<span>View</span>
                                 								</Button>
-                                								<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleDelete(program.id)}>
+                                								<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleDelete(article.id)}>
                                 									<TrashIcon className="h-3.5 w-3.5" />
                                 									<span>Delete</span>
                                 								</Button>
@@ -284,8 +284,8 @@ const handlePublish = async (id) => {
                                 						)}
                                 						
                                 						{/* Show Approve Publish button only for pending programs if user is admin */}
-                                						{user.roles === "administrator" && program.status === "pending" && (
-                                						<Button size="sm" variant="black" onClick={() => handlePublish(program.id)}>
+                                						{user.roles === "administrator" && article.status === "pending" && (
+                                						<Button size="sm" variant="black" onClick={() => handlePublish(article.id)}>
                                 						Approve Publish
                                 						</Button>
                                 						)}
@@ -348,6 +348,25 @@ function FilePenIcon(props) {
   )
 }
 
+  
+function CheckIcon(props) {
+    return (
+        <svg
+            {...props}
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        >
+            <path d="M6 12l4 4L18 6" />
+        </svg>
+    );
+} 
 
 function FilterIcon(props) {
   return (
