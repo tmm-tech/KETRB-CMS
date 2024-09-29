@@ -293,14 +293,24 @@ const NewsEdit = () => {
                                                     </div>
 
                                                     {/* Buttons */}
-                                                    <div className="flex justify-end gap-2 mt-6">
-                                                        <Button size="sm" variant="black" onClick={handleSaveDraft} disabled={draftLoading}>
-                                                            {draftLoading ? "Saving..." : "Save as Draft"}
-                                                        </Button>
-                                                        <Button size="sm" variant="default" onClick={handlePublish} disabled={loading}>
-                                                            {loading ? "Saving..." : "Save"}
-                                                        </Button>
-                                                    </div>
+                                                     <div className="flex justify-end gap-2 mt-6">
+                                                    <Button onClick={() => setEditMode(false)} variant="outline">
+                                                        Cancel
+                                                    </Button>
+                                                    <Button onClick={handleSaveDraft} disabled={draftLoading} variant="black">
+                                                        {draftLoading ? "Saving Draft..." : "Save Draft"}
+                                                    </Button>
+                                                          {/* Conditionally render Approve & Publish button */}
+						    {user.roles === 'administrator' && status === 'pending' ? (
+							<Button onClick={() => handlePublish('published')} variant="black" disabled={loading}>
+							    {loading ? "Approving..." : "Approve & Publish"}
+							</Button>
+						    ) : (
+							<Button onClick={handlePublish} variant="black" disabled={loading}>
+							    {loading ? "Publishing..." : "Publish"}
+							</Button>
+						    )}
+                                                </div>
                                                 </form>
                                             </div>
                                         </CardContent>
