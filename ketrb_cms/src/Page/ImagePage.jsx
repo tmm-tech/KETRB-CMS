@@ -10,6 +10,7 @@ import { Badge } from '../Component/badge';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../Component/dialog";
 import { Input } from "../Component/input";
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
+import { ScrollArea, ScrollBar } from "../Component/scroll-area";
 import LoadingPage from '../Page/LoadingPage';
 
 const ImagePage = () => {
@@ -252,7 +253,9 @@ setAlertMessage(""); // Reset any previous alert message
       />
       {/* Image preview section */}
       {Array.isArray(previewUrl) && previewUrl.map((url, index) => (
-        <img key={index} src={url} alt={`Preview ${index}`} className="rounded-md" />
+	    <ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
+        	<img key={index} src={url} alt={`Preview ${index}`} className="rounded-md" />
+	    </ScrollArea> 
       ))}
 			      </div>
                       <DialogFooter>
