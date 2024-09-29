@@ -27,7 +27,36 @@ const ImagePage = () => {
   const [sortOption, setSortOption] = useState("date"); // default sorting by date
   const [statusFilter, setStatusFilter] = useState([]); // filter by status
 	
-  const capitalizeFirstLetter = (string) => {
+
+
+  if (imageloading) {
+    return <LoadingPage />;
+  }
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch('https://ketrb-backend.onrender.com/images/allimages');
+        const result = await response.json();
+
+        if (response.ok) {
+          setImages(result.images);
+        } else {
+          setAlertMessage("Failed to fetch images.");
+        }
+      } catch (error) {
+        console.log('Error fetching images:', error);
+        setAlertMessage("An error occurred while fetching images.");
+      }finally {
+                setimageLoading(false);
+            }
+    };
+
+    fetchImages();
+  }, []);
+ if (imageloading) {
+    return <LoadingPage />;
+  }
+const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
  const filteredImages = images
@@ -58,34 +87,6 @@ const ImagePage = () => {
   const handleSortChange = (sortOption) => {
     setSortOption(sortOption);
   };
-
-  if (imageloading) {
-    return <LoadingPage />;
-  }
-  useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        const response = await fetch('https://ketrb-backend.onrender.com/images/allimages');
-        const result = await response.json();
-
-        if (response.ok) {
-          setImages(result.images);
-        } else {
-          setAlertMessage("Failed to fetch images.");
-        }
-      } catch (error) {
-        console.log('Error fetching images:', error);
-        setAlertMessage("An error occurred while fetching images.");
-      }finally {
-                setimageLoading(false);
-            }
-    };
-
-    fetchImages();
-  }, []);
- if (imageloading) {
-    return <LoadingPage />;
-  }
   const handleCancel = () => {
     setImageFile(null);
   };
