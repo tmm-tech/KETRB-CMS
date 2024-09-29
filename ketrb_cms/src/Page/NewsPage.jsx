@@ -310,7 +310,7 @@ const handlePublish = async (id) => {
                                     </div>
                                 ) : (
                                     filteredNews.map((article) => (
-                                        <Card key={article.id}>
+                                        <Card key={article.id} className={(article.isdeleted === true && user.roles === "editor") ? "opacity-50 pointer-events-none" : ""}>
                                             <CardHeader>
                                                 <CardTitle>{article.title}</CardTitle>
                                                 <CardDescription>
