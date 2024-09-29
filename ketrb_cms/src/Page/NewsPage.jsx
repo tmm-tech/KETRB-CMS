@@ -44,6 +44,79 @@ const NewsPage = () => {
     const handleEdit = (id) => {
         navigate(`/news/edit news/${id}`); // Redirect to the edit page
     };
+    	// New handleCancel function
+    const handleCancel = async (id) => {
+        try {
+            const response = await fetch(`https://ketrb-backend.onrender.com/news/cancledelete/${id}`, {
+                method: 'PUT', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ isdeleted: false }), // Set isDeleted to true
+            });
+
+            if (response.ok) {
+                const updatedNews = await response.json();
+              
+                setAlertMessage('News Delete Canceled successfully');
+		window.location.href = '/news';
+            } else {
+                setAlertMessage('Failed to Cancel News Delete');
+            }
+        } catch (error) {
+            console.error("Error canceling news delete:", error);
+            setAlertMessage('An error occurred while canceling the news delete.');
+        }
+    };
+
+const handleApprove = async (id) => {
+    try {
+        const response = await fetch(`https://ketrb-backend.onrender.com/news/delete/${id}`, {
+            method: 'DELETE', 
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (response.ok) {
+            const updatedNews = await response.json();
+            // Update state to reflect the approved program
+            setNewsArticles((prevNews) => 
+                prevNews.map((news) => (news.id === id ? updatedNews : news))
+            );
+            setAlertMessage('News delete approved');
+	 window.location.href = '/news';
+        } else {
+            setAlertMessage('Failed to approve delete');
+        }
+    } catch (error) {
+        console.error("Error approving delete:", error);
+        setAlertMessage('An error occurred while approving delete.');
+    }
+};
+const handlePublish = async (id) => {
+    try {
+        const response = await fetch(`https://ketrb-backend.onrender.com/news/approve/${id}`, {
+            method: 'PUT', 
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (response.ok) {
+            const updatedNews= await response.json();
+            // Update state to reflect the published program
+            setNewsArticles((prevNews) => 
+                prevNews.map((news) => (news.id === id ? updatedNews : news))
+            );
+            setAlertMessage('Program published successfully');
+		window.location.href = '/programs';
+        } else {
+            setAlertMessage('Failed to publish program');
+        }
+    } catch (error) {
+        console.error("Error publishing program:", error);
+        setAlertMessage('An error occurred while publishing the program.');
+    }
+};
 
     const handleDelete = async (id) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this news article?");
@@ -179,15 +252,44 @@ const NewsPage = () => {
                                                         {article.status}
                                                     </Badge>
                                                     <div className="flex items-center gap-2">
-                                                        <Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(article.id)}>
-                                                            <FilePenIcon className="h-3.5 w-3.5" />
-                                                            <span>View</span>
-                                                        </Button>
-                                                        <Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleDelete(article.id)}>
-                                                            <TrashIcon className="h-3.5 w-3.5" />
-                                                            <span>Delete</span>
-                                                        </Button>
-                                                    </div>
+                                							{/* Conditionally display buttons */}
+                                							{user.roles === 'administrator' && program.isdeleted === true ? (
+                                							// Show Approve Delete button if the program is pending delete and user is an admin
+                                							<>
+                                								<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(article.id)} >
+                                									<FilePenIcon className="h-3.5 w-3.5" />
+                                									<span>View</span>
+                                								</Button>
+                                								<Button variant="black" size="sm" className="h-8 gap-1" onClick={() => handleApprove(article.id)}>
+                                									<CheckIcon className="h-3.5 w-3.5" />
+                                									<span>Approve Delete</span>
+                                								</Button>
+                                								<Button variant="black" size="sm" className="h-8 gap-1" onClick={() => handleCancel(article.id)}>
+                                									<CheckIcon className="h-3.5 w-3.5" />
+                                									<span>Cancle Delete</span>
+                                								</Button>
+                                							</>
+                                							) : (
+                                							// Otherwise, show Edit and Delete buttons
+                                							<>
+                                								<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleEdit(article.id)}>
+                                									<FilePenIcon className="h-3.5 w-3.5" />
+                                									<span>View</span>
+                                								</Button>
+                                								<Button variant="outline" size="sm" className="h-8 gap-1" onClick={() => handleDelete(program.id)}>
+                                									<TrashIcon className="h-3.5 w-3.5" />
+                                									<span>Delete</span>
+                                								</Button>
+                                							</>
+                                						)}
+                                						
+                                						{/* Show Approve Publish button only for pending programs if user is admin */}
+                                						{user.roles === "administrator" && program.status === "pending" && (
+                                						<Button size="sm" variant="black" onClick={() => handlePublish(program.id)}>
+                                						Approve Publish
+                                						</Button>
+                                						)}
+                                					</div>
                                                 </div>
                                             </CardFooter>
                                         </Card>
