@@ -292,7 +292,7 @@ const UserPage = () => {
                 <TableBody>
 	  {filteredUsers.length === 0 ? (
 		    <TableRow>
-		        <TableCell colSpan={5} className="flex items-center justify-center">
+		        <TableCell colSpan={5} className="text-center text-gray-500">
 		          <p className="text-center text-gray-500">No Users available.</p>
 		        </TableCell>
      	 	   </TableRow>
