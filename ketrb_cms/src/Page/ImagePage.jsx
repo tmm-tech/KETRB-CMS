@@ -365,7 +365,7 @@ setAlertMessage(""); // Reset any previous alert message
       <p className="text-center text-gray-500">No images available.</p>
     </div>
   ) : (
-    filteredImages.length((image) => (
+    filteredImages.map((image) => (
       <div key={image.id} className="bg-background rounded-lg shadow-lg overflow-hidden">
         {/* Display the image */}
         <img
