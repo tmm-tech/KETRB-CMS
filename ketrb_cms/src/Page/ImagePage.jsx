@@ -276,6 +276,7 @@ if (imageFile.length === 0) {
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+ <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
   {images.length === 0 ? (
     <div className="col-span-full flex items-center justify-center">
       <p className="text-center text-gray-500">No images available.</p>
@@ -295,35 +296,31 @@ if (imageFile.length === 0) {
 
         {/* Image details and actions */}
         <div className="p-4">
-        <div className="flex items-center justify-between">
-	  <div className="text-sm font-medium">{image.title || "Untitled"}</div>
-	  
-		  {/* Status Badge */}
-		   <Badge
-	              variant={image.status === "pending" ? "pending" : "approved"}
-	              className={image.status === "pending" ? "bg-yellow-500 text-yellow-50" : "bg-green-500 text-green-50"}
-	            >
-             		 {capitalizeFirstLetter(image.status)}
-            	    </Badge>
-	</div>
+          <div className="flex items-center justify-between">
+            <div className="text-sm font-medium">{image.title || "Untitled"}</div>
+            
+            {/* Status Badge */}
+            <Badge
+              variant={image.status === "pending" ? "pending" : "approved"}
+              className={image.status === "pending" ? "bg-yellow-500 text-yellow-50" : "bg-green-500 text-green-50"}
+            >
+              {capitalizeFirstLetter(image.status)}
+            </Badge>
+          </div>
 
           {/* Uploaded Date */}
           <div className="text-muted-foreground text-sm mt-1">
             {`Uploaded ${new Date(image.registered_at).toLocaleDateString()}`}
           </div>
-          
+
           {/* Action Buttons */}
           <div className="flex items-center justify-end gap-2 mt-4">
-            <Button variant="outline" onClick={() => handleViewImage(image)}>
-             <FilePenIcon className="h-4 w-4" />         
-	     View
-            </Button>
             <Button variant="outline" size="sm" onClick={() => handleDelete(image.id)}>
               <TrashIcon className="h-4 w-4" />
             </Button>
 
             {/* Only show approve button for pending images and if the user is an admin */}
-            {user.roles === "administrator" && status === "pending" && (
+            {user.roles === "administrator" && image.status === "pending" && (
               <Button size="sm" variant="black" onClick={() => handleApprove(image.id)}>
                 Approve
               </Button>
