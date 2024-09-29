@@ -5,7 +5,7 @@ import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Component/table';
 import { Button } from '../Component/button';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuCheckboxItem } from '../Component/dropdown-menu';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem } from '../Component/dropdown-menu';
 import { Tabs, TabsList, TabsTrigger } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../Component/card';
 import { Badge } from '../Component/badge';
@@ -17,6 +17,9 @@ const UserPage = () => {
   const [users, setUsers] = useState([]);
   const [alertMessage, setAlertMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [sortOption, setSortOption] = useState("date"); // default sorting by date
+   const [statusFilter, setStatusFilter] = useState([]); // filter by status
+ const[roleFilter,setRoleFilter]=useState([]); // filter by role
   const navigate = useNavigate();
   const handleEdit = (userId) => {
     navigate(`/users/edit user/${userId}`); // Redirect to the edit page
@@ -33,7 +36,42 @@ const UserPage = () => {
       if (!response.ok) {
         setAlertMessage('Failed to activate user');
       }
+ const filteredUsers = users
+    .filter((user) =>
+      statusFilter.length === 0 ? true : statusFilter.includes(user.status)
+    )
+    .sort((a, b) => {
+      if (sortOption === "asc") {
+        return a.title.localeCompare(b.title);
+      } else if (sortOption === "desc") {
+        return b.title.localeCompare(a.title);
+      } else if (sortOption === "date") {
+        return new Date(b.registered_at) - new Date(a.registered_at);
+      }
+      return 0;
+    });
 
+  // Handle status filter change
+  const handleStatusFilterChange = (status) => {
+    if (statusFilter.includes(status)) {
+      setStatusFilter(statusFilter.filter((item) => item !== status));
+    } else {
+      setStatusFilter([...statusFilter, status]);
+    }
+  };
+// Handle status filter change
+  const handleRoleFilterChange = (role) => {
+    if (roleFilter.includes(role)) {
+      setRoleFilter(statusFilter.filter((item) => item !== role));
+    } else {
+      setRoleFilter([...statusFilter, role]);
+    }
+  };
+
+  // Handle sorting option change
+  const handleSortChange = (sortOption) => {
+    setSortOption(sortOption);
+  };
       const data = await response.json();
       if (data.success) {
         setAlertMessage('User account activated successfully');
@@ -157,20 +195,83 @@ const UserPage = () => {
               </TabsList>
               <div className="ml-auto flex items-center gap-2">
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="h-8 gap-1">
-                      <FilterIcon className="h-3.5 w-3.5" />
-                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Filter</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem checked>Published</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>Pending</DropdownMenuCheckboxItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+			  <DropdownMenuTrigger asChild>
+			    <Button variant="outline" size="sm" className="h-8 gap-1">
+			      <FilterIcon className="h-3.5 w-3.5" />
+			      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Filter</span>
+			    </Button>
+			  </DropdownMenuTrigger>
+			
+			  <DropdownMenuContent align="end">
+			    <DropdownMenuLabel>Sort by</DropdownMenuLabel>
+			    <DropdownMenuSeparator />
+			
+			    {/* Sorting Options with SVG Icons */}
+			    <DropdownMenuRadioGroup value={sortOption} onValueChange={handleSortChange}>
+			      <DropdownMenuRadioItem value="asc">
+			        <span className="flex items-center gap-2">
+			          A-Z (Ascending)
+			          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+			            <path d="M12 19V5M5 12l7-7 7 7" />
+			          </svg>
+			        </span>
+			      </DropdownMenuRadioItem>
+			
+			      <DropdownMenuRadioItem value="desc">
+			        <span className="flex items-center gap-2">
+			          Z-A (Descending)
+			          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+			            <path d="M12 5v14M5 12l7 7 7-7" />
+			          </svg>
+			        </span>
+			      </DropdownMenuRadioItem>
+			
+			      <DropdownMenuRadioItem value="date">
+			        <span className="flex items-center gap-2">
+			          Date
+			          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+			            <path d="M3 3h18M3 8h18M8 12v8m4-8v8m4-8v8M5 5h2m10 0h2" />
+			          </svg>
+			        </span>
+			      </DropdownMenuRadioItem>
+			    </DropdownMenuRadioGroup>
+			
+			    <DropdownMenuSeparator />
+			    
+			    {/* Filter by Status */}
+			    <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+			    <DropdownMenuSeparator />
+			    <DropdownMenuCheckboxItem
+			      checked={statusFilter.includes('published')}
+			      onCheckedChange={() => handleStatusFilterChange('active')}
+			    >
+			      Active
+			    </DropdownMenuCheckboxItem>
+			    <DropdownMenuCheckboxItem
+			      checked={statusFilter.includes('pending')}
+			      onCheckedChange={() => handleStatusFilterChange('inactive')}
+			    >
+			      Inactive
+			    </DropdownMenuCheckboxItem>
+				  <DropdownMenuSeparator />
+			    
+			    {/* Filter by Role */}
+			    <DropdownMenuLabel>Filter by Role</DropdownMenuLabel>
+			    <DropdownMenuSeparator />
+			    <DropdownMenuCheckboxItem
+			      checked={roleFilter.includes('administrator')}
+			      onCheckedChange={() => handleRoleFilterChange('administrator')}
+			    >
+			      Active
+			    </DropdownMenuCheckboxItem>
+			    <DropdownMenuCheckboxItem
+			      checked={roleFilter.includes('editor')}
+			      onCheckedChange={() => handleRoleFilterChange('editor')}
+			    >
+			      Inactive
+			    </DropdownMenuCheckboxItem>
+			  </DropdownMenuContent>
+		</DropdownMenu>
                 <Link to="/users/add users">
                   <Button variant="outline" size="sm" className="h-8 gap-1 bg-black text-white">
                     <PlusIcon className="h-3.5 w-3.5" />
@@ -191,7 +292,7 @@ const UserPage = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {users.map(user => (
+                  {filteredUsers.map(user => (
                     <TableRow key={user.id}>
                       <TableCell>{user.fullname}</TableCell>
                       <TableCell>{user.email}</TableCell>
