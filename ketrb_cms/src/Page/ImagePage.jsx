@@ -242,22 +242,25 @@ setAlertMessage(""); // Reset any previous alert message
                       <DialogDescription>Select an image to upload for the user profile.</DialogDescription>
                     </DialogHeader>
                     <form onSubmit={handleUpload} encType="multipart/form-data">
-                      <div className="grid gap-4 py-4">
-      <Input
-        type="file"
-        accept="image/*"
-        multiple
-        onChange={handleImageSelect}
-        className="block w-full"
-        name="image"
-      />
-      {/* Image preview section */}
-      {Array.isArray(previewUrl) && previewUrl.map((url, index) => (
-	    <ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
-        	<img key={index} src={url} alt={`Preview ${index}`} className="rounded-md" />
-	    </ScrollArea> 
-      ))}
-			      </div>
+			<ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
+                      		<div className="grid gap-4 py-4">
+				      <Input
+				        type="file"
+				        accept="image/*"
+				        multiple
+				        onChange={handleImageSelect}
+				        className="block w-full"
+				        name="image"
+				      />
+							     
+				      {/* Image preview section */}
+				      {Array.isArray(previewUrl) && previewUrl.map((url, index) => (
+					   
+				        	<img key={index} src={url} alt={`Preview ${index}`} className="rounded-md" />
+					   
+				      ))}
+			      	</div>
+			 </ScrollArea> 
                       <DialogFooter>
                         {previewUrl && (
                           <Button onClick={handleCancel} variant="outline">Cancel</Button>
