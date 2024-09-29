@@ -108,7 +108,7 @@ const handlePublish = async (id) => {
                 prevNews.map((news) => (news.id === id ? updatedNews : news))
             );
             setAlertMessage('Program published successfully');
-		window.location.href = '/programs';
+		window.location.href = '/news';
         } else {
             setAlertMessage('Failed to publish program');
         }
