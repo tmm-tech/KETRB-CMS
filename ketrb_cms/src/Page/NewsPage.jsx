@@ -280,6 +280,12 @@ const handlePublish = async (id) => {
 			    >
 			      Pending
 			    </DropdownMenuCheckboxItem>
+			    <DropdownMenuCheckboxItem
+			      checked={statusFilter.includes('draft')}
+			      onCheckedChange={() => handleStatusFilterChange('draft')}
+			    >
+			      Draft
+			    </DropdownMenuCheckboxItem>
 			  </DropdownMenuContent>
 		</DropdownMenu>
                                 <Link to="/news/add news">
