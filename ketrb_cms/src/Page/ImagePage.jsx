@@ -27,11 +27,6 @@ const ImagePage = () => {
   const [sortOption, setSortOption] = useState("date"); // default sorting by date
   const [statusFilter, setStatusFilter] = useState([]); // filter by status
 	
-
-
-  if (imageloading) {
-    return <LoadingPage />;
-  }
   useEffect(() => {
     const fetchImages = async () => {
       try {
