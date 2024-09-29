@@ -291,9 +291,11 @@ const UserPage = () => {
                 </TableHeader>
                 <TableBody>
 	  {filteredUsers.length === 0 ? (
-		    <div className="col-span-full flex items-center justify-center"> 
-			<p className="text-center text-gray-500">No Users available.</p>
-		    </div>
+		    <TableRow>
+		        <TableCell colSpan={5} className="flex items-center justify-center">
+		          <p className="text-center text-gray-500">No Users available.</p>
+		        </TableCell>
+     	 	   </TableRow>
 		) : (
                   filteredUsers.map(user => (
                     <TableRow key={user.id}>
