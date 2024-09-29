@@ -121,13 +121,14 @@ if (imageFile.length === 0) {
     setAlertMessage("");
 
     const formData = new FormData();
-    imageFile.forEach(file => formData.append('images', file)); // Append each file
-    formData.append('status', status);
-	  
-    setLoading(true);
-    setAlertMessage("");
-    formData.append('image', imageFile);
-    formData.append('status', status);
+  // Append each image file to the form data
+imageFile.forEach(file => formData.append('images', file)); // Assuming imageFile is an array
+
+// Append other form data (like status)
+formData.append('status', status);
+
+setLoading(true);
+setAlertMessage(""); // Reset any previous alert message
 
     try {
       const response = await fetch('https://ketrb-backend.onrender.com/images/add', {
