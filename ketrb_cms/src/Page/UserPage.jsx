@@ -244,13 +244,13 @@ const UserPage = () => {
 			    <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
 			    <DropdownMenuSeparator />
 			    <DropdownMenuCheckboxItem
-			      checked={statusFilter.includes('published')}
+			      checked={statusFilter.includes('active')}
 			      onCheckedChange={() => handleStatusFilterChange('active')}
 			    >
 			      Active
 			    </DropdownMenuCheckboxItem>
 			    <DropdownMenuCheckboxItem
-			      checked={statusFilter.includes('pending')}
+			      checked={statusFilter.includes('inactive')}
 			      onCheckedChange={() => handleStatusFilterChange('inactive')}
 			    >
 			      Inactive
