@@ -17,10 +17,10 @@ const UserPage = () => {
   const [users, setUsers] = useState([]);
   const [alertMessage, setAlertMessage] = useState("");
   const [loading, setLoading] = useState(true);
-  const [sortOption, setSortOption] = useState("date"); // default sorting by date
-   const [statusFilter, setStatusFilter] = useState([]); // filter by status
- const[roleFilter,setRoleFilter]=useState([]); // filter by role
-
+   const [sortOption, setSortOption] = useState("date"); // default sorting by date
+  const [statusFilter, setStatusFilter] = useState([]); // filter by status
+  const [roleFilter, setRoleFilter] = useState([]); // filter by role
+	
   const navigate = useNavigate();
   useEffect(() => {
     // Fetch users from backend
@@ -70,42 +70,7 @@ const UserPage = () => {
       if (!response.ok) {
         setAlertMessage('Failed to activate user');
       }
- const filteredUsers = users
-    .filter((user) =>
-      statusFilter.length === 0 ? true : statusFilter.includes(user.status)
-    )
-    .sort((a, b) => {
-      if (sortOption === "asc") {
-        return a.title.localeCompare(b.title);
-      } else if (sortOption === "desc") {
-        return b.title.localeCompare(a.title);
-      } else if (sortOption === "date") {
-        return new Date(b.registered_at) - new Date(a.registered_at);
-      }
-      return 0;
-    });
 
-  // Handle status filter change
-  const handleStatusFilterChange = (status) => {
-    if (statusFilter.includes(status)) {
-      setStatusFilter(statusFilter.filter((item) => item !== status));
-    } else {
-      setStatusFilter([...statusFilter, status]);
-    }
-  };
-// Handle status filter change
-  const handleRoleFilterChange = (role) => {
-    if (roleFilter.includes(role)) {
-      setRoleFilter(roleFilter.filter((item) => item !== role));
-    } else {
-      setRoleFilter([...roleFilter, role]);
-    }
-  };
-
-  // Handle sorting option change
-  const handleSortChange = (sortOption) => {
-    setSortOption(sortOption);
-  };
       const data = await response.json();
       if (data.success) {
         setAlertMessage('User account activated successfully');
@@ -150,6 +115,37 @@ const UserPage = () => {
         setAlertMessage('An error occurred while deleting the user.');
       }
     }
+  };
+ const filteredUsers = users
+    .filter(user => 
+      (statusFilter.length === 0 || statusFilter.includes(user.status)) &&
+      (roleFilter.length === 0 || roleFilter.includes(user.roles))
+    )
+    .sort((a, b) => {
+      if (sortOption === "asc") {
+        return a.fullname.localeCompare(b.fullname);
+      } else if (sortOption === "desc") {
+        return b.fullname.localeCompare(a.fullname);
+      } else if (sortOption === "date") {
+        return new Date(b.registered_at) - new Date(a.registered_at);
+      }
+      return 0;
+    });
+
+  const handleStatusFilterChange = (status) => {
+    setStatusFilter(prevFilter =>
+      prevFilter.includes(status) ? prevFilter.filter(item => item !== status) : [...prevFilter, status]
+    );
+  };
+
+  const handleRoleFilterChange = (role) => {
+    setRoleFilter(prevFilter =>
+      prevFilter.includes(role) ? prevFilter.filter(item => item !== role) : [...prevFilter, role]
+    );
+  };
+
+  const handleSortChange = (sortOption) => {
+    setSortOption(sortOption);
   };
 
 
