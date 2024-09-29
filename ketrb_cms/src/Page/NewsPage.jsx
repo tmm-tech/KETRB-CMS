@@ -160,9 +160,15 @@ const handlePublish = async (id) => {
                 });
 
                 if (response.ok) {
-                    setNewsArticles((prevArticles) => prevArticles.filter((article) => article.id !== id));
-                    setAlertMessage('News article deleted successfully');
-                    window.location.href = '/news';
+                    if (user.roles === 'editor') {
+		
+          setAlertMessage('News marked for deletion. Admin approval required.');
+	 
+        } else {
+          setPrograms((prevNews) => prevNews.filter((news) => news.id !== id));
+	          setAlertMessage('News deleted successfully');
+	window.location.href = '/news';
+        }
                 } else {
                     setAlertMessage('Failed to delete news article');
                 }
