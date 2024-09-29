@@ -260,13 +260,13 @@ const UserPage = () => {
 			      checked={roleFilter.includes('administrator')}
 			      onCheckedChange={() => handleRoleFilterChange('administrator')}
 			    >
-			      Active
+			      Administrator
 			    </DropdownMenuCheckboxItem>
 			    <DropdownMenuCheckboxItem
 			      checked={roleFilter.includes('editor')}
 			      onCheckedChange={() => handleRoleFilterChange('editor')}
 			    >
-			      Inactive
+			      Editor
 			    </DropdownMenuCheckboxItem>
 			  </DropdownMenuContent>
 		</DropdownMenu>
