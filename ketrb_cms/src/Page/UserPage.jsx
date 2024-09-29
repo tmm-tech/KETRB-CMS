@@ -290,7 +290,12 @@ const UserPage = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredUsers.map(user => (
+	  {filteredUsers.length === 0 ? (
+		    <div className="col-span-full flex items-center justify-center"> 
+			<p className="text-center text-gray-500">No Users available.</p>
+		    </div>
+		) : (
+                  filteredUsers.map(user => (
                     <TableRow key={user.id}>
                       <TableCell>{user.fullname}</TableCell>
                       <TableCell>{user.email}</TableCell>
@@ -326,7 +331,8 @@ const UserPage = () => {
                         </div>
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ))
+    )}
                 </TableBody>
               </Table>
             </div>
