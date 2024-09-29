@@ -4,7 +4,7 @@ import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
 import { Button } from '../Component/button';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from '../Component/dropdown-menu';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem } from '../Component/dropdown-menu';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter} from '../Component/card';
 import { Badge } from '../Component/badge';
@@ -15,6 +15,8 @@ const ProgramsPage = () => {
     const [programs, setPrograms] = useState([]);
     const [loading, setLoading] = useState(true);
     const [alertMessage, setAlertMessage] = useState("");
+    const [sortOption, setSortOption] = useState("date"); // default sorting by date
+    const [statusFilter, setStatusFilter] = useState([]); // filter by status
 
 const storedUser = localStorage.getItem('user');
   const user = JSON.parse(storedUser);
@@ -39,6 +41,34 @@ const storedUser = localStorage.getItem('user');
   }
  const handleEdit = (id) => {
     navigate(`/programs/edit program/${id}`); // Redirect to the edit page
+  };
+const filteredPrograms = programs
+    .filter((program) =>
+      statusFilter.length === 0 ? true : statusFilter.includes(program.status)
+    )
+    .sort((a, b) => {
+      if (sortOption === "asc") {
+        return a.title.localeCompare(b.title);
+      } else if (sortOption === "desc") {
+        return b.title.localeCompare(a.title);
+      } else if (sortOption === "date") {
+        return new Date(b.registered_at) - new Date(a.registered_at);
+      }
+      return 0;
+    });
+
+  // Handle status filter change
+  const handleStatusFilterChange = (status) => {
+    if (statusFilter.includes(status)) {
+      setStatusFilter(statusFilter.filter((item) => item !== status));
+    } else {
+      setStatusFilter([...statusFilter, status]);
+    }
+  };
+
+  // Handle sorting option change
+  const handleSortChange = (sortOption) => {
+    setSortOption(sortOption);
   };
 	// New handleCancel function
     const handleCancel = async (id) => {
@@ -225,10 +255,10 @@ const handlePublish = async (id) => {
                         </div>
                         <TabsContent value="program">
                             <div className="grid gap-4">
-                                { programs.length === 0 ? (
+                                { filteredPrograms.length === 0 ? (
                                     <div className="col-span-full flex items-center justify-center"> <p className="text-center text-gray-500">No programs available.</p></div>
                                 ) : (
-                                    programs.map((program) => (
+                                    filteredPrograms.map((program) => (
                                         <Card key={program.id} className={(program.isdeleted === true && user.roles === "editor") ? "opacity-50 pointer-events-none" : ""}>
                                             <CardHeader>
                                                 <CardTitle>{program.title}</CardTitle>
