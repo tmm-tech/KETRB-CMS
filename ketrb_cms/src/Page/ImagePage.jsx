@@ -299,13 +299,18 @@ if (imageFile.length === 0) {
           <div className="flex items-center justify-between">
             <div className="text-sm font-medium">{image.title || "Untitled"}</div>
             
-            {/* Status Badge */}
-            <Badge
-              variant={image.status === "pending" ? "pending" : "approved"}
-              className={image.status === "pending" ? "bg-yellow-500 text-yellow-50" : "bg-green-500 text-green-50"}
-            >
-              {capitalizeFirstLetter(image.status)}
-            </Badge>
+             <Badge
+                                                        variant="outline"
+                                                        className={`capitalize ${
+                                                            image.status === "published"
+                                                                ? "bg-green-500 text-green-50"
+                                                                : image.status === "pending"
+                                                                ? "bg-yellow-500 text-yellow-50"
+                                                                : "bg-gray-500 text-gray-50"
+                                                        }`}
+                                                    >
+                                                        {image.status}
+                                                    </Badge>
           </div>
 
           {/* Uploaded Date */}
