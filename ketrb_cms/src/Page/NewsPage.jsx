@@ -165,7 +165,7 @@ const handlePublish = async (id) => {
           setAlertMessage('News marked for deletion. Admin approval required.');
 	 
         } else {
-          setPrograms((prevNews) => prevNews.filter((news) => news.id !== id));
+          setNewsArticles((prevNews) => prevNews.filter((news) => news.id !== id));
 	          setAlertMessage('News deleted successfully');
 	window.location.href = '/news';
         }
