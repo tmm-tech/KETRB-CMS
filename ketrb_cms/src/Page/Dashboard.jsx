@@ -8,43 +8,47 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '../Component/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../Component/card';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Component/table';
 import { Badge } from '../Component/badge';
+import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext, PaginationLink, PaginationEllipsis } from '../Component/pagination'; // Import pagination components
 import bgImage from "../Asset/bg.png";
 
 const Dashboard = () => {
-    const [userCount, setUserCount] = useState(0);
-  const [imageCount, setImageCount] = useState(0);
-  const [newsCount, setNewsCount] = useState(0);
-  const [programCount, setProgramCount] = useState(0);
+  const [news, setNews] = useState([]);
+  const [images, setImages] = useState([]);
+  const [programs, setPrograms] = useState([]);
+  const [users, setUsers] = useState([]);
   
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5); // Adjust number of items per page
+
   const storedUser = localStorage.getItem('user');
   const user = JSON.parse(storedUser);
 
   useEffect(() => {
-    const fetchCounts = async () => {
+    const fetchData = async () => {
       try {
-        const [usersResponse, imagesResponse, newsResponse, programsResponse] = await Promise.all([
-          fetch("https://ketrb-backend.onrender.com/users/allusers"),
-          fetch("https://ketrb-backend.onrender.com/images/allimages"),
+        const [newsResponse, imagesResponse, programsResponse, usersResponse] = await Promise.all([
           fetch("https://ketrb-backend.onrender.com/news/"),
-          fetch("https://ketrb-backend.onrender.com/programs/")
+          fetch("https://ketrb-backend.onrender.com/images/allimages"),
+          fetch("https://ketrb-backend.onrender.com/programs/"),
+          fetch("https://ketrb-backend.onrender.com/users/allusers")
         ]);
 
-        const usersData = await usersResponse.json();
-        const imagesData = await imagesResponse.json();
-        const newsData = await newsResponse.json();
-        const programsData = await programsResponse.json();
-
-        setUserCount(usersData.length);
-        setImageCount(imagesData.length);
-        setNewsCount(newsData.length);
-        setProgramCount(programsData.length);
+        setNews(await newsResponse.json());
+        setImages(await imagesResponse.json());
+        setPrograms(await programsResponse.json());
+        setUsers(await usersResponse.json());
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    fetchCounts();
+    fetchData();
   }, []);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(news.length / itemsPerPage);
+  // Get current items
+  const currentItems = news.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -52,44 +56,6 @@ const Dashboard = () => {
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: "center" }}>
         <HeaderNav />
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Users</CardTitle>
-                <CardDescription>Total users registered</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-4xl font-bold">{userCount}</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Images</CardTitle>
-                <CardDescription>Total images uploaded</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-4xl font-bold">{imageCount}</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                  <CardTitle>News & Events</CardTitle>
-                <CardDescription>Total news articles</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-4xl font-bold">{newsCount}</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Programs & Projects</CardTitle>
-                <CardDescription>Total programs listed</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-4xl font-bold">{programCount}</div>
-              </CardContent>
-            </Card>
-          </div>
           <Tabs defaultValue="news">
             <div className="flex items-center">
               <TabsList className="bg-gray-200 p-2 rounded-md">
@@ -102,31 +68,11 @@ const Dashboard = () => {
                   </TabsTrigger>
                 )}
               </TabsList>
-              <div className="ml-auto flex items-center gap-2">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="h-8 gap-1">
-                      <FilterIcon className="h-3.5 w-3.5" />
-                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Filter</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem checked>Published</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>Archived</DropdownMenuCheckboxItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <Button size="sm" className="h-8 gap-1 bg-black text-white">
-                  <PlusIcon className="h-3.5 w-3.5" />
-                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Add</span>
-                </Button>
-
-              </div>
             </div>
+
+            {/* News Tab */}
             <TabsContent value="news">
-              <Card x-chunk="dashboard-06-chunk-0">
+              <Card>
                 <CardHeader>
                   <CardTitle>News</CardTitle>
                   <CardDescription>Manage your news content and view their performance.</CardDescription>
@@ -135,94 +81,169 @@ const Dashboard = () => {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="hidden w-[100px] sm:table-cell">
-                          <span className="sr-only">Thumbnail</span>
-                        </TableHead>
+                        <TableHead className="hidden w-[100px] sm:table-cell">Thumbnail</TableHead>
                         <TableHead>Title</TableHead>
                         <TableHead>Status</TableHead>
                         <TableHead className="hidden md:table-cell">Author</TableHead>
                         <TableHead className="hidden md:table-cell">Published At</TableHead>
-                        <TableHead>
-                          <span className="sr-only">Actions</span>
-                        </TableHead>
+                        <TableHead>Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
+                      {currentItems.map((article) => (
+                        <TableRow key={article.id}>
+                          <TableCell className="hidden sm:table-cell">
+                            <img
+                              alt={article.title}
+                              className="aspect-square rounded-md object-cover"
+                              height="64"
+                              src={article.thumbnail || "https://via.placeholder.com/150"}
+                              width="64"
+                            />
+                          </TableCell>
+                          <TableCell className="font-medium">
+                            <Link to="#" className="hover:underline">{article.title}</Link>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="outline" className={`bg-${article.status === "published" ? "green" : "gray"}-500 text-white`}>
+                              {article.status}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">{article.author}</TableCell>
+                          <TableCell className="hidden md:table-cell">{new Date(article.publishedAt).toLocaleString()}</TableCell>
+                          <TableCell>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button aria-haspopup="true" size="icon" variant="ghost">
+                                  <span className="sr-only">Toggle menu</span>
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                <DropdownMenuItem>View</DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                  <Pagination>
+                    <PaginationContent>
+                      <PaginationItem>
+                        <PaginationPrevious 
+                          href="#"
+                          onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                          disabled={currentPage === 1}
+                        />
+                      </PaginationItem>
+                      {[...Array(totalPages).keys()].map(number => (
+                        <PaginationItem key={number + 1}>
+                          <PaginationLink 
+                            href="#"
+                            onClick={() => setCurrentPage(number + 1)}
+                            className={currentPage === number + 1 ? 'bg-gray-300' : ''}
+                          >
+                            {number + 1}
+                          </PaginationLink>
+                        </PaginationItem>
+                      ))}
+                      {currentPage < totalPages && (
+                        <PaginationItem>
+                          <PaginationEllipsis />
+                        </PaginationItem>
+                      )}
+                      <PaginationItem>
+                        <PaginationNext 
+                          href="#"
+                          onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                          disabled={currentPage === totalPages}
+                        />
+                      </PaginationItem>
+                    </PaginationContent>
+                  </Pagination>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Images Tab */}
+            <TabsContent value="images">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Images</CardTitle>
+                  <CardDescription>Manage your images.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    {images.map((image) => (
+                      <div key={image.id}>
+                        <img src={image.url} alt={image.name} className="w-full h-auto rounded-md" />
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Programs Tab */}
+            <TabsContent value="programs">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Programs</CardTitle>
+                  <CardDescription>Manage your programs.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
                       <TableRow>
-                        <TableCell className="hidden sm:table-cell">
-                          <img
-                            alt="News thumbnail"
-                            className="aspect-square rounded-md object-cover"
-                            height="64"
-                            src="https://via.placeholder.com/150"
-                            width="64"
-                          />
-                        </TableCell>
-                        <TableCell className="font-medium">
-                          <Link to="#" className="hover:underline" prefetch={false}>
-                            Acme Inc Announces New Product Launch
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className="bg-green-500 text-green-50">Published</Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">John Doe</TableCell>
-                        <TableCell className="hidden md:table-cell">2023-07-12 10:42 AM</TableCell>
-                        <TableCell>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button aria-haspopup="true" size="icon" variant="ghost">
-                                <MoveHorizontalIcon className="h-4 w-4" />
-                                <span className="sr-only">Toggle menu</span>
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                              <DropdownMenuItem>View</DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </TableCell>
+                        <TableHead>Program Name</TableHead>
+                        <TableHead>Description</TableHead>
                       </TableRow>
-                      <TableRow>
-                        <TableCell className="hidden sm:table-cell">
-                          <img
-                            alt="News thumbnail"
-                            className="aspect-square rounded-md object-cover"
-                            height="64"
-                            src="https://via.placeholder.com/150"
-                            width="64"
-                          />
-                        </TableCell>
-                        <TableCell className="font-medium">
-                          <Link to="#" className="hover:underline" prefetch={false}>
-                            Acme Inc Wins Industry Award
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className="bg-green-500 text-green-50">Published</Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">Jane Doe</TableCell>
-                        <TableCell className="hidden md:table-cell">2023-06-30 3:15 PM</TableCell>
-                        <TableCell>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button aria-haspopup="true" size="icon" variant="ghost">
-                                <MoveHorizontalIcon className="h-4 w-4" />
-                                <span className="sr-only">Toggle menu</span>
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                              <DropdownMenuItem>View</DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </TableCell>
-                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {programs.map((program) => (
+                        <TableRow key={program.id}>
+                          <TableCell>{program.name}</TableCell>
+                          <TableCell>{program.description}</TableCell>
+                        </TableRow>
+                      ))}
                     </TableBody>
                   </Table>
                 </CardContent>
               </Card>
             </TabsContent>
+
+            {/* Users Tab */}
+            {user.roles === 'administrator' && (
+              <TabsContent value="users">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Users</CardTitle>
+                    <CardDescription>Manage your users.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>User Name</TableHead>
+                          <TableHead>Email</TableHead>
+                          <TableHead>Role</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {users.map((user) => (
+                          <TableRow key={user.id}>
+                            <TableCell>{user.name}</TableCell>
+                            <TableCell>{user.email}</TableCell>
+                            <TableCell>{user.role}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            )}
           </Tabs>
         </main>
       </div>
