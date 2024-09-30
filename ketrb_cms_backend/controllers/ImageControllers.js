@@ -97,7 +97,8 @@ module.exports = {
           } else {
             await query('DELETE FROM images WHERE id = $1', [id]);
             res.status(200).json({ message: 'Image deleted successfully' });
-        } catch (error) {
+        }
+    }catch (error) {
             res.status(500).json({ message: 'Error deleting image', error });
         }
     },
