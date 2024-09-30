@@ -175,11 +175,11 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    {images.map((image) => (
+{/*                     {images.map((image) => (
                       <div key={image.id}>
                         <img src={image.url} alt={image.name} className="w-full h-auto rounded-md" />
                       </div>
-                    ))}
+                    ))} */}
                   </div>
                 </CardContent>
               </Card>
