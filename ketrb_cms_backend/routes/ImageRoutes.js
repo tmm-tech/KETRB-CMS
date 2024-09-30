@@ -36,8 +36,10 @@ ImageRoutes.post('/add', upload.array('images', 20), AddImage);
 
 // Update an image's status
 ImageRoutes.put('/update/:id', UpdateImage);
+
 // Cancel delete for a image
-NewsRoutes.put('/cancledelete/:id', CancelImage);
+ImageRoutes.put('/cancledelete/:id', CancelImage);
+
 // Delete an image
 ImageRoutes.delete('/delete/:id', DeleteImage);
 
