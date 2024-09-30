@@ -237,7 +237,7 @@ const handleDeleteApprove = async (id) => {
         if (response.ok) {
             const updatedImages = await response.json();
             // Update state to reflect the approved program
-            setNewsArticles((prevImages) => 
+            setImages((prevImages) => 
                 prevImages.map((image) => (image.id === id ? updatedImages : image))
             );
             setAlertMessage('Image delete approved');
@@ -574,6 +574,25 @@ function PlusIcon(props) {
     </svg>
   )
 }
+
+function CheckIcon(props) {
+    return (
+        <svg
+            {...props}
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        >
+            <path d="M6 12l4 4L18 6" />
+        </svg>
+    );
+} 
 
  function FilePenIcon(props) {
     return (
