@@ -42,7 +42,27 @@ module.exports = {
             res.status(500).json({ message: 'Error saving image details to database' });
         }
     },
+     // Cancel an image delete
+      CancelImages: async (req, res) => {
+        const { id } = req.params;
     
+        try {
+          const result = await query(
+            'UPDATE images SET isdeleted = FALSE WHERE id = $1 RETURNING *',
+            [id]
+          );
+    
+          if (result.rowCount === 0) {
+            return res.status(404).json({ message: 'Image not found' });
+          }
+    
+          const updatedImages = result.rows[0];
+          res.status(200).json(updatedImages);
+        } catch (error) {
+          console.error('Error canceling image:', error);
+          res.status(500).json({ message: 'Internal server error' });
+        }
+      },
     UpdateImage: async (req, res) => {
         const { id } = req.params;
         const { status } = req.body;
@@ -58,8 +78,23 @@ module.exports = {
     // Delete an image
     DeleteImage: async (req, res) => {
         const { id } = req.params;
-
+        const { role } = req.body;
         try {
+             if (role === 'editor') {
+                const result = await query(
+                  'UPDATE images SET isdeleted = TRUE WHERE id = $1 RETURNING *',
+                  [id]
+                );
+        
+                if (result.rows.length === 0) {
+                  return res.status(404).json({ message: 'Image not found.' });
+                }
+        
+                return res.status(200).json({
+                  message: 'Image marked for deletion. Admin approval required.',
+                  news: result.rows[0],
+                });
+          } else {
             await query('DELETE FROM images WHERE id = $1', [id]);
             res.status(200).json({ message: 'Image deleted successfully' });
         } catch (error) {
