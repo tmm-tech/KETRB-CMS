@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
@@ -11,8 +11,41 @@ import { Badge } from '../Component/badge';
 import bgImage from "../Asset/bg.png";
 
 const Dashboard = () => {
+    const [userCount, setUserCount] = useState(0);
+  const [imageCount, setImageCount] = useState(0);
+  const [newsCount, setNewsCount] = useState(0);
+  const [programCount, setProgramCount] = useState(0);
+  
   const storedUser = localStorage.getItem('user');
   const user = JSON.parse(storedUser);
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const [usersResponse, imagesResponse, newsResponse, programsResponse] = await Promise.all([
+          fetch("https://ketrb-backend.onrender.com/users/allusers"),
+          fetch("https://ketrb-backend.onrender.com/images/allimages"),
+          fetch("https://ketrb-backend.onrender.com/news/"),
+          fetch("https://ketrb-backend.onrender.com/programs/")
+        ]);
+
+        const usersData = await usersResponse.json();
+        const imagesData = await imagesResponse.json();
+        const newsData = await newsResponse.json();
+        const programsData = await programsResponse.json();
+
+        setUserCount(usersData.length);
+        setImageCount(imagesData.length);
+        setNewsCount(newsData.length);
+        setProgramCount(programsData.length);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchCounts();
+  }, []);
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
@@ -26,7 +59,7 @@ const Dashboard = () => {
                 <CardDescription>Total users registered</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold">1,234</div>
+                <div className="text-4xl font-bold">{userCount}</div>
               </CardContent>
             </Card>
             <Card>
@@ -35,21 +68,19 @@ const Dashboard = () => {
                 <CardDescription>Total images uploaded</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold">567</div>
+                <div className="text-4xl font-bold">{imageCount}</div>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>News</CardTitle>
+                  <CardTitle>News{ vm</CardTitle>
                 <CardDescription>Total news articles</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold">89</div>
+                <div className="text-4xl font-bold">{newsCount}</div>
               </CardContent>
             </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Events</CardTitle>
+             vmtle>Events</CardTitle>
                 <CardDescription>Total events created</CardDescription>
               </CardHeader>
               <CardContent>
