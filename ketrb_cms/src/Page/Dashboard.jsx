@@ -110,7 +110,7 @@ const Dashboard = () => {
                             </Badge>
                           </TableCell>
                           <TableCell className="hidden md:table-cell">{article.author}</TableCell>
-                          <TableCell className="hidden md:table-cell">{new Date(article.publishedAt).toLocaleString()}</TableCell>
+                          <TableCell className="hidden md:table-cell">{new Date(article.published_date).toLocaleString()}</TableCell>
                           <TableCell>
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
@@ -128,39 +128,41 @@ const Dashboard = () => {
                       ))}
                     </TableBody>
                   </Table>
-                  <Pagination>
-                    <PaginationContent>
-                      <PaginationItem>
-                        <PaginationPrevious 
-                          href="#"
-                          onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                          disabled={currentPage === 1}
-                        />
-                      </PaginationItem>
-                      {[...Array(totalPages).keys()].map(number => (
-                        <PaginationItem key={number + 1}>
-                          <PaginationLink 
-                            href="#"
-                            onClick={() => setCurrentPage(number + 1)}
-                            className={currentPage === number + 1 ? 'bg-gray-300' : ''}
-                          >
-                            {number + 1}
-                          </PaginationLink>
-                        </PaginationItem>
-                      ))}
-                      {currentPage < totalPages && (
+                  <Pagination className="flex items-center justify-center mt-4">
+                      <PaginationContent className="flex items-center space-x-2">
                         <PaginationItem>
-                          <PaginationEllipsis />
+                          <PaginationPrevious
+                            href="#"
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-50"
+                          />
                         </PaginationItem>
-                      )}
-                      <PaginationItem>
-                        <PaginationNext 
-                          href="#"
-                          onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                          disabled={currentPage === totalPages}
-                        />
-                      </PaginationItem>
-                    </PaginationContent>
+                    
+                        {/* Page Numbers */}
+                        {[...Array(totalPages).keys()].map(number => (
+                          <PaginationItem key={number + 1}>
+                            <PaginationLink
+                              href="#"
+                              onClick={() => setCurrentPage(number + 1)}
+                              className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-blue-200 ${
+                                currentPage === number + 1 ? 'bg-blue-600 text-white' : 'text-gray-700'
+                              }`}
+                            >
+                              {number + 1}
+                            </PaginationLink>
+                          </PaginationItem>
+                        ))}
+                    
+                        <PaginationItem>
+                          <PaginationNext
+                            href="#"
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-50"
+                          />
+                        </PaginationItem>
+                      </PaginationContent>
                   </Pagination>
                 </CardContent>
               </Card>
@@ -175,11 +177,11 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-{/*                     {images.map((image) => (
+                    {images.map((image) => (
                       <div key={image.id}>
-                        <img src={image.url} alt={image.name} className="w-full h-auto rounded-md" />
+                        <img src={image.image} alt={image.image} className="w-full h-auto rounded-md" />
                       </div>
-                    ))} */}
+                    ))}
                   </div>
                 </CardContent>
               </Card>
@@ -196,15 +198,49 @@ const Dashboard = () => {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Program Name</TableHead>
-                        <TableHead>Description</TableHead>
+                         <TableHead className="hidden w-[100px] sm:table-cell">Thumbnail</TableHead>
+                        <TableHead>Title</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead className="hidden md:table-cell">Author</TableHead>
+                        <TableHead className="hidden md:table-cell">Published At</TableHead>
+                        <TableHead>Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {programs.map((program) => (
-                        <TableRow key={program.id}>
-                          <TableCell>{program.name}</TableCell>
-                          <TableCell>{program.description}</TableCell>
+                         <TableRow key={program.id}>
+                          <TableCell className="hidden sm:table-cell">
+                            <img
+                              alt={program.title}
+                              className="aspect-square rounded-md object-cover"
+                              height="64"
+                              src={program.thumbnail || "https://via.placeholder.com/150"}
+                              width="64"
+                            />
+                          </TableCell>
+                          <TableCell className="font-medium">
+                            <Link to="#" className="hover:underline">{program.title}</Link>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="outline" className={`bg-${program.status === "published" ? "green" : "gray"}-500 text-white`}>
+                              {program.status}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">{program.author}</TableCell>
+                          <TableCell className="hidden md:table-cell">{new Date(program.published_date).toLocaleString()}</TableCell>
+                          <TableCell>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button aria-haspopup="true" size="icon" variant="ghost">
+                                  <span className="sr-only">Toggle menu</span>
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                <DropdownMenuItem>View</DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -228,16 +264,32 @@ const Dashboard = () => {
                           <TableHead>User Name</TableHead>
                           <TableHead>Email</TableHead>
                           <TableHead>Role</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead>Action</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-{/*                         {users.map((user) => (
+                        {users.map((user) => (
                           <TableRow key={user.id}>
-                            <TableCell>{user.name}</TableCell>
+                            <TableCell>{user.fullname}</TableCell>
                             <TableCell>{user.email}</TableCell>
-                            <TableCell>{user.role}</TableCell>
+                            <TableCell>{user.roles}</TableCell>
+                             <TableCell>{user.status}</TableCell>
+                             <TableCell>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button aria-haspopup="true" size="icon" variant="ghost">
+                                  <span className="sr-only">Toggle menu</span>
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                <DropdownMenuItem>View</DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
                           </TableRow>
-                        ))} */}
+                        ))}
                       </TableBody>
                     </Table>
                   </CardContent>
