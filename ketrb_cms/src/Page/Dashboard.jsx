@@ -250,7 +250,7 @@ const Dashboard = () => {
             </TabsContent>
 
             {/* Users Tab */}
-            {user.roles === 'administrator' && (
+{/*             {user.roles === 'administrator' && (
               <TabsContent value="users">
                 <Card>
                   <CardHeader>
@@ -289,7 +289,7 @@ const Dashboard = () => {
                             </DropdownMenu>
                           </TableCell>
                           </TableRow>
-                        ))}
+                        ))} */}
                       </TableBody>
                     </Table>
                   </CardContent>
