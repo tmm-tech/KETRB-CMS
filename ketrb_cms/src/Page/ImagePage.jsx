@@ -121,13 +121,21 @@ const handleApprove = async (id) => {
 const handleDelete = async (id) => {
   try {                     
     const response = await fetch(`https://ketrb-backend.onrender.com/images/delete/${id}`, {
-      method: 'DELETE',
-    });
+	    method: 'DELETE',
+	    headers: {
+		'Content-Type': 'application/json',
+	    },
+	    body: JSON.stringify({ role: user.roles }) // Pass user role to the backend
+	});
+
 
     if (response.ok) {
-      setAlertMessage("Image deleted successfully!");
-      // Optionally, you can refetch images or update UI state
-      window.location.reload(); // Refresh the page or refetch images
+	if (user.roles === 'editor') {	
+            setAlertMessage('Image marked for deletion. Admin approval required.');
+        } else {
+            setAlertMessage("Image deleted successfully!");
+            window.location.reload();
+	    }	    
     } else {
       setAlertMessage("Failed to delete the image.");
     }
@@ -194,7 +202,54 @@ setAlertMessage(""); // Reset any previous alert message
     setPreviewUrl(prevUrls => [...prevUrls, ...files.map(file => URL.createObjectURL(file))]); // Generate preview URLs
   };
 
+    const handleDeleteCancel = async (id) => {
+        try {
+            const response = await fetch(`https://ketrb-backend.onrender.com/images/cancledelete/${id}`, {
+                method: 'PUT', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ isdeleted: false }), // Set isDeleted to true
+            });
 
+            if (response.ok) {
+                const updatedImages = await response.json();
+              
+                setAlertMessage('Image Delete Canceled successfully');
+		window.location.href = '/images';
+            } else {
+                setAlertMessage('Failed to Cancel Image Delete');
+            }
+        } catch (error) {
+            console.error("Error canceling Image delete:", error);
+            setAlertMessage('An error occurred while canceling the image delete.');
+        }
+    };
+
+const handleDeleteApprove = async (id) => {
+    try {
+        const response = await fetch(`https://ketrb-backend.onrender.com/images/delete/${id}`, {
+            method: 'DELETE', 
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (response.ok) {
+            const updatedImages = await response.json();
+            // Update state to reflect the approved program
+            setNewsArticles((prevImages) => 
+                prevImages.map((image) => (image.id === id ? updatedImages : image))
+            );
+            setAlertMessage('Image delete approved');
+	 window.location.href = '/images';
+        } else {
+            setAlertMessage('Failed to approve delete');
+        }
+    } catch (error) {
+        console.error("Error approving delete:", error);
+        setAlertMessage('An error occurred while approving delete.');
+    }
+};
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
@@ -403,14 +458,35 @@ setAlertMessage(""); // Reset any previous alert message
 
           {/* Action Buttons */}
           <div className="flex items-center justify-end gap-2 mt-4">
-		    <Button variant="outline" onClick={() => handleViewImage(image)}>
-             <FilePenIcon className="h-4 w-4" />         
-	     View
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => handleDelete(image.id)}>
-              <TrashIcon className="h-4 w-4" />
-            </Button>
-
+		  {user.roles === 'administrator' && image.isdeleted === true ? (
+			// Show Approve Delete button if the program is pending delete and user is an admin
+			<>
+				 <Button variant="outline" onClick={() => handleViewImage(image)}>
+			             <FilePenIcon className="h-4 w-4" />         
+				     View
+			        </Button>
+				<Button variant="black" size="sm" className="h-8 gap-1" onClick={() => handleDeleteApprove(image.id)}>
+					<CheckIcon className="h-3.5 w-3.5" />
+					<span>Approve Delete</span>
+				</Button>
+				<Button variant="black" size="sm" className="h-8 gap-1" onClick={() => handleDeleteCancel(image.id)}>
+					<CheckIcon className="h-3.5 w-3.5" />
+					<span>Cancle Delete</span>
+				</Button>
+			</>
+			) : (
+			// Otherwise, show Edit and Delete buttons
+			<> 
+			     <Button variant="outline" onClick={() => handleViewImage(image)}>
+				     <FilePenIcon className="h-4 w-4" />         
+				     View
+			    </Button>
+		 	    <Button variant="outline" size="sm" onClick={() => handleDelete(image.id)}>
+		              <TrashIcon className="h-4 w-4" />
+		            </Button>
+			</>
+		)}
+		   
             {/* Only show approve button for pending images and if the user is an admin */}
             {user.roles === "administrator" && image.status === "pending" && (
               <Button size="sm" variant="black" onClick={() => handleApprove(image.id)}>
