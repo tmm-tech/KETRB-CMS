@@ -73,54 +73,20 @@ const Dashboard = () => {
             </Card>
             <Card>
               <CardHeader>
-                  <CardTitle>News{ vm</CardTitle>
+                  <CardTitle>News & Events</CardTitle>
                 <CardDescription>Total news articles</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-4xl font-bold">{newsCount}</div>
               </CardContent>
             </Card>
-             vmtle>Events</CardTitle>
-                <CardDescription>Total events created</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-4xl font-bold">23</div>
-              </CardContent>
-            </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Programs</CardTitle>
+                <CardTitle>Programs & Projects</CardTitle>
                 <CardDescription>Total programs listed</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold">45</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Projects</CardTitle>
-                <CardDescription>Total projects uploaded</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-4xl font-bold">78</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Viewers</CardTitle>
-                <CardDescription>Total viewers this month</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-4xl font-bold">12,345</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Pending</CardTitle>
-                <CardDescription>Unpublished content</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-4xl font-bold">27</div>
+                <div className="text-4xl font-bold">{programCount}</div>
               </CardContent>
             </Card>
           </div>
