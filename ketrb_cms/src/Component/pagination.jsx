@@ -48,15 +48,14 @@ const PaginationLink = ({ className, isActive, size = "icon", ...props }) => (
   <a
     aria-current={isActive ? "page" : undefined}
     className={cn(
-      buttonVariants({
-        variant: isActive ? "outline" : "ghost",
-        size,
-      }),
-      className
+      buttonVariants.variant[isActive ? "outline" : "ghost"], // Using the buttonVariants for styles
+      buttonVariants.size[size], // Getting the size class from buttonVariants
+      className // Merging any additional classes
     )}
-    {...props}
+    {...props} // Spread props to allow other attributes like onClick, href, etc.
   />
 );
+
 PaginationLink.displayName = "PaginationLink";
 
 PaginationLink.propTypes = {
