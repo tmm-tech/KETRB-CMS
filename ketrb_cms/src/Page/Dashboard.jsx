@@ -146,7 +146,7 @@ const Dashboard = () => {
                               href="#"
                               onClick={() => setCurrentPage(number + 1)}
                               className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-black ${
-                                currentPage === number + 1 ? 'bg-black text-white' : 'text-gray-700'
+                                currentPage === number + 1 ? 'bg-transparent text-black' : 'text-gray-700'
                               }`}
                             >
                               {number + 1}
@@ -201,7 +201,7 @@ const Dashboard = () => {
                               href="#"
                               onClick={() => setCurrentPage(number + 1)}
                               className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-blue-200 ${
-                                currentPage === number + 1 ? 'bg-black text-white' : 'text-gray-700'
+                                currentPage === number + 1 ? 'bg-transparent text-black' : 'text-gray-700'
                               }`}
                             >
                               {number + 1}
@@ -214,7 +214,7 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages}
-                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-50"
+                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-black disabled:opacity-50"
                           />
                         </PaginationItem>
                       </PaginationContent>
@@ -299,7 +299,7 @@ const Dashboard = () => {
                               href="#"
                               onClick={() => setCurrentPage(number + 1)}
                               className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-blue-200 ${
-                                currentPage === number + 1 ? 'bg-black text-white' : 'text-gray-700'
+                                currentPage === number + 1 ? 'bg-transparent text-black' : 'text-gray-700'
                               }`}
                             >
                               {number + 1}
@@ -312,7 +312,7 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages}
-                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-50"
+                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-black disabled:opacity-50"
                           />
                         </PaginationItem>
                       </PaginationContent>
@@ -382,8 +382,8 @@ const Dashboard = () => {
                 <PaginationLink
                   href="#"
                   onClick={() => setCurrentPage(number + 1)}
-                  className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-blue-200 ${
-                    currentPage === number + 1 ? 'bg-black text-white' : 'text-gray-700'
+                  className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-transparent ${
+                    currentPage === number + 1 ? 'bg-transparent text-black' : 'text-gray-700'
                   }`}
                 >
                   {number + 1}
@@ -396,7 +396,7 @@ const Dashboard = () => {
                 href="#"
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className="flex items-center px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-50"
+                className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-black disabled:opacity-50"
               />
             </PaginationItem>
           </PaginationContent>
