@@ -220,39 +220,42 @@ const Dashboard = () => {
                       <PaginationContent className="flex items-center space-x-2">
                         <PaginationItem>
                           <PaginationPrevious
-                href="#"
-                onClick={() => handlePageChange("news", Math.max(currentPage.news - 1, 1))}
-                disabled={currentPage.news === 1}
-                className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
-                  currentPage.news === 1 ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-              >
-                Previous
-              </PaginationPrevious>
-              {[...Array(totalPages.news).keys()].map((number) => (
-                <PaginationItem key={number + 1}>
-                  <PaginationLink
-                    href="#"
-                    onClick={() => handlePageChange("news", number + 1)}
-                    className={`px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
-                      currentPage.news === number + 1 ? "bg-gray-300" : ""
-                    }`}
-                  >
-                    {number + 1}
-                  </PaginationLink>
-                </PaginationItem>
-              ))}
-              <PaginationNext
-                href="#"
-                onClick={() => handlePageChange("news", Math.min(currentPage.news + 1, totalPages.news))}
-                disabled={currentPage.news === totalPages.news}
-                className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
-                  currentPage.news === totalPages.news ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-              >
-                Next
-              </PaginationNext>
-            </PaginationContent>
+                            href="#"
+                            onClick={() => handlePageChange("news", Math.max(currentPage.news - 1, 1))}
+                            disabled={currentPage.news === 1}
+                            className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                              currentPage.news === 1 ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
+                          >
+                            Previous
+                          </PaginationPrevious>
+                           </PaginationItem>
+                          {[...Array(totalPages.news).keys()].map((number) => (
+                            <PaginationItem key={number + 1}>
+                              <PaginationLink
+                                href="#"
+                                onClick={() => handlePageChange("news", number + 1)}
+                                className={`px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
+                                  currentPage.news === number + 1 ? "bg-gray-300" : ""
+                                }`}
+                              >
+                                {number + 1}
+                              </PaginationLink>
+                            </PaginationItem>
+                          ))}
+                        <PaginationItem>
+                          <PaginationNext
+                            href="#"
+                            onClick={() => handlePageChange("news", Math.min(currentPage.news + 1, totalPages.news))}
+                            disabled={currentPage.news === totalPages.news}
+                            className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                              currentPage.news === totalPages.news ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
+                          >
+                            Next
+                          </PaginationNext>
+                         </PaginationItem>
+                        </PaginationContent>
                   </Pagination>
                 </CardContent>
               </Card>
@@ -286,6 +289,7 @@ const Dashboard = () => {
                         >
                       Previous
                     </PaginationPrevious>
+                    </PaginationItem>
                     {[...Array(totalPages.images).keys()].map((number) => (
                       <PaginationItem key={number + 1}>
                         <PaginationLink
@@ -299,6 +303,7 @@ const Dashboard = () => {
                         </PaginationLink>
                       </PaginationItem>
                     ))}
+                    <PaginationItem>
                     <PaginationNext
                       href="#"
                       onClick={() => handlePageChange("images", Math.min(currentPage.images + 1, totalPages.images))}
@@ -309,6 +314,7 @@ const Dashboard = () => {
                     >
                       Next
                     </PaginationNext>
+                      </PaginationItem>
                   </PaginationContent>
                   </Pagination>
                 </CardContent>
@@ -386,6 +392,7 @@ const Dashboard = () => {
                           >
                             Previous  
                           </PaginationPrevious>
+                          </PaginationItem>
                           {[...Array(totalPages.programs).keys()].map((number) => (
                             <PaginationItem key={number + 1}>
                               <PaginationLink
@@ -399,6 +406,7 @@ const Dashboard = () => {
                               </PaginationLink>
                             </PaginationItem>
                           ))}
+                        <PaginationItem>
                           <PaginationNext
                             href="#"
                             onClick={() => handlePageChange("programs", Math.min(currentPage.programs + 1, totalPages.programs))}
@@ -409,6 +417,7 @@ const Dashboard = () => {
                           >
                             Next
                           </PaginationNext>
+                          </PaginationItem>
                         </PaginationContent>
                   </Pagination>
                 </CardContent>
@@ -417,94 +426,97 @@ const Dashboard = () => {
 
             
               {/* Users Tab */}
-<TabsContent value="users">
-  {user.roles === 'administrator' && (
-    <Card>
-      <CardHeader>
-        <CardTitle>Users</CardTitle>
-        <CardDescription>Manage your users.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>User Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {users.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell>{user.fullname}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell> 
-                    <Badge className="capitalize" variant={user.roles === "administrator" ? "admin" : user.roles === "editor" ? "editor" : "warning"}>
-                          {user.roles}
-                    </Badge>
-                </TableCell>
-                <TableCell>
-                  <Badge className="capitalize" variant={user.status === "inactive" ? "danger" : "success"} >
-                          {user.status}
-                        </Badge>
-                </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button aria-haspopup="true" size="icon" variant="ghost">
-                        <span className="sr-only">Toggle menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem>View</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <Pagination className="flex items-center justify-center mt-4">
-          <PaginationContent className="flex items-center space-x-2">
-            <PaginationItem>
-              <PaginationPrevious
-                href="#"
-                onClick={() => handlePageChange("users", Math.max(currentPage.users - 1, 1))}
-                disabled={currentPage.users === 1}
-                className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
-                  currentPage.users === 1 ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-              >
-                Previous
-              </PaginationPrevious>
-              {[...Array(totalPages.users).keys()].map((number) => (
-                <PaginationItem key={number + 1}>
-                  <PaginationLink
-                    href="#"
-                    onClick={() => handlePageChange("users", number + 1)}
-                    className={`px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
-                      currentPage.users === number + 1 ? "bg-gray-300" : ""
-                    }`}
-                  >
-                    {number + 1}
-                  </PaginationLink>
-                </PaginationItem>
-              ))}
-              <PaginationNext
-                href="#"
-                onClick={() => handlePageChange("users", Math.min(currentPage.users + 1, totalPages.users))}
-                disabled={currentPage.users === totalPages.users}
-                className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
-                  currentPage.users === totalPages.users ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-              >
-                Next
-              </PaginationNext>
-            </PaginationContent>
-        </Pagination>
+          <TabsContent value="users">
+            {user.roles === 'administrator' && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Users</CardTitle>
+                  <CardDescription>Manage your users.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>  
+                        <TableHead>User Name</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Role</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Action</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {users.map((user) => (
+                        <TableRow key={user.id}>
+                          <TableCell>{user.fullname}</TableCell>
+                          <TableCell>{user.email}</TableCell>
+                          <TableCell> 
+                              <Badge className="capitalize" variant={user.roles === "administrator" ? "admin" : user.roles === "editor" ? "editor" : "warning"}>
+                                    {user.roles}
+                              </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <Badge className="capitalize" variant={user.status === "inactive" ? "danger" : "success"} >
+                                    {user.status}
+                                  </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button aria-haspopup="true" size="icon" variant="ghost">
+                                  <span className="sr-only">Toggle menu</span>
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                <DropdownMenuItem>View</DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                    <Pagination className="flex items-center justify-center mt-4">
+                      <PaginationContent className="flex items-center space-x-2">
+                        <PaginationItem>
+                          <PaginationPrevious
+                            href="#"
+                            onClick={() => handlePageChange("users", Math.max(currentPage.users - 1, 1))}
+                            disabled={currentPage.users === 1}
+                            className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                              currentPage.users === 1 ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
+                          >
+                            Previous
+                          </PaginationPrevious>
+                          </PaginationItem>
+                          {[...Array(totalPages.users).keys()].map((number) => (
+                            <PaginationItem key={number + 1}>
+                              <PaginationLink
+                                href="#"
+                                onClick={() => handlePageChange("users", number + 1)}
+                                className={`px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
+                                  currentPage.users === number + 1 ? "bg-gray-300" : ""
+                                }`}
+                              >
+                                {number + 1}
+                              </PaginationLink>
+                            </PaginationItem>
+                          ))}
+                        <PaginationItem>
+                          <PaginationNext
+                            href="#"
+                            onClick={() => handlePageChange("users", Math.min(currentPage.users + 1, totalPages.users))}
+                            disabled={currentPage.users === totalPages.users}
+                            className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                              currentPage.users === totalPages.users ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
+                          >
+                            Next
+                          </PaginationNext>
+                        </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
       </CardContent>
     </Card>
   )}
