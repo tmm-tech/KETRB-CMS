@@ -347,7 +347,7 @@ const Dashboard = () => {
                 <TableCell>{user.fullname}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.roles}</TableCell>
-                <TableCell>{user.status}</TableCell>*/}
+                <TableCell>{user.status}</TableCell>
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -362,7 +362,7 @@ const Dashboard = () => {
                   </DropdownMenu>
                 </TableCell>
               </TableRow>
-            ))}
+            ))}*/}
           </TableBody>
         </Table>
         <Pagination className="flex items-center justify-center mt-4">
