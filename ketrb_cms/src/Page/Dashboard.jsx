@@ -16,9 +16,15 @@ const Dashboard = () => {
   const [images, setImages] = useState([]);
   const [programs, setPrograms] = useState([]);
   const [users, setUsers] = useState([]);
-  
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5); // Adjust number of items per page
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState({
+    news: 1,
+    images: 1,
+    programs: 1,
+    users: 1,
+  });
+
+  const itemsPerPage = 5; // Items per page for all tabs
 
   const storedUser = localStorage.getItem('user');
   const user = JSON.parse(storedUser);
@@ -46,10 +52,29 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  // Calculate total pages
-  const totalPages = Math.ceil(news.length / itemsPerPage);
-  // Get current items
-  const currentItems = news.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+ // Update page when switching tabs
+  const handlePageChange = (tab, pageNumber) => {
+    setCurrentPage((prevState) => ({
+      ...prevState,
+      [tab]: pageNumber,
+    }));
+  };
+
+  // Calculate total pages for each tab
+  const totalPages = {
+    news: Math.ceil(news.length / itemsPerPage),
+    images: Math.ceil(images.length / itemsPerPage),
+    programs: Math.ceil(programs.length / itemsPerPage),
+    users: Math.ceil(users.length / itemsPerPage),
+  };
+
+  // Get current items for each tab
+  const currentItems = {
+    news: news.slice((currentPage.news - 1) * itemsPerPage, currentPage.news * itemsPerPage),
+    images: images.slice((currentPage.images - 1) * itemsPerPage, currentPage.images * itemsPerPage),
+    programs: programs.slice((currentPage.programs - 1) * itemsPerPage, currentPage.programs * itemsPerPage),
+    users: users.slice((currentPage.users - 1) * itemsPerPage, currentPage.users * itemsPerPage),
+  };
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -195,37 +220,39 @@ const Dashboard = () => {
                       <PaginationContent className="flex items-center space-x-2">
                         <PaginationItem>
                           <PaginationPrevious
-                            href="#"
-                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                            disabled={currentPage === 1}
-                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-black disabled:opacity-50"
-                          />
-                        </PaginationItem>
-                    
-                        {/* Page Numbers */}
-                        {[...Array(totalPages).keys()].map(number => (
-                          <PaginationItem key={number + 1}>
-                            <PaginationLink
-                              href="#"
-                              onClick={() => setCurrentPage(number + 1)}
-                              className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-black ${
-                                currentPage === number + 1 ? 'bg-transparent text-black' : 'text-gray-700'
-                              }`}
-                            >
-                              {number + 1}
-                            </PaginationLink>
-                          </PaginationItem>
-                        ))}
-                    
-                        <PaginationItem>
-                          <PaginationNext
-                            href="#"
-                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                            disabled={currentPage === totalPages}
-                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-black disabled:opacity-50"
-                          />
-                        </PaginationItem>
-                      </PaginationContent>
+                href="#"
+                onClick={() => handlePageChange("news", Math.max(currentPage.news - 1, 1))}
+                disabled={currentPage.news === 1}
+                className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                  currentPage.news === 1 ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
+                Previous
+              </PaginationPrevious>
+              {[...Array(totalPages.news).keys()].map((number) => (
+                <PaginationItem key={number + 1}>
+                  <PaginationLink
+                    href="#"
+                    onClick={() => handlePageChange("news", number + 1)}
+                    className={`px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
+                      currentPage.news === number + 1 ? "bg-gray-300" : ""
+                    }`}
+                  >
+                    {number + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+              <PaginationNext
+                href="#"
+                onClick={() => handlePageChange("news", Math.min(currentPage.news + 1, totalPages.news))}
+                disabled={currentPage.news === totalPages.news}
+                className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                  currentPage.news === totalPages.news ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
+                Next
+              </PaginationNext>
+            </PaginationContent>
                   </Pagination>
                 </CardContent>
               </Card>
@@ -249,38 +276,40 @@ const Dashboard = () => {
                   <Pagination className="flex items-center justify-center mt-4">
                       <PaginationContent className="flex items-center space-x-2">
                         <PaginationItem>
-                          <PaginationPrevious
-                            href="#"
-                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                            disabled={currentPage === 1}
-                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-blue-700 disabled:opacity-50"
-                          />
-                        </PaginationItem>
-                    
-                        {/* Page Numbers */}
-                        {[...Array(totalPages).keys()].map(number => (
-                          <PaginationItem key={number + 1}>
-                            <PaginationLink
-                              href="#"
-                              onClick={() => setCurrentPage(number + 1)}
-                              className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-blue-200 ${
-                                currentPage === number + 1 ? 'bg-transparent text-black' : 'text-gray-700'
-                              }`}
-                            >
-                              {number + 1}
-                            </PaginationLink>
-                          </PaginationItem>
-                        ))}
-                    
-                        <PaginationItem>
-                          <PaginationNext
-                            href="#"
-                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                            disabled={currentPage === totalPages}
-                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-black disabled:opacity-50"
-                          />
-                        </PaginationItem>
-                      </PaginationContent>
+                         <PaginationPrevious  
+                          href="#"
+                          onClick={() => handlePageChange("images", Math.max(currentPage.images - 1, 1))}
+                          disabled={currentPage.images === 1}
+                          className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                            currentPage.images === 1 ? "opacity-50 cursor-not-allowed" : ""
+                          }`}
+                        >
+                      Previous
+                    </PaginationPrevious>
+                    {[...Array(totalPages.images).keys()].map((number) => (
+                      <PaginationItem key={number + 1}>
+                        <PaginationLink
+                          href="#"
+                          onClick={() => handlePageChange("images", number + 1)}
+                          className={`px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
+                            currentPage.images === number + 1 ? "bg-gray-300" : ""
+                          }`}
+                        >
+                          {number + 1}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+                    <PaginationNext
+                      href="#"
+                      onClick={() => handlePageChange("images", Math.min(currentPage.images + 1, totalPages.images))}
+                      disabled={currentPage.images === totalPages.images}
+                      className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                        currentPage.images === totalPages.images ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
+                    >
+                      Next
+                    </PaginationNext>
+                  </PaginationContent>
                   </Pagination>
                 </CardContent>
               </Card>
@@ -349,36 +378,38 @@ const Dashboard = () => {
                         <PaginationItem>
                           <PaginationPrevious
                             href="#"
-                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                            disabled={currentPage === 1}
-                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-blue-700 disabled:opacity-50"
-                          />
-                        </PaginationItem>
-                    
-                        {/* Page Numbers */}
-                        {[...Array(totalPages).keys()].map(number => (
-                          <PaginationItem key={number + 1}>
-                            <PaginationLink
-                              href="#"
-                              onClick={() => setCurrentPage(number + 1)}
-                              className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-blue-200 ${
-                                currentPage === number + 1 ? 'bg-transparent text-black' : 'text-gray-700'
-                              }`}
-                            >
-                              {number + 1}
-                            </PaginationLink>
-                          </PaginationItem>
-                        ))}
-                    
-                        <PaginationItem>
+                            onClick={() => handlePageChange("programs", Math.max(currentPage.programs - 1, 1))}
+                            disabled={currentPage.programs === 1}
+                            className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                              currentPage.programs === 1 ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
+                          >
+                            Previous  
+                          </PaginationPrevious>
+                          {[...Array(totalPages.programs).keys()].map((number) => (
+                            <PaginationItem key={number + 1}>
+                              <PaginationLink
+                                href="#"
+                                onClick={() => handlePageChange("programs", number + 1)}
+                                className={`px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
+                                  currentPage.programs === number + 1 ? "bg-gray-300" : ""
+                                }`}
+                              >
+                                {number + 1}
+                              </PaginationLink>
+                            </PaginationItem>
+                          ))}
                           <PaginationNext
                             href="#"
-                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                            disabled={currentPage === totalPages}
-                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-black disabled:opacity-50"
-                          />
-                        </PaginationItem>
-                      </PaginationContent>
+                            onClick={() => handlePageChange("programs", Math.min(currentPage.programs + 1, totalPages.programs))}
+                            disabled={currentPage.programs === totalPages.programs}
+                            className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                              currentPage.programs === totalPages.programs ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
+                          >
+                            Next
+                          </PaginationNext>
+                        </PaginationContent>
                   </Pagination>
                 </CardContent>
               </Card>
@@ -441,36 +472,38 @@ const Dashboard = () => {
             <PaginationItem>
               <PaginationPrevious
                 href="#"
-                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-                className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-blue-700 disabled:opacity-50"
-              />
-            </PaginationItem>
-
-            {/* Page Numbers */}
-            {[...Array(totalPages).keys()].map(number => (
-              <PaginationItem key={number + 1}>
-                <PaginationLink
-                  href="#"
-                  onClick={() => setCurrentPage(number + 1)}
-                  className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-transparent ${
-                    currentPage === number + 1 ? 'bg-transparent text-black' : 'text-gray-700'
-                  }`}
-                >
-                  {number + 1}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
-
-            <PaginationItem>
+                onClick={() => handlePageChange("users", Math.max(currentPage.users - 1, 1))}
+                disabled={currentPage.users === 1}
+                className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                  currentPage.users === 1 ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
+                Previous
+              </PaginationPrevious>
+              {[...Array(totalPages.users).keys()].map((number) => (
+                <PaginationItem key={number + 1}>
+                  <PaginationLink
+                    href="#"
+                    onClick={() => handlePageChange("users", number + 1)}
+                    className={`px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
+                      currentPage.users === number + 1 ? "bg-gray-300" : ""
+                    }`}
+                  >
+                    {number + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
               <PaginationNext
                 href="#"
-                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                disabled={currentPage === totalPages}
-                className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-black disabled:opacity-50"
-              />
-            </PaginationItem>
-          </PaginationContent>
+                onClick={() => handlePageChange("users", Math.min(currentPage.users + 1, totalPages.users))}
+                disabled={currentPage.users === totalPages.users}
+                className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                  currentPage.users === totalPages.users ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
+                Next
+              </PaginationNext>
+            </PaginationContent>
         </Pagination>
       </CardContent>
     </Card>
