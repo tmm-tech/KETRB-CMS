@@ -135,7 +135,7 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1}
-                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-50"
+                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-blue-700 disabled:opacity-50"
                           />
                         </PaginationItem>
                     
@@ -146,7 +146,7 @@ const Dashboard = () => {
                               href="#"
                               onClick={() => setCurrentPage(number + 1)}
                               className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-blue-200 ${
-                                currentPage === number + 1 ? 'bg-blue-600 text-white' : 'text-gray-700'
+                                currentPage === number + 1 ? 'bg-black text-white' : 'text-gray-700'
                               }`}
                             >
                               {number + 1}
