@@ -105,7 +105,7 @@ const Dashboard = () => {
                             <Link to="#" className="hover:underline">{article.title}</Link>
                           </TableCell>
                           <TableCell>
-                            <Badge variant="outline" className={`bg-${article.status === "published" ? "green" : "gray"}-500 text-white`}>
+                            <Badge variant="outline" className={`bg-${article.status === "published" ? "green" : "gray"}-500 text-white` capitalize}>
                               {article.status}
                             </Badge>
                           </TableCell>
@@ -258,7 +258,7 @@ const Dashboard = () => {
                             <Link to="#" className="hover:underline">{program.title}</Link>
                           </TableCell>
                           <TableCell>
-                            <Badge variant="outline" className={`bg-${program.status === "published" ? "green" : "gray"}-500 text-white`}>
+                            <Badge variant="outline" className={`bg-${program.status === "published" ? "green" : "gray"}-500 text-white capitalize`}>
                               {program.status}
                             </Badge>
                           </TableCell>
@@ -347,7 +347,7 @@ const Dashboard = () => {
                 <TableCell>{user.fullname}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.roles}</TableCell>
-                <TableCell>{user.status}</TableCell>
+                <TableCell className="capitalize">{user.status}</TableCell>
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
