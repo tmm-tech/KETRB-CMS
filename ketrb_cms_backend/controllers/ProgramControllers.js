@@ -45,7 +45,19 @@ module.exports = {
 	GetPrograms: async (req, res) => {
 	  try {
 		const result = await query('SELECT * FROM programs ORDER BY created_at DESC');
-		res.status(200).json(result.rows);
+		 const program = result.rows[0];
+	
+	        // Construct the full image URL using the stored image path in the 'image' column
+	        const imageUrl = `${req.protocol}://${req.get('host')}/${program.image}`; 
+		
+	        // Add the full image URL to the program object
+	        const programWithImageUrl = {
+	            ...program,
+	            imageUrl // Adding the full image URL to the response
+	        };
+	
+	        // Return the program data with the constructed image URL
+	        res.status(200).json(programWithImageUrl);
 	  } catch (error) {
 		console.error('Error fetching programs:', error);
 		res.status(500).json({ message: 'Error fetching programs.' });
