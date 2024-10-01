@@ -93,7 +93,7 @@ const Dashboard = () => {
                 <div className="text-4xl font-bold">{programs.length}</div>
               </CardContent>
             </Card>
-            <Card>
+            
           </div>
           <Tabs defaultValue="news">
             <div className="flex items-center">
