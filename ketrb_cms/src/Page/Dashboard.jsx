@@ -302,12 +302,12 @@ const Dashboard = () => {
                             <Link to="#" className="hover:underline">{image.image}</Link>
                           </TableCell>
                           <TableCell>
-                            <Badge variant="outline" className={`${article.status === "published"  ? "bg-green-500 text-green-50"  : article.status === "pending"  ? "bg-yellow-500 text-yellow-50" : "bg-gray-500 text-gray-50"} capitalize`}>
+                            <Badge variant="outline" className={`${image.status === "published"  ? "bg-green-500 text-green-50"  : image.status === "pending"  ? "bg-yellow-500 text-yellow-50" : "bg-gray-500 text-gray-50"} capitalize`}>
                               {image.status}
                             </Badge>
                           </TableCell>
                          
-                          <TableCell className="hidden md:table-cell">{new Date(article.registered_at).toLocaleString()}</TableCell>
+                          <TableCell className="hidden md:table-cell">{new Date(image.registered_at).toLocaleString()}</TableCell>
                           <TableCell>
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
