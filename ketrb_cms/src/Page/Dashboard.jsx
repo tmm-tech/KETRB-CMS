@@ -409,8 +409,16 @@ const Dashboard = () => {
               <TableRow key={user.id}>
                 <TableCell>{user.fullname}</TableCell>
                 <TableCell>{user.email}</TableCell>
-                <TableCell>{user.roles}</TableCell>
-                <TableCell className="capitalize">{user.status}</TableCell>
+                <TableCell> 
+                    <Badge className="capitalize" variant={user.roles === "administrator" ? "admin" : user.roles === "editor" ? "editor" : "warning"}>
+                          {user.roles}
+                    </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge className="capitalize" variant={user.status === "inactive" ? "danger" : "success"} >
+                          {user.status}
+                        </Badge>
+                </TableCell>
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
