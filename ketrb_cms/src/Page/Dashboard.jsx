@@ -193,7 +193,7 @@ const Dashboard = () => {
                             <Link to="#" className="hover:underline">{article.title}</Link>
                           </TableCell>
                           <TableCell>
-                            <Badge variant="outline" className={`bg-${article.status === "published"  ? "bg-green-500 text-green-50"  : article.status === "pending"  ? "bg-yellow-500 text-yellow-50" : "bg-gray-500 text-gray-50"}-500 text-white capitalize`}>
+                            <Badge variant="outline" className={`${article.status === "published"  ? "bg-green-500 text-green-50"  : article.status === "pending"  ? "bg-yellow-500 text-yellow-50" : "bg-gray-500 text-gray-50"} capitalize`}>
                               {article.status}
                             </Badge>
                           </TableCell>
@@ -224,7 +224,7 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => handlePageChange("news", Math.max(currentPage.news - 1, 1))}
                             disabled={currentPage.news === 1}
-                            className={`flex items-center px-3 py-1 text-sm font-medium bg-gray-200 rounded hover:bg-gray-300 transition-colors duration-200 ${
+                            className={`flex items-center px-3 py-1 text-sm font-medium bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
                               currentPage.news === 1 ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                           />
@@ -238,7 +238,7 @@ const Dashboard = () => {
                               onClick={() => handlePageChange("news", number + 1)}
                               className={`flex items-center px-3 py-1 text-sm font-medium rounded border transition-colors duration-200 ${
                                 currentPage.news === number + 1
-                                  ? "bg-gray-300 text-white border-gray-300"
+                                  ? "bg-black text-white border-black"
                                   : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
                               }`}
                             >
@@ -253,7 +253,7 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => handlePageChange("news", Math.min(currentPage.news + 1, totalPages.news))}
                             disabled={currentPage.news === totalPages.news}
-                            className={`flex items-center px-3 py-1 text-sm font-medium bg-gray-200 rounded hover:bg-gray-300 transition-colors duration-200 ${
+                            className={`flex items-center px-3 py-1 text-sm font-medium bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
                               currentPage.news === totalPages.news ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                          />
@@ -288,7 +288,7 @@ const Dashboard = () => {
                           href="#"
                           onClick={() => handlePageChange("images", Math.max(currentPage.images - 1, 1))}
                           disabled={currentPage.images === 1}
-                          className={`flex items-center px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
                             currentPage.images === 1 ? "opacity-50 cursor-not-allowed" : ""
                           }`}
                         />
@@ -300,7 +300,7 @@ const Dashboard = () => {
                           href="#"
                           onClick={() => handlePageChange("images", number + 1)}
                           className={`flex items-center px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
-                            currentPage.images === number + 1 ? "bg-gray-300" : ""
+                            currentPage.images === number + 1 ? "bg-black text-white border-black" : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
                           }`}
                         >
                           {number + 1}
@@ -312,7 +312,7 @@ const Dashboard = () => {
                       href="#"
                       onClick={() => handlePageChange("images", Math.min(currentPage.images + 1, totalPages.images))}
                       disabled={currentPage.images === totalPages.images}
-                      className={`flex items-center px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                      className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
                         currentPage.images === totalPages.images ? "opacity-50 cursor-not-allowed" : ""
                       }`}
                     />
@@ -359,7 +359,7 @@ const Dashboard = () => {
                             <Link to="#" className="hover:underline">{program.title}</Link>
                           </TableCell>
                           <TableCell>
-                            <Badge variant="outline" className={`bg-${program.status === "published"  ? "bg-green-500 text-green-50"  : program.status === "pending"  ? "bg-yellow-500 text-yellow-50" : "bg-gray-500 text-gray-50"}-500 text-white capitalize`}>
+                            <Badge variant="outline" className={`${program.status === "published"  ? "bg-green-500 text-green-50"  : program.status === "pending"  ? "bg-yellow-500 text-yellow-50" : "bg-gray-500 text-gray-50"} capitalize`}>
                               {program.status}
                             </Badge>
                           </TableCell>
@@ -389,7 +389,7 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => handlePageChange("programs", Math.max(currentPage.programs - 1, 1))}
                             disabled={currentPage.programs === 1}
-                            className={`flex items-center px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                            className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
                               currentPage.programs === 1 ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                           />
@@ -401,7 +401,7 @@ const Dashboard = () => {
                                 href="#"
                                 onClick={() => handlePageChange("programs", number + 1)}
                                 className={`flex items-center px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
-                                  currentPage.programs === number + 1 ? "bg-gray-300" : ""
+                                  currentPage.programs === number + 1 ? "bg-black text-white border-black" : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
                                 }`}
                               >
                                 {number + 1}
@@ -413,7 +413,7 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => handlePageChange("programs", Math.min(currentPage.programs + 1, totalPages.programs))}
                             disabled={currentPage.programs === totalPages.programs}
-                            className={`flex items-center px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                            className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
                               currentPage.programs === totalPages.programs ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                           />        
@@ -483,7 +483,7 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => handlePageChange("users", Math.max(currentPage.users - 1, 1))}
                             disabled={currentPage.users === 1}
-                            className={`flex items-center px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                            className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
                               currentPage.users === 1 ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                           />
@@ -495,7 +495,7 @@ const Dashboard = () => {
                                 href="#"
                                 onClick={() => handlePageChange("users", number + 1)}
                                 className={`flex items-center px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
-                                  currentPage.users === number + 1 ? "bg-gray-300" : ""
+                                  currentPage.users === number + 1 ? "bg-black text-white border-black" : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
                                 }`}
                               >
                                 {number + 1}
@@ -507,7 +507,7 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => handlePageChange("users", Math.min(currentPage.users + 1, totalPages.users))}
                             disabled={currentPage.users === totalPages.users}
-                            className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                            className={`px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
                               currentPage.users === totalPages.users ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                           />
