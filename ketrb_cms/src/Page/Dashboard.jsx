@@ -291,7 +291,7 @@ const Dashboard = () => {
                           href="#"
                           onClick={() => handlePageChange("images", Math.max(currentPage.images - 1, 1))}
                           disabled={currentPage.images === 1}
-                          className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                          className={`px-4 py-2 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
                             currentPage.images === 1 ? "opacity-50 cursor-not-allowed" : ""
                           }`}
                         >
@@ -303,7 +303,7 @@ const Dashboard = () => {
                         <PaginationLink
                           href="#"
                           onClick={() => handlePageChange("images", number + 1)}
-                          className={`px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
+                          className={`px-4 py-2 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
                             currentPage.images === number + 1 ? "bg-gray-300" : ""
                           }`}
                         >
@@ -316,7 +316,7 @@ const Dashboard = () => {
                       href="#"
                       onClick={() => handlePageChange("images", Math.min(currentPage.images + 1, totalPages.images))}
                       disabled={currentPage.images === totalPages.images}
-                      className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                      className={`px-4 py-2 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
                         currentPage.images === totalPages.images ? "opacity-50 cursor-not-allowed" : ""
                       }`}
                     >
@@ -394,7 +394,7 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => handlePageChange("programs", Math.max(currentPage.programs - 1, 1))}
                             disabled={currentPage.programs === 1}
-                            className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                            className={`px-4 py-2 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
                               currentPage.programs === 1 ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                           >
@@ -406,7 +406,7 @@ const Dashboard = () => {
                               <PaginationLink
                                 href="#"
                                 onClick={() => handlePageChange("programs", number + 1)}
-                                className={`px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
+                                className={`px-4 py-2 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
                                   currentPage.programs === number + 1 ? "bg-gray-300" : ""
                                 }`}
                               >
@@ -419,7 +419,7 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => handlePageChange("programs", Math.min(currentPage.programs + 1, totalPages.programs))}
                             disabled={currentPage.programs === totalPages.programs}
-                            className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                            className={`px-4 py-2 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
                               currentPage.programs === totalPages.programs ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                           >
@@ -491,7 +491,7 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => handlePageChange("users", Math.max(currentPage.users - 1, 1))}
                             disabled={currentPage.users === 1}
-                            className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                            className={`px-4 py-2 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
                               currentPage.users === 1 ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                           >
@@ -503,7 +503,7 @@ const Dashboard = () => {
                               <PaginationLink
                                 href="#"
                                 onClick={() => handlePageChange("users", number + 1)}
-                                className={`px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
+                                className={`px-4 py-2 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
                                   currentPage.users === number + 1 ? "bg-gray-300" : ""
                                 }`}
                               >
@@ -516,7 +516,7 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => handlePageChange("users", Math.min(currentPage.users + 1, totalPages.users))}
                             disabled={currentPage.users === totalPages.users}
-                            className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                            className={`px-4 py-2 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
                               currentPage.users === totalPages.users ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                           >
