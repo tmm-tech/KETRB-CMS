@@ -227,9 +227,7 @@ const Dashboard = () => {
                             className={`px-3 py-1 text-sm font-medium bg-gray-200 rounded hover:bg-gray-300 transition-colors duration-200 ${
                               currentPage.news === 1 ? "opacity-50 cursor-not-allowed" : ""
                             }`}
-                          >
-                            Previous
-                          </PaginationPrevious>
+                          />
                         </PaginationItem>
                     
                         {/* Pagination Numbers */}
@@ -258,9 +256,8 @@ const Dashboard = () => {
                             className={`px-3 py-1 text-sm font-medium bg-gray-200 rounded hover:bg-gray-300 transition-colors duration-200 ${
                               currentPage.news === totalPages.news ? "opacity-50 cursor-not-allowed" : ""
                             }`}
-                          >
-                            Next
-                          </PaginationNext>
+                         />
+                           
                         </PaginationItem>
                       </PaginationContent>
                     </Pagination>
@@ -294,9 +291,8 @@ const Dashboard = () => {
                           className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
                             currentPage.images === 1 ? "opacity-50 cursor-not-allowed" : ""
                           }`}
-                        >
-                      Previous
-                    </PaginationPrevious>
+                        />
+                    
                     </PaginationItem>
                     {[...Array(totalPages.images).keys()].map((number) => (
                       <PaginationItem key={number + 1}>
@@ -319,9 +315,8 @@ const Dashboard = () => {
                       className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
                         currentPage.images === totalPages.images ? "opacity-50 cursor-not-allowed" : ""
                       }`}
-                    >
-                      Next
-                    </PaginationNext>
+                    />
+                    
                       </PaginationItem>
                   </PaginationContent>
                   </Pagination>
@@ -397,9 +392,8 @@ const Dashboard = () => {
                             className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
                               currentPage.programs === 1 ? "opacity-50 cursor-not-allowed" : ""
                             }`}
-                          >
-                            Previous  
-                          </PaginationPrevious>
+                          />
+                           
                           </PaginationItem>
                           {[...Array(totalPages.programs).keys()].map((number) => (
                             <PaginationItem key={number + 1}>
@@ -422,9 +416,7 @@ const Dashboard = () => {
                             className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
                               currentPage.programs === totalPages.programs ? "opacity-50 cursor-not-allowed" : ""
                             }`}
-                          >
-                            Next
-                          </PaginationNext>
+                          />        
                           </PaginationItem>
                         </PaginationContent>
                   </Pagination>
@@ -494,9 +486,8 @@ const Dashboard = () => {
                             className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
                               currentPage.users === 1 ? "opacity-50 cursor-not-allowed" : ""
                             }`}
-                          >
-                            Previous
-                          </PaginationPrevious>
+                          />
+
                           </PaginationItem>
                           {[...Array(totalPages.users).keys()].map((number) => (
                             <PaginationItem key={number + 1}>
@@ -519,9 +510,8 @@ const Dashboard = () => {
                             className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
                               currentPage.users === totalPages.users ? "opacity-50 cursor-not-allowed" : ""
                             }`}
-                          >
-                            Next
-                          </PaginationNext>
+                          />
+                           
                         </PaginationItem>
                         </PaginationContent>
                     </Pagination>
