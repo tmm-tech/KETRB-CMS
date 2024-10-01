@@ -424,7 +424,7 @@ const handleDeleteApprove = async (id) => {
       <div
   key={image.id}
   className={`bg-background rounded-lg shadow-lg overflow-hidden ${
-    article.isdeleted === true && user.roles === "editor" ? "opacity-50 pointer-events-none" : ""
+    image.isdeleted === true && user.roles === "editor" ? "opacity-50 pointer-events-none" : ""
   }`}
 >
 	    {/* Display the image */}
