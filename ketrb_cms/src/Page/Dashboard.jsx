@@ -135,6 +135,61 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1}
+                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-black disabled:opacity-50"
+                          />
+                        </PaginationItem>
+                    
+                        {/* Page Numbers */}
+                        {[...Array(totalPages).keys()].map(number => (
+                          <PaginationItem key={number + 1}>
+                            <PaginationLink
+                              href="#"
+                              onClick={() => setCurrentPage(number + 1)}
+                              className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-black ${
+                                currentPage === number + 1 ? 'bg-black text-white' : 'text-gray-700'
+                              }`}
+                            >
+                              {number + 1}
+                            </PaginationLink>
+                          </PaginationItem>
+                        ))}
+                    
+                        <PaginationItem>
+                          <PaginationNext
+                            href="#"
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-black disabled:opacity-50"
+                          />
+                        </PaginationItem>
+                      </PaginationContent>
+                  </Pagination>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Images Tab */}
+            <TabsContent value="images">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Images</CardTitle>
+                  <CardDescription>Manage your images.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+{/*                     {images.map((image) => (
+                      <div key={image.id}>
+                        <img src={image.image  || "https://via.placeholder.com/150"} alt={image.image} className="w-full h-auto rounded-md" />
+                      </div>
+                    ))} */}
+                  </div>
+                  <Pagination className="flex items-center justify-center mt-4">
+                      <PaginationContent className="flex items-center space-x-2">
+                        <PaginationItem>
+                          <PaginationPrevious
+                            href="#"
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
                             className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-blue-700 disabled:opacity-50"
                           />
                         </PaginationItem>
@@ -164,25 +219,6 @@ const Dashboard = () => {
                         </PaginationItem>
                       </PaginationContent>
                   </Pagination>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* Images Tab */}
-            <TabsContent value="images">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Images</CardTitle>
-                  <CardDescription>Manage your images.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-{/*                     {images.map((image) => (
-                      <div key={image.id}>
-                        <img src={image.image  || "https://via.placeholder.com/150"} alt={image.image} className="w-full h-auto rounded-md" />
-                      </div>
-                    ))} */}
-                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -245,6 +281,42 @@ const Dashboard = () => {
                       ))}
                     </TableBody>
                   </Table>
+                  <Pagination className="flex items-center justify-center mt-4">
+                      <PaginationContent className="flex items-center space-x-2">
+                        <PaginationItem>
+                          <PaginationPrevious
+                            href="#"
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-blue-700 disabled:opacity-50"
+                          />
+                        </PaginationItem>
+                    
+                        {/* Page Numbers */}
+                        {[...Array(totalPages).keys()].map(number => (
+                          <PaginationItem key={number + 1}>
+                            <PaginationLink
+                              href="#"
+                              onClick={() => setCurrentPage(number + 1)}
+                              className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-blue-200 ${
+                                currentPage === number + 1 ? 'bg-black text-white' : 'text-gray-700'
+                              }`}
+                            >
+                              {number + 1}
+                            </PaginationLink>
+                          </PaginationItem>
+                        ))}
+                    
+                        <PaginationItem>
+                          <PaginationNext
+                            href="#"
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-50"
+                          />
+                        </PaginationItem>
+                      </PaginationContent>
+                  </Pagination>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -292,6 +364,42 @@ const Dashboard = () => {
                         ))}
                       </TableBody>
                     </Table>
+                    <Pagination className="flex items-center justify-center mt-4">
+                      <PaginationContent className="flex items-center space-x-2">
+                        <PaginationItem>
+                          <PaginationPrevious
+                            href="#"
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-blue-700 disabled:opacity-50"
+                          />
+                        </PaginationItem>
+                    
+                        {/* Page Numbers */}
+                        {[...Array(totalPages).keys()].map(number => (
+                          <PaginationItem key={number + 1}>
+                            <PaginationLink
+                              href="#"
+                              onClick={() => setCurrentPage(number + 1)}
+                              className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-blue-200 ${
+                                currentPage === number + 1 ? 'bg-black text-white' : 'text-gray-700'
+                              }`}
+                            >
+                              {number + 1}
+                            </PaginationLink>
+                          </PaginationItem>
+                        ))}
+                    
+                        <PaginationItem>
+                          <PaginationNext
+                            href="#"
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-50"
+                          />
+                        </PaginationItem>
+                      </PaginationContent>
+                  </Pagination>
                   </CardContent>
                 </Card>
               </TabsContent>
