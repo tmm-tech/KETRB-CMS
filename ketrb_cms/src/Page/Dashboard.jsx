@@ -32,11 +32,11 @@ const Dashboard = () => {
           fetch("https://ketrb-backend.onrender.com/programs/"),
           fetch("https://ketrb-backend.onrender.com/users/allusers")
         ]);
-
+        const userdata = await usersResponse.json();
         setNews(await newsResponse.json());
         setImages(await imagesResponse.json());
         setPrograms(await programsResponse.json());
-        setUsers(await usersResponse.json());
+        setUsers(userdata.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
