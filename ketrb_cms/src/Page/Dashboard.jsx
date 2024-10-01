@@ -321,9 +321,9 @@ const Dashboard = () => {
               </Card>
             </TabsContent>
 
-            {/* Users Tab */}
-{/*             {user.roles === 'administrator' && (
+            {/* Users Tab 
               <TabsContent value="users">
+              {user.roles === 'administrator' && (
                 <Card>
                   <CardHeader>
                     <CardTitle>Users</CardTitle>
