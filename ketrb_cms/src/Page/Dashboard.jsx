@@ -63,7 +63,7 @@ const Dashboard = () => {
                 <CardDescription>Total users registered</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold">{users.length}</div>
+                <div className="text-4xl font-bold">{users.data.length}</div>
               </CardContent>
             </Card>
             <Card>
