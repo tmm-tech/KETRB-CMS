@@ -239,11 +239,11 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-{/*                     {images.map((image) => (
+                     {images.map((image) => (
                       <div key={image.id}>
                         <img src={image.image  || "https://via.placeholder.com/150"} alt={image.image} className="w-full h-auto rounded-md" />
                       </div>
-                    ))} */}
+                    ))}
                   </div>
                   <Pagination className="flex items-center justify-center mt-4">
                       <PaginationContent className="flex items-center space-x-2">
@@ -404,7 +404,7 @@ const Dashboard = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {/*{users.map((user) => (
+            {users.map((user) => (
               <TableRow key={user.id}>
                 <TableCell>{user.fullname}</TableCell>
                 <TableCell>{user.email}</TableCell>
@@ -424,7 +424,7 @@ const Dashboard = () => {
                   </DropdownMenu>
                 </TableCell>
               </TableRow>
-            ))}*/}
+            ))}
           </TableBody>
         </Table>
         <Pagination className="flex items-center justify-center mt-4">
