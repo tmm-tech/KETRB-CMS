@@ -168,7 +168,7 @@ const Dashboard = () => {
                             <Link to="#" className="hover:underline">{article.title}</Link>
                           </TableCell>
                           <TableCell>
-                            <Badge variant="outline" className={`bg-${article.status === "published" ? "green" : "gray"}-500 text-white capitalize`}>
+                            <Badge variant="outline" className={`bg-${article.status === "published"  ? "bg-green-500 text-green-50"  : article.status === "pending"  ? "bg-yellow-500 text-yellow-50" : "bg-gray-500 text-gray-50"}-500 text-white capitalize`}>
                               {article.status}
                             </Badge>
                           </TableCell>
@@ -321,7 +321,7 @@ const Dashboard = () => {
                             <Link to="#" className="hover:underline">{program.title}</Link>
                           </TableCell>
                           <TableCell>
-                            <Badge variant="outline" className={`bg-${program.status === "published" ? "green" : "gray"}-500 text-white capitalize`}>
+                            <Badge variant="outline" className={`bg-${program.status === "published"  ? "bg-green-500 text-green-50"  : program.status === "pending"  ? "bg-yellow-500 text-yellow-50" : "bg-gray-500 text-gray-50"}-500 text-white capitalize`}>
                               {program.status}
                             </Badge>
                           </TableCell>
