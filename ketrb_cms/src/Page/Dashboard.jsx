@@ -427,7 +427,7 @@ const Dashboard = () => {
             
               {/* Users Tab */}
           <TabsContent value="users">
-            {currentItems.user.roles === 'administrator' && (
+            {user.roles === 'administrator' && (
               <Card>
                 <CardHeader>
                   <CardTitle>Users</CardTitle>
@@ -445,7 +445,7 @@ const Dashboard = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {users.map((user) => (
+                      {currentItems.users.map((user) => (
                         <TableRow key={user.id}>
                           <TableCell>{user.fullname}</TableCell>
                           <TableCell>{user.email}</TableCell>
