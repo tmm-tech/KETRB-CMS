@@ -507,7 +507,8 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => handlePageChange("users", Math.min(currentPage.users + 1, totalPages.users))}
                             disabled={currentPage.users === totalPages.users}
-                            className={`px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
+                           
+                            className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
                               currentPage.users === totalPages.users ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                           />
