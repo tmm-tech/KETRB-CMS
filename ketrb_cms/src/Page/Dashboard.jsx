@@ -33,8 +33,9 @@ const Dashboard = () => {
           fetch("https://ketrb-backend.onrender.com/users/allusers")
         ]);
         const userdata = await usersResponse.json();
+        const imagedata = await imagesResponse.json();
         setNews(await newsResponse.json());
-        setImages(await imagesResponse.json());
+        setImages(imagedata.images);
         setPrograms(await programsResponse.json());
         setUsers(userdata.data);
       } catch (error) {
@@ -63,7 +64,7 @@ const Dashboard = () => {
                 <CardDescription>Total users registered</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold">{users.data.length}</div>
+                <div className="text-4xl font-bold">{users.length}</div>
               </CardContent>
             </Card>
             <Card>
@@ -72,7 +73,7 @@ const Dashboard = () => {
                 <CardDescription>Total images uploaded</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold">{images.images.length}</div>
+                <div className="text-4xl font-bold">{images.length}</div>
               </CardContent>
             </Card>
             <Card>
