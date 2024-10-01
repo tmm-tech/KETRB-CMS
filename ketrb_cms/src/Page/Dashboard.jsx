@@ -216,47 +216,55 @@ const Dashboard = () => {
                       ))}
                     </TableBody>
                   </Table>
-                  <Pagination className="flex items-center justify-center mt-4">
+                 <Pagination className="flex items-center justify-center mt-4">
                       <PaginationContent className="flex items-center space-x-2">
+                        {/* Previous Button */}
                         <PaginationItem>
                           <PaginationPrevious
                             href="#"
                             onClick={() => handlePageChange("news", Math.max(currentPage.news - 1, 1))}
                             disabled={currentPage.news === 1}
-                            className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                            className={`px-4 py-2 text-sm font-medium bg-gray-200 rounded hover:bg-gray-300 transition-colors duration-200 ${
                               currentPage.news === 1 ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                           >
                             Previous
                           </PaginationPrevious>
-                           </PaginationItem>
-                          {[...Array(totalPages.news).keys()].map((number) => (
-                            <PaginationItem key={number + 1}>
-                              <PaginationLink
-                                href="#"
-                                onClick={() => handlePageChange("news", number + 1)}
-                                className={`px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
-                                  currentPage.news === number + 1 ? "bg-gray-300" : ""
-                                }`}
-                              >
-                                {number + 1}
-                              </PaginationLink>
-                            </PaginationItem>
-                          ))}
+                        </PaginationItem>
+                    
+                        {/* Pagination Numbers */}
+                        {[...Array(totalPages.news).keys()].map((number) => (
+                          <PaginationItem key={number + 1}>
+                            <PaginationLink
+                              href="#"
+                              onClick={() => handlePageChange("news", number + 1)}
+                              className={`px-4 py-2 text-sm font-medium rounded border transition-colors duration-200 ${
+                                currentPage.news === number + 1
+                                  ? "bg-gray-300 text-white border-gray-300"
+                                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+                              }`}
+                            >
+                              {number + 1}
+                            </PaginationLink>
+                          </PaginationItem>
+                        ))}
+                    
+                        {/* Next Button */}
                         <PaginationItem>
                           <PaginationNext
                             href="#"
                             onClick={() => handlePageChange("news", Math.min(currentPage.news + 1, totalPages.news))}
                             disabled={currentPage.news === totalPages.news}
-                            className={`px-3 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 ${
+                            className={`px-4 py-2 text-sm font-medium bg-gray-200 rounded hover:bg-gray-300 transition-colors duration-200 ${
                               currentPage.news === totalPages.news ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                           >
                             Next
                           </PaginationNext>
-                         </PaginationItem>
-                        </PaginationContent>
-                  </Pagination>
+                        </PaginationItem>
+                      </PaginationContent>
+                    </Pagination>
+
                 </CardContent>
               </Card>
             </TabsContent>
