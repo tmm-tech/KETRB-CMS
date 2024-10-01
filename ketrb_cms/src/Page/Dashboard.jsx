@@ -178,7 +178,7 @@ const Dashboard = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {currentItems.map((article) => (
+                      {currentItems.news.map((article) => (
                         <TableRow key={article.id}>
                           <TableCell className="hidden sm:table-cell">
                             <img
@@ -270,7 +270,7 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                     {images.map((image) => (
+                     {currentItems.images.map((image) => (
                       <div key={image.id}>
                         <img src={image.url  || "https://via.placeholder.com/150"} alt={image.image} className="w-full h-auto rounded-md" />
                       </div>
@@ -341,7 +341,7 @@ const Dashboard = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {programs.map((program) => (
+                      {currentItems.programs.map((program) => (
                          <TableRow key={program.id}>
                           <TableCell className="hidden sm:table-cell">
                             <img
@@ -427,7 +427,7 @@ const Dashboard = () => {
             
               {/* Users Tab */}
           <TabsContent value="users">
-            {user.roles === 'administrator' && (
+            {currentItems.user.roles === 'administrator' && (
               <Card>
                 <CardHeader>
                   <CardTitle>Users</CardTitle>
