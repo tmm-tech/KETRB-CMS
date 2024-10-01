@@ -242,7 +242,7 @@ const Dashboard = () => {
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                      {images.map((image) => (
                       <div key={image.id}>
-                        <img src={image.image  || "https://via.placeholder.com/150"} alt={image.image} className="w-full h-auto rounded-md" />
+                        <img src={image.url  || "https://via.placeholder.com/150"} alt={image.image} className="w-full h-auto rounded-md" />
                       </div>
                     ))}
                   </div>
