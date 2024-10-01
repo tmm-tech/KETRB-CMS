@@ -321,90 +321,92 @@ const Dashboard = () => {
               </Card>
             </TabsContent>
 
-            {/* Users Tab 
-              <TabsContent value="users">
-              {user.roles === 'administrator' && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Users</CardTitle>
-                    <CardDescription>Manage your users.</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>User Name</TableHead>
-                          <TableHead>Email</TableHead>
-                          <TableHead>Role</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead>Action</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {users.map((user) => (
-                          <TableRow key={user.id}>
-                            <TableCell>{user.fullname}</TableCell>
-                            <TableCell>{user.email}</TableCell>
-                            <TableCell>{user.roles}</TableCell>
-                             <TableCell>{user.status}</TableCell>
-                             <TableCell>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button aria-haspopup="true" size="icon" variant="ghost">
-                                  <span className="sr-only">Toggle menu</span>
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem>View</DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                    <Pagination className="flex items-center justify-center mt-4">
-                      <PaginationContent className="flex items-center space-x-2">
-                        <PaginationItem>
-                          <PaginationPrevious
-                            href="#"
-                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                            disabled={currentPage === 1}
-                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-blue-700 disabled:opacity-50"
-                          />
-                        </PaginationItem>
-                    
-                        {/* Page Numbers */}
-                        {[...Array(totalPages).keys()].map(number => (
-                          <PaginationItem key={number + 1}>
-                            <PaginationLink
-                              href="#"
-                              onClick={() => setCurrentPage(number + 1)}
-                              className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-blue-200 ${
-                                currentPage === number + 1 ? 'bg-black text-white' : 'text-gray-700'
-                              }`}
-                            >
-                              {number + 1}
-                            </PaginationLink>
-                          </PaginationItem>
-                        ))}
-                    
-                        <PaginationItem>
-                          <PaginationNext
-                            href="#"
-                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                            disabled={currentPage === totalPages}
-                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-50"
-                          />
-                        </PaginationItem>
-                      </PaginationContent>
-                  </Pagination>
-                  </CardContent>
-                </Card>
-     
-              </TabsContent>
-            )}*/}
+            
+              {/* Users Tab */}
+<TabsContent value="users">
+  {user.roles === 'administrator' && (
+    <Card>
+      <CardHeader>
+        <CardTitle>Users</CardTitle>
+        <CardDescription>Manage your users.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>User Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Action</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {/*{users.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell>{user.fullname}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.roles}</TableCell>
+                <TableCell>{user.status}</TableCell>*/}
+                <TableCell>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button aria-haspopup="true" size="icon" variant="ghost">
+                        <span className="sr-only">Toggle menu</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuItem>View</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <Pagination className="flex items-center justify-center mt-4">
+          <PaginationContent className="flex items-center space-x-2">
+            <PaginationItem>
+              <PaginationPrevious
+                href="#"
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="flex items-center px-3 py-1 text-sm font-medium text-white bg-black rounded hover:bg-blue-700 disabled:opacity-50"
+              />
+            </PaginationItem>
+
+            {/* Page Numbers */}
+            {[...Array(totalPages).keys()].map(number => (
+              <PaginationItem key={number + 1}>
+                <PaginationLink
+                  href="#"
+                  onClick={() => setCurrentPage(number + 1)}
+                  className={`flex items-center px-3 py-1 text-sm font-medium rounded hover:bg-blue-200 ${
+                    currentPage === number + 1 ? 'bg-black text-white' : 'text-gray-700'
+                  }`}
+                >
+                  {number + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+            <PaginationItem>
+              <PaginationNext
+                href="#"
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="flex items-center px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-50"
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </CardContent>
+    </Card>
+  )}
+</TabsContent>
+            
+            )}
   </Tabs>
         </main>
       </div>
