@@ -109,9 +109,13 @@ const Dashboard = () => {
                 )}
               </TabsList>
               <div className="ml-auto flex items-center gap-2">
+                <Button size="sm" className="h-8 gap-1 bg-transparent text-black">
+                  <ListOrderedIcon className="h-3.5 w-3.5" />
+                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Sort by</span>
+                </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="h-8 gap-1">
+                    <Button variant="outline" size="sm" className="h-8 gap-1 bg-black text-white">
                       <FilterIcon className="h-3.5 w-3.5" />
                       <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Filter</span>
                     </Button>
@@ -124,10 +128,7 @@ const Dashboard = () => {
                     <DropdownMenuCheckboxItem>Archived</DropdownMenuCheckboxItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <Button size="sm" className="h-8 gap-1 bg-black text-white">
-                  <ListOrderedIcon className="h-3.5 w-3.5" />
-                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Sort by</span>
-                </Button>
+                
 
               </div>
             </div>
