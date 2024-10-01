@@ -405,7 +405,7 @@ const Dashboard = () => {
      
               </TabsContent>
             )}*/}
-          </Tabs>
+  </Tabs>
         </main>
       </div>
     </div>
