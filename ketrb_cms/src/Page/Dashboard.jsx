@@ -216,7 +216,7 @@ const Dashboard = () => {
                       ))}
                     </TableBody>
                   </Table>
-                 <Pagination className="flex items-center justify-center mt-4">
+                 <Pagination className="flex items-center justify-center mt-4 w-full">
                       <PaginationContent className="flex items-center space-x-2">
                         {/* Previous Button */}
                         <PaginationItem>
