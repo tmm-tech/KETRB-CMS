@@ -44,31 +44,32 @@ module.exports = {
 
   // Get all news articles
   GetNews: async (req, res) => {
-    try {
-      const result = await query('SELECT * FROM news ORDER BY created_at DESC');
-         const news = result.rows;
-    
+  try {
+    // Fetch news articles from the database
+    const result = await query('SELECT * FROM news ORDER BY created_at DESC');
+    const news = result.rows;
+
     // Map over the news to construct the full image URL for each one
-    const newsWithImageUrls = news.map(new => {
+    const newsWithImageUrls = news.map(item => {
       // If the image exists, construct the full image URL
-      const imageUrl = new.image 
-        ? `${req.protocol}://${req.get('host')}/${new.image}`
+      const imageUrl = item.image 
+        ? `${req.protocol}://${req.get('host')}/${item.image}` // Construct full URL
         : null; // Handle case where image doesn't exist
 
-      // Return the news with the full image URL
+      // Return the news item with the full image URL
       return {
-        ...new,
-        imageUrl
+        ...item, // Spread the existing news item properties
+        imageUrl // Add the constructed image URL
       };
     });
 
     // Return the news data with constructed image URLs
     res.status(200).json(newsWithImageUrls);
-    } catch (error) {
-      console.error('Error fetching news articles:', error);
-      res.status(500).json({ message: 'Error fetching news articles.' });
-    }
-  },
+  } catch (error) {
+    console.error('Error fetching news:', error);
+    res.status(500).json({ message: 'Error fetching news.' });
+  }
+},
 
   // Get a single news article by ID
   GetNewsById: async (req, res) => {
