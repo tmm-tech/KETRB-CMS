@@ -109,7 +109,7 @@ const Dashboard = () => {
                 )}
               </TabsList>
               <div className="ml-auto flex items-center gap-2">
-                <Button size="sm" className="h-8 gap-1 bg-transparent text-black">
+                <Button size="sm" className="h-8 gap-1 bg-transparent text-black border border-black rounded-md">
                   <ListOrderedIcon className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Sort by</span>
                 </Button>
