@@ -72,7 +72,7 @@ const Dashboard = () => {
                 <CardDescription>Total images uploaded</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold">{images.length}</div>
+                <div className="text-4xl font-bold">{images.images.length}</div>
               </CardContent>
             </Card>
             <Card>
