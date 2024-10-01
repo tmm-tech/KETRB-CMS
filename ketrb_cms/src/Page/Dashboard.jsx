@@ -56,6 +56,45 @@ const Dashboard = () => {
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: "center" }}>
         <HeaderNav />
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Users</CardTitle>
+                <CardDescription>Total users registered</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">{users.length}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Images</CardTitle>
+                <CardDescription>Total images uploaded</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">{images.length}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                  <CardTitle>News & Events</CardTitle>
+                <CardDescription>Total news articles</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">{news.length}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Programs & Projects</CardTitle>
+                <CardDescription>Total programs listed</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">{programs.length}</div>
+              </CardContent>
+            </Card>
+            <Card>
+          </div>
           <Tabs defaultValue="news">
             <div className="flex items-center">
               <TabsList className="bg-gray-200 p-2 rounded-md">
@@ -68,8 +107,30 @@ const Dashboard = () => {
                   </TabsTrigger>
                 )}
               </TabsList>
-            </div>
+              <div className="ml-auto flex items-center gap-2">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="h-8 gap-1">
+                      <FilterIcon className="h-3.5 w-3.5" />
+                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Filter</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuCheckboxItem checked>Published</DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem>Archived</DropdownMenuCheckboxItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <Button size="sm" className="h-8 gap-1 bg-black text-white">
+                  <PlusIcon className="h-3.5 w-3.5" />
+                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Add</span>
+                </Button>
 
+              </div>
+            </div>
+          
             {/* News Tab */}
             <TabsContent value="news">
               <Card>
