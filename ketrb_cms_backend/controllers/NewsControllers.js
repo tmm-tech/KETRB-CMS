@@ -46,7 +46,10 @@ module.exports = {
   GetNews: async (req, res) => {
     try {
       const result = await query('SELECT * FROM news ORDER BY created_at DESC');
-      res.status(200).json(result.rows);
+      const news = result.rows[0];
+      const imageUrl = `${req.protocol}://${req.get('host')}/${news.image}`;
+      const newsWithImageUrl = { ...news, imageUrl };
+      res.status(200).json(newsWithImageUrl);
     } catch (error) {
       console.error('Error fetching news articles:', error);
       res.status(500).json({ message: 'Error fetching news articles.' });
