@@ -280,8 +280,7 @@ const Dashboard = () => {
                       <TableRow>
                         <TableHead className="hidden w-[100px] sm:table-cell">Thumbnail</TableHead>
                         <TableHead>Title</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead className="hidden md:table-cell">Author</TableHead>
+                        <TableHead>Status</TableHead>                        
                         <TableHead className="hidden md:table-cell">Published At</TableHead>
                         <TableHead>Actions</TableHead>
                       </TableRow>
