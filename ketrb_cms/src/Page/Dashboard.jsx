@@ -185,7 +185,7 @@ const Dashboard = () => {
                               alt={article.title}
                               className="aspect-square rounded-md object-cover"
                               height="64"
-                              src={article.thumbnail || "https://via.placeholder.com/150"}
+                              src={article.imageUrl || "https://via.placeholder.com/150"}
                               width="64"
                             />
                           </TableCell>
@@ -275,13 +275,57 @@ const Dashboard = () => {
                   <CardDescription>Manage your images.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="hidden w-[100px] sm:table-cell">Thumbnail</TableHead>
+                        <TableHead>Title</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead className="hidden md:table-cell">Author</TableHead>
+                        <TableHead className="hidden md:table-cell">Published At</TableHead>
+                        <TableHead>Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
                      {currentItems.images.map((image) => (
-                      <div key={image.id}>
-                        <img src={image.url  || "https://via.placeholder.com/150"} alt={image.image} className="w-full h-auto rounded-md" />
-                      </div>
+                      <TableRow key={image.id}>
+                          <TableCell className="hidden sm:table-cell">
+                            <img
+                              alt={image.image}
+                              className="aspect-square rounded-md object-cover"
+                              height="64"
+                              src={image.url || "https://via.placeholder.com/150"}
+                              width="64"
+                            />
+                          </TableCell>
+                          <TableCell className="font-medium">
+                            <Link to="#" className="hover:underline">{image.image}</Link>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="outline" className={`${article.status === "published"  ? "bg-green-500 text-green-50"  : article.status === "pending"  ? "bg-yellow-500 text-yellow-50" : "bg-gray-500 text-gray-50"} capitalize`}>
+                              {image.status}
+                            </Badge>
+                          </TableCell>
+                         
+                          <TableCell className="hidden md:table-cell">{new Date(article.registered_at).toLocaleString()}</TableCell>
+                          <TableCell>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button aria-haspopup="true" size="icon" variant="ghost">
+                                  <MoveHorizontalIcon className="h-4 w-4" />
+                                  <span className="sr-only">Toggle menu</span>
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                <DropdownMenuItem>View</DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
+                        </TableRow>
                     ))}
-                  </div>
+                  </TableBody>
+                  </Table>
                   <Pagination className="flex items-center justify-center mt-4">
                       <PaginationContent className="flex items-center space-x-2">
                         <PaginationItem>
@@ -352,7 +396,7 @@ const Dashboard = () => {
                               alt={program.title}
                               className="aspect-square rounded-md object-cover"
                               height="64"
-                              src={program.thumbnail || "https://via.placeholder.com/150"}
+                              src={program.imageUrl || "https://via.placeholder.com/150"}
                               width="64"
                             />
                           </TableCell>
