@@ -4,7 +4,7 @@ const {
     UpdateImage,
     DeleteImage,
     getAImage,
-    CancelImage,
+    CancelImages,
     getAllImage
 } = require('../controllers/ImageControllers');
 const multer = require('multer');
@@ -38,7 +38,7 @@ ImageRoutes.post('/add', upload.array('images', 20), AddImage);
 ImageRoutes.put('/update/:id', UpdateImage);
 
 // Cancel delete for a image
-ImageRoutes.put('/cancledelete/:id', CancelImage);
+ImageRoutes.put('/cancledelete/:id', CancelImages);
 
 // Delete an image
 ImageRoutes.delete('/delete/:id', DeleteImage);
