@@ -105,7 +105,7 @@ const Dashboard = () => {
                             <Link to="#" className="hover:underline">{article.title}</Link>
                           </TableCell>
                           <TableCell>
-                            <Badge variant="outline" className={`bg-${article.status === "published" ? "green" : "gray"}-500 text-white` capitalize}>
+                            <Badge variant="outline" className={`bg-${article.status === "published" ? "green" : "gray"}-500 text-white capitalize`}>
                               {article.status}
                             </Badge>
                           </TableCell>
