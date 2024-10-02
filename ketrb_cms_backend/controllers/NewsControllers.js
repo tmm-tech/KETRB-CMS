@@ -1,18 +1,29 @@
 const { query } = require('../config/sqlConfig');
-const path = require('path');
-const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
+
 module.exports = {
-  // Add a new news article
   AddNews: async (req, res) => {
     const { title, content, publishedDate, author, status } = req.body;
     const image = req.file;
 
+    // Ensure the image is provided
+    if (!image) {
+      return res.status(400).json({ message: 'No image uploaded' });
+    }
+
     try {
-      const imagePath = `news/${image.filename}`;
+      // Upload the image to Cloudinary
+      const cloudinaryResult = await cloudinary.uploader.upload(image.path, {
+        folder: 'news' // Specify the folder in Cloudinary
+      });
+
+      const imagePath = cloudinaryResult.secure_url; // Get the secure URL from Cloudinary
+
       const result = await query(
         'INSERT INTO news (title, content, image, published_date, author, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
         [title, content, imagePath, publishedDate, author, status]
       );
+
       res.status(201).json({ message: 'News article added successfully', news: result.rows[0] });
     } catch (error) {
       console.error('Error adding news:', error);
@@ -43,33 +54,23 @@ module.exports = {
   },
 
   // Get all news articles
-  GetNews: async (req, res) => {
+ GetNews: async (req, res) => {
   try {
-    // Fetch news articles from the database
     const result = await query('SELECT * FROM news ORDER BY created_at DESC');
     const news = result.rows;
 
-    // Map over the news to construct the full image URL for each one
-    const newsWithImageUrls = news.map(item => {
-      // If the image exists, construct the full image URL
-      const imageUrl = item.image 
-        ? `${req.protocol}://${req.get('host')}/${item.image}` // Construct full URL
-        : null; // Handle case where image doesn't exist
+    const newsWithImageUrls = news.map(item => ({
+      ...item,
+      imageUrl: item.image || null, // Use the image field directly, or null if it doesn't exist
+    }));
 
-      // Return the news item with the full image URL
-      return {
-        ...item, // Spread the existing news item properties
-        imageUrl // Add the constructed image URL
-      };
-    });
-
-    // Return the news data with constructed image URLs
     res.status(200).json(newsWithImageUrls);
   } catch (error) {
     console.error('Error fetching news:', error);
     res.status(500).json({ message: 'Error fetching news.' });
   }
 },
+
 
   // Get a single news article by ID
   GetNewsById: async (req, res) => {
@@ -83,7 +84,7 @@ module.exports = {
       }
 
       const news = result.rows[0];
-      const imageUrl = `${req.protocol}://${req.get('host')}/${news.image}`;
+      const imageUrl = news.image;
       const newsWithImageUrl = { ...news, imageUrl };
 
       res.status(200).json(newsWithImageUrl);
@@ -93,37 +94,52 @@ module.exports = {
     }
   },
 
-  // Update an existing news article
-  UpdateNews: async (req, res) => {
-    const { id } = req.params;
-    const { title, content, publishedDate, author, status, role } = req.body;
-    const image = req.file;
+// Update an existing news article
+UpdateNews: async (req, res) => {
+  const { id } = req.params;
+  const { title, content, publishedDate, author, status, role } = req.body;
+  const image = req.file;
 
-    try {
-      const existingNews = await query('SELECT * FROM news WHERE id = $1', [id]);
-      if (existingNews.rows.length === 0) {
-        return res.status(404).json({ message: 'News article not found.' });
-      }
-
-      let newStatus = status;
-      if (role === 'editor') {
-        newStatus = 'pending';
-      } else if (role === 'administrator' && status === 'pending') {
-        newStatus = 'published';
-      }
-
-      const imagePath = image ? `news/${image.filename}` : existingNews.rows[0].image;
-      const result = await query(
-        'UPDATE news SET title = $1, content = $2, image = $3, published_date = $4, author = $5, status = $6 WHERE id = $7 RETURNING *',
-        [title, content, imagePath, publishedDate, author, newStatus, id]
-      );
-
-      res.status(200).json({ message: 'News article updated successfully', news: result.rows[0] });
-    } catch (error) {
-      console.error('Error updating news article:', error);
-      res.status(500).json({ message: 'Error updating the news article.' });
+  try {
+    // Check if the news article exists
+    const existingNews = await query('SELECT * FROM news WHERE id = $1', [id]);
+    if (existingNews.rows.length === 0) {
+      return res.status(404).json({ message: 'News article not found.' });
     }
-  },
+
+    // Determine the new status based on role
+    let newStatus = status;
+    if (role === 'editor') {
+      newStatus = 'pending';
+    } else if (role === 'administrator' && status === 'pending') {
+      newStatus = 'published';
+    }
+
+    // Handle image upload to Cloudinary
+    let imagePath;
+    if (image) {
+      // Upload new image to Cloudinary
+      const cloudinaryResult = await cloudinary.uploader.upload(image.path, {
+        folder: 'news'
+      });
+      imagePath = cloudinaryResult.secure_url; // Get the URL of the new image
+    } else {
+      imagePath = existingNews.rows[0].image; // Use the existing image if no new one is provided
+    }
+
+    // Update the news article in the database
+    const result = await query(
+      'UPDATE news SET title = $1, content = $2, image = $3, published_date = $4, author = $5, status = $6 WHERE id = $7 RETURNING *',
+      [title, content, imagePath, publishedDate, author, newStatus, id]
+    );
+
+    // Respond with the updated news article
+    res.status(200).json({ message: 'News article updated successfully', news: result.rows[0] });
+  } catch (error) {
+    console.error('Error updating news article:', error);
+    res.status(500).json({ message: 'Error updating the news article.' });
+  }
+},
 
   // Approve a news article (set its status to 'published')
   ApproveNews: async (req, res) => {
