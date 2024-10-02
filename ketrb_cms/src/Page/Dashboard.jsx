@@ -17,7 +17,7 @@ const Dashboard = () => {
   const [programs, setPrograms] = useState([]);
   const [users, setUsers] = useState([]);
   const [activeTab, setActiveTab] = useState("news");
-  const [sortOption, setSortOption] = useState({ news: 'latest', images: 'latest', programs: 'latest', users: 'latest' });
+const [sortOption, setSortOption] = useState({ news: '', images: '', programs: '', users: '' });
   const [filterOptions, setFilterOptions] = useState({ news: [], images: [], programs: [], users: [] });
   const [currentPage, setCurrentPage] = useState({ news: 1, images: 1, programs: 1, users: 1 });
   const itemsPerPage = 5;
@@ -158,7 +158,7 @@ const Dashboard = () => {
               <div className="ml-auto flex items-center gap-2">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button size="sm" className="h-8 bg-black text-white">
+                    <Button size="sm" className="h-8 gap-1 bg-black text-white">
                       <ListOrderedIcon className="h-3.5 w-3.5" />
                       Sort by
                     </Button>
@@ -180,9 +180,9 @@ const Dashboard = () => {
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem onClick={() => handleFilterChange('Published')}>Published</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem onClick={() => handleFilterChange('Pending')}>Pending</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem onClick={() => handleFilterChange('Draft')}>Draft</DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem onClick={() => handleFilterChange('published')}>Published</DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem onClick={() => handleFilterChange('pending')}>Pending</DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem onClick={() => handleFilterChange('draft')}>Draft</DropdownMenuCheckboxItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
                 
