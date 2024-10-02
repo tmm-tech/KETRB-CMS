@@ -12,19 +12,15 @@ import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, Pagi
 import bgImage from "../Asset/bg.png";
 
 const Dashboard = () => {
-  const [news, setNews] = useState([]);
+ const [news, setNews] = useState([]);
   const [images, setImages] = useState([]);
   const [programs, setPrograms] = useState([]);
   const [users, setUsers] = useState([]);
-  // Pagination states
-  const [currentPage, setCurrentPage] = useState({
-    news: 1,
-    images: 1,
-    programs: 1,
-    users: 1,
-  });
-
-  const itemsPerPage = 5; // Items per page for all tabs
+  const [activeTab, setActiveTab] = useState("news");
+  const [sortOption, setSortOption] = useState({ news: 'latest', images: 'latest', programs: 'latest', users: 'latest' });
+  const [filterOptions, setFilterOptions] = useState({ news: [], images: [], programs: [], users: [] });
+  const [currentPage, setCurrentPage] = useState({ news: 1, images: 1, programs: 1, users: 1 });
+  const itemsPerPage = 5;
 
   const storedUser = localStorage.getItem('user');
   const user = JSON.parse(storedUser);
@@ -52,28 +48,54 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
- // Update page when switching tabs
-  const handlePageChange = (tab, pageNumber) => {
-    setCurrentPage((prevState) => ({
-      ...prevState,
-      [tab]: pageNumber,
-    }));
+    // Sorting handler
+  const handleSort = (option) => {
+    setSortOption(prev => ({ ...prev, [activeTab]: option }));
   };
 
-  // Calculate total pages for each tab
+  // Filtering handler
+  const handleFilterChange = (option) => {
+    setFilterOptions(prev => {
+      const newFilters = prev[activeTab].includes(option)
+        ? prev[activeTab].filter(filter => filter !== option)
+        : [...prev[activeTab], option];
+      return { ...prev, [activeTab]: newFilters };
+    });
+  };
+
+  // Sorting logic for each tab
+  const sortedData = {
+    news: () => [...news].sort((a, b) => (sortOption.news === 'latest' ? new Date(b.published_date) - new Date(a.published_date) : 0))
+                  .filter(article => (filterOptions.news.length === 0 ? true : filterOptions.news.includes(article.status))),
+    images: () => [...images].sort((a, b) => (sortOption.images === 'latest' ? new Date(b.registered_at) - new Date(a.registered_at) : 0))
+                    .filter(image => (filterOptions.images.length === 0 ? true : filterOptions.images.includes(image.status))),
+    programs: () => [...programs].sort((a, b) => (sortOption.programs === 'latest' ? new Date(b.published_date) - new Date(a.published_date) : 0))
+                      .filter(program => (filterOptions.programs.length === 0 ? true : filterOptions.programs.includes(program.status))),
+    users: () => [...users].sort((a, b) => (sortOption.users === 'latest' ? new Date(b.registered_at) - new Date(a.registered_at) : 0))
+                  .filter(user => (filterOptions.users.length === 0 ? true : filterOptions.users.includes(user.status))),
+  };
+
+  // Pagination logic
   const totalPages = {
-    news: Math.ceil(news.length / itemsPerPage),
-    images: Math.ceil(images.length / itemsPerPage),
-    programs: Math.ceil(programs.length / itemsPerPage),
-    users: Math.ceil(users.length / itemsPerPage),
+    news: Math.ceil(sortedData.news().length / itemsPerPage),
+    images: Math.ceil(sortedData.images().length / itemsPerPage),
+    programs: Math.ceil(sortedData.programs().length / itemsPerPage),
+    users: Math.ceil(sortedData.users().length / itemsPerPage),
   };
 
-  // Get current items for each tab
   const currentItems = {
-    news: news.slice((currentPage.news - 1) * itemsPerPage, currentPage.news * itemsPerPage),
-    images: images.slice((currentPage.images - 1) * itemsPerPage, currentPage.images * itemsPerPage),
-    programs: programs.slice((currentPage.programs - 1) * itemsPerPage, currentPage.programs * itemsPerPage),
-    users: users.slice((currentPage.users - 1) * itemsPerPage, currentPage.users * itemsPerPage),
+    news: sortedData.news().slice((currentPage.news - 1) * itemsPerPage, currentPage.news * itemsPerPage),
+    images: sortedData.images().slice((currentPage.images - 1) * itemsPerPage, currentPage.images * itemsPerPage),
+    programs: sortedData.programs().slice((currentPage.programs - 1) * itemsPerPage, currentPage.programs * itemsPerPage),
+    users: sortedData.users().slice((currentPage.users - 1) * itemsPerPage, currentPage.users * itemsPerPage),
+  };
+
+  // Pagination handler
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(prev => ({
+      ...prev,
+      [activeTab]: pageNumber,
+    }));
   };
 
   return (
@@ -121,7 +143,7 @@ const Dashboard = () => {
             </Card>
             
           </div>
-          <Tabs defaultValue="news">
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
             <div className="flex items-center">
               <TabsList className="bg-gray-200 p-2 rounded-md">
                 <TabsTrigger value="news">News</TabsTrigger>
@@ -134,23 +156,33 @@ const Dashboard = () => {
                 )}
               </TabsList>
               <div className="ml-auto flex items-center gap-2">
-                <Button size="sm" className="h-8 gap-1 bg-transparent text-black border border-black rounded-md">
-                  <ListOrderedIcon className="h-3.5 w-3.5" />
-                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Sort by</span>
-                </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="h-8 gap-1 bg-black text-white">
-                      <FilterIcon className="h-3.5 w-3.5" />
-                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Filter</span>
+                    <Button size="sm" className="h-8 bg-black text-white">
+                      <ListOrderedIcon className="h-3.5 w-3.5" />
+                      Sort by
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+                    <DropdownMenuLabel>Sort</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem checked>Published</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>Archived</DropdownMenuCheckboxItem>
+                    <DropdownMenuItem onClick={() => handleSort('latest')}>Latest</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleSort('oldest')}>Oldest</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="h-8 gap-1 bg-transparent border-black text-black">
+                      <FilterIcon className="h-3.5 w-3.5" />
+                      Filter
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuCheckboxItem onClick={() => handleFilterChange('Published')}>Published</DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem onClick={() => handleFilterChange('Pending')}>Pending</DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem onClick={() => handleFilterChange('Draft')}>Draft</DropdownMenuCheckboxItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
                 
