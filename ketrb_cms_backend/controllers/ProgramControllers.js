@@ -1,203 +1,193 @@
 const { query } = require('../config/sqlConfig');
-const path = require('path');
-const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
+
 module.exports = {
-	// Add a new program
-	AddProgram: async (req, res) => {
-	  const { title, content, publishedDate, author, status } = req.body;
-	  const image = req.file;
-
-	  try {
-		const imagePath = `programs/${image.filename}`;
-		const result = await query(
-		  'INSERT INTO programs (title, content, image, published_date, author, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-		  [title, content, imagePath, publishedDate, author, status]
-		);
-		res.status(201).json({ message: 'Program added successfully', program: result.rows[0] });
-	  } catch (error) {
-		console.error('Error adding program:', error);
-		res.status(500).json({ message: 'Server error while adding the program.' });
-	  }
-	},
-	CancelProgram: async (req, res) => {
-	    const { id } = req.params; // Get the program ID from the request parameters
-	
-	    try {
-	     const result = await query(
-	        'UPDATE programs SET isdeleted = FALSE WHERE id = $1 RETURNING *',
-	        [id]
-	      );
-	
-	
-	     // Check if a program was returned (i.e., it exists)
-	        if (result.rowCount === 0) {
-	            return res.status(404).json({ message: 'Program not found' });
-	        }
-	
-	        const updatedProgram = result.rows[0]; // Get the updated program from the result
-	        res.status(200).json(updatedProgram); // Return the updated program
-	    } catch (error) {
-	        console.error("Error canceling program:", error);
-	        res.status(500).json({ message: 'Internal server error' });
-	    }
-	},
-	// Get all programs
-	GetPrograms: async (req, res) => {
-	  try {
-		const result = await query('SELECT * FROM programs ORDER BY created_at DESC');
-		     const programs = result.rows;
-    
-    // Map over the programs to construct the full image URL for each one
-    const programsWithImageUrls = programs.map(program => {
-      // If the image exists, construct the full image URL
-      const imageUrl = program.image 
-        ? `${req.protocol}://${req.get('host')}/${program.image}`
-        : null; // Handle case where image doesn't exist
-
-      // Return the program with the full image URL
-      return {
-        ...program,
-        imageUrl
-      };
-    });
-
-    // Return the programs data with constructed image URLs
-    res.status(200).json(programsWithImageUrls);
-	  } catch (error) {
-		console.error('Error fetching programs:', error);
-		res.status(500).json({ message: 'Error fetching programs.' });
-	  }
-	},
-
-	// Get a single program by ID
-	GetProgramById: async (req, res) => {
-	    const { id } = req.params; // Program ID from the URL
-	
-	    try {
-	        // Query to get the program details, including the image path
-	        const result = await query('SELECT * FROM programs WHERE id = $1', [id]);
-	
-	        if (result.rows.length === 0) {
-	            return res.status(404).json({ message: 'Program not found.' });
-	        }
-	
-	        const program = result.rows[0];
-	
-	        // Construct the full image URL using the stored image path in the 'image' column
-	        const imageUrl = `${req.protocol}://${req.get('host')}/${program.image}`; 
-		
-	        // Add the full image URL to the program object
-	        const programWithImageUrl = {
-	            ...program,
-	            imageUrl // Adding the full image URL to the response
-	        };
-	
-	        // Return the program data with the constructed image URL
-	        res.status(200).json(programWithImageUrl);
-	
-	    } catch (error) {
-	        console.error('Error fetching program:', error);
-	        res.status(500).json({ message: 'Error fetching the program.' });
-	    }
-},
-
-	// Update an existing program
-	UpdateProgram: async (req, res) => {
-    const { id } = req.params;
-    const { title, content, publishedDate, author, status, role} = req.body; // Ensure `status` comes from the client
+	 // Add a new program
+  AddProgram: async (req, res) => {
+    const { title, content, publishedDate, author, status } = req.body;
     const image = req.file;
-    
 
     try {
-        // Check if program exists
-        const existingProgram = await query('SELECT * FROM programs WHERE id = $1', [id]);
-        if (existingProgram.rows.length === 0) {
-            return res.status(404).json({ message: 'Program not found.' });
-        }
+      // Upload the image to Cloudinary
+      const cloudinaryResult = await cloudinary.uploader.upload(image.path, {
+        folder: 'programs' // Specify the folder in Cloudinary
+      });
+      const imagePath = cloudinaryResult.secure_url; // Get the URL of the uploaded image
 
-        // Determine the new status
-        let newStatus = status; // Default to the status provided in the request
-        if (role === 'editor') {
-            // If the user is an editor, set status to 'Pending'
-            newStatus = 'pending';
-        }else if (role === 'administrator' && status === 'pending') {
-            newStatus = 'published';
-	}
-
-        // Update fields, including the image if uploaded
-        const imagePath = image ? `programs/${image.filename}` : existingProgram.rows[0].image;
-        const result = await query(
-            'UPDATE programs SET title = $1, content = $2, image = $3, published_date = $4, author = $5, status = $6 WHERE id = $7 RETURNING *',
-            [title, content, imagePath, publishedDate, author, newStatus, id]
-        );
-
-        res.status(200).json({ message: 'Program updated successfully', program: result.rows[0] });
-    } catch (error) {
-        console.error('Error updating program:', error);
-        res.status(500).json({ message: 'Error updating the program.' });
-    }
-},
-
-
-	// Approve a program (set its status to 'approved')
-	ApproveProgram: async (req, res) => {
-	  const { id } = req.params;
-
-	  try {
-		const result = await query(
-		  'UPDATE programs SET status = $1 WHERE id = $2 RETURNING *',
-		  ['published', id]
-		);
-
-		if (result.rows.length === 0) {
-		  return res.status(404).json({ message: 'Program not found.' });
-		}
-
-		res.status(200).json({ message: 'Program approved successfully', program: result.rows[0] });
-	  } catch (error) {
-		console.error('Error approving program:', error);
-		res.status(500).json({ message: 'Error approving the program.' });
-	  }
-	},
-
-	// Delete a program
-	DeleteProgram: async (req, res) => {
-  const { id } = req.params;
-  const { role } = req.body; // Get the user role from the request body
-
-  try {
-    if (role === 'editor') {
-      // Soft delete: Set isDeleted to true, requiring admin approval for final deletion
       const result = await query(
-        'UPDATE programs SET isdeleted = TRUE WHERE id = $1 RETURNING *',
+        'INSERT INTO programs (title, content, image, published_date, author, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+        [title, content, imagePath, publishedDate, author, status]
+      );
+      res.status(201).json({ message: 'Program added successfully', program: result.rows[0] });
+    } catch (error) {
+      console.error('Error adding program:', error);
+      res.status(500).json({ message: 'Server error while adding the program.' });
+    }
+  },
+
+  // Cancel a program
+  CancelProgram: async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const result = await query(
+        'UPDATE programs SET isdeleted = FALSE WHERE id = $1 RETURNING *',
         [id]
+      );
+
+      if (result.rowCount === 0) {
+        return res.status(404).json({ message: 'Program not found' });
+      }
+
+      const updatedProgram = result.rows[0];
+      res.status(200).json(updatedProgram);
+    } catch (error) {
+      console.error('Error canceling program:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  },
+
+  // Get all programs
+  GetPrograms: async (req, res) => {
+    try {
+      const result = await query('SELECT * FROM programs ORDER BY created_at DESC');
+      const programs = result.rows;
+
+      const programsWithImageUrls = programs.map(program => ({
+        ...program,
+        imageUrl: program.image // Assuming image contains the full Cloudinary URL
+      }));
+
+      res.status(200).json(programsWithImageUrls);
+    } catch (error) {
+      console.error('Error fetching programs:', error);
+      res.status(500).json({ message: 'Error fetching programs.' });
+    }
+  },
+
+  // Get a single program by ID
+  GetProgramById: async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const result = await query('SELECT * FROM programs WHERE id = $1', [id]);
+
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: 'Program not found.' });
+      }
+
+      const program = result.rows[0];
+
+      // Return the program data with the existing Cloudinary URL
+      res.status(200).json({
+        ...program,
+        imageUrl: program.image // Assuming image contains the full Cloudinary URL
+      });
+    } catch (error) {
+      console.error('Error fetching program:', error);
+      res.status(500).json({ message: 'Error fetching the program.' });
+    }
+  },
+
+  // Update an existing program
+  UpdateProgram: async (req, res) => {
+    const { id } = req.params;
+    const { title, content, publishedDate, author, status, role } = req.body;
+    const image = req.file;
+
+    try {
+      const existingProgram = await query('SELECT * FROM programs WHERE id = $1', [id]);
+      if (existingProgram.rows.length === 0) {
+        return res.status(404).json({ message: 'Program not found.' });
+      }
+
+      let newStatus = status; 
+      if (role === 'editor') {
+        newStatus = 'pending';
+      } else if (role === 'administrator' && status === 'pending') {
+        newStatus = 'published';
+      }
+
+      let imagePath;
+      if (image) {
+        // Upload new image to Cloudinary
+        const cloudinaryResult = await cloudinary.uploader.upload(image.path, {
+          folder: 'programs'
+        });
+        imagePath = cloudinaryResult.secure_url; // Get the URL of the new image
+      } else {
+        imagePath = existingProgram.rows[0].image; // Use existing image if no new one is provided
+      }
+
+      const result = await query(
+        'UPDATE programs SET title = $1, content = $2, image = $3, published_date = $4, author = $5, status = $6 WHERE id = $7 RETURNING *',
+        [title, content, imagePath, publishedDate, author, newStatus, id]
+      );
+
+      res.status(200).json({ message: 'Program updated successfully', program: result.rows[0] });
+    } catch (error) {
+      console.error('Error updating program:', error);
+      res.status(500).json({ message: 'Error updating the program.' });
+    }
+  },
+
+  // Approve a program (set its status to 'published')
+  ApproveProgram: async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const result = await query(
+        'UPDATE programs SET status = $1 WHERE id = $2 RETURNING *',
+        ['published', id]
       );
 
       if (result.rows.length === 0) {
         return res.status(404).json({ message: 'Program not found.' });
       }
 
-      return res.status(200).json({
-        message: 'Program marked for deletion. Admin approval required.',
-        program: result.rows[0],
-      });
-    } else {
-      // Hard delete: Permanently delete the program
-      const result = await query('DELETE FROM programs WHERE id = $1 RETURNING *', [id]);
-
-      if (result.rows.length === 0) {
-        return res.status(404).json({ message: 'Program not found.' });
-      }
-
-      return res.status(200).json({
-        message: 'Program deleted successfully',
-        program: result.rows[0],
-      });
+      res.status(200).json({ message: 'Program approved successfully', program: result.rows[0] });
+    } catch (error) {
+      console.error('Error approving program:', error);
+      res.status(500).json({ message: 'Error approving the program.' });
     }
-  } catch (error) {
-    console.error('Error deleting program:', error);
-    return res.status(500).json({ message: 'Error deleting the program.' });
-  }
-},
+  },
+
+  // Delete a program
+  DeleteProgram: async (req, res) => {
+    const { id } = req.params;
+    const { role } = req.body;
+
+    try {
+      if (role === 'editor') {
+        const result = await query(
+          'UPDATE programs SET isdeleted = TRUE WHERE id = $1 RETURNING *',
+          [id]
+        );
+
+        if (result.rows.length === 0) {
+          return res.status(404).json({ message: 'Program not found.' });
+        }
+
+        return res.status(200).json({
+          message: 'Program marked for deletion. Admin approval required.',
+          program: result.rows[0],
+        });
+      } else {
+        const result = await query('DELETE FROM programs WHERE id = $1 RETURNING *', [id]);
+
+        if (result.rows.length === 0) {
+          return res.status(404).json({ message: 'Program not found.' });
+        }
+
+        return res.status(200).json({
+          message: 'Program deleted successfully',
+          program: result.rows[0],
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting program:', error);
+      return res.status(500).json({ message: 'Error deleting the program.' });
+    }
+  },
 
 }
