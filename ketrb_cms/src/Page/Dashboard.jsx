@@ -91,10 +91,10 @@ const Dashboard = () => {
   };
 
   // Pagination handler
-  const handlePageChange = (pageNumber) => {
+ const handlePageChange = (tab, pageNumber) => {
     setCurrentPage(prev => ({
       ...prev,
-      [activeTab]: pageNumber,
+      [tab]: pageNumber,
     }));
   };
 
