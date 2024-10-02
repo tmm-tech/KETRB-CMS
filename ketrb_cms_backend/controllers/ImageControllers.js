@@ -15,33 +15,39 @@ module.exports = {
 
         // Ensure the correct file path is saved
         const registeredAt = new Date(); // Get the current timestamp
-        const insertedImages = [];
+       const insertedImages = [];
 
-        try {
-            for (const file of files) {
-                const imageUrl = `gallery/${file.filename}`; // Use the correct 'gallery' folder
-                const filename = file.filename;
+  try {
+    for (const file of files) {
+      // Upload each image to Cloudinary and get the URL
+      const uploadResult = await cloudinary.uploader.upload(file.path, {
+        folder: 'gallery', // Uploading to the 'gallery' folder in Cloudinary
+      });
 
-                // Insert image details into PostgreSQL
-                const result = await query(
-                    'INSERT INTO images (filepath, image, status, registered_at) VALUES ($1, $2, $3, $4) RETURNING *',
-                    [imageUrl, filename, status, registeredAt]
-                );
+      const imageUrl = uploadResult.secure_url; // Cloudinary URL for the image
+      const publicId = uploadResult.public_id; // Cloudinary public ID
+      const filename = file.originalname; // Original file name
 
-                // Collect inserted image data
-                insertedImages.push(result.rows[0]);
-            }
+      // Insert image details into PostgreSQL
+      const result = await query(
+        'INSERT INTO images (filepath, image, status, registered_at) VALUES ($1, $2, $3, $4) RETURNING *',
+        [imageUrl, filename, status, registeredAt]
+      );
 
-            // Return success message and the newly inserted image data
-            res.status(201).json({
-                message: 'Images uploaded successfully',
-                images: insertedImages, // Return all inserted rows
-            });
-        } catch (error) {
-            console.error('Error saving images to database:', error);
-            res.status(500).json({ message: 'Error saving image details to database' });
-        }
-    },
+      // Collect inserted image data
+      insertedImages.push(result.rows[0]);
+    }
+
+    // Return success message and the newly inserted image data
+    res.status(201).json({
+      message: 'Images uploaded successfully',
+      images: insertedImages, // Return all inserted rows
+    });
+  } catch (error) {
+    console.error('Error saving images to database:', error);
+    res.status(500).json({ message: 'Error saving image details to database' });
+  }
+},
      // Cancel an image delete
       CancelImages: async (req, res) => {
         const { id } = req.params;
@@ -130,17 +136,17 @@ module.exports = {
             }
 
             const imagesWithUrl = images.map(image => ({
-                ...image,
-                url: `${req.protocol}://${req.get('host')}/gallery/${path.basename(image.filepath)}`,
-                status: image.status,
-                registered_at: image.registered_at,
-                title: image.image // Assuming 'filename' refers to the title
-            }));
+            ...image,
+            url: image.filepath, // Cloudinary URL from the database
+            status: image.status,
+            registered_at: image.registered_at,
+            title: image.image // Assuming 'image' refers to the title or filename
+        }));
 
-            res.status(200).json({
-                message: 'Images retrieved successfully',
-                images: imagesWithUrl
-            });
+        res.status(200).json({
+            message: 'Images retrieved successfully',
+            images: imagesWithUrl
+        });
         } catch (error) {
             console.error("Error retrieving images:", error);
             res.status(500).json({
