@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const { v2 as cloudinary } = require('cloudinary');
 const UserRoutes = require('./routes/UserRoutes');
 const ImageRoutes = require('./routes/ImageRoutes');
 const ProgramRoutes = require('./routes/ProgramRoutes');
@@ -14,7 +15,11 @@ const app = express();
 
 // Middleware setup
 app.use(cookieParser());
-
+cloudinary.config({ 
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 const corsOptions = {
   origin: 'https://ketrb-cms-one.vercel.app', // Your frontend URL
   credentials: true, // Allow cookies to be sent
@@ -22,16 +27,6 @@ const corsOptions = {
   allowedHeaders: 'Content-Type,Authorization' // Allowed headers
 };
 app.use(cors(corsOptions));
-
-// Static files and views
-// Serve static files from the public folder
-app.use(express.static(path.join(__dirname, 'public')));
-// Serve images from 'gallery', 'program', and 'news' folders inside public
-app.use('/gallery', express.static(path.join(__dirname, 'public', 'gallery')));
-app.use('/program', express.static(path.join(__dirname, 'public', 'program')));
-app.use('/news', express.static(path.join(__dirname, 'public', 'news')));
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "resources/views"));
 
 // Body parsing
 app.use(express.json({ limit: '50mb' }));
