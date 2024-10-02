@@ -1,6 +1,5 @@
 const { query } = require('../config/sqlConfig');
-const path = require('path');
-const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
 
 module.exports = {
     // Add multiple images
