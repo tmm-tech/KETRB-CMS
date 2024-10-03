@@ -54,14 +54,29 @@ const [sortOption, setSortOption] = useState({ news: '', images: '', programs: '
   };
 
   // Filtering handler
-  const handleFilterChange = (option) => {
+  const handleFilterChange = (filterType, option) => {
+  if (activeTab === "users") {
+    // Filter for Users tab: Handle status
+    setFilterOptions(prev => ({
+      ...prev,
+      users: {
+        ...prev.users,
+        status: prev.users.status.includes(option)
+          ? prev.users.status.filter(filter => filter !== option)
+          : [...prev.users.status, option]
+      }
+    }));
+  } else {
+    // For other tabs (news and programs), handle status filter
     setFilterOptions(prev => {
       const newFilters = prev[activeTab].includes(option)
         ? prev[activeTab].filter(filter => filter !== option)
         : [...prev[activeTab], option];
       return { ...prev, [activeTab]: newFilters };
     });
-  };
+  }
+};
+ 
 
   // Sorting logic for each tab
   const sortedData = {
@@ -171,20 +186,59 @@ const [sortOption, setSortOption] = useState({ news: '', images: '', programs: '
                   </DropdownMenuContent>
                 </DropdownMenu>
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="h-8 gap-1 bg-transparent border-black text-black">
-                      <FilterIcon className="h-3.5 w-3.5" />
-                      Filter
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem onClick={() => handleFilterChange('published')}>Published</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem onClick={() => handleFilterChange('pending')}>Pending</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem onClick={() => handleFilterChange('draft')}>Draft</DropdownMenuCheckboxItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button variant="outline" size="sm" className="h-8 gap-1 bg-transparent border-black text-black">
+      <FilterIcon className="h-3.5 w-3.5" />
+      Filter
+    </Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent align="end">
+    {activeTab === "users" ? (
+      <>
+        <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuCheckboxItem
+          checked={filterOptions.users.status.includes('active')}
+          onCheckedChange={() => handleFilterChange('status', 'active')}
+        >
+          Active
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          checked={filterOptions.users.status.includes('inactive')}
+          onCheckedChange={() => handleFilterChange('status', 'inactive')}
+        >
+          Inactive
+        </DropdownMenuCheckboxItem>
+      </>
+    ) : (
+      <>
+        <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuCheckboxItem
+          checked={filterOptions[activeTab].includes('published')}
+          onCheckedChange={() => handleFilterChange('status', 'published')}
+        >
+          Published
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          checked={filterOptions[activeTab].includes('pending')}
+          onCheckedChange={() => handleFilterChange('status', 'pending')}
+        >
+          Pending
+        </DropdownMenuCheckboxItem>
+        {activeTab !== "images" && ( // Ensure draft is not included for images
+          <DropdownMenuCheckboxItem
+            checked={filterOptions[activeTab].includes('draft')}
+            onCheckedChange={() => handleFilterChange('status', 'draft')}
+          >
+            Draft
+          </DropdownMenuCheckboxItem>
+        )}
+      </>
+    )}
+  </DropdownMenuContent>
+</DropdownMenu>
+               
                 
 
               </div>
