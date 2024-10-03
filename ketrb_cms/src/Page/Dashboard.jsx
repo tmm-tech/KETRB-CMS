@@ -79,16 +79,60 @@ const [sortOption, setSortOption] = useState({ news: '', images: '', programs: '
  
 
   // Sorting logic for each tab
-  const sortedData = {
-    news: () => [...news].sort((a, b) => (sortOption.news === 'latest' ? new Date(b.published_date) - new Date(a.published_date) : 0))
-                  .filter(article => (filterOptions.news.length === 0 ? true : filterOptions.news.includes(article.status))),
-    images: () => [...images].sort((a, b) => (sortOption.images === 'latest' ? new Date(b.registered_at) - new Date(a.registered_at) : 0))
-                    .filter(image => (filterOptions.images.length === 0 ? true : filterOptions.images.includes(image.status))),
-    programs: () => [...programs].sort((a, b) => (sortOption.programs === 'latest' ? new Date(b.published_date) - new Date(a.published_date) : 0))
-                      .filter(program => (filterOptions.programs.length === 0 ? true : filterOptions.programs.includes(program.status))),
-    users: () => [...users].sort((a, b) => (sortOption.users === 'latest' ? new Date(b.registered_at) - new Date(a.registered_at) : 0))
-                  .filter(user => (filterOptions.users.length === 0 ? true : filterOptions.users.includes(user.status))),
-  };
+const sortedData = {
+  news: () => {
+    return [...news]
+      .sort((a, b) => {
+        if (sortOption.news === 'latest') {
+          return new Date(b.published_date) - new Date(a.published_date);
+        } else if (sortOption.news === 'oldest') {
+          return new Date(a.published_date) - new Date(b.published_date);
+        }
+        return 0; // No sorting if option is not set
+      })
+      .filter(article => (filterOptions.news.length === 0 ? true : filterOptions.news.includes(article.status)));
+  },
+  
+  images: () => {
+    return [...images]
+      .sort((a, b) => {
+        if (sortOption.images === 'latest') {
+          return new Date(b.registered_at) - new Date(a.registered_at);
+        } else if (sortOption.images === 'oldest') {
+          return new Date(a.registered_at) - new Date(b.registered_at);
+        }
+        return 0; // No sorting if option is not set
+      })
+      .filter(image => (filterOptions.images.length === 0 ? true : filterOptions.images.includes(image.status)));
+  },
+
+  programs: () => {
+    return [...programs]
+      .sort((a, b) => {
+        if (sortOption.programs === 'latest') {
+          return new Date(b.published_date) - new Date(a.published_date);
+        } else if (sortOption.programs === 'oldest') {
+          return new Date(a.published_date) - new Date(b.published_date);
+        }
+        return 0; // No sorting if option is not set
+      })
+      .filter(program => (filterOptions.programs.length === 0 ? true : filterOptions.programs.includes(program.status)));
+  },
+
+  users: () => {
+    return [...users]
+      .sort((a, b) => {
+        if (sortOption.users === 'latest') {
+          return new Date(b.registered_at) - new Date(a.registered_at);
+        } else if (sortOption.users === 'oldest') {
+          return new Date(a.registered_at) - new Date(b.registered_at);
+        }
+        return 0; // No sorting if option is not set
+      })
+      .filter(user => (filterOptions.users.length === 0 ? true : filterOptions.users.includes(user.status)));
+  },
+};
+ 
 
   // Pagination logic
   const totalPages = {
