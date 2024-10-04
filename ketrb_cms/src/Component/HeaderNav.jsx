@@ -210,7 +210,7 @@ const HeaderNav = () => {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="flex items-center justify-between gap-2 p-2 hover:bg-muted">
-              <Link href="/notifications" className="flex items-center gap-2" prefetch={false}>
+              <Link to="/notifications" className="flex items-center gap-2" prefetch={false}>
                 <BellIcon className="h-4 w-4" />
                 <span className="text-sm font-medium">View all notifications</span>
               </Link>
