@@ -8,7 +8,7 @@ import bgImage from "../Asset/bg.png";
 
 
 
-export default function NotificationsPage() {
+const NotificationsPage= () => {
   const [notifications, setNotifications] = useState([
     {
       id: 1,
@@ -106,8 +106,10 @@ export default function NotificationsPage() {
   </main>
 </div>
 </div>
-  )
-}
+  );
+};
+
+export default NotificationsPage;
 
 function BellIcon(props) {
   return (
