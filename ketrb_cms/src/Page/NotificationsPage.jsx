@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import React, { useEffect, useState } from "react";
+import SideNav from "../Component/SideNav";
+import HeaderNav from "../Component/HeaderNav";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../Component/card';
-import { ScrollArea } from "../Component/scroll-area"
-import { Button } from "../Component/button"
+import { ScrollArea } from "../Component/scroll-area";
+import { Button } from "../Component/button";
 import bgImage from "../Asset/bg.png";
 
 
