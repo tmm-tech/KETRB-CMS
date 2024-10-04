@@ -4,20 +4,32 @@ import { ScrollArea } from "../Component/scroll-area"
 import { Button } from "../Component/button"
 import bgImage from "../Asset/bg.png";
 
-interface Notification {
-  id: number
-  title: string
-  summary: string
-  body: string
-  isRead: boolean
-}
+
 
 export default function NotificationsPage() {
-  const [notifications, setNotifications] = useState<Notification[]>([
-    { id: 1, title: "New Update", summary: "Check out the latest update", body: "Detailed information about the update. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", isRead: false },
-    { id: 2, title: "Reminder", summary: "Upcoming event reminder", body: "Details about the event. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", isRead: true },
-    { id: 3, title: "New Message", summary: "You have a new message", body: "Content of the new message. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", isRead: false },
-  ])
+  const [notifications, setNotifications] = useState([
+    {
+      id: 1,
+      title: "New Update",
+      summary: "Check out the latest update",
+      body: "Detailed information about the update. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      isRead: false
+    },
+    {
+      id: 2,
+      title: "Reminder",
+      summary: "Upcoming event reminder",
+      body: "Details about the event. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      isRead: true
+    },
+    {
+      id: 3,
+      title: "New Message",
+      summary: "You have a new message",
+      body: "Content of the new message. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      isRead: false
+    },
+  ]);
 
   const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null)
 
