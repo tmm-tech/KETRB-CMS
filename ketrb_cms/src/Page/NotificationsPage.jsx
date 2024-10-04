@@ -33,7 +33,7 @@ const NotificationsPage= () => {
     },
   ]);
 
-  const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null)
+  const [selectedNotification, setSelectedNotification] = useState(null)
 
   const handleNotificationClick = (notification: Notification) => {
     setSelectedNotification(notification)
