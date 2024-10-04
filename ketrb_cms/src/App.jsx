@@ -12,6 +12,7 @@ import ProgramsEdit from './Page/ProgramsEdit';
 import UserAdd from './Page/UsersAdd';
 import ProfilePage from './Page/ProfilePage';
 import LoadingPage from './Page/LoadingPage';
+import NotificationsPage from './Page/NotificationsPage';
 import MobileCheckWrapper from './Page/MobileCheckWrapper';
 import UserEdit from './Page/UserEdit';
 import NewsEdit from './Page/NewsEdit';
@@ -59,6 +60,7 @@ const App = () => {
         {isAuthenticated ? (
           <>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/notifications" element={<NotificationsPage/>} />
             <Route path="/news" element={<NewsPage />} />
             <Route path="/news/add news" element={<NewsAdd />} />
              <Route path="/news/edit news/:id" element={<NewsEdit />} />
