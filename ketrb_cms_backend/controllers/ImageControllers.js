@@ -131,7 +131,7 @@ module.exports = {
         if (result.rows.length === 0) {
           return res.status(404).json({ message: 'Image not found.' });
         }
- if (status == "pending"){
+
         // Notify admin about deletion request
         await query(
           'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
@@ -143,7 +143,7 @@ module.exports = {
             false, // Not read yet
           ]
         );
- }
+ 
         return res.status(200).json({
           message: 'Image marked for deletion. Admin approval required.',
           news: result.rows[0],
