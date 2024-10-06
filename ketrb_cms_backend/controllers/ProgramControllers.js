@@ -18,6 +18,19 @@ module.exports = {
         'INSERT INTO programs (title, content, image, published_date, author, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
         [title, content, imagePath, publishedDate, author, status]
       );
+      // Notify admins for approval if status is pending
+      if (status === 'pending') {
+        await query(
+          'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
+          [
+            'programs_uploaded',
+            `Program article "${title}" uploaded by ${author} pending approval.`,
+            user_id,  // The editor's ID
+            'administrator',  // Notify all admins
+            false     // Not read yet
+          ]
+        );
+      }
       res.status(201).json({ message: 'Program added successfully', program: result.rows[0] });
     } catch (error) {
       console.error('Error adding program:', error);
@@ -40,6 +53,16 @@ module.exports = {
       }
 
       const updatedProgram = result.rows[0];
+	    await query(
+          'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
+          [
+            'program_marked_for_deletion',
+            `program article "${title}" deletion by ${user_id}.Has been Canceled`,
+            user_id,
+            'administrator',
+            false
+          ]
+        );
       res.status(200).json(updatedProgram);
     } catch (error) {
       console.error('Error canceling program:', error);
@@ -103,9 +126,9 @@ module.exports = {
 
       let newStatus = status; 
       if (role === 'editor') {
-        newStatus = 'pending';
+        programStatus = 'pending';
       } else if (role === 'administrator' && status === 'pending') {
-        newStatus = 'published';
+        programStatus = 'published';
       }
 
       let imagePath;
@@ -121,9 +144,22 @@ module.exports = {
 
       const result = await query(
         'UPDATE programs SET title = $1, content = $2, image = $3, published_date = $4, author = $5, status = $6 WHERE id = $7 RETURNING *',
-        [title, content, imagePath, publishedDate, author, newStatus, id]
+        [title, content, imagePath, publishedDate, author, programStatus, id]
       );
 
+ // Notify admin if the update changes status to pending
+      if (programStatus === 'pending') {
+        await query(
+          'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
+          [
+            'program_updated',
+            `Program article "${title}" has been updated and is pending approval.`,
+            user_id,
+            'administrator',
+            false
+          ]
+        );
+      }
       res.status(200).json({ message: 'Program updated successfully', program: result.rows[0] });
     } catch (error) {
       console.error('Error updating program:', error);
@@ -140,7 +176,16 @@ module.exports = {
         'UPDATE programs SET status = $1 WHERE id = $2 RETURNING *',
         ['published', id]
       );
-
+       await query(
+        'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
+        [
+          'program_approved',
+          `Program article "${news.title}" has been approved for publishing.`,
+          null, // System notification, no specific sender
+          'editor',
+          false
+        ]
+      );
       if (result.rows.length === 0) {
         return res.status(404).json({ message: 'Program not found.' });
       }
@@ -167,7 +212,16 @@ module.exports = {
         if (result.rows.length === 0) {
           return res.status(404).json({ message: 'Program not found.' });
         }
-
+        await query(
+          'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
+          [
+            'program_marked_for_deletion',
+            `program article "${title}" has been marked for deletion by ${user_id}.`,
+            user_id,
+            'administrator',
+            false
+          ]
+        );
         return res.status(200).json({
           message: 'Program marked for deletion. Admin approval required.',
           program: result.rows[0],
