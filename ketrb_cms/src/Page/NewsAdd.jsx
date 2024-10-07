@@ -23,6 +23,7 @@ const NewsAdd = () => {
     const [draftloading, setdraftLoading] = useState(false);
     const storedUser = localStorage.getItem('user');
     const user = JSON.parse(storedUser);
+    const user_id = user.id;
 
 	
     useEffect(() => {
@@ -71,6 +72,7 @@ const NewsAdd = () => {
         formData.append('author', author);
         formData.append('status', status);
         formData.append('news', image);
+	formData.append('user_id', user_id);
 
         try {
             const response = await fetch('https://ketrb-backend.onrender.com/news/add', {
