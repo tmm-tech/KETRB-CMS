@@ -4,7 +4,7 @@ const cloudinary = require('cloudinary').v2;
 module.exports = {
 	 // Add a new program
   AddProgram: async (req, res) => {
-    const { title, content, publishedDate, author, status } = req.body;
+    const { title, content, publishedDate, author, status,user_id} = req.body;
     const image = req.file;
 
     try {
@@ -57,7 +57,7 @@ module.exports = {
           'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
           [
             'program_marked_for_deletion',
-            `program article "${title}" deletion by ${user_id}.Has been Canceled`,
+            `program article deletion by ${user_id}.Has been Canceled`,
             user_id,
             'administrator',
             false
@@ -115,7 +115,7 @@ module.exports = {
   // Update an existing program
   UpdateProgram: async (req, res) => {
     const { id } = req.params;
-    const { title, content, publishedDate, author, status, role } = req.body;
+    const { title, content, publishedDate, author, status, role, user_id} = req.body;
     const image = req.file;
 
     try {
@@ -180,7 +180,7 @@ module.exports = {
         'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
         [
           'program_approved',
-          `Program article "${news.title}" has been approved for publishing.`,
+          `Program article has been approved for publishing.`,
           null, // System notification, no specific sender
           'editor',
           false
@@ -200,7 +200,7 @@ module.exports = {
   // Delete a program
   DeleteProgram: async (req, res) => {
     const { id } = req.params;
-    const { role } = req.body;
+    const { role,user_id} = req.body;
 
     try {
       if (role === 'editor') {
@@ -216,8 +216,8 @@ module.exports = {
           'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
           [
             'program_marked_for_deletion',
-            `program article "${title}" has been marked for deletion by ${user_id}.`,
-            user_id,
+            `program article has been marked for deletion by ${user_id}.`,
+             user_id,
             'administrator',
             false
           ]
