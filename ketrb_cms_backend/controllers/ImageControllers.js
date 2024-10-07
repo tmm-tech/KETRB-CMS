@@ -35,9 +35,10 @@ module.exports = {
        if (status == "pending"){
         // Add notification for admin approval
         await query(
-          'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
+          'INSERT INTO notifications (notification_type,item_id message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
           [
             'image_uploaded',
+             filename,
             `Image "${filename}" uploaded by editor pending approval.`,
              user_id,  // The editor's ID
             'administrator',  // Notification for admin
@@ -71,6 +72,7 @@ module.exports = {
           'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
           [
             'Image Delete Cancelled',
+            
             `Editor requested deletion for image with ID ${id}.Has been cancelled`,
              'null',
             'editor',  // Notify admins
