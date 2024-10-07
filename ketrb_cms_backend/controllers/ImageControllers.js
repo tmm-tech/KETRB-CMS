@@ -35,7 +35,7 @@ module.exports = {
        if (status == "pending"){
         // Add notification for admin approval
         await query(
-          'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
+          'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
           [
             'image_uploaded',
              filename,
