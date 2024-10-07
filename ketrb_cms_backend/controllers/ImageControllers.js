@@ -88,7 +88,7 @@ module.exports = {
     // Notify editor about delete cancellation request
     if (userId) {
       await query(
-        'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
+        'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
         [
           'image_deletion_cancelled',
           id,
@@ -123,9 +123,6 @@ module.exports = {
 
     const filename = imageResult.rows[0].filename; // Get the filename
 
-    await query('UPDATE images SET status = $1 WHERE id = $2', [status, id]);
-
-
     const existingNotification = await query(
       'SELECT sender_id FROM notifications WHERE notification_type = $1 AND item_id = $2',
       ['image_uploaded', filename]
@@ -136,7 +133,7 @@ module.exports = {
       // If an existing notification is found, use its sender_id
       const senderIdToUse = existingNotification.rows[0].sender_id;
 
-      
+      await query('UPDATE images SET status = $1 WHERE id = $2', [status, id]);
       await query(
         'INSERT INTO notifications (notification_type, item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
         [
@@ -149,6 +146,9 @@ module.exports = {
         ]
       );
     }
+
+    
+
 
     res.status(200).json({ message: 'Image status updated successfully. Admin review required.' });
   } catch (error) {
