@@ -3,7 +3,7 @@ const cloudinary = require('cloudinary').v2;
 
 module.exports = {
   AddNews: async (req, res) => {
-    const { title, content, publishedDate, author, status } = req.body;
+    const { title, content, publishedDate, author, status,user_id } = req.body;
     const image = req.file;
 
     // Ensure the image is provided
@@ -30,7 +30,7 @@ module.exports = {
           [
             'news_uploaded',
             `News article "${title}" uploaded by ${author} pending approval.`,
-            user_id,  // The editor's ID
+             user_id,  // The editor's ID
             'administrator',  // Notify all admins
             false     // Not read yet
           ]
@@ -63,7 +63,7 @@ module.exports = {
           [
             'news_marked_for_deletion',
             `News article "${news.title}" deletion by ${user_id}.Has been Canceled`,
-            user_id,
+             null,
             'editor',
             false
           ]
@@ -119,7 +119,7 @@ module.exports = {
 // Update an existing news article
 UpdateNews: async (req, res) => {
   const { id } = req.params;
-  const { title, content, publishedDate, author, status, role } = req.body;
+  const { title, content, publishedDate, author, status, role,user_id } = req.body;
   const image = req.file;
 
   try {
@@ -160,7 +160,7 @@ UpdateNews: async (req, res) => {
           [
             'news_updated',
             `News article "${title}" has been updated and is pending approval.`,
-            user_id,
+             user_id,
             'administrator',
             false
           ]
@@ -191,7 +191,7 @@ UpdateNews: async (req, res) => {
         'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
         [
           'news_approved',
-          `News article "${news.title}" has been approved for publishing.`,
+          `News article has been approved for publishing.`,
           null, // System notification, no specific sender
           'editor',
           false
@@ -208,7 +208,7 @@ UpdateNews: async (req, res) => {
   // Delete a news article
   DeleteNews: async (req, res) => {
     const { id } = req.params;
-    const { role } = req.body;
+    const { role,user_id } = req.body;
 
     try {
       if (role === 'editor') {
@@ -224,7 +224,7 @@ UpdateNews: async (req, res) => {
           'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
           [
             'news_marked_for_deletion',
-            `News article "${news.title}" has been marked for deletion by ${user_id}.`,
+            `News article has been marked for deletion by ${user_id}.`,
             user_id,
             'administrator',
             false
