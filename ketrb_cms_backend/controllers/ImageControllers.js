@@ -127,8 +127,8 @@ module.exports = {
 
 
     const existingNotification = await query(
-      'SELECT sender_id FROM notifications WHERE notification_type = $1 AND message LIKE $2',
-      ['image_uploaded', `%Image "${filename}"%`]
+      'SELECT sender_id FROM notifications WHERE notification_type = $1 AND item_id= $2',
+      ['image_uploaded', filename]
     );
 
     
