@@ -28,6 +28,7 @@ const NewsEdit = () => {
     const [editMode, setEditMode] = useState(false); // Handle edit mode toggle
     const storedUser = localStorage.getItem('user');
     const user = JSON.parse(storedUser);
+	const user_id=user.id;
 
     useEffect(() => {
         // Fetch news data by ID and set state
@@ -89,6 +90,7 @@ const NewsEdit = () => {
         formData.append('author', author);
         formData.append('status', status);
         formData.append('role', user.roles);
+	formData.append('user_id', user_id);
         if (image) formData.append('news', image); // Append new image if uploaded
 
         try {
