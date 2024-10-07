@@ -135,9 +135,10 @@ module.exports = {
 
       await query('UPDATE images SET status = $1 WHERE id = $2', [status, id]);
       await query(
-        'INSERT INTO notifications (notification_type, item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
+        'INSERT INTO notifications (notification_type, item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
         [
           'image_status_updated',
+          filename,
           `Image "${filename}" updated by editor, pending administrator approval.`,
           filename,
           senderIdToUse,  // Use the existing notification's sender_id
@@ -202,11 +203,12 @@ DeleteImage: async (req, res) => {
         // Proceed with deletion
         await query('DELETE FROM images WHERE id = $1', [id]);
 
-        // Optional: If you want to notify the editor about the deletion approval
+       
         await query(
-          'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
+          'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5,$6)',
           [
             'image_deletion_approved',
+            id,
             `Administrator approved the deletion of image with ID ${id}.`,
             existingUserId,  // Use the user_id from the existing notification
             'editor',  // Notify the editor
