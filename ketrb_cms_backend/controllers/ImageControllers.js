@@ -114,7 +114,7 @@ module.exports = {
   const { status, user_id, role } = req.body; // Add user_id and role
 
   try {
-    const imageResult = await query('SELECT filename FROM images WHERE id = $1', [id]);
+    const imageResult = await query('SELECT image FROM images WHERE id = $1', [id]);
 
     // Check if the image exists
     if (imageResult.rows.length === 0) {
