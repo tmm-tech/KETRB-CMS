@@ -4,7 +4,7 @@ const cloudinary = require('cloudinary').v2;
 module.exports = {
   // Add multiple images
   AddImage: async (req, res) => {
-    const { status, user_id, role } = req.body; // Add user_id and role
+    const { status, user_id} = req.body; // Add user_id and role
     const files = req.files;
 
     // Check if files are uploaded
@@ -39,7 +39,7 @@ module.exports = {
           [
             'image_uploaded',
             `Image "${filename}" uploaded by editor pending approval.`,
-            user_id,  // The editor's ID
+             user_id,  // The editor's ID
             'administrator',  // Notification for admin
             false, // Not read yet
           ]
@@ -72,7 +72,7 @@ module.exports = {
           [
             'Image Delete Cancelled',
             `Editor requested deletion for image with ID ${id}.Has been cancelled`,
-            user_id,
+             'null',
             'editor',  // Notify admins
             false, // Not read yet
           ]
