@@ -23,7 +23,7 @@ const ProgramsAdd = () => {
     const [draftloading, setdraftLoading] = useState(false);
     const storedUser = localStorage.getItem('user');
     const user = JSON.parse(storedUser);
-
+   const user_id=user.id;
 	
     useEffect(() => {
         if (user && user.fullname) {
@@ -71,6 +71,7 @@ const ProgramsAdd = () => {
         formData.append('author', author);
         formData.append('status', status);
         formData.append('program', image);
+	formData.append('user_id', user_id);
 
         try {
             const response = await fetch('https://ketrb-backend.onrender.com/programs/add', {
