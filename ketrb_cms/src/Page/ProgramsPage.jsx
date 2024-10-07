@@ -17,7 +17,7 @@ const ProgramsPage = () => {
     const [alertMessage, setAlertMessage] = useState("");
     const [sortOption, setSortOption] = useState("date"); // default sorting by date
     const [statusFilter, setStatusFilter] = useState([]); // filter by status
-
+    const user_id=user.id;
 const storedUser = localStorage.getItem('user');
   const user = JSON.parse(storedUser);
       const navigate = useNavigate();
@@ -157,7 +157,7 @@ const handlePublish = async (id) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ role: user.roles }) // Pass user role to the backend
+        body: JSON.stringify({ role: user.roles,user_id }) // Pass user role to the backend
       });
 
       if (response.ok) {
