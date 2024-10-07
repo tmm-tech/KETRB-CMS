@@ -226,30 +226,7 @@ setAlertMessage(""); // Reset any previous alert message
         }
     };
 
-const handleDeleteApprove = async (id) => {
-    try {
-        const response = await fetch(`https://ketrb-backend.onrender.com/images/delete/${id}`, {
-            method: 'DELETE', 
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        if (response.ok) {
-            const updatedImages = await response.json();
-            // Update state to reflect the approved program
-            setImages((prevImages) => 
-                prevImages.map((image) => (image.id === id ? updatedImages : image))
-            );
-            setAlertMessage('Image delete approved');
-	 window.location.href = '/images';
-        } else {
-            setAlertMessage('Failed to approve delete');
-        }
-    } catch (error) {
-        console.error("Error approving delete:", error);
-        setAlertMessage('An error occurred while approving delete.');
-    }
-};
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
@@ -470,7 +447,7 @@ const handleDeleteApprove = async (id) => {
 			             <FilePenIcon className="h-4 w-4" />         
 				     View
 			        </Button>
-				<Button variant="black" size="sm" className="h-8 gap-1" onClick={() => handleDeleteApprove(image.id)}>
+				<Button variant="black" size="sm" className="h-8 gap-1" onClick={() => handleDelete(image.id)}>
 					<CheckIcon className="h-3.5 w-3.5" />
 					<span>Approve Delete</span>
 				</Button>
