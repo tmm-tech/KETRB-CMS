@@ -26,7 +26,7 @@ const ImagePage = () => {
   const [selectedImage, setSelectedImage] = useState(null); 
   const [sortOption, setSortOption] = useState("date"); // default sorting by date
   const [statusFilter, setStatusFilter] = useState([]); // filter by status
-	
+	const user_id=user.id;
   useEffect(() => {
     const fetchImages = async () => {
       try {
@@ -101,7 +101,7 @@ const handleApprove = async (id) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ status: 'published' }), // Update status to 'published'
+      body: JSON.stringify({ status: 'published',user_id }), // Update status to 'published'
     });
 
     if (response.ok) {
@@ -125,7 +125,7 @@ const handleDelete = async (id) => {
 	    headers: {
 		'Content-Type': 'application/json',
 	    },
-	    body: JSON.stringify({ role: user.roles }) // Pass user role to the backend
+	    body: JSON.stringify({ role: user.roles,user_id }) // Pass user role to the backend
 	});
 
 
@@ -165,7 +165,7 @@ imageFile.forEach(file => formData.append('images', file)); // Assuming imageFil
 
 // Append other form data (like status)
 formData.append('status', status);
-
+formData.append('user_id', user_id);
 setLoading(true);
 setAlertMessage(""); // Reset any previous alert message
 
@@ -209,7 +209,7 @@ setAlertMessage(""); // Reset any previous alert message
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ isdeleted: false }), // Set isDeleted to true
+                body: JSON.stringify({ isdeleted: false,user_id }), // Set isDeleted to true
             });
 
             if (response.ok) {
