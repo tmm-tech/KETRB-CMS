@@ -32,7 +32,7 @@ const storedUser = localStorage.getItem('user');
         if (!users) return; // Check if user exists
 
         try {
-            const response = await fetch(`https://ketrb-backend.onrender.com/notifications?id=${users.id}&role=${users.role}`, {
+            const response = await fetch(`https://ketrb-backend.onrender.com/notifications?id=${users.id}&role=${users.roles}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
