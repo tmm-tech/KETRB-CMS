@@ -259,13 +259,14 @@ const storedUser = localStorage.getItem('user');
               className="grid grid-cols-[25px_1fr] items-start gap-2 p-2 hover:bg-muted"
               onClick={() => handleNotificationClick(notification.id)}
             >
-              <div className={`flex h-2 w-2 translate-y-1.5 rounded-full ${notification.is_read ? 'bg-gray-500' : 'bg-blue-500'}`} />
               <div className="space-y-1">
+            
   <p className={`text-sm font-bold ${notification.message.length > 40 ? 'truncate' : ''}`}>
     {notification.message.length > 50 ? `${notification.message.slice(0, 40)}...` : notification.message}
   </p>
   <p className="text-xs text-gray-500">{new Date(notification.created_at).toLocaleTimeString()}</p>
 </div>
+              
             </DropdownMenuItem>
           ))
         )}
