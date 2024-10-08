@@ -8,7 +8,8 @@ const cloudinary = require('cloudinary').v2;
 const UserRoutes = require('./routes/UserRoutes');
 const ImageRoutes = require('./routes/ImageRoutes');
 const ProgramRoutes = require('./routes/ProgramRoutes');
-const NewsRoutes = require('./routes/NewsRoutes'); // Include the NewsRoutes
+const NewsRoutes = require('./routes/NewsRoutes');
+const NotificationRoutes = require('./routes/NotificationRoutes'); 
 const cookieParser = require('cookie-parser');
 
 const app = express(); 
