@@ -69,7 +69,10 @@ const NotificationsPage = () => {
               </CardHeader>
               <CardContent className="p-0">
                 <ScrollArea className="h-[calc(100vh-5rem)] md:h-[calc(100vh-7rem)]">
-                  {notifications.map((notification) => (
+                  {notifications.length === 0 ? (
+      <div className="p-2 text-sm text-gray-500">No notifications</div>
+    ) : (
+      notifications.map((notification) => (
                     <div
                       key={notification.id}
                       className={`flex items-start p-4 cursor-pointer transition-colors ${
@@ -97,9 +100,9 @@ const NotificationsPage = () => {
               <CardContent className="p-6">
                 {selectedNotification ? (
                   <div>
-                    <h2 className="text-2xl font-bold mb-4">{selectedNotification.title}</h2>
-                    <p className="mb-6">{selectedNotification.body}</p>
-                    <Button onClick={() => markAsRead(selectedNotification.id)}>
+                    <h2 className="text-2xl font-bold mb-4">{selectedNotification.notification_type}</h2>
+                    <p className="mb-6">{selectedNotification.message}</p>
+                    <Button variant="black"  onClick={() => markAsRead(selectedNotification.id)}>
                       {selectedNotification.isRead ? "Mark as Unread" : "Mark as Read"}
                     </Button>
                   </div>
