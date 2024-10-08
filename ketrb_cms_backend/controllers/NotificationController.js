@@ -3,7 +3,7 @@ const { query } = require('../config/sqlConfig');
 module.exports = {
   // Get Notifications based on role and user ID
   getNotifications: async (req, res) => {
-    const { role, id } = req.user; // Assuming req.user holds the authenticated user's role and ID
+    const { role, id } = req.query; 
 
     try {
       let notifications = [];
