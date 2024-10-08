@@ -43,7 +43,7 @@ const storedUser = localStorage.getItem('user');
         if (response.ok) {
           const fetchedNotifications = await response.json();
           setNotifications(fetchedNotifications.notifications);
-          const unreadNotifications = notificationsData.filter(notification => !notification.is_read);
+          const unreadNotifications = notification.filter(notification => !notification.is_read);
           setUnreadCount(unreadNotifications.length); // Update unread count
           
         } else {
