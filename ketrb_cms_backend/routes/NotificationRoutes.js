@@ -1,12 +1,12 @@
 const express = require('express');
 const { getNotifications, updateNotificationStatus } = require('../controllers/NotificationController');
 
-const router = express.Router();
+const NotificationRoutes = express.Router();
 
 // Get all notifications for the user
-router.get('/', getNotifications);
+NotificationRoutes.get('/', getNotifications);
 
 // Update notification status (read/unread)
-router.put('/:id/status', updateNotificationStatus);
+NotificationRoutes.put('/:id/status', updateNotificationStatus);
 
-module.exports = router;
+module.exports = NotificationRoutes;
