@@ -10,15 +10,8 @@ import { Avatar, AvatarFallback, AvatarImage, } from "../Component/avatar";
 const HeaderNav = () => {
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
-
-  useEffect(() => {
-    const getNotifications = async () => {
-      const fetchedNotifications = await fetchNotifications();
-      setNotifications(fetchedNotifications);
-    };
-  const location = useLocation();
-  const getPathname = (path) => path.split('/').filter(Boolean);
-  const storedUser = localStorage.getItem('user');
+const storedUser = localStorage.getItem('user');
+  const users = JSON.parse(storedUser);
   let fullname = "";
   let userEmail = "";
   let initials = "";
@@ -34,14 +27,37 @@ const HeaderNav = () => {
       initials = nameParts.map(part => part[0].toUpperCase()).join("");
     }
   }
-const getUnreadCount = async () => {
-      const count = await fetchUnreadCount();
-      setUnreadCount(count);
+  useEffect(() => {
+    const getNotifications = async () => {
+      try {
+         
+        const userId = users.id;
+        const userRole = users.role;
+
+        const response = await fetch(`https://ketrb-backend.onrender.com/notifications?user_id=${userId}&role=${userRole}`, {
+          method: 'GET', // Use GET method
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        if (response.ok) {
+          const fetchedNotifications = await response.json();
+          setNotifications(fetchedNotifications.notifications);
+          const unreadNotifications = notificationsData.filter(notification => !notification.is_read);
+          setUnreadCount(unreadNotifications.length); // Update unread count
+          
+        } else {
+          console.error('Failed to fetch notifications');
+        }
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+      }
     };
 
     getNotifications();
-    getUnreadCount();
   }, []);
+  const location = useLocation();
+  const getPathname = (path) => path.split('/').filter(Boolean);
 
   const handleNotificationClick = async (notificationId) => {
     await updateNotificationStatus(notificationId, true);
