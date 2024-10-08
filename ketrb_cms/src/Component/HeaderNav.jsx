@@ -238,14 +238,14 @@ const storedUser = localStorage.getItem('user');
       </div>
       <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
-              <BellIcon className="h-5 w-5" />
-              {unreadCount > 0 && (
-            <span className="absolute top-0 right-0 inline-block w-6 h-6 text-center text-white bg-red-500 rounded-full">
-              {unreadCount}
-            </span>
-          )}
-            </Button>
+            <Button variant="outline" size="icon" className="relative overflow-hidden rounded-full">
+      <BellIcon className="h-5 w-5" />
+      {unreadCount > 0 && (
+        <span className="absolute top-0 right-0 -mt-2 -mr-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold leading-none text-white bg-red-500 rounded-full">
+          {unreadCount}
+        </span>
+      )}
+    </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-80">
             <DropdownMenuLabel>Notifications</DropdownMenuLabel>
