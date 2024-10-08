@@ -29,46 +29,62 @@ const storedUser = localStorage.getItem('user');
   }
   useEffect(() => {
     const getNotifications = async () => {
-      try {
-         
-        const userId = users.id;
-        const userRole = users.role;
+        if (!users) return; // Check if user exists
 
-        const response = await fetch(`https://ketrb-backend.onrender.com/notifications?user_id=${userId}&role=${userRole}`, {
-          method: 'GET', // Use GET method
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        if (response.ok) {
-          const fetchedNotifications = await response.json();
-          setNotifications(fetchedNotifications.notifications);
-          const unreadNotifications = notification.filter(notification => !notification.is_read);
-          setUnreadCount(unreadNotifications.length); // Update unread count
-          
-        } else {
-          console.error('Failed to fetch notifications');
+        try {
+            const response = await fetch(`https://ketrb-backend.onrender.com/notifications?user_id=${users.id}&role=${users.role}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.ok) {
+                const fetchedNotifications = await response.json();
+                setNotifications(fetchedNotifications.notifications);
+                const unreadNotifications = fetchedNotifications.notifications.filter(notification => !notification.is_read);
+                setUnreadCount(unreadNotifications.length); // Update unread count
+            } else {
+                console.error('Failed to fetch notifications');
+            }
+        } catch (error) {
+            console.error('Error fetching notifications:', error);
         }
-      } catch (error) {
-        console.error('Error fetching notifications:', error);
-      }
     };
 
     getNotifications();
-  }, []);
+}, [users]); // Add users as a dependency
+  
   const location = useLocation();
   const getPathname = (path) => path.split('/').filter(Boolean);
 
   const handleNotificationClick = async (notificationId) => {
-    await updateNotificationStatus(notificationId, true);
+  try {
+    // Call the API to update the notification status
+    const response = await fetch(`https://ketrb-backend.onrender.com/notifications/${notificationId}/status`, {
+      method: 'PUT', // or 'PATCH' depending on your API design
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ is_read: true }), // Adjust this payload as needed
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    // Update local state after successful API call
     setNotifications((prev) =>
       prev.map((notification) =>
         notification.id === notificationId ? { ...notification, is_read: true } : notification
       )
     );
     setUnreadCount((prev) => prev - 1);
-  };
-
+  } catch (error) {
+    console.error("Failed to update notification status:", error);
+    // Optionally, you can show a user-friendly error message here
+  }
+};
+  
   const handleLogout = async () => {
     console.log("Logging out...");
 
