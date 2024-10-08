@@ -1,38 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import { Card, CardHeader, CardTitle, CardContent } from '../Component/card';
 import { ScrollArea } from "../Component/scroll-area";
 import { Button } from "../Component/button";
 import bgImage from "../Asset/bg.png";
+import { fetchNotifications } from '../api'; // Import your fetch function
 
 const NotificationsPage = () => {
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      title: "New Update",
-      summary: "Check out the latest update",
-      body: "Detailed information about the update. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      isRead: false
-    },
-    {
-      id: 2,
-      title: "Reminder",
-      summary: "Upcoming event reminder",
-      body: "Details about the event. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.",
-      isRead: true
-    },
-    {
-      id: 3,
-      title: "New Message",
-      summary: "You have a new message",
-      body: "Content of the new message. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.",
-      isRead: false
-    },
-  ]);
-
+  const [notifications, setNotifications] = useState([]);
   const [selectedNotification, setSelectedNotification] = useState(null);
+  const storedUser = localStorage.getItem('user');
+  const users = JSON.parse(storedUser);
+  useEffect(() => {
+    const getNotifications = async () => {
+        if (!users) return; // Check if user exists
 
+        try {
+            const response = await fetch(`https://ketrb-backend.onrender.com/notifications?id=${users.id}&role=${users.roles}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.ok) {
+                const fetchedNotifications = await response.json();
+                setNotifications(fetchedNotifications.notifications);
+               } else {
+                console.error('Failed to fetch notifications');
+            }
+        } catch (error) {
+            console.error('Error fetching notifications:', error);
+        }
+    };
+
+    getNotifications();
+}, [users]); 
   const handleNotificationClick = (notification) => {
     setSelectedNotification(notification);
   };
