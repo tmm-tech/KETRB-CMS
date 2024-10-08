@@ -94,7 +94,7 @@ const formatTitle = (title) => {
                         )}
                       </div>
                       <div>
-                        <h3 className="text-2xl font-bold mb-4">{formatTitle(notification.notification_type)}</h3>
+                        <h3 className="text-2xl font-medium mb-4">{formatTitle(notification.notification_type)}</h3>
                         <p className="text-sm text-muted-foreground">{notification.message}</p>
                       </div>
                     </div>
