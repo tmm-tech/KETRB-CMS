@@ -44,7 +44,13 @@ const NotificationsPage = () => {
   const handleNotificationClick = (notification) => {
     setSelectedNotification(notification);
   };
-
+  
+const formatTitle = (title) => {
+    return title
+      .split('_')  // Split by underscores
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))  // Capitalize each word
+      .join(' ');  // Join words with spaces
+  };
   const markAsRead = (id) => {
     setNotifications(prevNotifications =>
       prevNotifications.map(n =>
@@ -88,7 +94,7 @@ const NotificationsPage = () => {
                         )}
                       </div>
                       <div>
-                        <h3 className="text-sm font-medium">{notification.notification_type}</h3>
+                        <h3 className="text-2xl font-bold mb-4">{formatTitle(notification.notification_type)}</h3>
                         <p className="text-sm text-muted-foreground">{notification.message}</p>
                       </div>
                     </div>
@@ -100,7 +106,7 @@ const NotificationsPage = () => {
               <CardContent className="p-6">
                 {selectedNotification ? (
                   <div>
-                    <h2 className="text-2xl font-bold mb-4">{selectedNotification.notification_type}</h2>
+                    <h2 className="text-2xl font-bold mb-4">{formatTitle(selectedNotification.notification_type)}</h2>
                     <p className="mb-6">{selectedNotification.message}</p>
                     <Button variant="black"  onClick={() => markAsRead(selectedNotification.id)}>
                       {selectedNotification.isRead ? "Mark as Unread" : "Mark as Read"}
