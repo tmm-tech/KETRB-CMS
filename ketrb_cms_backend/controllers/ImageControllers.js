@@ -108,12 +108,30 @@ module.exports = {
   }
 },
 
-  // Update image status
- UpdateImage: async (req, res) => {
+
+
+    
+  // Get a specific image by ID
+  getAImage: async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const result = await query('SELECT * FROM images WHERE id = $1', [id]);
+      if (result.rows.length > 0) {
+        res.status(200).json(result.rows[0]);
+      } else {
+        res.status(404).json({ message: 'Image not found' });
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Error retrieving image', error });
+    }
+  },
+UpdateImage: async (req, res) => {
   const { id } = req.params;
   const { status, user_id, role } = req.body; // Add user_id and role
 
   try {
+    // Get the image details
     const imageResult = await query('SELECT image FROM images WHERE id = $1', [id]);
 
     // Check if the image exists
@@ -121,80 +139,84 @@ module.exports = {
       return res.status(404).json({ message: 'Image not found.' });
     }
 
-    const filename = imageResult.rows[0].filename; // Get the filename
+    const filename = imageResult.rows[0].image; // Assuming `image` stores the filename or URL
 
+    // Check for existing notifications for this image
     const existingNotification = await query(
       'SELECT sender_id FROM notifications WHERE notification_type = $1 AND item_id = $2',
-      ['image_uploaded', filename]
+      ['image_uploaded', filename] // Use filename or image ID depending on your logic
     );
 
-    
     if (existingNotification.rows.length > 0) {
       // If an existing notification is found, use its sender_id
       const senderIdToUse = existingNotification.rows[0].sender_id;
 
+      // Update the image status
       await query('UPDATE images SET status = $1 WHERE id = $2', [status, id]);
+
+      // Create a new notification for the status update
       await query(
         'INSERT INTO notifications (notification_type, item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
         [
           'image_status_updated',
-          filename,
+          filename,  // Use the image filename or ID as item_id
           `Image "${filename}" updated by editor, pending administrator approval.`,
-          filename,
-          senderIdToUse,  // Use the existing notification's sender_id
-          'admin',        // Notify administrators for review
+          senderIdToUse,  // Use the sender_id from the existing notification
+          'admin',        // Notify administrators
           false           // Not read yet
         ]
       );
+
+      return res.status(200).json({ message: 'Image status updated successfully. Admin review required.' });
     }
 
-    
+    // If no existing notification, do not send any notification as per your requirement
+    res.status(200).json({ message: 'Image status updated successfully, but no notification was sent.' });
 
-
-    res.status(200).json({ message: 'Image status updated successfully. Admin review required.' });
   } catch (error) {
     console.error('Error updating image status:', error);
     res.status(500).json({ message: 'Error updating image status', error });
   }
 },
-
+// Delete an image
 DeleteImage: async (req, res) => {
   const { id } = req.params;
-  const { role, user_id } = req.body;
+  const { role, user_id } = req.body; // Assuming user_id is passed in the request body
 
   try {
     if (role === 'editor') {
+      // Mark the image as deleted
       const result = await query(
         'UPDATE images SET isdeleted = TRUE WHERE id = $1 RETURNING *',
         [id]
       );
 
-      if (result.rows.length === 0) {
+      if (result.rowCount === 0) {
         return res.status(404).json({ message: 'Image not found.' });
       }
 
       // Notify admin about deletion request
       await query(
-        'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
+        'INSERT INTO notifications (notification_type, item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
         [
           'image_deletion_requested',
-           id,
+          id,
           `Editor requested deletion for image with ID ${id}.`,
-          user_id,
-          'administrator',  // Notify admins
+          user_id, // Use the user_id from the request
+          'administrator', // Notify administrators
           false, // Not read yet
         ]
       );
 
       return res.status(200).json({
         message: 'Image marked for deletion. Admin approval required.',
-        news: result.rows[0],
+        image: result.rows[0], // Returning the updated image status
       });
     } else if (role === 'administrator') {
       // Check if a deletion request notification was already sent
       const notificationResult = await query(
         'SELECT sender_id FROM notifications WHERE notification_type = $1 AND message LIKE $2',
-        ['image_deletion_requested', `%Image with ID ${id}%`]
+        ['image_deletion_requested', `%image with ID ${id}%`]
       );
 
       if (notificationResult.rows.length > 0) {
@@ -203,9 +225,9 @@ DeleteImage: async (req, res) => {
         // Proceed with deletion
         await query('DELETE FROM images WHERE id = $1', [id]);
 
-       
+        // Notify the editor about the deletion approval
         await query(
-          'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5,$6)',
+          'INSERT INTO notifications (notification_type, item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
           [
             'image_deletion_approved',
             id,
@@ -228,27 +250,12 @@ DeleteImage: async (req, res) => {
       }
     }
   } catch (error) {
+    console.error('Error deleting image:', error);
     res.status(500).json({ message: 'Error deleting image', error });
   }
 },
-
-
-  // Get a specific image by ID
-  getAImage: async (req, res) => {
-    const { id } = req.params;
-
-    try {
-      const result = await query('SELECT * FROM images WHERE id = $1', [id]);
-      if (result.rows.length > 0) {
-        res.status(200).json(result.rows[0]);
-      } else {
-        res.status(404).json({ message: 'Image not found' });
-      }
-    } catch (error) {
-      res.status(500).json({ message: 'Error retrieving image', error });
-    }
-  },
-
+    
+    
   // Get all images
   getAllImage: async (req, res) => {
     try {
