@@ -85,8 +85,8 @@ const NotificationsPage = () => {
                         )}
                       </div>
                       <div>
-                        <h3 className="text-sm font-medium">{notification.title}</h3>
-                        <p className="text-sm text-muted-foreground">{notification.summary}</p>
+                        <h3 className="text-sm font-medium">{notification.notification_type}</h3>
+                        <p className="text-sm text-muted-foreground">{notification.message}</p>
                       </div>
                     </div>
                   ))}
