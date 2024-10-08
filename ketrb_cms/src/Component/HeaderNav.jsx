@@ -261,7 +261,7 @@ const storedUser = localStorage.getItem('user');
             >
               <div className={`flex h-2 w-2 translate-y-1.5 rounded-full ${notification.is_read ? 'bg-gray-500' : 'bg-blue-500'}`} />
               <div className="space-y-1">
-                <p className="text-sm font-medium">{notification.message.length > 10 ? `${notification.message.slice(0, 10)}...` : notification.message}`</p>
+                <p className="text-sm font-medium">{notification.message.length > 50 ? `${notification.message.slice(0, 50)}...` : notification.message}`</p>
                 <p className="text-sm text-muted-foreground">{new Date(notification.created_at).toLocaleTimeString()}</p>
               </div>
             </DropdownMenuItem>
