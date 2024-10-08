@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Sheet, SheetTrigger, SheetContent } from '../Component/sheet';
 import { Button } from '../Component/button';
@@ -8,6 +8,14 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLab
 import logo from "../Asset/Logo/ketrb.ico";
 import { Avatar, AvatarFallback, AvatarImage, } from "../Component/avatar";
 const HeaderNav = () => {
+  const [notifications, setNotifications] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    const getNotifications = async () => {
+      const fetchedNotifications = await fetchNotifications();
+      setNotifications(fetchedNotifications);
+    };
   const location = useLocation();
   const getPathname = (path) => path.split('/').filter(Boolean);
   const storedUser = localStorage.getItem('user');
@@ -26,6 +34,24 @@ const HeaderNav = () => {
       initials = nameParts.map(part => part[0].toUpperCase()).join("");
     }
   }
+const getUnreadCount = async () => {
+      const count = await fetchUnreadCount();
+      setUnreadCount(count);
+    };
+
+    getNotifications();
+    getUnreadCount();
+  }, []);
+
+  const handleNotificationClick = async (notificationId) => {
+    await updateNotificationStatus(notificationId, true);
+    setNotifications((prev) =>
+      prev.map((notification) =>
+        notification.id === notificationId ? { ...notification, is_read: true } : notification
+      )
+    );
+    setUnreadCount((prev) => prev - 1);
+  };
 
   const handleLogout = async () => {
     console.log("Logging out...");
@@ -182,32 +208,33 @@ const HeaderNav = () => {
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
               <BellIcon className="h-5 w-5" />
+              {unreadCount > 0 && (
+            <span className="absolute top-0 right-0 inline-block w-6 h-6 text-center text-white bg-red-500 rounded-full">
+              {unreadCount}
+            </span>
+          )}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-80">
             <DropdownMenuLabel>Notifications</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="grid grid-cols-[25px_1fr] items-start gap-2 p-2">
-              <div className="flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500" />
+            {notifications.length === 0 ? (
+          <div className="p-2 text-sm text-gray-500">No notifications</div>
+        ) : (
+          notifications.map((notification) => (
+            <DropdownMenuItem
+              key={notification.id}
+              className="grid grid-cols-[25px_1fr] items-start gap-2 p-2 hover:bg-muted"
+              onClick={() => handleNotificationClick(notification.id)}
+            >
+              <div className={`flex h-2 w-2 translate-y-1.5 rounded-full ${notification.is_read ? 'bg-gray-500' : 'bg-blue-500'}`} />
               <div className="space-y-1">
-                <p className="text-sm font-medium">Your call has been confirmed.</p>
-                <p className="text-sm text-muted-foreground">5 min ago</p>
+                <p className="text-sm font-medium">{notification.message}</p>
+                <p className="text-sm text-muted-foreground">{new Date(notification.createdAt).toLocaleTimeString()}</p>
               </div>
             </DropdownMenuItem>
-            <DropdownMenuItem className="grid grid-cols-[25px_1fr] items-start gap-2 p-2">
-              <div className="flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500" />
-              <div className="space-y-1">
-                <p className="text-sm font-medium">You have a new message!</p>
-                <p className="text-sm text-muted-foreground">1 min ago</p>
-              </div>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="grid grid-cols-[25px_1fr] items-start gap-2 p-2">
-              <div className="flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500" />
-              <div className="space-y-1">
-                <p className="text-sm font-medium">Your subscription is expiring soon!</p>
-                <p className="text-sm text-muted-foreground">2 hours ago</p>
-              </div>
-            </DropdownMenuItem>
+          ))
+        )}
             <DropdownMenuSeparator />
             <DropdownMenuItem className="flex items-center justify-between gap-2 p-2 hover:bg-muted">
               <Link to="/notifications" className="flex items-center gap-2" prefetch={false}>
