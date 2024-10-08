@@ -162,7 +162,7 @@ UpdateImage: async (req, res) => {
           filename,  // Use the image filename or ID as item_id
           `Image "${filename}" updated by editor, pending administrator approval.`,
           senderIdToUse,  // Use the sender_id from the existing notification
-          'admin',        // Notify administrators
+          'editor',        // Notify editor
           false           // Not read yet
         ]
       );
