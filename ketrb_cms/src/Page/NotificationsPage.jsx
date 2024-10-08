@@ -7,6 +7,9 @@ import { Button } from "../Component/button";
 import bgImage from "../Asset/bg.png";
 
 const NotificationsPage = () => {
+  const [selectedNotification, setSelectedNotification] = useState(null);
+  const [error, setError] = useState(null); 
+  const [notifications, setNotifications] = useState([]);
   const storedUser = localStorage.getItem('user');
   const users = JSON.parse(storedUser);
   useEffect(() => {
@@ -37,8 +40,7 @@ const NotificationsPage = () => {
     getNotifications();
   }, [users]);
 
-  const [selectedNotification, setSelectedNotification] = useState(null);
-
+  
   const handleNotificationClick = (notification) => {
     setSelectedNotification(notification);
   };
