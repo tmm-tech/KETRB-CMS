@@ -54,7 +54,8 @@ app.use(addTokenToRequest);
 app.use('/users', UserRoutes);
 app.use('/images', ImageRoutes);
 app.use('/programs', ProgramRoutes);
-app.use('/news', NewsRoutes); // Include the news routes
+app.use('/notifications', NotificationRoutes);
+app.use('/news', NewsRoutes);
 app.get('/', (req, res) => {
     res.json({ message: "Confirmed Connection to KETRB CMS" });
 });
