@@ -76,9 +76,9 @@ const formatTitle = (title) => {
               <CardContent className="p-0">
                 <ScrollArea className="h-[calc(100vh-5rem)] md:h-[calc(100vh-7rem)]">
                   {notifications.length === 0 ? (
-      <div className="p-2 text-sm text-gray-500">No notifications</div>
-    ) : (
-      notifications.map((notification) => (
+                     <div className="p-2 text-sm text-gray-500">No notifications</div>
+                   ) : (
+                 notifications.map((notification) => (
                     <div
                       key={notification.id}
                       className={`flex items-start p-4 cursor-pointer transition-colors ${
@@ -98,7 +98,8 @@ const formatTitle = (title) => {
                         <p className="text-sm text-muted-foreground">{notification.message}</p>
                       </div>
                     </div>
-                  ))}
+                  ))
+      )}
                 </ScrollArea>
               </CardContent>
             </Card>
