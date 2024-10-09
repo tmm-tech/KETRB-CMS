@@ -237,8 +237,8 @@ const storedUser = localStorage.getItem('user');
         />
       </div>
       <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="relative rounded-full">
+  <DropdownMenuTrigger asChild>
+    <Button variant="outline" size="icon" className="relative rounded-full">
       <BellIcon className="h-5 w-5" />
       {unreadCount > 0 && (
         <span className="absolute top-0 right-0 -mt-2 -mr-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold leading-none text-white bg-red-500 rounded-full">
@@ -246,40 +246,43 @@ const storedUser = localStorage.getItem('user');
         </span>
       )}
     </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-80">
-            <DropdownMenuLabel>Notifications</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {notifications.length === 0 ? (
-          <div className="p-2 text-sm text-gray-500">No notifications</div>
-        ) : (
-          notifications.map((notification) => (
-            <DropdownMenuItem
-              key={notification.id}
-              className="grid grid-cols-[25px_1fr] items-start gap-2 p-2 hover:bg-muted"
-              onClick={() => handleNotificationClick(notification.id)}
-            >
-              <div className="space-y-1">
-            
-  <p className={`text-sm font-medium ${notification.message.length > 50 ? 'truncate' : ''}`}>
-          {notification.message.length > 50 ? `${notification.message.slice(0, 50)}...` : notification.message}
-        </p>
-  <p className="text-xs text-gray-500">{new Date(notification.created_at).toLocaleTimeString()}</p>
-</div>
-              
-            </DropdownMenuItem>
-          ))
-        )}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="flex items-center justify-between gap-2 p-2 hover:bg-muted">
-              <Link to="/notifications" className="flex items-center gap-2" prefetch={false}>
-                <BellIcon className="h-4 w-4" />
-                <span className="text-sm font-medium">View all notifications</span>
-              </Link>
-              <ChevronRightIcon className="h-4 w-4 text-muted-foreground" />
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+  </DropdownMenuTrigger>
+  
+  <DropdownMenuContent align="end" className="w-80">
+    <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+    <DropdownMenuSeparator />
+    
+    {notifications.length === 0 ? (
+      <div className="p-2 text-sm text-gray-500">No notifications</div>
+    ) : (
+      notifications.map((notification) => (
+        <DropdownMenuItem
+          key={notification.id}
+          className="grid grid-cols-[25px_1fr] items-start gap-2 p-2 hover:bg-muted"
+          onClick={() => handleNotificationClick(notification.id)}
+        >
+          <div className="space-y-1">
+            <p className={`text-sm font-medium ${notification.message.length > 50 ? 'truncate' : ''}`}>
+              {notification.message.length > 50 ? `${notification.message.slice(0, 50)}...` : notification.message}
+            </p>
+            <p className="text-xs text-gray-500">{new Date(notification.created_at).toLocaleTimeString()}</p>
+          </div>
+        </DropdownMenuItem>
+      ))
+    )}
+    
+    <DropdownMenuSeparator />
+    
+    <DropdownMenuItem className="flex items-center justify-between gap-2 p-2 hover:bg-muted">
+      <Link to="/notifications" className="flex items-center gap-2" prefetch={false}>
+        <BellIcon className="h-4 w-4" />
+        <span className="text-sm font-medium">View all notifications</span>
+      </Link>
+      <ChevronRightIcon className="h-4 w-4 text-muted-foreground" />
+    </DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+      
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
