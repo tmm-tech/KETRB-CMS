@@ -4,9 +4,7 @@ module.exports = {
   // Get Notifications based on role and user ID
   getNotifications: async (req, res) => {
     const { role, id } = req.query; 
-    console.log("id ", id);
-    console.log("role ", role);
-
+   
     try {
       let notifications = [];
 
