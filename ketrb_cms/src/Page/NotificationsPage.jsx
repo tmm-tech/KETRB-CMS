@@ -100,21 +100,21 @@ const formatTitle = (title) => {
                    ) : (
                  notifications.map((notification) => (
                     <div
-                      key={notification.id}
-                      className={`flex items-start p-4 cursor-pointer transition-colors ${
-                        notification.isRead ? 'bg-background' : 'bg-accent'
-                      } ${selectedNotification?.id === notification.id ? 'bg-muted' : ''}`}
-                      onClick={() => handleNotificationClick(notification)}
-                    >
+                        key={notification.id}
+                        className={`flex items-start p-4 cursor-pointer transition-colors 
+                          ${notification.isRead ? 'bg-gray-100' : 'bg-blue-100'} 
+                          ${selectedNotification?.id === notification.id ? 'bg-gray-200' : ''}`}
+                        onClick={() => handleNotificationClick(notification)}
+                      >
                       <div className="mr-4 mt-1">
                         {notification.isRead ? (
-                          <BellIcon className="h-4 w-4 text-muted-foreground" />
+                          <CheckCircle className="h-4 w-4 text-gray-400" />
                         ) : (
-                          <BellIcon className="h-4 w-4 text-primary" />
+                          <BellIcon className="h-4 w-4 text-blue-500" />
                         )}
                       </div>
                       <div>
-                        <h3 className="text-2xl font-medium mb-4">{formatTitle(notification.notification_type)}</h3>
+                        <h3 className="text-sm font-medium mb-4">{formatTitle(notification.notification_type)}</h3>
                         <p className="text-sm text-muted-foreground">{notification.message}</p>
                       </div>
                     </div>
@@ -129,8 +129,8 @@ const formatTitle = (title) => {
                   <div>
                     <h2 className="text-2xl font-bold mb-4">{formatTitle(selectedNotification.notification_type)}</h2>
                     <p className="mb-6">{selectedNotification.message}</p>
-                   <Button variant="black" onClick={() => markAsRead(selectedNotification.id)}>
-                      {selectedNotification.isRead ? "Mark as Unread" : "✔✔ Mark as Read"}
+                   <Button variant="black" onClick={() => markAsRead(selectedNotification.id)}  disabled={selectedNotification.isRead}>
+                      {selectedNotification.isRead ?   <span className="text-white">✓✓ Marked as Read</span>  : "Mark as Read"}
                     </Button>
                   </div>
                 ) : (
@@ -165,4 +165,23 @@ function BellIcon(props) {
       <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
     </svg>
   );
+}
+
+function CheckCircle(props) {
+  return (
+ <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    fill="currentColor"
+    className="check-circle"
+    viewBox="0 0 24 24"
+  >
+    <path
+      fillRule="evenodd"
+      d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm-1.114-6.586l-3.3-3.3a1 1 0 0 1 1.414-1.415l2.179 2.18 4.465-4.465a1 1 0 1 1 1.415 1.414l-5.172 5.172a1 1 0 0 1-1.415 0z"
+      clipRule="evenodd"
+    />
+  </svg>
+    );
 }
