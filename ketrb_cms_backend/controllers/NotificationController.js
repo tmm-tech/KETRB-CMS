@@ -54,7 +54,7 @@ module.exports = {
       }
 
       res.status(200).json({
-        message: `Notification marked as ${isRead ? 'read' : 'unread'} successfully`,
+        message: `Notification marked as ${is_read ? 'read' : 'unread'} successfully`,
         notification: result.rows[0],
       });
     } catch (error) {
