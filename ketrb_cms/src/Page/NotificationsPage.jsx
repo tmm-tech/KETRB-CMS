@@ -107,7 +107,7 @@ const formatTitle = (title) => {
                         onClick={() => handleNotificationClick(notification)}
                       >
                       <div className="mr-4 mt-1">
-                        {notification.isRead ? (
+                        {notification.is_read ? (
                           <CheckCircle className="h-4 w-4 text-gray-400" />
                         ) : (
                           <BellIcon className="h-4 w-4 text-blue-500" />
