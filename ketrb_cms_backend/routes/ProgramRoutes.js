@@ -8,6 +8,7 @@ const {
   GetProgramById,
   UpdateProgram,
   ApproveProgram,
+  ApproveUpdateProgram,
   DeleteProgram,
   CancelProgram,
 } = require('../controllers/ProgramControllers');
@@ -45,10 +46,13 @@ ProgramRoutes.get('/:id', GetProgramById);
 // Update an existing program
 ProgramRoutes.put('/edit/:id', upload.single('program'), UpdateProgram);
 
-// Approve a program (change status to "approved")
+// Approve a program 
 ProgramRoutes.put('/approve/:id', ApproveProgram);
 
-// Approve a program (change status to "approved")
+// Approve a program update 
+ProgramRoutes.put('/approveupdate/:id',ApproveUpdateProgram);
+
+// Cancel Delete
 ProgramRoutes.put('/cancledelete/:id', CancelProgram);
 
 // Delete a program
