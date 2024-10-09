@@ -70,12 +70,12 @@ const formatTitle = (title) => {
       // Update local state after successful API call
       setNotifications((prev) =>
         prev.map((notification) =>
-          notification.id === id ? { ...notification, isRead: true } : notification
+          notification.id === id ? { ...notification, is_read : true } : notification
         )
       );
 
       if (selectedNotification && selectedNotification.id === id) {
-        setSelectedNotification({ ...selectedNotification, isRead: true });
+        setSelectedNotification({ ...selectedNotification, is_read : true });
       }
     } catch (error) {
       console.error("Failed to update notification status:", error);
@@ -129,8 +129,8 @@ const formatTitle = (title) => {
                   <div>
                     <h2 className="text-2xl font-bold mb-4">{formatTitle(selectedNotification.notification_type)}</h2>
                     <p className="mb-6">{selectedNotification.message}</p>
-                   <Button variant="black" onClick={() => markAsRead(selectedNotification.id)}  disabled={selectedNotification.isRead}>
-                      {selectedNotification.isRead ?   <span className="text-white">✓✓ Marked as Read</span>  : "Mark as Read"}
+                   <Button variant="black" onClick={() => markAsRead(selectedNotification.id)}  disabled={selectedNotification.is_read}>
+                      {selectedNotification.is_read  ?   <span className="text-white">✓✓ Marked as Read</span>  : "Mark as Read"}
                     </Button>
                   </div>
                 ) : (
