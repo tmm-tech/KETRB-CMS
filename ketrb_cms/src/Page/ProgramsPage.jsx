@@ -17,9 +17,9 @@ const ProgramsPage = () => {
     const [alertMessage, setAlertMessage] = useState("");
     const [sortOption, setSortOption] = useState("date"); // default sorting by date
     const [statusFilter, setStatusFilter] = useState([]); // filter by status
-    const user_id=user.id;
-const storedUser = localStorage.getItem('user');
-  const user = JSON.parse(storedUser);
+    const storedUser = localStorage.getItem('user');
+    const user = JSON.parse(storedUser);
+    const user_id = user.id;
       const navigate = useNavigate();
     useEffect(() => {
         const fetchPrograms = async () => {
@@ -78,7 +78,7 @@ const filteredPrograms = programs
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ isdeleted: false }), // Set isDeleted to true
+                body: JSON.stringify({ isdeleted: false, user_id }), // Set isDeleted to true
             });
 
             if (response.ok) {
@@ -102,6 +102,7 @@ const handleApprove = async (id) => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify({ user_id }), 
         });
         if (response.ok) {
             const updatedProgram = await response.json();
@@ -126,6 +127,7 @@ const handlePublish = async (id) => {
             headers: {
                 'Content-Type': 'application/json',
             },
+	    body: JSON.stringify({ user_id }),
         });
         if (response.ok) {
             const updatedProgram = await response.json();
@@ -157,7 +159,7 @@ const handlePublish = async (id) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ role: user.roles,user_id }) // Pass user role to the backend
+        body: JSON.stringify({ role: user.roles, user_id }) // Pass user role to the backend
       });
 
       if (response.ok) {
