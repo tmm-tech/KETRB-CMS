@@ -102,7 +102,7 @@ const formatTitle = (title) => {
                     <div
                         key={notification.id}
                         className={`flex items-start p-4 cursor-pointer transition-colors 
-                          ${notification.isRead ? 'bg-gray-100' : 'bg-transparent'} 
+                          ${notification.isRead ? 'bg-transparent' : 'bg-gray-100'} 
                           ${selectedNotification?.id === notification.id ? 'bg-gray-200' : ''}`}
                         onClick={() => handleNotificationClick(notification)}
                       >
