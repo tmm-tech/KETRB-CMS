@@ -49,8 +49,6 @@ ProgramRoutes.put('/edit/:id', upload.single('program'), UpdateProgram);
 // Approve a program 
 ProgramRoutes.put('/approve/:id', ApproveProgram);
 
-// Approve a program update 
-ProgramRoutes.put('/approveupdate/:id',ApproveUpdateProgram);
 
 // Cancel Delete
 ProgramRoutes.put('/cancledelete/:id', CancelProgram);
