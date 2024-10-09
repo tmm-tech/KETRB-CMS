@@ -196,7 +196,7 @@ const programResult = await query('SELECT title FROM programs WHERE id = $1', [i
     const filename = programResult.rows[0].title; 
    const existingNotification = await query(
             'SELECT sender_id FROM notifications WHERE (notification_type = $1 OR notification_type = $2) AND item_id = $3',
-            ['programs_uploaded', 'programs_updated', filename] // Check for both notification types
+            ['programs_uploaded', 'program_updated', filename] // Check for both notification types
         );
 
     if (existingNotification.rows.length > 0) {
@@ -222,6 +222,7 @@ const programResult = await query('SELECT title FROM programs WHERE id = $1', [i
         return res.status(404).json({ message: 'Program not found.' });
       }
     }
+    
       res.status(200).json({ message: 'Program approved successfully', program: result.rows[0] });
     } catch (error) {
       console.error('Error approving program:', error);
