@@ -264,8 +264,8 @@ const storedUser = localStorage.getItem('user');
           <div className="flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500" />
           <div className="space-y-1">
             <p className="text-sm font-medium">
-          {notification.message.length > 10 
-            ? `${notification.message.slice(0, 10)}...` 
+          {notification.message.length > 40 
+            ? `${notification.message.slice(0, 40)}...` 
             : notification.message}
         </p>
             <p className="text-xs text-gray-500">{new Date(notification.created_at).toLocaleTimeString()}</p>
