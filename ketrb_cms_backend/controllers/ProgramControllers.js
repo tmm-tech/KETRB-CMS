@@ -72,7 +72,7 @@ module.exports = {
 	     id,
             `program article deletion.Has been Canceled`,
              userId,
-            'administrator',
+            'editor',
             false
           ]
         );
