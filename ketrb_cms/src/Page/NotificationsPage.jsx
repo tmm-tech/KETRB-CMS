@@ -51,14 +51,34 @@ const formatTitle = (title) => {
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))  // Capitalize each word
       .join(' ');  // Join words with spaces
   };
-  const markAsRead = (id) => {
-    setNotifications(prevNotifications =>
-      prevNotifications.map(n =>
-        n.id === id ? { ...n, isRead: !n.isRead } : n
-      )
-    );
-    if (selectedNotification && selectedNotification.id === id) {
-      setSelectedNotification({ ...selectedNotification, isRead: !selectedNotification.isRead });
+  
+  const markAsRead = async (id) => {
+    try {
+      
+      const response = await fetch(`https://ketrb-backend.onrender.com/notifications/${id}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ is_read: true }), // Adjust payload as needed
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update notification status');
+      }
+
+      // Update local state after successful API call
+      setNotifications((prev) =>
+        prev.map((notification) =>
+          notification.id === id ? { ...notification, isRead: true } : notification
+        )
+      );
+
+      if (selectedNotification && selectedNotification.id === id) {
+        setSelectedNotification({ ...selectedNotification, isRead: true });
+      }
+    } catch (error) {
+      console.error("Failed to update notification status:", error);
     }
   };
 
@@ -109,8 +129,8 @@ const formatTitle = (title) => {
                   <div>
                     <h2 className="text-2xl font-bold mb-4">{formatTitle(selectedNotification.notification_type)}</h2>
                     <p className="mb-6">{selectedNotification.message}</p>
-                    <Button variant="black"  onClick={() => markAsRead(selectedNotification.id)}>
-                      {selectedNotification.isRead ? "Mark as Unread" : "Mark as Read"}
+                   <Button variant="black" onClick={() => markAsRead(selectedNotification.id)}>
+                      {selectedNotification.isRead ? "Mark as Unread" : "✔✔ Mark as Read"}
                     </Button>
                   </div>
                 ) : (
