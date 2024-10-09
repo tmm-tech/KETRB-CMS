@@ -42,13 +42,13 @@ module.exports = {
   // Update notification status (mark as read/unread)
   updateNotificationStatus: async (req, res) => {
     const { id } = req.params; // Notification ID
-    const { isRead } = req.body; // Mark as read or unread
+    const { is_read } = req.body; // Mark as read or unread
 
     try {
       // Update the notification's read status
       const result = await query(
         'UPDATE notifications SET is_read = $1 WHERE id = $2 RETURNING *',
-        [isRead, id]
+        [is_read, id]
       );
 
       if (result.rowCount === 0) {
