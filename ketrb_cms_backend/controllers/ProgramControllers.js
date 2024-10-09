@@ -333,7 +333,7 @@ ApproveUpdateProgram: async (req, res) => {
           program: result.rows[0],
         });
       }
-
+      }
     } catch (error) {
       console.error('Error deleting program:', error);
       return res.status(500).json({ message: 'Error deleting the program.' });
