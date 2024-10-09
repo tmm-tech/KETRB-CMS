@@ -186,11 +186,11 @@ module.exports = {
     const { id } = req.params;
 
     try {
-	    // Check for existing notifications for this image
-    const existingNotification = await query(
-      'SELECT sender_id FROM notifications WHERE notification_type = $1 AND item_id = $2',
-      ['programs_uploaded', id] 
-    );
+	   
+   const existingNotification = await query(
+            'SELECT sender_id FROM notifications WHERE (notification_type = $1 OR notification_type = $2) AND item_id = $3',
+            ['programs_uploaded', 'programs_updated', id] // Check for both notification types
+        );
 
     if (existingNotification.rows.length > 0) {
       // If an existing notification is found, use its sender_id
@@ -222,45 +222,7 @@ module.exports = {
     }
   },
 
-ApproveUpdateProgram: async (req, res) => {
-    const { id } = req.params;
 
-    try {
-    // Check for existing notifications for this image
-    const existingNotification = await query(
-      'SELECT sender_id FROM notifications WHERE notification_type = $1 AND item_id = $2',
-      ['program_updated', filename] // Use filename or image ID depending on your logic
-    );
-
-    if (existingNotification.rows.length > 0) {
-      // If an existing notification is found, use its sender_id
-      const senderIdToUse = existingNotification.rows[0].sender_id;
-	    
-      const result = await query(
-        'UPDATE programs SET status = $1 WHERE id = $2 RETURNING *',
-        ['published', id]
-      );
-       await query(
-        'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5,$6)',
-        [
-          'program_approved',
-	   id,
-          `Program article has been approved for publishing.`,
-          null, // System notification, no specific sender
-          'editor',
-          false
-        ]
-      );
-      if (result.rows.length === 0) {
-        return res.status(404).json({ message: 'Program not found.' });
-      }
-    }
-      res.status(200).json({ message: 'Program approved successfully', program: result.rows[0] });
-    } catch (error) {
-      console.error('Error approving program:', error);
-      res.status(500).json({ message: 'Error approving the program.' });
-    }
-  },
 
   // Delete a program
   DeleteProgram: async (req, res) => {
