@@ -208,10 +208,10 @@ const programResult = await query('SELECT title FROM programs WHERE id = $1', [i
         ['published', id]
       );
        await query(
-        'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5,$6)',
+        'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
         [
           'program_approved',
-	   id,
+	   filename,
           `Program article has been approved for publishing.`,
           senderIdToUse, // System notification, no specific sender
           'editor',
