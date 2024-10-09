@@ -126,6 +126,7 @@ module.exports = {
       res.status(500).json({ message: 'Error retrieving image', error });
     }
   },
+  
 UpdateImage: async (req, res) => {
   const { id } = req.params;
   const { status, user_id, role } = req.body; // Add user_id and role
@@ -178,6 +179,7 @@ UpdateImage: async (req, res) => {
     res.status(500).json({ message: 'Error updating image status', error });
   }
 },
+  
 // Delete an image
 DeleteImage: async (req, res) => {
   const { id } = req.params;
