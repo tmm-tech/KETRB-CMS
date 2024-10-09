@@ -261,6 +261,7 @@ const storedUser = localStorage.getItem('user');
           className="grid grid-cols-[25px_1fr] items-start gap-2 p-2 hover:bg-muted"
           onClick={() => handleNotificationClick(notification.id)}
         >
+          <div className="flex h-2 w-2 translate-y-1.5 rounded-full bg-blue-500" />
           <div className="space-y-1">
             <p className="text-sm font-medium">
           {notification.message.length > 10 
