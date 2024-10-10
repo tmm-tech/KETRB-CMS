@@ -10,6 +10,7 @@ const {
   ApproveNews,
   DeleteNews,
   CancelNews,
+  GetPublishedNews
 } = require('../controllers/NewsControllers');
 const NewsRoutes = express.Router();
 
@@ -39,6 +40,7 @@ NewsRoutes.post('/add', upload.single('news'), AddNews);
 // Get all news articles
 NewsRoutes.get('/', GetNews);
 
+NewsRoutes.get('/news', GetPublishedNews);
 // Get a specific news article by ID
 NewsRoutes.get('/:id', GetNewsById);
 
