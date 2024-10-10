@@ -57,6 +57,27 @@ module.exports = {
       res.status(500).json({ message: 'Error saving image details to database' });
     }
   },
+  
+updateImageCaption: async (req, res) => {
+  const { id } = req.params;
+  const { caption } = req.body;
+
+  try {
+    const result = await query(
+      'UPDATE images SET caption = $1 WHERE id = $2 RETURNING *',
+      [caption, id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Image not found' });
+    }
+
+    res.status(200).json(result.rows[0]);
+  } catch (error) {
+    console.error('Error updating caption:', error);
+    res.status(500).json({ message: 'Error updating caption', error: error.message });
+  }
+};
 
   // Cancel an image delete
  CancelImages: async (req, res) => {
