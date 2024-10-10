@@ -208,7 +208,7 @@ DeleteImage: async (req, res) => {
 
   try {
     if (role === 'editor') {
-      // Mark the image as deleted
+      // Mark the image as deleted (pending admin approval)
       const result = await query(
         'UPDATE images SET isdeleted = TRUE WHERE id = $1 RETURNING *',
         [id]
@@ -218,7 +218,7 @@ DeleteImage: async (req, res) => {
         return res.status(404).json({ message: 'Image not found.' });
       }
 
-      // Notify admin about deletion request
+      // Notify admin about the deletion request
       await query(
         'INSERT INTO notifications (notification_type, item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
         [
@@ -242,43 +242,41 @@ DeleteImage: async (req, res) => {
         ['image_deletion_requested', id]
       );
 
+      let existingUserId = null;
+
+      // If a notification exists, get the original requestor's user ID
       if (notificationResult.rows.length > 0) {
-        const existingUserId = notificationResult.rows[0].sender_id;
+        existingUserId = notificationResult.rows[0].sender_id;
+      }
 
-        // Proceed with deletion
-        await query('DELETE FROM images WHERE id = $1', [id]);
+      // Proceed with the deletion
+      await query('DELETE FROM images WHERE id = $1', [id]);
 
-        // Notify the editor about the deletion approval
+      // Notify the editor (or whoever requested the deletion) that the deletion has been approved
+      if (existingUserId) {
         await query(
           'INSERT INTO notifications (notification_type, item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
           [
             'image_deletion_approved',
             id,
             `Administrator approved the deletion of image with ID ${id}.`,
-            existingUserId,  // Use the user_id from the existing notification
-            'editor',  // Notify the editor
-            false,  // Not read yet
+            existingUserId,  // Notify the original editor
+            'editor',        // Notify the editor who made the request
+            false,           // Not read yet
           ]
         );
-
-        return res.status(200).json({
-          message: 'Image deleted successfully. Editor notified of deletion approval.',
-        });
-      } else {
-        // No previous notification, just delete the image
-        await query('DELETE FROM images WHERE id = $1', [id]);
-        return res.status(200).json({
-          message: 'Image deleted successfully.',
-        });
       }
+
+      return res.status(200).json({
+        message: 'Image deleted successfully. Editor notified of deletion approval.',
+      });
     }
   } catch (error) {
     console.error('Error deleting image:', error);
     res.status(500).json({ message: 'Error deleting image', error });
   }
 },
-    
-    
+  
   // Get all images
   getAllImage: async (req, res) => {
     try {
