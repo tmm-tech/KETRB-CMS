@@ -483,30 +483,47 @@ setAlertMessage(""); // Reset any previous alert message
 </div>
           </Tabs>
 		<Dialog open={!!selectedImage} onOpenChange={handleCloseDialog}>
-  <DialogContent className="sm:max-w-[500px]">
-    <DialogHeader>
-      <DialogTitle>View Image</DialogTitle>
-    </DialogHeader>
-    {selectedImage && (
-      <img src={selectedImage.url} alt={selectedImage.title} className="w-full h-auto" />
-    )}
-    <DialogFooter>
-      
-      <div className="flex items-center justify-end gap-2 mt-4">
-        {/* Adjust this part to use selectedImage instead */}
-        <Button variant="black" onClick={handleCloseDialog}>Close</Button>
-        <Button variant="outline" size="sm" onClick={() => handleDelete(selectedImage.id)}>
-          <TrashIcon className="h-4 w-4" />
-        </Button>
-        {user.roles === "administrator" && status === "pending" && (
-          <Button size="sm" variant="black" onClick={() => handleApprove(selectedImage.id)}>
-            Approve
-          </Button>
-        )}
-      </div>
-    </DialogFooter>
-  </DialogContent>
-</Dialog>
+		  <DialogContent className="sm:max-w-[500px]">
+		    <DialogHeader>
+		      <DialogTitle>View Image</DialogTitle>
+		    </DialogHeader>
+		    {selectedImage && (
+		      <>
+		        <img src={selectedImage.url} alt={selectedImage.title} className="w-full h-auto" />
+		        <div className="mt-4">
+		          <label htmlFor="caption" className="block text-sm font-medium text-gray-700">
+		            Caption
+		          </label>
+		          <textarea
+		            id="caption"
+		            rows="3"
+		            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm"
+		            value={selectedImage.caption || ""}
+		            onChange={(e) => setSelectedImage({ ...selectedImage, caption: e.target.value })}
+		          />
+		        </div>
+		      </>
+		    )}
+		    <DialogFooter>
+		      <div className="flex items-center justify-end gap-2 mt-4">
+		        <Button variant="black" onClick={handleCloseDialog}>Close</Button>
+		        <Button variant="outline" size="sm" onClick={() => handleDelete(selectedImage.id)}>
+		          <TrashIcon className="h-4 w-4" />
+		        </Button>
+		        {user.roles === "administrator" && status === "pending" && (
+		          <Button size="sm" variant="black" onClick={() => handleApprove(selectedImage.id)}>
+		            Approve
+		          </Button>
+		        )}
+		        {/* Save Caption Button */}
+		        <Button size="sm" variant="black" onClick={() => handleUpdateCaption(selectedImage.id, selectedImage.caption)}>
+		          Save Caption
+		        </Button>
+		      </div>
+		    </DialogFooter>
+		  </DialogContent>
+		</Dialog>
+
 		
         </main>
       </div>
