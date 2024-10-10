@@ -348,7 +348,7 @@ const handleDelete = async (id) => {
                                 									<FilePenIcon className="h-3.5 w-3.5" />
                                 									<span>View</span>
                                 								</Button>
-                                								<Button variant="black" size="sm" className="h-8 gap-1" onClick={() => handleApprove(article.id)}>
+                                								<Button variant="black" size="sm" className="h-8 gap-1" onClick={() => handleDelete(article.id)}>
                                 									<CheckIcon className="h-3.5 w-3.5" />
                                 									<span>Approve Delete</span>
                                 								</Button>
