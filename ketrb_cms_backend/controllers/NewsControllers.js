@@ -309,6 +309,7 @@ UpdateNews: async (req, res) => {
           news: result.rows[0],
         });
       }
+    }
     } catch (error) {
       console.error('Error deleting news article:', error);
       return res.status(500).json({ message: 'Error deleting the news article.' });
