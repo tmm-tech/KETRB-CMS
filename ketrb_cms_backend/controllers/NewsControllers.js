@@ -91,7 +91,7 @@ module.exports = {
     // Get all published news articles
  GetPublishedNews: async (req, res) => {
   try {
-    const result = await query('SELECT * FROM news WHERE status=published ORDER BY created_at DESC');
+    const result = await query('SELECT * FROM news WHERE status=$1 ORDER BY created_at DESC',['published']);
     const news = result.rows;
 
     const newsWithImageUrls = news.map(item => ({
