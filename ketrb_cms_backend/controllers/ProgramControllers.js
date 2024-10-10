@@ -267,7 +267,7 @@ module.exports = {
       // Check if a deletion request notification was already sent
       const notificationResult = await query(
         'SELECT sender_id FROM notifications WHERE notification_type = $1 AND item_id = $2',
-        ['image_deletion_requested', id]
+        ['program_marked_for_deletion', id]
       );
 
       if (notificationResult.rows.length > 0) {
