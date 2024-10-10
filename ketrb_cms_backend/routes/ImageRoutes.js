@@ -6,7 +6,8 @@ const {
     getAImage,
     CancelImages,
     updateImageCaption,
-    getAllImage
+    getAllImage,
+    getAllPublishedImage
 } = require('../controllers/ImageControllers');
 const multer = require('multer');
 const path = require('path');
@@ -53,4 +54,6 @@ ImageRoutes.get('/image/:id', getAImage);
 // Get all images
 ImageRoutes.get('/allimages', getAllImage);
 
+// Get published images
+ImageRoutes.get('/images', getAllPublishedImage);
 module.exports = ImageRoutes;
