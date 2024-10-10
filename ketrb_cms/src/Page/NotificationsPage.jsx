@@ -102,8 +102,8 @@ const formatTitle = (title) => {
                     <div
                         key={notification.id}
                         className={`flex items-start p-4 cursor-pointer transition-colors 
-                          ${notification.is_read ? 'bg-transparent' : 'bg-gray-100'} 
-                           ${selectedNotification?.id === notification.id ? 'bg-blue-100' : ''}`}
+                          ${selectedNotification?.id === notification.id ? 'bg-gray-200' : 
+                          notification.is_read ? 'bg-transparent' : 'bg-gray-100'}`}
                         onClick={() => handleNotificationClick(notification)}
                       >
                       <div className="mr-4 mt-1">
