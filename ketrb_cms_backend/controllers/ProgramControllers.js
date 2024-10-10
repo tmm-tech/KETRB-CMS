@@ -186,7 +186,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-const programResult = await query('SELECT title FROM programs WHERE id = $1', [id]);
+	const programResult = await query('SELECT title FROM programs WHERE id = $1', [id]);
 
     // Check if the image exists
     if (programResult.rows.length === 0) {
@@ -266,8 +266,8 @@ const programResult = await query('SELECT title FROM programs WHERE id = $1', [i
       }if (role === 'administrator') {
       // Check if a deletion request notification was already sent
       const notificationResult = await query(
-        'SELECT sender_id FROM notifications WHERE notification_type = $1 AND message LIKE $2',
-        ['image_deletion_requested', `%image with ID ${id}%`]
+        'SELECT sender_id FROM notifications WHERE notification_type = $1 AND item_id = $2',
+        ['image_deletion_requested', id]
       );
 
       if (notificationResult.rows.length > 0) {
