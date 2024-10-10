@@ -86,8 +86,8 @@ updateImageCaption: async (req, res) => {
   try {
     // Check if there's a deletion request notification for the image
     const notificationResult = await query(
-      'SELECT sender_id FROM notifications WHERE notification_type = $1 AND message LIKE $2',
-      ['image_deletion_requested', `%image with ID ${id}%`]
+      'SELECT sender_id FROM notifications WHERE notification_type = $1 AND item_id = $2',
+      ['image_deletion_requested', id]
     );
 
     // If a notification for the deletion request exists, get the user_id
@@ -238,8 +238,8 @@ DeleteImage: async (req, res) => {
     } else if (role === 'administrator') {
       // Check if a deletion request notification was already sent
       const notificationResult = await query(
-        'SELECT sender_id FROM notifications WHERE notification_type = $1 AND message LIKE $2',
-        ['image_deletion_requested', `%image with ID ${id}%`]
+        'SELECT sender_id FROM notifications WHERE notification_type = $1 AND item_id = $2',
+        ['image_deletion_requested', id]
       );
 
       if (notificationResult.rows.length > 0) {
