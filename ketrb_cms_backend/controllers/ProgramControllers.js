@@ -83,6 +83,23 @@ module.exports = {
     }
   },
 
+// Get all published programs
+  GetPublishedPrograms: async (req, res) => {
+    try {
+      const result = await query('SELECT * FROM programs WHERE status=published ORDER BY created_at DESC');
+      const programs = result.rows;
+
+      const programsWithImageUrls = programs.map(program => ({
+        ...program,
+        imageUrl: program.image 
+      }));
+
+      res.status(200).json(programsWithImageUrls);
+    } catch (error) {
+      console.error('Error fetching programs:', error);
+      res.status(500).json({ message: 'Error fetching programs.' });
+    }
+  },
   // Get all programs
   GetPrograms: async (req, res) => {
     try {
