@@ -55,18 +55,7 @@ const [sortOption, setSortOption] = useState({ news: '', images: '', programs: '
 
   // Filtering handler
   const handleFilterChange = (filterType, option) => {
-  if (activeTab === "users") {
-    // Filter for Users tab: Handle status
-    setFilterOptions(prev => ({
-      ...prev,
-      users: {
-        ...prev.users,
-        status: prev[activeTab].includes(option)
-          ? prev[activeTab].filter(filter => filter !== option)
-          : [...prev[activeTab], option]
-      }
-    }));
-  } else {
+
     // For other tabs (news and programs), handle status filter
     setFilterOptions(prev => {
       const newFilters = prev[activeTab].includes(option)
@@ -74,7 +63,7 @@ const [sortOption, setSortOption] = useState({ news: '', images: '', programs: '
         : [...prev[activeTab], option];
       return { ...prev, [activeTab]: newFilters };
     });
-  }
+  
 };
  
 
