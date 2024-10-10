@@ -255,7 +255,7 @@ const storedUser = localStorage.getItem('user');
     {notifications.length === 0 ? (
       <div className="p-2 text-sm text-gray-500">No notifications</div>
     ) : (
-      notifications.map((notification) => (
+      notifications.filter(notification => !notification.is_read).map((notification) => (
         <DropdownMenuItem
           key={notification.id}
           className="grid grid-cols-[25px_1fr] items-start gap-2 p-2 hover:bg-muted"
