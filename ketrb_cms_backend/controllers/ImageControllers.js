@@ -276,7 +276,37 @@ DeleteImage: async (req, res) => {
     res.status(500).json({ message: 'Error deleting image', error });
   }
 },
-  
+//Get published images
+getAllPublishedImage: async (req, res) => {
+    try {
+      const result = await query('SELECT * FROM images WHERE status = published');
+
+      const images = result.rows;
+
+      if (images.length === 0) {
+        return res.status(200).json({ message: 'No images found', images: [] });
+      }
+
+      const imagesWithUrl = images.map((image) => ({
+        ...image,
+        url: image.filepath, // Cloudinary URL from the database
+        status: image.status,
+        registered_at: image.registered_at,
+        title: image.image, // Assuming 'image' refers to the title or filename
+      }));
+
+      res.status(200).json({
+        message: 'Images retrieved successfully',
+        images: imagesWithUrl,
+      });
+    } catch (error) {
+      console.error('Error retrieving images:', error);
+      res.status(500).json({
+        message: 'Error retrieving images',
+        error: error.message,
+      });
+    }
+  },
   // Get all images
   getAllImage: async (req, res) => {
     try {
