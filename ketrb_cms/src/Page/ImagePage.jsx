@@ -54,6 +54,35 @@ const ImagePage = () => {
 const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
+	
+const handleUpdateCaption = async (id, caption) => {
+  try {
+    const response = await fetch(`https://ketrb-backend.onrender.com/images/${id}/caption`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ caption }), 
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update the caption');
+    }
+
+    const updatedImage = await response.json();
+
+    // Optionally update local state with the new caption
+    setSelectedImage((prev) => ({
+      ...prev,
+      caption: updatedImage.caption,
+    }));
+
+    console.log('Caption updated successfully');
+  } catch (error) {
+    console.error('Failed to update the caption:', error);
+  }
+};
+
  const filteredImages = images
     .filter((image) =>
       statusFilter.length === 0 ? true : statusFilter.includes(image.status)
