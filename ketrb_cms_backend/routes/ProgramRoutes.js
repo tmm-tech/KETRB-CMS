@@ -11,6 +11,7 @@ const {
   ApproveUpdateProgram,
   DeleteProgram,
   CancelProgram,
+  GetPublishedPrograms
 } = require('../controllers/ProgramControllers');
 const ProgramRoutes = express.Router();
 
@@ -39,6 +40,8 @@ ProgramRoutes.post('/add', upload.single('program'), AddProgram);
 
 // Get all programs
 ProgramRoutes.get('/', GetPrograms);
+
+ProgramRoutes.get('/programs', GetPublishedPrograms);
 
 // Get a specific program by ID
 ProgramRoutes.get('/:id', GetProgramById);
