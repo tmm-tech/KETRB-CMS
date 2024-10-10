@@ -167,11 +167,11 @@ const handlePublish = async (id) => {
         if (user.roles === 'editor') {
 		
           setAlertMessage('Program marked for deletion. Admin approval required.');
-	 
+	 window.location.reload();
         } else {
           setPrograms((prevPrograms) => prevPrograms.filter((program) => program.id !== id));
           setAlertMessage('Program deleted successfully');
-	window.location.href = '/programs';
+	  window.location.href = '/programs';
         }
       } else {
         setAlertMessage('Failed to delete program');
