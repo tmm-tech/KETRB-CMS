@@ -86,7 +86,7 @@ module.exports = {
 // Get all published programs
   GetPublishedPrograms: async (req, res) => {
     try {
-      const result = await query('SELECT * FROM programs WHERE status=published ORDER BY created_at DESC');
+      const result = await query('SELECT * FROM programs WHERE status = $1 ORDER BY created_at DESC', ['published']);
       const programs = result.rows;
 
       const programsWithImageUrls = programs.map(program => ({
