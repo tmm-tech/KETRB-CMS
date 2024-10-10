@@ -27,8 +27,8 @@ module.exports = {
 
         // Insert image details into database
         const result = await query(
-          'INSERT INTO images (filepath, image, status, registered_at) VALUES ($1, $2, $3, $4) RETURNING *',
-          [imageUrl, filename, status, registeredAt]
+          'INSERT INTO images (filepath, image, status, registered_at, caption) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+          [imageUrl, filename, status, registeredAt, 'NULL']
         );
 
         insertedImages.push(result.rows[0]);
