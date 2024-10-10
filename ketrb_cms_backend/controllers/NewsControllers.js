@@ -237,82 +237,85 @@ UpdateNews: async (req, res) => {
     }
   },
 
-  // Delete a news article
-  DeleteNews: async (req, res) => {
-    const { id } = req.params;
-    const { role,user_id } = req.body;
+ // Delete a news article
+DeleteNews: async (req, res) => {
+  const { id } = req.params;
+  const { role, user_id } = req.body; // Assuming user_id and role are passed in the request body
 
-    try {
-      if (role === 'editor') {
-        const result = await query(
-          'UPDATE news SET isdeleted = TRUE WHERE id = $1 RETURNING *',
-          [id]
-        );
+  try {
+    if (role === 'editor') {
+      // Editor marks the news for deletion (pending admin approval)
+      const result = await query(
+        'UPDATE news SET isdeleted = TRUE WHERE id = $1 RETURNING *',
+        [id]
+      );
 
-        if (result.rows.length === 0) {
-          return res.status(404).json({ message: 'News article not found.' });
-        }
-        await query(
-          'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
-          [
-            'news_marked_for_deletion',
-            id,
-            `News article has been marked for deletion by ${user_id}.`,
-            user_id,
-            'administrator',
-            false
-          ]
-        );
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: 'News article not found.' });
+      }
 
-        return res.status(200).json({
-          message: 'News article marked for deletion. Admin approval required.',
-          news: result.rows[0],
-        });
-      } else if (role === 'administrator') {
+      // Notify the administrator about the deletion request
+      await query(
+        'INSERT INTO notifications (notification_type, item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
+        [
+          'news_marked_for_deletion',
+          id,
+          `News article has been marked for deletion by editor with ID ${user_id}.`,
+          user_id, // Editor who made the request
+          'administrator', // Notify administrators
+          false // Mark as unread
+        ]
+      );
+
+      return res.status(200).json({
+        message: 'News article marked for deletion. Admin approval required.',
+        news: result.rows[0],
+      });
+    } else if (role === 'administrator') {
       // Check if a deletion request notification was already sent
       const notificationResult = await query(
         'SELECT sender_id FROM notifications WHERE notification_type = $1 AND item_id = $2',
         ['news_marked_for_deletion', id]
       );
 
+      let existingUserId = null;
+
       if (notificationResult.rows.length > 0) {
-        const existingUserId = notificationResult.rows[0].sender_id;
-        const result = await query('DELETE FROM news WHERE id = $1 RETURNING *', [id]);
+        // If a notification exists, get the original requestor's user ID
+        existingUserId = notificationResult.rows[0].sender_id;
+      }
+
+      // Proceed with the deletion
+      const result = await query('DELETE FROM news WHERE id = $1 RETURNING *', [id]);
+
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: 'News article not found.' });
+      }
+
+      // Notify the editor if deletion was previously requested
+      if (existingUserId) {
         await query(
           'INSERT INTO notifications (notification_type, item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
           [
             'news_deletion_approved',
-	           id,
-            `program article has been approved for deletion by ${user_id}.`,
-             existingUserId,
-            'editor',
-            false
+            id,
+            `News article deletion has been approved by administrator with ID ${user_id}.`,
+            existingUserId, // Notify the editor who made the request
+            'editor', // Notify editor
+            false // Mark as unread
           ]
         );
-        if (result.rows.length === 0) {
-          return res.status(404).json({ message: 'News not found.' });
-        }
-
-        return res.status(200).json({
-          message: 'News deleted successfully',
-          program: result.rows[0],
-        });
-      } else {
-        const result = await query('DELETE FROM news WHERE id = $1 RETURNING *', [id]);
-
-        if (result.rows.length === 0) {
-          return res.status(404).json({ message: 'News article not found.' });
-        }
-
-        return res.status(200).json({
-          message: 'News article deleted successfully',
-          news: result.rows[0],
-        });
       }
+
+      return res.status(200).json({
+        message: 'News article deleted successfully.',
+        news: result.rows[0],
+      });
     }
-    } catch (error) {
-      console.error('Error deleting news article:', error);
-      return res.status(500).json({ message: 'Error deleting the news article.' });
-    }
-  },
+  } catch (error) {
+    console.error('Error deleting news article:', error);
+    return res.status(500).json({ message: 'Error deleting the news article.' });
+  }
+},
+
 };
