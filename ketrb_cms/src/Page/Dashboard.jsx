@@ -309,7 +309,7 @@ const sortedData = {
                             />
                           </TableCell>
                           <TableCell className="font-medium">
-                            <Link to=`/news/edit news/${article.id}` className="hover:underline">{article.title}</Link>
+                            <Link to={`/news/edit news/${article.id}`} className="hover:underline">{article.title}</Link>
                           </TableCell>
                           <TableCell>
                             <Badge variant="outline" className={`${article.status === "published"  ? "bg-green-500 text-green-50"  : article.status === "pending"  ? "bg-yellow-500 text-yellow-50" : "bg-gray-500 text-gray-50"} capitalize`}>
@@ -327,8 +327,8 @@ const sortedData = {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
-                                <DropdownMenuLabel><Link to=`/news` className="hover:underline">Actions</Link></DropdownMenuLabel>
-                                <DropdownMenuItem><Link to=`/news/edit news/${article.id}` className="hover:underline">View</Link></DropdownMenuItem>
+                                <DropdownMenuLabel><Link to="/news" className="hover:underline">Actions</Link></DropdownMenuLabel>
+                                <DropdownMenuItem><Link to={`/news/edit news/${article.id}`} className="hover:underline">View</Link></DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </TableCell>
@@ -435,8 +435,8 @@ const sortedData = {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
-                                <DropdownMenuLabel><Link to=`/images` className="hover:underline">Actions</Link></DropdownMenuLabel>
-                                <DropdownMenuItem><Link to=`/images` className="hover:underline">View</Link></DropdownMenuItem>
+                                <DropdownMenuLabel><Link to="/images" className="hover:underline">Actions</Link></DropdownMenuLabel>
+                                <DropdownMenuItem><Link to="/images" className="hover:underline">View</Link></DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </TableCell>
@@ -519,7 +519,7 @@ const sortedData = {
                             />
                           </TableCell>
                           <TableCell className="font-medium">
-                            <Link to=`/programs/edit program/${program.id}` className="hover:underline">{program.title}</Link>
+                            <Link to={`/programs/edit program/${program.id}`} className="hover:underline">{program.title}</Link>
                           </TableCell>
                           <TableCell>
                             <Badge variant="outline" className={`${program.status === "published"  ? "bg-green-500 text-green-50"  : program.status === "pending"  ? "bg-yellow-500 text-yellow-50" : "bg-gray-500 text-gray-50"} capitalize`}>
@@ -537,8 +537,8 @@ const sortedData = {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
-                                <DropdownMenuLabel><Link to=`/programs` className="hover:underline">Actions</Link></DropdownMenuLabel>
-                                <DropdownMenuItem><Link to=`/programs/edit program/${program.id}` className="hover:underline">View</Link></DropdownMenuItem>
+                                <DropdownMenuLabel><Link to="/programs" className="hover:underline">Actions</Link></DropdownMenuLabel>
+                                <DropdownMenuItem><Link to={`/programs/edit program/${program.id}`} className="hover:underline">View</Link></DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </TableCell>
@@ -632,8 +632,8 @@ const sortedData = {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
-                                <DropdownMenuLabel><Link to=`/users` className="hover:underline">Actions</Link></DropdownMenuLabel>
-                                <DropdownMenuItem><Link to=`/users/edit user/${user.id}` className="hover:underline">View</Link></DropdownMenuItem>
+                                <DropdownMenuLabel><Link to="/users" className="hover:underline">Actions</Link></DropdownMenuLabel>
+                                <DropdownMenuItem><Link to={`/users/edit user/${user.id}`} className="hover:underline">View</Link></DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </TableCell>
