@@ -20,7 +20,7 @@ const NewsPage = () => {
     const [statusFilter, setStatusFilter] = useState([]); // filter by status
     const storedUser = localStorage.getItem('user');
     const user = JSON.parse(storedUser);
-    const user_id=user.id;
+    const user_id = user.id;
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -149,7 +149,7 @@ const handlePublish = async (id) => {
     }
 };
 
-    const handleDelete = async (id) => {
+const handleDelete = async (id) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this news article?");
         if (confirmDelete) {
             try {
@@ -165,16 +165,15 @@ const handlePublish = async (id) => {
                     if (user.roles === 'editor') {
 		
           setAlertMessage('News marked for deletion. Admin approval required.');
-	 window.location.reload();
+	  window.location.reload();
         } else {
-          setNewsArticles((prevNews) => prevNews.filter((news) => news.id !== id));
 	          setAlertMessage('News deleted successfully');
-	window.location.href = '/news';
+	 	  window.location.reload();
         }
-                } else {
+        } else {
                     setAlertMessage('Failed to delete news article');
                 }
-            } catch (error) {
+} catch (error) {
                 console.error("Error deleting news article:", error);
                 setAlertMessage('An error occurred while deleting the news article.');
             }
