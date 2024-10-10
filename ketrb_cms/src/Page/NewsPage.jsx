@@ -106,6 +106,7 @@ const handleApprove = async (id) => {
             headers: {
                 'Content-Type': 'application/json',
             },
+	    
         });
         if (response.ok) {
             const updatedNews = await response.json();
@@ -164,7 +165,7 @@ const handlePublish = async (id) => {
                     if (user.roles === 'editor') {
 		
           setAlertMessage('News marked for deletion. Admin approval required.');
-	 
+	 window.location.reload();
         } else {
           setNewsArticles((prevNews) => prevNews.filter((news) => news.id !== id));
 	          setAlertMessage('News deleted successfully');
