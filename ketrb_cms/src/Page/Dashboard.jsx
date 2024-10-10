@@ -242,13 +242,13 @@ const sortedData = {
         <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem
-          checked={filterOptions.users.status.includes('active')}
+          checked={filterOptions[activeTab].includes('active')}
           onCheckedChange={() => handleFilterChange('status', 'active')}
         >
           Active
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
-          checked={filterOptions.users.status.includes('inactive')}
+          checked={filterOptions[activeTab].includes('inactive')}
           onCheckedChange={() => handleFilterChange('status', 'inactive')}
         >
           Inactive
