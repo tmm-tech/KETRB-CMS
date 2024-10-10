@@ -61,9 +61,9 @@ const [sortOption, setSortOption] = useState({ news: '', images: '', programs: '
       ...prev,
       users: {
         ...prev.users,
-        status: prev.users.status.includes(option)
-          ? prev.users.status.filter(filter => filter !== option)
-          : [...prev.users.status, option]
+        status: prev[activeTab].includes(option)
+          ? prev[activeTab].filter(filter => filter !== option)
+          : [...prev[activeTab], option]
       }
     }));
   } else {
