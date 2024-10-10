@@ -99,31 +99,6 @@ const NewsPage = () => {
         }
     };
 
-const handleApprove = async (id) => {
-    try {
-        const response = await fetch(`https://ketrb-backend.onrender.com/news/delete/${id}`, {
-            method: 'DELETE', 
-            headers: {
-                'Content-Type': 'application/json',
-            },
-	    
-        });
-        if (response.ok) {
-            const updatedNews = await response.json();
-            // Update state to reflect the approved program
-            setNewsArticles((prevNews) => 
-                prevNews.map((news) => (news.id === id ? updatedNews : news))
-            );
-            setAlertMessage('News delete approved');
-	 window.location.href = '/news';
-        } else {
-            setAlertMessage('Failed to approve delete');
-        }
-    } catch (error) {
-        console.error("Error approving delete:", error);
-        setAlertMessage('An error occurred while approving delete.');
-    }
-};
 const handlePublish = async (id) => {
     try {
         const response = await fetch(`https://ketrb-backend.onrender.com/news/approve/${id}`, {
