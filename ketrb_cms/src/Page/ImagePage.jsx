@@ -161,6 +161,7 @@ const handleDelete = async (id) => {
     if (response.ok) {
 	if (user.roles === 'editor') {	
             setAlertMessage('Image marked for deletion. Admin approval required.');
+		window.location.reload();
         } else {
             setAlertMessage("Image deleted successfully!");
             window.location.reload();
