@@ -77,7 +77,7 @@ updateImageCaption: async (req, res) => {
     console.error('Error updating caption:', error);
     res.status(500).json({ message: 'Error updating caption', error: error.message });
   }
-};
+},
 
   // Cancel an image delete
  CancelImages: async (req, res) => {
