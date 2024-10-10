@@ -3,7 +3,7 @@ const cloudinary = require('cloudinary').v2;
 
 module.exports = {
   AddNews: async (req, res) => {
-    const { title, content, publishedDate, author, status,user_id } = req.body;
+    const { title, content, publishedDate, author, status, user_id } = req.body;
     const image = req.file;
 
     // Ensure the image is provided
@@ -26,9 +26,10 @@ module.exports = {
  // Notify admins for approval if status is pending
       if (status === 'pending') {
         await query(
-          'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
+          'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
           [
             'news_uploaded',
+            title,
             `News article "${title}" uploaded by ${author} pending approval.`,
              user_id,  // The editor's ID
             'administrator',  // Notify all admins
@@ -46,8 +47,19 @@ module.exports = {
   // Cancel a news article
   CancelNews: async (req, res) => {
     const { id } = req.params;
-
+     const { user_id} = req.body;
     try {
+      // Check if there's a deletion request notification for the image
+    const notificationResult = await query(
+      'SELECT sender_id FROM notifications WHERE notification_type = $1 AND item_id = $2',
+      ['news_marked_for_deletion', id]
+    );
+
+    // If a notification for the deletion request exists, get the user_id
+    let userId = null;
+    if (notificationResult.rows.length > 0) {
+      userId = notificationResult.rows[0].sender_id;
+    }
       const result = await query(
         'UPDATE news SET isdeleted = FALSE WHERE id = $1 RETURNING *',
         [id]
@@ -59,11 +71,12 @@ module.exports = {
 
       const updatedNews = result.rows[0];
       await query(
-          'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
+          'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
           [
             'news_marked_for_deletion',
-            `News article "${news.title}" deletion by ${user_id}.Has been Canceled`,
-             null,
+            id,
+            `News article deletion by ${userId}.Has been Canceled`,
+             userId,
             'editor',
             false
           ]
@@ -156,9 +169,10 @@ UpdateNews: async (req, res) => {
     );
  if (newStatus === 'pending') {
         await query(
-          'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
+          'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
           [
             'news_updated',
+            title,
             `News article "${title}" has been updated and is pending approval.`,
              user_id,
             'administrator',
@@ -179,6 +193,22 @@ UpdateNews: async (req, res) => {
     const { id } = req.params;
 
     try {
+      const newsResult = await query('SELECT title FROM news WHERE id = $1', [id]);
+
+    // Check if the image exists
+    if (newsResult.rows.length === 0) {
+      return res.status(404).json({ message: 'Program not found.' });
+    }
+
+    const filename = newsResult.rows[0].title; 
+     const existingNotification = await query(
+            'SELECT sender_id FROM notifications WHERE (notification_type = $1 OR notification_type = $2) AND item_id = $3',
+            ['news_uploaded', 'news_updated', filename] 
+        );
+
+    if (existingNotification.rows.length > 0) {
+      // If an existing notification is found, use its sender_id
+      const senderIdToUse = existingNotification.rows[0].sender_id;
       const result = await query(
         'UPDATE news SET status = $1 WHERE id = $2 RETURNING *',
         ['published', id]
@@ -188,11 +218,12 @@ UpdateNews: async (req, res) => {
         return res.status(404).json({ message: 'News article not found.' });
       }
        await query(
-        'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
+        'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
         [
           'news_approved',
+           id,
           `News article has been approved for publishing.`,
-          null, // System notification, no specific sender
+           senderIdToUse, 
           'editor',
           false
         ]
@@ -221,9 +252,10 @@ UpdateNews: async (req, res) => {
           return res.status(404).json({ message: 'News article not found.' });
         }
         await query(
-          'INSERT INTO notifications (notification_type, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5)',
+          'INSERT INTO notifications (notification_type,item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
           [
             'news_marked_for_deletion',
+            id,
             `News article has been marked for deletion by ${user_id}.`,
             user_id,
             'administrator',
@@ -234,6 +266,35 @@ UpdateNews: async (req, res) => {
         return res.status(200).json({
           message: 'News article marked for deletion. Admin approval required.',
           news: result.rows[0],
+        });
+      } else if (role === 'administrator') {
+      // Check if a deletion request notification was already sent
+      const notificationResult = await query(
+        'SELECT sender_id FROM notifications WHERE notification_type = $1 AND item_id = $2',
+        ['news_marked_for_deletion', id]
+      );
+
+      if (notificationResult.rows.length > 0) {
+        const existingUserId = notificationResult.rows[0].sender_id;
+        const result = await query('DELETE FROM news WHERE id = $1 RETURNING *', [id]);
+        await query(
+          'INSERT INTO notifications (notification_type, item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
+          [
+            'news_deletion_approved',
+	           id,
+            `program article has been approved for deletion by ${user_id}.`,
+             existingUserId,
+            'editor',
+            false
+          ]
+        );
+        if (result.rows.length === 0) {
+          return res.status(404).json({ message: 'News not found.' });
+        }
+
+        return res.status(200).json({
+          message: 'News deleted successfully',
+          program: result.rows[0],
         });
       } else {
         const result = await query('DELETE FROM news WHERE id = $1 RETURNING *', [id]);
