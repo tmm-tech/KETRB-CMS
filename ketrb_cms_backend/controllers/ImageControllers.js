@@ -279,7 +279,7 @@ DeleteImage: async (req, res) => {
 //Get published images
 getAllPublishedImage: async (req, res) => {
     try {
-      const result = await query('SELECT * FROM images WHERE status = published');
+      const result = await query('SELECT * FROM images WHERE status = $1',['published']);
 
       const images = result.rows;
 
