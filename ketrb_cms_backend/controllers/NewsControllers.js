@@ -88,6 +88,23 @@ module.exports = {
     }
   },
 
+    // Get all published news articles
+ GetPublishedNews: async (req, res) => {
+  try {
+    const result = await query('SELECT * FROM news WHERE status=published ORDER BY created_at DESC');
+    const news = result.rows;
+
+    const newsWithImageUrls = news.map(item => ({
+      ...item,
+      imageUrl: item.image || null, // Use the image field directly, or null if it doesn't exist
+    }));
+
+    res.status(200).json(newsWithImageUrls);
+  } catch (error) {
+    console.error('Error fetching news:', error);
+    res.status(500).json({ message: 'Error fetching news.' });
+  }
+},
   // Get all news articles
  GetNews: async (req, res) => {
   try {
