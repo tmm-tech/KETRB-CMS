@@ -230,6 +230,7 @@ UpdateNews: async (req, res) => {
       );
 
       res.status(200).json({ message: 'News article approved successfully', news: result.rows[0] });
+    }
     } catch (error) {
       console.error('Error approving news article:', error);
       res.status(500).json({ message: 'Error approving the news article.' });
