@@ -169,7 +169,6 @@ const handlePublish = async (id) => {
           setAlertMessage('Program marked for deletion. Admin approval required.');
 	 window.location.reload();
         } else {
-          setPrograms((prevPrograms) => prevPrograms.filter((program) => program.id !== id));
           setAlertMessage('Program deleted successfully');
 	  window.location.href = '/programs';
         }
