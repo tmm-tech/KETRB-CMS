@@ -283,6 +283,7 @@ DeleteNews: async (req, res) => {
       if (notificationResult.rows.length > 0) {
         // If a notification exists, get the original requestor's user ID
         existingUserId = notificationResult.rows[0].sender_id;
+        console.log("ID: ", existingUserId);
       }
 
       // Proceed with the deletion
@@ -291,7 +292,7 @@ DeleteNews: async (req, res) => {
       if (result.rows.length === 0) {
         return res.status(404).json({ message: 'News article not found.' });
       }
-
+       console.log("RESULT: ", result);
       // Notify the editor if deletion was previously requested
       if (existingUserId) {
         await query(
