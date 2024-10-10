@@ -263,7 +263,7 @@ module.exports = {
           message: 'Program marked for deletion. Admin approval required.',
           program: result.rows[0],
         });
-      }if (role === 'administrator') {
+      } else if (role === 'administrator') {
       // Check if a deletion request notification was already sent
       const notificationResult = await query(
         'SELECT sender_id FROM notifications WHERE notification_type = $1 AND item_id = $2',
