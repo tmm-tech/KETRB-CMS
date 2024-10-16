@@ -55,7 +55,7 @@ export default function ForgotPassword() {
             </p>
           </CardContent>
           <CardFooter>
-            <Button className="w-full" onClick={() => router.push("/login")}>
+            <Button className="w-full" onClick={() => window.location.href = '/login'}>
               Return to Login
             </Button>
           </CardFooter>
