@@ -151,7 +151,7 @@ module.exports = {
             // Check if the password is being updated
             if (password) {
                 // You should hash the password before updating it in the database
-                const hashedPassword = await hashPassword(password); // hashPassword is a hypothetical function to hash the password
+                const hashedPassword = bcrypt.hash(password, 8);
                 updateUserQuery += `, password = $4`;
                 params.push(hashedPassword); // Add the hashed password to the parameters
             }
