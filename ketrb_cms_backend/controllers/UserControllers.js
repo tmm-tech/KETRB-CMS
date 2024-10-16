@@ -135,51 +135,52 @@ module.exports = {
     },
 
     // Update user details
-    updateUser: async (req, res) => {
-        const { fullname, email, roles, password } = req.body;
-        const { id } = req.params;
+    // Update user details
+updateUser: async (req, res) => {
+    const { fullname, email, roles, password } = req.body;
+    const { id } = req.params;
 
-        try {
-            
-            // Build the query and parameters
-            let updateUserQuery = `
-                UPDATE users
-                SET fullname = $1, email = $2, roles = $3
-            `;
-            let params = [fullname, email, roles];
+    try {
+        // Build the query and parameters
+        let updateUserQuery = `
+            UPDATE users
+            SET fullname = $1, email = $2, roles = $3
+        `;
+        let params = [fullname, email, roles];
 
-            // Check if the password is being updated
-            if (password) {
-                // You should hash the password before updating it in the database
-                const hashedPassword = bcrypt.hash(password, 8);
-                updateUserQuery += `, password = $4`;
-                params.push(hashedPassword); // Add the hashed password to the parameters
-            }
-
-            // Finalize the query
-            updateUserQuery += ` WHERE id = $${params.length + 1} RETURNING *;`;
-            params.push(id);
-
-            // Execute the query
-            const result = await query(updateUserQuery, params);
-
-            if (result.rowCount > 0) {
-                const emailContent = {
-                    email: result.rows[0].email,
-                    fullname: result.rows[0].fullname,
-                    roles: result.rows[0].roles,
-                    password: !!password // Indicate if the password was updated
-                };
-                reportService.sendPasswordUpdate(emailContent);
-                res.json({ success: true, message: 'User updated successfully', data: result.rows[0] });
-            } else {
-                res.status(404).json({ success: false, message: 'User not found' });
-            }
-        } catch (error) {
-            console.error('Error updating user:', error);
-            res.status(500).json({ success: false, message: `Error updating user: ${error.message}` });
+        // Check if the password is being updated
+        if (password) {
+            // Hash the password before updating it in the database
+            const hashedPassword = await bcrypt.hash(password, 8); // Ensure bcrypt is imported
+            updateUserQuery += `, password = $4`;
+            params.push(hashedPassword); // Add the hashed password to the parameters
         }
-    },
+
+        // Finalize the query
+        updateUserQuery += ` WHERE id = $${params.length + 1} RETURNING *;`;
+        params.push(id);
+
+        // Execute the query
+        const result = await query(updateUserQuery, params);
+
+        if (result.rowCount > 0) {
+            const emailContent = {
+                email: result.rows[0].email,
+                fullname: result.rows[0].fullname,
+                roles: result.rows[0].roles,
+                password: !!password // Indicate if the password was updated
+            };
+            // Send email notification
+            await reportService.sendPasswordUpdate(emailContent);
+            res.json({ success: true, message: 'User updated successfully', data: result.rows[0] });
+        } else {
+            res.status(404).json({ success: false, message: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error updating user:', error);
+        res.status(500).json({ success: false, message: `Error updating user: ${error.message}` });
+    }
+},
 
 
     // Soft delete (deactivate) user
