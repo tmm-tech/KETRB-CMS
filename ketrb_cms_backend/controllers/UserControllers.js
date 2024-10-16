@@ -300,4 +300,37 @@ module.exports = {
             res.status(500).json({ success: false, message: `Log Out Error: ${error.message}` });
         }
     },
+    forgotPassword: async (req, res) => {
+        const { email } = req.body;
+
+        try {
+            // Check if the user exists with the provided email
+            const findUserQuery = 'SELECT id, fullname, email FROM users WHERE email = $1';
+            const userResult = await query(findUserQuery, [email]);
+
+            if (userResult.rows.length > 0) {
+                const user = userResult.rows[0];
+                
+                // Notify admins of the password reset request
+                await query(
+                    'INSERT INTO notifications (notification_type, item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
+                    [
+                        'password_reset_requested',
+                        user.id,
+                        `Password reset requested by ${user.fullname} (${user.email}).`,
+                        user.id,  // The user's ID who requested the reset
+                        'administrator',  // Notify all admins
+                        false  // Not read yet
+                    ]
+                );
+
+                return res.json({ success: true, message: 'Password reset link has been sent to your email.' });
+            } else {
+                return res.status(404).json({ success: false, message: 'Email not found.' });
+            }
+        } catch (error) {
+            console.error('Error handling password reset:', error);
+            return res.status(500).json({ success: false, message: 'Internal server error.' });
+        }
+    },              
 };
