@@ -1,10 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "../Component/button";
 import { Input } from "../Component/input";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../Component/card";
 import { Label } from "../Component/label";
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 import { AlertCircle, ArrowLeft, Loader2 } from "lucide-react";
+import bgImage from "../Asset/bg.png"; 
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -41,7 +42,13 @@ export default function ForgotPassword() {
 
   if (success) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="flex items-center justify-center"
+        style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+        >
         <Card className="w-[450px]">
           <CardHeader>
             <CardTitle>Check Your Email</CardTitle>
