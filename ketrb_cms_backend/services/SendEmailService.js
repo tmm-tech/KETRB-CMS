@@ -100,7 +100,7 @@ exports.sendAccountCreation = (email, password, fullname, roles) => {
         if (error) {
             console.error(error);
         } else {
-            console.log('Account Creation sent: ' + info.response);
+            console.log('Account Creation sent.');
         }
     });
 };
@@ -108,7 +108,6 @@ exports.sendAccountCreation = (email, password, fullname, roles) => {
 // Password Update
 exports.sendPasswordUpdate = (userData) => {
     const { email, fullname, roles, password } = userData;
-    console.log('Sending email to:', email);
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: email,
@@ -181,7 +180,7 @@ exports.sendPasswordUpdate = (userData) => {
         if (error) {
             console.error(error);
         } else {
-            console.log('Password Update sent: ' + info.response);
+            console.log('Password Update sent.');
         }
     });
 };
@@ -257,7 +256,7 @@ exports.sendAccountDeactivation = (email, fullname) => {
         if (error) {
             console.error(error);
         } else {
-            console.log('Account Deactivation sent: ' + info.response);
+            console.log('Account Deactivation sent.');
         }
     });
 };
@@ -333,7 +332,7 @@ exports.sendAccountActivation = (email, fullname) => {
         if (error) {
             console.error(error);
         } else {
-            console.log('Account Activation sent: ' + info.response);
+            console.log('Account Activation sent.');
         }
     });
 };
