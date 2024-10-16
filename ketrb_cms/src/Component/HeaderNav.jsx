@@ -23,7 +23,7 @@ const storedUser = localStorage.getItem('user');
     userEmail = user.email || "";
 
     if (fullname) {
-      const nameParts = fullname.split(" ");
+      const nameParts = fullname.toLowerCase().split(" ");
       initials = nameParts.map(part => part[0].toUpperCase()).join("");
     }
   }
