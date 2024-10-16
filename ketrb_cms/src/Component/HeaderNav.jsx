@@ -212,14 +212,17 @@ const storedUser = localStorage.getItem('user');
               <UsersIcon className="h-5 w-5" />
               Users
             </Link>
-            <Link
-              to="/profile"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-              prefetch={false}
-            >
-              <SettingsIcon className="h-5 w-5" />
-              Settings
-            </Link>
+            {/* 
+<Link
+  to="/profile"
+  className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+  prefetch={false}
+>
+  <SettingsIcon className="h-5 w-5" />
+  Settings
+</Link>
+*/}
+
           </nav>
         </SheetContent>
       </Sheet>
@@ -296,8 +299,8 @@ const storedUser = localStorage.getItem('user');
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel><Link to="/profile">My Account</Link></DropdownMenuLabel>
-          <DropdownMenuItem><Link to="/profile">Settings</Link></DropdownMenuItem>
+          {/* <DropdownMenuLabel><Link to="/profile">My Account</Link></DropdownMenuLabel>*/}
+          {/* <DropdownMenuItem><Link to="/profile">Settings</Link></DropdownMenuItem>*/}
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleLogout}><LogOutIcon className="mr-2 h-4 w-4" />Logout</DropdownMenuItem>
         </DropdownMenuContent>
