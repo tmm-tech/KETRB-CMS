@@ -51,31 +51,39 @@ export default function ForgotPassword() {
         >
         <Card className="w-[450px]">
           <CardHeader>
-            <CardTitle>Check Your Email</CardTitle>
-            <CardDescription>
-              We've sent a password reset link to your email address.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">
-              If you don't see the email in your inbox, please check your spam folder.
-            </p>
-          </CardContent>
-          <CardFooter>
-            <Button className="w-full" onClick={() => window.location.href = '/login'}>
-              Return to Login
-            </Button>
-          </CardFooter>
+  <CardTitle className="text-2xl font-bold text-center text-gray-800">Notification Sent</CardTitle>
+  <CardDescription>
+    A notification to reset your password has been sent to the administrator.
+  </CardDescription>
+</CardHeader>
+<CardContent>
+  <p className="text-sm text-muted-foreground">
+    Please wait for further instructions from the administrator.
+  </p>
+</CardContent>
+<CardFooter>
+  <Button className="w-full" onClick={() => window.location.href = '/login'}>
+    Return to Login
+  </Button>
+</CardFooter>
         </Card>
       </div>
     );
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center"
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+      >
       <Card className="w-[450px]">
         <CardHeader>
-          <CardTitle>Forgot Password</CardTitle>
+          <CardTitle className="text-2xl font-bold text-center text-gray-800">
+  Forgot Password
+</CardTitle>
           <CardDescription>
             Enter your email address and we'll send you a link to reset your password.
           </CardDescription>
