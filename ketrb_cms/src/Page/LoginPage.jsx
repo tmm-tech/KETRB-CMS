@@ -98,7 +98,7 @@ const LoginPage = () => {
             {loading ? "Signing in..." : "Sign in"}
           </button>
           <a
-            href="#"
+            href="/forgot password"
             className="text-sm font-medium underline underline-offset-4 text-primary hover:text-primary/90 text-center block w-full"
           >
             Forgot password?
