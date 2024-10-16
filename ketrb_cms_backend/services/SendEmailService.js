@@ -168,6 +168,22 @@ exports.sendPasswordUpdate = (userData) => {
                         <li><strong>Email:</strong> ${email}</li>
                         <li><strong>Role:</strong> ${roles.charAt(0).toUpperCase() + roles.slice(1)}</li>
                     </ul>
+                    <p>You can now log in to your account using your updated details.</p>
+                    <p>If you have any questions, feel free to contact us.</p>
+                    <a href="https://ketrb-cms-one.vercel.app/" class="btn">Go to Website</a>
+                </div>
+        </body>
+        </html>`
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.error(error);
+        } else {
+            console.log('Password Update sent: ' + info.response);
+        }
+    });
+};
 
 // Account Deactivation
 exports.sendAccountDeactivation = (email, fullname) => {
