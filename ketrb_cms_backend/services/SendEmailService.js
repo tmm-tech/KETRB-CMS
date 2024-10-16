@@ -160,18 +160,18 @@ exports.sendPasswordUpdate = (userData) => {
         </head>
         <body>
               <div class="container">
-                    <h1>Account Updated</h1>
-                    <p>Dear ${fullname},</p>
-                    <p>Your account has been successfully updated. ${password ? 'Your password has been changed.' : ''} Please find your updated details below:</p>
-                    <ul>
-                        <li><strong>Email:</strong> ${email}</li>
-                        <li><strong>Role:</strong> ${roles.charAt(0).toUpperCase() + roles.slice(1)}</li>
-                        ${password ? <li><strong>Password:</strong> ${password}</li> : ''}
-                    </ul>
-                    <p>You can now log in to your account using your updated details.</p>
-                    <p>If you have any questions, feel free to contact us.</p>
-                    <a href="https://ketrb-cms-one.vercel.app/" class="btn">Go to Website</a>
-                </div>
+    <h1>Account Updated</h1>
+    <p>Dear ${fullname},</p>
+    <p>Your account has been successfully updated. ${password ? 'Your password has been changed.' : ''} Please find your updated details below:</p>
+    <ul>
+        <li><strong>Email:</strong> ${email}</li>
+        ${password ? `<li><strong>Password:</strong> ${password}</li>` : ''}
+        <li><strong>Role:</strong> ${roles.charAt(0).toUpperCase() + roles.slice(1)}</li>
+    </ul>
+    <p>You can now log in to your account using your updated details.</p>
+    <p>If you have any questions, feel free to contact us.</p>
+    <a href="https://ketrb-cms-one.vercel.app/" class="btn">Go to Website</a>
+</div>
         </body>
         </html>`
     };
