@@ -167,6 +167,7 @@ exports.sendPasswordUpdate = (userData) => {
                     <ul>
                         <li><strong>Email:</strong> ${email}</li>
                         <li><strong>Role:</strong> ${roles.charAt(0).toUpperCase() + roles.slice(1)}</li>
+                        ${password ? <li><strong>Password:</strong> ${password}</li> : ''}
                     </ul>
                     <p>You can now log in to your account using your updated details.</p>
                     <p>If you have any questions, feel free to contact us.</p>
