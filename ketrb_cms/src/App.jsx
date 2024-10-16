@@ -16,6 +16,7 @@ import NotificationsPage from './Page/NotificationsPage';
 import MobileCheckWrapper from './Page/MobileCheckWrapper';
 import UserEdit from './Page/UserEdit';
 import NewsEdit from './Page/NewsEdit';
+import ForgotPassword from './Page/ForgotPassword';
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -57,6 +58,7 @@ const App = () => {
       <MobileCheckWrapper>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/forgot password" element={<ForgotPassword />} />
         {isAuthenticated ? (
           <>
             <Route path="/" element={<Dashboard />} />
