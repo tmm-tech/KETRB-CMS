@@ -118,7 +118,7 @@ const SideNav = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="/profile"
+                to="/"
                 className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/settings')
                   ? "bg-black text-white"
                   : "text-muted-foreground hover:text-foreground"
