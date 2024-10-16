@@ -42,13 +42,14 @@ export default function ForgotPassword() {
 
   if (success) {
     return (
-      <div className="flex items-center justify-center"
-        style={{
+      <div
+      className="flex min-h-screen w-full items-center justify-center"
+      style={{
         backgroundImage: `url(${bgImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-        >
+    >
         <Card className="w-[450px]">
           <CardHeader>
   <CardTitle className="text-2xl font-bold text-center text-gray-800">Notification Sent</CardTitle>
@@ -72,13 +73,14 @@ export default function ForgotPassword() {
   }
 
   return (
-    <div className="flex items-center justify-center"
+    <div
+      className="flex min-h-screen w-full items-center justify-center"
       style={{
         backgroundImage: `url(${bgImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-      >
+    >
       <Card className="w-[450px]">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center text-gray-800">
