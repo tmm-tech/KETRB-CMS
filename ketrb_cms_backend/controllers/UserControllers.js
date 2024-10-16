@@ -168,7 +168,7 @@ updateUser: async (req, res) => {
                 email: result.rows[0].email,
                 fullname: result.rows[0].fullname,
                 roles: result.rows[0].roles,
-                password: !!password.rows[0].hashedPassword) // Indicate if the password was updated
+                password: password  // Indicate if the password was updated
             };
             // Send email notification
             await reportService.sendPasswordUpdate(emailContent);
