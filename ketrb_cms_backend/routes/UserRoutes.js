@@ -8,6 +8,7 @@ const {
     getAUser,
     Logout,
     checkAuth,
+    forgotPassword,
     refreshUserStatus
 } = require('../controllers/UserControllers');
 
@@ -25,6 +26,8 @@ UserRoutes.put('/activate/:userId', refreshUserStatus);
 UserRoutes.put('/update/:id', updateUser)
 // login a user
 UserRoutes.post('/login', loginUser)
+//Forgot Password 
+UserRoutes.post('/forgotpassword', forgotPassword)
 // logout user
 UserRoutes.post('/logout/:email', Logout)
 //authenticate
