@@ -13,13 +13,13 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-} from "../Component/dropdown-menu"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "../Component/tabs"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../Component/card"
-import { Badge } from "../Component/badge"
-import { Alert, AlertDescription, AlertTitle } from "../Component/alert"
-import { useNavigate } from "react-router-dom"
-import LoadingPage from "../Page/LoadingPage"
+} from "../Component/dropdown-menu";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "../Component/tabs";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../Component/card";
+import { Badge } from "../Component/badge";
+import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
+import { useNavigate } from "react-router-dom";
+import LoadingPage from "../Page/LoadingPage";
 
 const EmployeesPage = () => {
   const [employees, setEmployees] = useState([])
@@ -300,7 +300,7 @@ const EmployeesPage = () => {
                     </DropdownMenuCheckboxItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <Link to="/employees/add">
+                <Link to="/employees/add employees">
                   <Button variant="outline" size="sm" className="h-8 gap-1 bg-black text-white">
                     <PlusIcon className="h-3.5 w-3.5" />
                     <span>Add Employee</span>

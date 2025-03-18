@@ -350,7 +350,7 @@ const CareersPage = () => {
                     </DropdownMenuCheckboxItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <Link to="/careers/add">
+                <Link to="/careers/add career">
                   <Button variant="outline" size="sm" className="h-8 gap-1 bg-black text-white">
                     <PlusIcon className="h-3.5 w-3.5" />
                     <span>Add Career Posting</span>
