@@ -21,6 +21,8 @@ import CareerAddPage from "./Page/CareersPageAdd";
 import EmployeesPage from "./Page/EmployeesPage";
 import EmployeeAddPage from "./Page/EmployeesPageAdd";
 import ForgotPassword from "./Page/ForgotPassword";
+import CareerEdit from "./Page/CareersPageEdit";
+import EmployeeEdit from "./Page/EmployeesPageEdit";
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -81,13 +83,16 @@ const App = () => {
               />
               <Route path="/careers" element={<CareersPage />} />
               <Route path="/careers/add career" element={<CareerAddPage />} />
-              {/* <Route path="/career/edit career/:id" element={<ProgramsEdit />} /> */}
+              <Route path="/career/edit career/:id" element={<CareerEdit />} />
               <Route path="/employees" element={<EmployeesPage />} />
               <Route
                 path="/employees/add employees"
                 element={<EmployeeAddPage />}
               />
-              {/* <Route path="/employees/edit employees/:id" element={<ProgramsEdit />} /> */}
+              <Route
+                path="/employees/edit employees/:id"
+                element={<EmployeeEdit />}
+              />
               {user.roles === "administrator" && (
                 <>
                   <Route path="/users" element={<UserPage />} />
