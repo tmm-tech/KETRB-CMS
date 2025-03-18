@@ -93,6 +93,36 @@ const SideNav = () => {
             </TooltipTrigger>
             <TooltipContent side="right">Programs</TooltipContent>
           </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                to="/careers"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/careers')
+                  ? "bg-black text-white"
+                  : "text-muted-foreground hover:text-foreground"
+                  }`}
+              >
+                <CareerIcon className="h-5 w-5" />
+                <span className="sr-only">Career</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Career</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                to="/employees"
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${isActive(pathname, '/employees')
+                  ? "bg-black text-white"
+                  : "text-muted-foreground hover:text-foreground"
+                  }`}
+              >
+                <EmployeeIcon className="h-5 w-5" />
+                <span className="sr-only">Employee</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Employee</TooltipContent>
+          </Tooltip>
           {user.roles === 'administrator' && (
             <Tooltip>
               <TooltipTrigger asChild>
@@ -270,6 +300,48 @@ function SettingsIcon(props) {
 
 
 function UsersIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  )
+}
+
+function CareerIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
+      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+    </svg>
+  )
+}
+
+function EmployeeIcon(props) {
   return (
     <svg
       {...props}
