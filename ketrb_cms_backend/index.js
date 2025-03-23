@@ -9,6 +9,8 @@ const UserRoutes = require('./routes/UserRoutes');
 const ImageRoutes = require('./routes/ImageRoutes');
 const ProgramRoutes = require('./routes/ProgramRoutes');
 const NewsRoutes = require('./routes/NewsRoutes');
+const CareerRoutes = require('./routes/CareerRoutes');
+const EmployeeRoutes = require('./routes/EmployeeRoutes');
 const NotificationRoutes = require('./routes/NotificationRoutes'); 
 const cookieParser = require('cookie-parser');
 
@@ -55,6 +57,8 @@ app.use('/users', UserRoutes);
 app.use('/images', ImageRoutes);
 app.use('/programs', ProgramRoutes);
 app.use('/notifications', NotificationRoutes);
+app.use('/employees', EmployeeRoutes);
+app.use('/careers', CareerRoutes);
 app.use('/news', NewsRoutes);
 app.get('/', (req, res) => {
     res.json({ message: "Confirmed Connection to KETRB CMS" });

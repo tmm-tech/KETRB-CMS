@@ -22,9 +22,6 @@ const EmployeeAddPage = () => {
     email: "",
     phone: "",
     hire_date: "",
-    bio: "",
-    linkedin_url: "",
-    twitter_url: "",
     profile_image: null,
     profile_image_url: "", // For preview
   })

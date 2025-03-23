@@ -1,21 +1,19 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
-import { Popover, PopoverTrigger, PopoverContent } from "../Component/popover"
-import { Calendar } from "../Component/calendar"
-import SideNav from "../Component/SideNav"
-import HeaderNav from "../Component/HeaderNav"
-import bgImage from "../Asset/bg.png"
-import { Button } from "../Component/button"
-import { Card, CardHeader, CardTitle, CardContent } from "../Component/card"
-import { Input } from "../Component/input"
-import { Textarea } from "../Component/textarea"
-import { Alert, AlertDescription, AlertTitle } from "../Component/alert"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../Component/select"
-import { Label } from "../Component/label"
-import { Badge } from "../Component/badge"
-import { RadioGroup, RadioGroupItem } from "../Component/radio-group"
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Popover, PopoverTrigger, PopoverContent } from "../Component/popover";
+import { Calendar } from "../Component/calendar";
+import SideNav from "../Component/SideNav";
+import HeaderNav from "../Component/HeaderNav";
+import bgImage from "../Asset/bg.png";
+import { Button } from "../Component/button";
+import { Card, CardHeader, CardTitle, CardContent } from "../Component/card";
+import { Input } from "../Component/input";
+import { Textarea } from "../Component/textarea";
+import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../Component/select";
+import { Label } from "../Component/label";
+import { Badge } from "../Component/badge";
+import { RadioGroup, RadioGroupItem } from "../Component/radio-group";
 
 const EmployeeEdit = () => {
   const { id } = useParams() // Get employee ID from route params
@@ -29,9 +27,6 @@ const EmployeeEdit = () => {
     email: "",
     phone: "",
     hire_date: new Date(),
-    bio: "",
-    linkedin_url: "",
-    twitter_url: "",
     profile_image: null,
     profile_image_url: "",
   })
@@ -58,11 +53,7 @@ const EmployeeEdit = () => {
           email: data.email,
           phone: data.phone || "",
           hire_date: data.hire_date ? new Date(data.hire_date) : new Date(),
-          bio: data.bio || "",
-          linkedin_url: data.linkedin_url || "",
-          twitter_url: data.twitter_url || "",
-          profile_image: null,
-          profile_image_url: data.profile_image || "",
+          profile_image: data.profile_image || "",
         })
       } catch (error) {
         console.error("Error fetching employee:", error)
@@ -274,36 +265,6 @@ const EmployeeEdit = () => {
                               <h4 className="text-sm font-medium text-gray-500">Hire Date</h4>
                               <p>{formatDate(formData.hire_date)}</p>
                             </div>
-                          </div>
-
-                          {formData.bio && (
-                            <div className="border-t py-4">
-                              <h4 className="text-lg font-medium">Bio</h4>
-                              <p className="mt-2 whitespace-pre-line">{formData.bio}</p>
-                            </div>
-                          )}
-
-                          <div className="flex gap-4 mt-4">
-                            {formData.linkedin_url && (
-                              <a
-                                href={formData.linkedin_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 hover:underline"
-                              >
-                                LinkedIn
-                              </a>
-                            )}
-                            {formData.twitter_url && (
-                              <a
-                                href={formData.twitter_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-400 hover:underline"
-                              >
-                                Twitter
-                              </a>
-                            )}
                           </div>
                         </div>
                       </div>
