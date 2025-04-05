@@ -82,8 +82,6 @@ const CareerAddPage = () => {
         body: JSON.stringify({
           ...formData,
           status: estatus,
-          created_by: author,
-          posted_at: new Date().toISOString(),
         }),
       });
 
