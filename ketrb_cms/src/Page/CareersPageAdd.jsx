@@ -60,25 +60,22 @@ const CareerAddPage = () => {
   };
 
   const handleSaveDraft = async () => {
-    setFormData((prevState) => ({
-      ...prevState,
-      status: "draft",
-    }));
-    await handleSubmit();
+    setIsDraft(true)
+    setdraftLoading(true);
+    await handleSubmit('draft');
   };
 
   const handlePublish = async () => {
-    setFormData((prevState) => ({
-      ...prevState,
-      status: user?.roles === "editor" ? "pending" : "published",
-    }));
-    await handleSubmit();
+    setLoading(true);
+    await handleSubmit(user?.roles === 'editor' ? 'pending' : 'published');
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (estatus) => {
     setLoading(true);
-
+    setFormData((prevState) => ({
+      ...prevState,
+      status: estatus,
+    }));
     try {
       const response = await fetch("https://ketrb-backend.onrender.com/careers/add", {
         method: "POST",
@@ -117,6 +114,7 @@ const CareerAddPage = () => {
       setAlertMessage("An error occurred while adding the career posting.");
     } finally {
       setLoading(false);
+      setdraftLoading(false);
     }
   };
 
@@ -296,15 +294,15 @@ const CareerAddPage = () => {
               <Button
                 variant="outline"
                 onClick={handleSaveDraft}
-                disabled={loading}
+                disabled={draftloading}
               >
-                Save as Draft
+                {draftloading ? "Saving..." : "Save as Draft"}
               </Button>
               <Button
                 onClick={handlePublish}
                 disabled={loading}
               >
-                Publish
+                {loading ? "Publishing..." : "Publish"}
               </Button>
             </CardFooter>
           </Card>
