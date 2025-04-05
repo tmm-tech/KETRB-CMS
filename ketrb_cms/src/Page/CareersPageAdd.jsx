@@ -222,7 +222,6 @@ const CareerAddPage = () => {
                         <SelectItem value="part_time">Part-time</SelectItem>
                         <SelectItem value="contract">Contract</SelectItem>
                         <SelectItem value="internship">Internship</SelectItem>
-                        <SelectItem value="temporary">Temporary</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
