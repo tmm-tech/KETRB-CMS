@@ -4,14 +4,14 @@ const cloudinary = require('cloudinary').v2;
 module.exports = {
   // Add a new job posting
   AddCareer: async (req, res) => {
-    const { title, description, department, employment_type, location,salary_range,requirements,responsibilities,benefits,status,application_link,application_deadline,created_by,posted_at} = req.body;
+    const { title, description, department, employment_type, location,salary_range,requirements,responsibilities,benefits,status,application_deadline,created_by,posted_at} = req.body;
     console.log('Received Data:', req.body); // Log incoming data
 
     try {
         const result = await query(
-            `INSERT INTO careers (title, description, department, job_type, location, salary_range, closing_date,status,requirements,responsibilities,benefits,application_link, closing_date, created_by,status) 
+            `INSERT INTO careers (title, description, department, job_type, location, salary_range, closing_date,status,requirements,responsibilities,benefits, closing_date, created_by,status) 
             VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-            [title, description, department, employment_type, location, salary_range, application_deadline,requirements, responsibilities, benefits, application_link,created_by,status]
+            [title, description, department, employment_type, location, salary_range, application_deadline,requirements, responsibilities, benefits,created_by,status]
         );
 
         console.log('Insert Result:', result.rows[0]); // Log the inserted row

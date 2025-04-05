@@ -34,10 +34,9 @@ const CareerAddPage = () => {
     requirements: "",
     responsibilities: "",
     benefits: "",
-    status: "draft", // Default status
-    application_link: "",
+    status: "draft",
     application_deadline: "",
-    created_by: author,
+    created_by: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -82,6 +81,7 @@ const CareerAddPage = () => {
         body: JSON.stringify({
           ...formData,
           status: estatus,
+          created_by: author,
         }),
       });
 

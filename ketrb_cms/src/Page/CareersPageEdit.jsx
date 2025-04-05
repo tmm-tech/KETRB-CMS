@@ -28,7 +28,6 @@ const CareerEdit = () => {
         responsibilities: "",
         benefits: "",
         status: "",
-        application_link: "",
         application_deadline: new Date(),
         posted_at: new Date()
     });
@@ -59,7 +58,6 @@ const CareerEdit = () => {
                     responsibilities: data.responsibilities,
                     benefits: data.benefits,
                     status: data.status,
-                    application_link: data.application_link,
                     application_deadline: data.closing_date ? new Date(data.application_deadline) : new Date(),
                     posted_at: data.posted_date ? new Date(data.posted_at) : new Date()
                 });
@@ -267,21 +265,6 @@ const CareerEdit = () => {
                                                         <p className="mt-2 whitespace-pre-line">{formData.benefits}</p>
                                                     </div>
                                                 )}
-
-                                                {formData.application_link && (
-                                                    <div>
-                                                        <h4 className="text-lg font-medium">How to Apply</h4>
-                                                        <a 
-                                                            href={formData.application_link} 
-                                                            target="_blank" 
-                                                            rel="noopener noreferrer"
-                                                            className="text-blue-600 hover:underline"
-                                                        >
-                                                            Apply Online
-                                                        </a>
-                                                    </div>
-                                                )}
-
                                                 <div className="text-sm text-gray-500">
                                                     <p>Posted on: {formatDate(formData.posted_at)}</p>
                                                 </div>
@@ -411,19 +394,6 @@ const CareerEdit = () => {
                                                                 />
                                                             </PopoverContent>
                                                         </Popover>
-                                                    </div>
-
-                                                    {/* Application Link */}
-                                                    <div>
-                                                        <Label htmlFor="application_link">Application Link</Label>
-                                                        <Input
-                                                            id="application_link"
-                                                            name="application_link"
-                                                            value={formData.application_link}
-                                                            onChange={handleChange}
-                                                            className="mt-1 block w-full"
-                                                            placeholder="https://company.com/apply"
-                                                        />
                                                     </div>
                                                 </div>
 
