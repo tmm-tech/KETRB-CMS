@@ -197,7 +197,7 @@ const CareersPage = () => {
 
   // Add these handler functions before the return statement
   const handleViewApplication = (id) => {
-    navigate(`/applications/${id}`)
+    navigate(`/careers/${id}`)
   }
 
   const handleApplicationStatus = async (id, status) => {
