@@ -16,7 +16,8 @@ const CareerAddPage = () => {
   const user = JSON.parse(storedUser);
   const user_id = user.id;
   const [author, setAuthor] = useState("");
-  
+  const [isDraft, setIsDraft] = useState(true);
+  const [draftloading, setdraftLoading] = useState(false);
   useEffect(() => {
     if (user && user.fullname) {
       setAuthor(user.fullname);
