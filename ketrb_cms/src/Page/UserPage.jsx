@@ -26,7 +26,12 @@ const UserPage = () => {
     // Fetch users from backend
     const fetchUsers = async () => {
       try {
-        const response = await fetch("https://ketrb-backend.onrender.com/users/allusers");
+        const response = await fetch("https://ketrb-backend.onrender.com/users/allusers", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
         // Check if the response is OK (status code 200–299)
         if (!response.ok) {

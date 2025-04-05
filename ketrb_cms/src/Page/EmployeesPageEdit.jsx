@@ -41,7 +41,12 @@ const EmployeeEdit = () => {
     // Fetch employee data by ID and set state
     const fetchEmployee = async () => {
       try {
-        const response = await fetch(`https://ketrb-backend.onrender.com/employees/${id}`)
+        const response = await fetch(`https://ketrb-backend.onrender.com/employees/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         const data = await response.json()
         setEmployee(data)
         setFormData({

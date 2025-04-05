@@ -28,12 +28,17 @@ const ProgramsEdit = () => {
     const [editMode, setEditMode] = useState(false); // Handle edit mode toggle
     const storedUser = localStorage.getItem('user');
     const user = JSON.parse(storedUser);
-    const user_id=user.id;
+    const user_id = user.id;
     useEffect(() => {
         // Fetch program data by ID and set state
         const fetchProgram = async () => {
             try {
-                const response = await fetch(`https://ketrb-backend.onrender.com/programs/${id}`);
+                const response = await fetch(`https://ketrb-backend.onrender.com/programs/${id}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
                 const data = await response.json();
                 setProgram(data);
                 setTitle(data.title);
@@ -68,7 +73,7 @@ const ProgramsEdit = () => {
 
     const handleSaveDraft = async () => {
         setIsDraft(true);
-	setDraftLoading(true);
+        setDraftLoading(true);
         await handleSubmit('draft');
     };
 
@@ -79,8 +84,8 @@ const ProgramsEdit = () => {
     };
 
     const handleSubmit = async (status) => {
-        
-        
+
+
         const formData = new FormData();
         console.log("url: ", image);
         formData.append('title', title);
@@ -89,7 +94,7 @@ const ProgramsEdit = () => {
         formData.append('author', author);
         formData.append('status', status);
         formData.append('role', user.roles);
-	formData.append('user_id', user_id);
+        formData.append('user_id', user_id);
         if (image) formData.append('program', image); // Append new image if uploaded
 
         try {
@@ -113,26 +118,26 @@ const ProgramsEdit = () => {
         }
     };
     const handlePublished = async () => {
-    try {
-        const response = await fetch(`https://ketrb-backend.onrender.com/programs/approve/${id}`, {
-            method: 'PUT', 
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        if (response.ok) {
-            const updatedProgram = await response.json();
-            // Update state to reflect the published program
-            setAlertMessage('Program published successfully');
-		window.location.href = '/programs';
-        } else {
-            setAlertMessage('Failed to publish program');
+        try {
+            const response = await fetch(`https://ketrb-backend.onrender.com/programs/approve/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.ok) {
+                const updatedProgram = await response.json();
+                // Update state to reflect the published program
+                setAlertMessage('Program published successfully');
+                window.location.href = '/programs';
+            } else {
+                setAlertMessage('Failed to publish program');
+            }
+        } catch (error) {
+            console.error("Error publishing program:", error);
+            setAlertMessage('An error occurred while publishing the program.');
         }
-    } catch (error) {
-        console.error("Error publishing program:", error);
-        setAlertMessage('An error occurred while publishing the program.');
-    }
-};
+    };
 
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -160,7 +165,7 @@ const ProgramsEdit = () => {
 
                                 {/* Preview mode (default view) */}
                                 {!editMode ? (
-                                   <Card className="relative p-6 bg-white rounded-md w-[700px]">
+                                    <Card className="relative p-6 bg-white rounded-md w-[700px]">
                                         <CardHeader>
                                             <CardTitle className="text-2xl font-bold mb-4">Program Preview</CardTitle>
                                         </CardHeader>
@@ -172,7 +177,7 @@ const ProgramsEdit = () => {
                                             >
                                                 <FilePenIcon className="w-5 h-5" />
                                             </button>
-                                    
+
                                             {/* Program content */}
                                             <div className="mb-4">
                                                 <img
@@ -184,34 +189,34 @@ const ProgramsEdit = () => {
                                             <h3 className="text-xl font-semibold">{title}</h3>
                                             <p className="text-muted-foreground my-2">{content}</p>
                                             <p className="text-sm mt-4">{status === "published"
-                                                        ? `Published on ${publishedDate.toLocaleDateString()}`
-                                                        : status === "pending" 
-							? "Pending Approval"
-							: "Draft"}</p>
+                                                ? `Published on ${publishedDate.toLocaleDateString()}`
+                                                : status === "pending"
+                                                    ? "Pending Approval"
+                                                    : "Draft"}</p>
                                             <p className="text-sm">Author: {author}</p>
-					     <div className="flex justify-end gap-2 mt-6">
-						{/* Show Approve Publish button only for pending programs if user is admin */}
-						{user.roles === "administrator" && status === "pending" && (
-						<Button size="sm" variant="black" onClick={() => handlePublished()}>
-						Approve Publish
-						</Button>
-						)}
-					    </div>     
+                                            <div className="flex justify-end gap-2 mt-6">
+                                                {/* Show Approve Publish button only for pending programs if user is admin */}
+                                                {user.roles === "administrator" && status === "pending" && (
+                                                    <Button size="sm" variant="black" onClick={() => handlePublished()}>
+                                                        Approve Publish
+                                                    </Button>
+                                                )}
+                                            </div>
                                         </CardContent>
-					    
-					    
-					
+
+
+
                                     </Card>
                                 ) : (
                                     /* Edit mode (form view) */
                                     <Card className="relative p-6 bg-white rounded-md w-[800px]">
-                                         <CardHeader>
+                                        <CardHeader>
                                             <CardTitle className="text-2xl font-bold mb-4">Edit Program</CardTitle>
                                         </CardHeader>
                                         <CardContent>
                                             {/* Form for editing the program */}
                                             <div>
-                                               
+
                                                 <form className="space-y-6 w-[700px]" encType="multipart/form-data">
                                                     {/* Title Input */}
                                                     <div>
@@ -227,7 +232,7 @@ const ProgramsEdit = () => {
                                                             required
                                                         />
                                                     </div>
-                                    
+
                                                     {/* Image Upload */}
                                                     <div>
                                                         <label htmlFor="image" className="block text-sm font-medium text-muted-foreground">
@@ -253,7 +258,7 @@ const ProgramsEdit = () => {
                                                             )}
                                                         </div>
                                                     </div>
-                                    
+
                                                     {/* Content Textarea */}
                                                     <div>
                                                         <label htmlFor="content" className="block text-sm font-medium text-muted-foreground">
@@ -268,7 +273,7 @@ const ProgramsEdit = () => {
                                                             required
                                                         />
                                                     </div>
-                                    
+
                                                     {/* Published Date and Author Fields */}
                                                     <div className="grid grid-cols-2 gap-4">
                                                         {/* Published Date */}
@@ -291,7 +296,7 @@ const ProgramsEdit = () => {
                                                                 </PopoverContent>
                                                             </Popover>
                                                         </div>
-                                    
+
                                                         {/* Author Field */}
                                                         <div>
                                                             <label htmlFor="author" className="block text-sm font-medium text-muted-foreground">
@@ -308,7 +313,7 @@ const ProgramsEdit = () => {
                                                         </div>
                                                     </div>
                                                 </form>
-                                    
+
                                                 {/* Action Buttons */}
                                                 <div className="flex justify-end gap-2 mt-6">
                                                     <Button onClick={() => setEditMode(false)} variant="outline">
@@ -317,16 +322,16 @@ const ProgramsEdit = () => {
                                                     <Button onClick={handleSaveDraft} disabled={draftLoading} variant="black">
                                                         {draftLoading ? "Saving Draft..." : "Save Draft"}
                                                     </Button>
-                                                          {/* Conditionally render Approve & Publish button */}
-            {user.roles === 'administrator' && status === 'pending' ? (
-                <Button onClick={() => handlePublish('published')} variant="black" disabled={loading}>
-                    {loading ? "Approving..." : "Approve & Publish"}
-                </Button>
-            ) : (
-                <Button onClick={handlePublish} variant="black" disabled={loading}>
-                    {loading ? "Publishing..." : "Publish"}
-                </Button>
-            )}
+                                                    {/* Conditionally render Approve & Publish button */}
+                                                    {user.roles === 'administrator' && status === 'pending' ? (
+                                                        <Button onClick={() => handlePublish('published')} variant="black" disabled={loading}>
+                                                            {loading ? "Approving..." : "Approve & Publish"}
+                                                        </Button>
+                                                    ) : (
+                                                        <Button onClick={handlePublish} variant="black" disabled={loading}>
+                                                            {loading ? "Publishing..." : "Publish"}
+                                                        </Button>
+                                                    )}
                                                 </div>
                                             </div>
                                         </CardContent>

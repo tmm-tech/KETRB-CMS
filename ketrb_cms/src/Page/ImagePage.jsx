@@ -30,7 +30,12 @@ const ImagePage = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await fetch('https://ketrb-backend.onrender.com/images/allimages');
+        const response = await fetch('https://ketrb-backend.onrender.com/images/allimages', {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         const result = await response.json();
 
         if (response.ok) {

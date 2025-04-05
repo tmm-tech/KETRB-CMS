@@ -36,7 +36,12 @@ const EmployeesPage = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await fetch("https://ketrb-backend.onrender.com/employees/") // Update with your API endpoint
+        const response = await fetch("https://ketrb-backend.onrender.com/employees/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         const data = await response.json()
         setEmployees(data) // Adjust according to your data structure
       } catch (error) {
@@ -54,7 +59,7 @@ const EmployeesPage = () => {
   }
 
   const handleEdit = (id) => {
-    navigate(`/employees/edit/${id}`) // Redirect to the edit page
+    navigate(`/employees/edit employees/${id}`) // Redirect to the edit page
   }
 
   const filteredEmployees = employees

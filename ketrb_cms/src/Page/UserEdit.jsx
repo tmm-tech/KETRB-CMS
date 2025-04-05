@@ -31,7 +31,12 @@ const UserEdit = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await fetch(`https://ketrb-backend.onrender.com/users/user/${id}`);
+                const response = await fetch(`https://ketrb-backend.onrender.com/users/user/${id}`, {
+                    method: "GET",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  });
                 const userData = await response.json();
                 setName(userData.data.fullname);
                 setEmail(userData.data.email);

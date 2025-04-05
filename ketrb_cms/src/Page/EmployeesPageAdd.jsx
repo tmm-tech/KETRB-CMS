@@ -85,6 +85,9 @@ const EmployeeAddPage = () => {
 
       const response = await fetch("https://ketrb-backend.onrender.com/employees/add", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: formDataToSend, // Send as FormData, not JSON
       })
 

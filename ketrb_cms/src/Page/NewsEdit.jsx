@@ -34,7 +34,12 @@ const NewsEdit = () => {
         // Fetch news data by ID and set state
         const fetchNews = async () => {
             try {
-                const response = await fetch(`https://ketrb-backend.onrender.com/news/${id}`);
+                const response = await fetch(`https://ketrb-backend.onrender.com/news/${id}`, {
+                    method: "GET",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  });
                 const data = await response.json();
                 setNews(data);
                 setTitle(data.title);

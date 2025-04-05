@@ -39,7 +39,12 @@ const CareersPage = () => {
 
   const fetchCareers = async () => {
     try {
-      const response = await fetch("https://ketrb-backend.onrender.com/careers/") // Update with your API endpoint
+      const response = await fetch("https://ketrb-backend.onrender.com/careers/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       const data = await response.json()
       setCareers(data) // Adjust according to your data structure
     } catch (error) {
@@ -50,7 +55,12 @@ const CareersPage = () => {
   // Add this inside the useEffect after fetchCareers
   const fetchApplications = async () => {
     try {
-      const response = await fetch("https://ketrb-backend.onrender.com/careers/applications/")
+      const response = await fetch("https://ketrb-backend.onrender.com/careers/applications/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       const data = await response.json()
       setApplications(data)
     } catch (error) {
