@@ -24,11 +24,18 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 const corsOptions = {
-  origin: 'https://ketrb-cms-one.vercel.app', // Your frontend URL
-  credentials: true, // Allow cookies to be sent
-  methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
-  allowedHeaders: 'Content-Type,Authorization' // Allowed headers
-};
+    origin: (origin, callback) => {
+      const allowedOrigins = ['https://ketrb-cms-one.vercel.app', 'https://ketrb.netlify.app'];
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true, // Allow cookies to be sent
+    methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
+    allowedHeaders: 'Content-Type,Authorization' // Allowed headers
+  };
 app.use(cors(corsOptions));
 
 // Body parsing
