@@ -56,7 +56,7 @@ const CareerAddPage = () => {
     // Set the status based on the action and user role
     let status = formData.status
     if (action === "publish") {
-      status = user.roles === "administrator" ? "active" : "pending"
+      status = user.roles === "administrator" ? "published" : "pending"
     } else if (action === "draft") {
       status = "draft"
     }
@@ -79,7 +79,7 @@ const CareerAddPage = () => {
         setAlertType("success")
         if (status === "pending") {
           setAlertMessage("Career posting submitted for approval.")
-        } else if (status === "active") {
+        } else if (status === "published") {
           setAlertMessage("Career posting published successfully.")
         } else {
           setAlertMessage("Career posting saved as draft.")
