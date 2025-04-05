@@ -15,7 +15,8 @@ const NotificationRoutes = require('./routes/NotificationRoutes');
 const cookieParser = require('cookie-parser');
 
 const app = express(); 
-
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
 // Middleware setup
 app.use(cookieParser());
 cloudinary.config({ 
@@ -23,20 +24,9 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY, 
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
-const allowedOrigins = [
-    'https://ketrb-cms-one.vercel.app',
-    'https://ketrb.netlify.app'
-  ];
-  
-  const corsOptions = {
-    origin: true,  
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-    allowedHeaders: ['Content-Type', 'Authorization'], 
-  };
-  
-  app.use(cors(corsOptions));
-  
-app.use(cors(corsOptions));
+
+
+app.use(cors());
 
 // Body parsing
 app.use(express.json({ limit: '50mb' }));
