@@ -52,7 +52,7 @@ const CareersPage = () => {
   // Add this inside the useEffect after fetchCareers
   const fetchApplications = async () => {
     try {
-      const response = await fetch("https://ketrb-backend.onrender.com/applications/")
+      const response = await fetch("https://ketrb-backend.onrender.com/careers/applications/")
       const data = await response.json()
       setApplications(data)
     } catch (error) {
@@ -80,7 +80,7 @@ const CareersPage = () => {
   }
 
   const handleEdit = (id) => {
-    navigate(`/careers/edit/${id}`) // Redirect to the edit page
+    navigate(`/career/edit career/${id}`) // Redirect to the edit page
   }
 
   const filteredCareers = careers
