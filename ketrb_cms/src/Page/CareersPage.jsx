@@ -1,11 +1,9 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import SideNav from "../Component/SideNav"
-import HeaderNav from "../Component/HeaderNav"
-import bgImage from "../Asset/bg.png"
-import { Button } from "../Component/button"
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import SideNav from "../Component/SideNav";
+import HeaderNav from "../Component/HeaderNav";
+import bgImage from "../Asset/bg.png";
+import { Button } from "../Component/button";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -15,13 +13,13 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-} from "../Component/dropdown-menu"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "../Component/tabs"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../Component/card"
-import { Badge } from "../Component/badge"
-import { Alert, AlertDescription, AlertTitle } from "../Component/alert"
-import { useNavigate } from "react-router-dom"
-import LoadingPage from "../Page/LoadingPage"
+} from "../Component/dropdown-menu";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "../Component/tabs";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../Component/card";
+import { Badge } from "../Component/badge";
+import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
+import { useNavigate } from "react-router-dom";
+import LoadingPage from "../Page/LoadingPage";
 
 const CareersPage = () => {
   const [careers, setCareers] = useState([])
