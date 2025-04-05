@@ -33,7 +33,7 @@ module.exports = {
 
   // Get a single job posting by ID
   GetCareerById: async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params.id;
     console.log('ID: ', id);
     try {
       const result = await query('SELECT * FROM careers WHERE id = $1 AND isdeleted = false', [id]);
