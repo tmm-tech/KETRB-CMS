@@ -26,15 +26,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Job posting routes
-CareerRoutes.post('/add', AddCareer); // Add a new job posting
-CareerRoutes.get('/', GetAllCareers); // Get all job postings
-CareerRoutes.get('/:id', GetCareerById); // Get a specific job posting
-CareerRoutes.put('/edit/:id', UpdateCareer); // Update a job posting
-CareerRoutes.delete('/delete/:id', DeleteCareer); // Delete a job posting
-// Approve a career post
-CareerRoutes.put('/approve/:id', ApproveCareer);
-// Job application routes
-CareerRoutes.post('/apply', upload.single('resume'), ApplyForJob); // Apply for a job
-CareerRoutes.get('/applications', GetAllApplications); // Get all job applications
 
+CareerRoutes.get('/', GetAllCareers); 
+CareerRoutes.get('/applications', GetAllApplications);
+CareerRoutes.post('/apply', upload.single('resume'), ApplyForJob); 
+CareerRoutes.put('/approve/:id', ApproveCareer);
+CareerRoutes.put('/edit/:id', UpdateCareer); 
+CareerRoutes.delete('/delete/:id', DeleteCareer);
+CareerRoutes.get('/:id', GetCareerById); 
 module.exports = CareerRoutes;
