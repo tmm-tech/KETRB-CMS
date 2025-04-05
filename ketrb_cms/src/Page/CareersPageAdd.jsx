@@ -62,7 +62,7 @@ const CareerAddPage = () => {
     }
 
     try {
-      const response = await fetch("https://ketrb-backend.onrender.com/careers/add", {
+      const response = await fetch("https://ketrb-backend.onrender.com/careers/apply", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

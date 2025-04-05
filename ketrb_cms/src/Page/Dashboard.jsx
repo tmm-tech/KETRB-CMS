@@ -836,7 +836,7 @@ const Dashboard = () => {
                           <TableCell>
                             <Badge
                               variant="outline"
-                              className={`${career.status === "approved" ? "bg-green-500 text-green-50" : career.status === "pending" ? "bg-yellow-500 text-yellow-50" : "bg-gray-500 text-gray-50"} capitalize`}
+                              className={`${career.status === "published" ? "bg-green-500 text-green-50" : career.status === "pending" ? "bg-yellow-500 text-yellow-50" : "bg-gray-500 text-gray-50"} capitalize`}
                             >
                               {career.status}
                             </Badge>

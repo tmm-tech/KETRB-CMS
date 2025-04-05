@@ -252,7 +252,7 @@ const CareersPage = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Badge variant="outline" className="bg-green-500 text-green-50">
-                      Active
+                      Published
                     </Badge>
                     <Badge variant="outline" className="bg-yellow-500 text-yellow-50">
                       Pending
@@ -367,10 +367,10 @@ const CareersPage = () => {
                     <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuCheckboxItem
-                      checked={statusFilter.includes("active")}
-                      onCheckedChange={() => handleStatusFilterChange("active")}
+                      checked={statusFilter.includes("published")}
+                      onCheckedChange={() => handleStatusFilterChange("published")}
                     >
-                      Active
+                      Published
                     </DropdownMenuCheckboxItem>
                     <DropdownMenuCheckboxItem
                       checked={statusFilter.includes("pending")}
@@ -447,7 +447,7 @@ const CareersPage = () => {
                       <CardHeader>
                         <CardTitle>{career.title}</CardTitle>
                         <CardDescription>
-                          {career.status === "active"
+                          {career.status === "published"
                             ? `Posted on ${new Date(career.posted_at).toLocaleDateString()}`
                             : career.status === "pending"
                               ? "Pending Approval"
@@ -484,7 +484,7 @@ const CareersPage = () => {
                             <Badge
                               variant="outline"
                               className={`capitalize ${
-                                career.status === "active"
+                                career.status === "published"
                                   ? "bg-green-500 text-green-50"
                                   : career.status === "pending"
                                     ? "bg-yellow-500 text-yellow-50"
@@ -617,7 +617,7 @@ const CareersPage = () => {
                             <Badge
                               variant="outline"
                               className={`capitalize ${
-                                application.status === "accepted"
+                                application.status === "published"
                                   ? "bg-green-500 text-green-50"
                                   : application.status === "rejected"
                                     ? "bg-red-500 text-red-50"
