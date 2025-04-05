@@ -55,7 +55,7 @@ const CareerAddPage = () => {
 
     // Set the status based on the action and user role
     let status = formData.status
-    if (action === "publish") {
+    if (action === "published") {
       status = user.roles === "administrator" ? "published" : "pending"
     } else if (action === "draft") {
       status = "draft"

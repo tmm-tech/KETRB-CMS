@@ -32,6 +32,7 @@ CareerRoutes.get('/applications', GetAllApplications);
 CareerRoutes.post('/apply', upload.single('resume'), ApplyForJob); 
 CareerRoutes.put('/approve/:id', ApproveCareer);
 CareerRoutes.put('/edit/:id', UpdateCareer); 
+CareerRoutes.put('/add', upload.single('resume'), AddCareer); 
 CareerRoutes.delete('/delete/:id', DeleteCareer);
 CareerRoutes.get('/:id', GetCareerById); 
 module.exports = CareerRoutes;
