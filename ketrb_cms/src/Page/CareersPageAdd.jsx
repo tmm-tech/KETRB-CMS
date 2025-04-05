@@ -73,10 +73,6 @@ const CareerAddPage = () => {
 
   const handleSubmit = async (estatus) => {
     setLoading(true);
-    setFormData((prevState) => ({
-      ...prevState,
-      status: estatus,
-    }));
     try {
       const response = await fetch("https://ketrb-backend.onrender.com/careers/add", {
         method: "POST",
@@ -85,7 +81,8 @@ const CareerAddPage = () => {
         },
         body: JSON.stringify({
           ...formData,
-          created_by: user_id,
+          status: estatus,
+          created_by: author,
           posted_at: new Date().toISOString(),
         }),
       });
