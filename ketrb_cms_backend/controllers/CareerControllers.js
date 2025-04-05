@@ -84,6 +84,62 @@ module.exports = {
       res.status(500).json({ message: 'Error deleting job posting.' });
     }
   },
+  ApproveCareer: async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      // Fetch the career posting by its ID
+      const careerResult = await query('SELECT title FROM careers WHERE id = $1', [id]);
+
+      // Check if the career exists
+      if (careerResult.rows.length === 0) {
+        return res.status(404).json({ message: 'Career posting not found.' });
+      }
+
+      const filename = careerResult.rows[0].title;
+
+      // Check if there is an existing notification for this career
+      const existingNotification = await query(
+        'SELECT sender_id FROM notifications WHERE (notification_type = $1 OR notification_type = $2) AND item_id = $3',
+        ['career_uploaded', 'career_updated', filename]
+      );
+
+      if (existingNotification.rows.length > 0) {
+        // If an existing notification is found, use its sender_id
+        const senderIdToUse = existingNotification.rows[0].sender_id;
+
+        // Update the career status to 'approved' or 'published'
+        const result = await query(
+          'UPDATE careers SET status = $1 WHERE id = $2 RETURNING *',
+          ['approved', id]
+        );
+
+        if (result.rows.length === 0) {
+          return res.status(404).json({ message: 'Career posting not found.' });
+        }
+
+        // Create a notification for the career approval
+        await query(
+          'INSERT INTO notifications (notification_type, item_id, message, sender_id, target_role, is_read) VALUES ($1, $2, $3, $4, $5, $6)',
+          [
+            'career_approved',
+            id,
+            `Career posting has been approved for publishing.`,
+            senderIdToUse,
+            'admin',
+            false
+          ]
+        );
+
+        res.status(200).json({ message: 'Career posting approved successfully', career: result.rows[0] });
+      } else {
+        res.status(404).json({ message: 'No existing notification found for this career.' });
+      }
+    } catch (error) {
+      console.error('Error approving career posting:', error);
+      res.status(500).json({ message: 'Error approving the career posting.' });
+    }
+  },
 
   // Apply for a job
   ApplyForJob: async (req, res) => {

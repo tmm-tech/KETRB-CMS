@@ -202,7 +202,7 @@ const CareersPage = () => {
 
   const handleApplicationStatus = async (id, status) => {
     try {
-      const response = await fetch(`https://ketrb-backend.onrender.com/applications/status/${id}`, {
+      const response = await fetch(`https://ketrb-backend.onrender.com/careers/approve/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -8,7 +8,8 @@ const {
   UpdateCareer,
   DeleteCareer,
   ApplyForJob,
-  GetAllApplications
+  GetAllApplications,
+  ApproveCareer
 } = require('../controllers/CareerControllers');
 
 const CareerRoutes = express.Router();
@@ -30,7 +31,8 @@ CareerRoutes.get('/', GetAllCareers); // Get all job postings
 CareerRoutes.get('/:id', GetCareerById); // Get a specific job posting
 CareerRoutes.put('/edit/:id', UpdateCareer); // Update a job posting
 CareerRoutes.delete('/delete/:id', DeleteCareer); // Delete a job posting
-
+// Approve a career post
+CareerRoutes.put('/approve/:id', ApproveCareer);
 // Job application routes
 CareerRoutes.post('/apply', upload.single('resume'), ApplyForJob); // Apply for a job
 CareerRoutes.get('/applications', GetAllApplications); // Get all job applications
