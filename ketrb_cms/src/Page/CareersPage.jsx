@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import SideNav from "../Component/SideNav";
-import HeaderNav from "../Component/HeaderNav";
-import bgImage from "../Asset/bg.png";
-import { Button } from "../Component/button";
+"use client"
+
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import SideNav from "../Component/SideNav"
+import HeaderNav from "../Component/HeaderNav"
+import bgImage from "../Asset/bg.png"
+import { Button } from "../Component/button"
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -33,20 +35,44 @@ const CareersPage = () => {
   const user_id = user.id
   const navigate = useNavigate()
 
+  // Add the applications state and fetch function
+  // Add after the careers state declaration (around line 22)
+  const [applications, setApplications] = useState([])
+
+  const fetchCareers = async () => {
+    try {
+      const response = await fetch("https://ketrb-backend.onrender.com/careers/") // Update with your API endpoint
+      const data = await response.json()
+      setCareers(data) // Adjust according to your data structure
+    } catch (error) {
+      console.error("Error fetching careers:", error)
+    }
+  }
+
+  // Add this inside the useEffect after fetchCareers
+  const fetchApplications = async () => {
+    try {
+      const response = await fetch("https://ketrb-backend.onrender.com/applications/")
+      const data = await response.json()
+      setApplications(data)
+    } catch (error) {
+      console.error("Error fetching applications:", error)
+    }
+  }
+
+  // Modify the useEffect to fetch both careers and applications
   useEffect(() => {
-    const fetchCareers = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch("https://ketrb-backend.onrender.com/careers/") // Update with your API endpoint
-        const data = await response.json()
-        setCareers(data) // Adjust according to your data structure
+        await Promise.all([fetchCareers(), fetchApplications()])
       } catch (error) {
-        console.error("Error fetching careers:", error)
+        console.error("Error fetching data:", error)
       } finally {
         setLoading(false)
       }
     }
 
-    fetchCareers()
+    fetchData()
   }, [])
 
   if (loading) {
@@ -169,6 +195,33 @@ const CareersPage = () => {
     }
   }
 
+  // Add these handler functions before the return statement
+  const handleViewApplication = (id) => {
+    navigate(`/applications/${id}`)
+  }
+
+  const handleApplicationStatus = async (id, status) => {
+    try {
+      const response = await fetch(`https://ketrb-backend.onrender.com/applications/status/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }),
+      })
+
+      if (response.ok) {
+        setApplications(applications.map((app) => (app.id === id ? { ...app, status } : app)))
+        setAlertMessage(`Application ${status === "accepted" ? "accepted" : "rejected"} successfully`)
+      } else {
+        setAlertMessage("Failed to update application status")
+      }
+    } catch (error) {
+      console.error("Error updating application status:", error)
+      setAlertMessage("An error occurred while updating the application status.")
+    }
+  }
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SideNav />
@@ -213,11 +266,32 @@ const CareersPage = () => {
                 </div>
               </CardFooter>
             </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Job Applications</CardTitle>
+                <CardDescription>Manage job applications</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center justify-between">
+                  <div className="text-4xl font-bold">{applications.length}</div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="bg-green-500 text-green-50">
+                      Completed
+                    </Badge>
+                  </div>
+                </div>
+              </CardFooter>
+            </Card>
           </div>
           <Tabs defaultValue="careers">
             <div className="flex items-center">
               <TabsList>
                 <TabsTrigger value="careers">Career Opportunities</TabsTrigger>
+                <TabsTrigger value="applications">Career Applications</TabsTrigger>
               </TabsList>
               <div className="ml-auto flex items-center gap-2">
                 <DropdownMenu>
@@ -496,6 +570,114 @@ const CareersPage = () => {
                 )}
               </div>
             </TabsContent>
+            {/* Add the Applications TabsContent after the careers TabsContent (around line 380) */}
+            {/* Replace the existing TabsContent for applications or add if it doesn't exist */}
+            <TabsContent value="applications">
+              <div className="grid gap-4">
+                {applications.length === 0 ? (
+                  <div className="col-span-full flex items-center justify-center">
+                    <p className="text-center text-gray-500">No job applications available.</p>
+                  </div>
+                ) : (
+                  applications.map((application) => (
+                    <Card key={application.id}>
+                      <CardHeader>
+                        <CardTitle>{application.job_title || "Job Application"}</CardTitle>
+                        <CardDescription>
+                          Applied on {new Date(application.applied_at).toLocaleDateString()}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <h3 className="text-sm font-medium text-gray-500">Applicant Name</h3>
+                            <p className="mt-1">{application.applicant_name}</p>
+                          </div>
+                          <div>
+                            <h3 className="text-sm font-medium text-gray-500">Email</h3>
+                            <p className="mt-1">{application.email}</p>
+                          </div>
+                          <div>
+                            <h3 className="text-sm font-medium text-gray-500">Phone</h3>
+                            <p className="mt-1">{application.phone || "Not provided"}</p>
+                          </div>
+                          <div>
+                            <h3 className="text-sm font-medium text-gray-500">Status</h3>
+                            <p className="mt-1">{application.status || "Pending"}</p>
+                          </div>
+                        </div>
+                        {application.cover_letter && (
+                          <div className="mt-4">
+                            <h3 className="text-sm font-medium text-gray-500">Cover Letter</h3>
+                            <p className="mt-1 line-clamp-3">{application.cover_letter}</p>
+                          </div>
+                        )}
+                      </CardContent>
+                      <CardFooter>
+                        <div className="flex items-center justify-between gap-2 w-full">
+                          <div className="flex items-center gap-2">
+                            <Badge
+                              variant="outline"
+                              className={`capitalize ${
+                                application.status === "accepted"
+                                  ? "bg-green-500 text-green-50"
+                                  : application.status === "rejected"
+                                    ? "bg-red-500 text-red-50"
+                                    : "bg-yellow-500 text-yellow-50"
+                              }`}
+                            >
+                              {application.status || "Pending"}
+                            </Badge>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-8 gap-1"
+                              onClick={() => window.open(application.resume_url, "_blank")}
+                            >
+                              <DownloadIcon className="h-3.5 w-3.5" />
+                              <span>Resume</span>
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-8 gap-1"
+                              onClick={() => handleViewApplication(application.id)}
+                            >
+                              <FilePenIcon className="h-3.5 w-3.5" />
+                              <span>View</span>
+                            </Button>
+                            {user.roles === "administrator" && (
+                              <>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="h-8 gap-1 bg-green-500 text-white hover:bg-green-600"
+                                  onClick={() => handleApplicationStatus(application.id, "accepted")}
+                                >
+                                  <CheckIcon className="h-3.5 w-3.5" />
+                                  <span>Accept</span>
+                                </Button>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="h-8 gap-1 bg-red-500 text-white hover:bg-red-600"
+                                  onClick={() => handleApplicationStatus(application.id, "rejected")}
+                                >
+                                  <XIcon className="h-3.5 w-3.5" />
+                                  <span>Reject</span>
+                                </Button>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </CardFooter>
+                    </Card>
+                  ))
+                )}
+              </div>
+            </TabsContent>
           </Tabs>
         </main>
       </div>
@@ -622,6 +804,27 @@ function TrashIcon(props) {
       <path d="M3 6h18" />
       <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
       <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+    </svg>
+  )
+}
+
+// Add the XIcon at the end of the file with the other icon components
+function XIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
     </svg>
   )
 }
