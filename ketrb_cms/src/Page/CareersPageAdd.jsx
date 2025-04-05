@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
@@ -12,6 +12,17 @@ import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 import { Label } from "../Component/label";
 
 const CareerAddPage = () => {
+  const storedUser = localStorage.getItem("user");
+  const user = JSON.parse(storedUser);
+  const user_id = user.id;
+  const [author, setAuthor] = useState("");
+  
+  useEffect(() => {
+    if (user && user.fullname) {
+      setAuthor(user.fullname);
+    }
+  }, [user]);
+
   const [formData, setFormData] = useState({
     title: "",
     department: "",
@@ -25,41 +36,48 @@ const CareerAddPage = () => {
     status: "draft", // Default status
     application_link: "",
     application_deadline: "",
-  })
-  const [loading, setLoading] = useState(false)
-  const [alertMessage, setAlertMessage] = useState("")
-  const [alertType, setAlertType] = useState("success") // success or error
-  const navigate = useNavigate()
-  const storedUser = localStorage.getItem("user")
-  const user = JSON.parse(storedUser)
-  const user_id = user.id
+    created_by: author,
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("success");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleSelectChange = (name, value) => {
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
-  const handleSubmit = async (e, action) => {
-    e.preventDefault()
-    setLoading(true)
+  const handleSaveDraft = async () => {
+    setFormData((prevState) => ({
+      ...prevState,
+      status: "draft",
+    }));
+    await handleSubmit();
+  };
 
-    // Set the status based on the action and user role
-    let status = formData.status
-    if (action === "published") {
-      status = user.roles === "administrator" ? "published" : "pending"
-    } else if (action === "draft") {
-      status = "draft"
-    }
+  const handlePublish = async () => {
+    setFormData((prevState) => ({
+      ...prevState,
+      status: user?.roles === "editor" ? "pending" : "published",
+    }));
+    await handleSubmit();
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await fetch("https://ketrb-backend.onrender.com/careers/add", {
@@ -69,39 +87,38 @@ const CareerAddPage = () => {
         },
         body: JSON.stringify({
           ...formData,
-          status,
           created_by: user_id,
           posted_at: new Date().toISOString(),
         }),
-      })
+      });
 
       if (response.ok) {
-        setAlertType("success")
-        if (status === "pending") {
-          setAlertMessage("Career posting submitted for approval.")
-        } else if (status === "published") {
-          setAlertMessage("Career posting published successfully.")
+        setAlertType("success");
+        if (formData.status === "pending") {
+          setAlertMessage("Career posting submitted for approval.");
+        } else if (formData.status === "published") {
+          setAlertMessage("Career posting published successfully.");
         } else {
-          setAlertMessage("Career posting saved as draft.")
+          setAlertMessage("Career posting saved as draft.");
         }
 
         // Redirect after a short delay
         setTimeout(() => {
-          navigate("/careers")
-        }, 2000)
+          navigate("/careers");
+        }, 2000);
       } else {
-        const errorData = await response.json()
-        setAlertType("error")
-        setAlertMessage(errorData.message || "Failed to add career posting.")
+        const errorData = await response.json();
+        setAlertType("error");
+        setAlertMessage(errorData.message || "Failed to add career posting.");
       }
     } catch (error) {
-      console.error("Error adding career posting:", error)
-      setAlertType("error")
-      setAlertMessage("An error occurred while adding the career posting.")
+      console.error("Error adding career posting:", error);
+      setAlertType("error");
+      setAlertMessage("An error occurred while adding the career posting.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -136,7 +153,7 @@ const CareerAddPage = () => {
               <CardDescription>Fill in the details for the new career opportunity.</CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={(e) => handleSubmit(e, "publish")} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="title">
@@ -230,34 +247,28 @@ const CareerAddPage = () => {
                     />
                   </div>
                 </div>
-
                 <div className="space-y-2">
-                  <Label htmlFor="description">
-                    Job Description <span className="text-red-500">*</span>
-                  </Label>
+                  <Label htmlFor="description">Job Description</Label>
                   <Textarea
                     id="description"
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
-                    placeholder="Provide a detailed description of the job..."
-                    rows={5}
-                    required
+                    rows={6}
+                    placeholder="Provide a description of the role."
                   />
                 </div>
-
                 <div className="space-y-2">
-                  <Label htmlFor="requirements">Requirements</Label>
+                  <Label htmlFor="requirements">Job Requirements</Label>
                   <Textarea
                     id="requirements"
                     name="requirements"
                     value={formData.requirements}
                     onChange={handleChange}
-                    placeholder="List the requirements for this position..."
-                    rows={4}
+                    rows={6}
+                    placeholder="List the qualifications required."
                   />
                 </div>
-
                 <div className="space-y-2">
                   <Label htmlFor="responsibilities">Responsibilities</Label>
                   <Textarea
@@ -265,11 +276,10 @@ const CareerAddPage = () => {
                     name="responsibilities"
                     value={formData.responsibilities}
                     onChange={handleChange}
-                    placeholder="List the key responsibilities for this position..."
-                    rows={4}
+                    rows={6}
+                    placeholder="List the responsibilities of the role."
                   />
                 </div>
-
                 <div className="space-y-2">
                   <Label htmlFor="benefits">Benefits</Label>
                   <Textarea
@@ -277,41 +287,32 @@ const CareerAddPage = () => {
                     name="benefits"
                     value={formData.benefits}
                     onChange={handleChange}
-                    placeholder="List the benefits offered with this position..."
-                    rows={3}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="application_link">Application Link</Label>
-                  <Input
-                    id="application_link"
-                    name="application_link"
-                    value={formData.application_link}
-                    onChange={handleChange}
-                    placeholder="e.g. https://company.com/apply"
+                    rows={6}
+                    placeholder="Describe the benefits offered."
                   />
                 </div>
               </form>
             </CardContent>
-            <CardFooter className="flex justify-between">
-              <Button variant="outline" onClick={(e) => handleSubmit(e, "draft")} disabled={loading}>
+            <CardFooter className="flex justify-end space-x-4">
+              <Button
+                variant="outline"
+                onClick={handleSaveDraft}
+                disabled={loading}
+              >
                 Save as Draft
               </Button>
-              <div className="flex gap-2">
-                <Button variant="outline" onClick={() => navigate("/careers")} disabled={loading}>
-                  Cancel
-                </Button>
-                <Button onClick={(e) => handleSubmit(e, "publish")} disabled={loading}>
-                  {loading ? "Submitting..." : user.roles === "administrator" ? "Publish" : "Submit for Approval"}
-                </Button>
-              </div>
+              <Button
+                onClick={handlePublish}
+                disabled={loading}
+              >
+                Publish
+              </Button>
             </CardFooter>
           </Card>
         </main>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CareerAddPage
+export default CareerAddPage;

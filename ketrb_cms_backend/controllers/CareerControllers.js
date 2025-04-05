@@ -4,22 +4,24 @@ const cloudinary = require('cloudinary').v2;
 module.exports = {
   // Add a new job posting
   AddCareer: async (req, res) => {
-    const { title, description, department, job_type, location, salary_range, closing_date } = req.body;
+    const { title, description, department, employment_type, location,salary_range,requirements,responsibilities,benefits,status,application_link,application_deadline,created_by } = req.body;
+    console.log('Received Data:', req.body); // Log incoming data
 
     try {
-      const result = await query(
-        `INSERT INTO careers (title, description, department, job_type, location, salary_range, closing_date) 
-        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-        [title, description, department, job_type, location, salary_range, closing_date]
-      );
+        const result = await query(
+            `INSERT INTO careers (title, description, department, job_type, location, salary_range, closing_date,status,requirements,responsibilities,benefits,application_link, closing_date, created_by) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+            [title, description, department, employment_type, location, salary_range, application_deadline,requirements, responsibilities, benefits, application_link,created_by]
+        );
 
-      res.status(201).json({ message: 'Job posting added successfully', career: result.rows[0] });
+        console.log('Insert Result:', result.rows[0]); // Log the inserted row
+
+        res.status(201).json({ message: 'Job posting added successfully', career: result.rows[0] });
     } catch (error) {
-      console.error('Error adding job posting:', error);
-      res.status(500).json({ message: 'Server error while adding job posting.' });
+        console.error('Error adding job posting:', error);
+        res.status(500).json({ message: 'Server error while adding job posting.' });
     }
-  },
-
+},
   // Get all job postings (excluding deleted ones)
   GetAllCareers: async (req, res) => {
     try {

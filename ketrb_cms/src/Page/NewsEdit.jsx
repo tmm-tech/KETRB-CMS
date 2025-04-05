@@ -28,7 +28,7 @@ const NewsEdit = () => {
     const [editMode, setEditMode] = useState(false); // Handle edit mode toggle
     const storedUser = localStorage.getItem('user');
     const user = JSON.parse(storedUser);
-	const user_id=user.id;
+    const user_id = user.id;
 
     useEffect(() => {
         // Fetch news data by ID and set state
@@ -80,8 +80,8 @@ const NewsEdit = () => {
     };
 
     const handleSubmit = async (status) => {
-        
-        
+
+
         const formData = new FormData();
         console.log("url: ", image);
         formData.append('title', title);
@@ -90,7 +90,7 @@ const NewsEdit = () => {
         formData.append('author', author);
         formData.append('status', status);
         formData.append('role', user.roles);
-	formData.append('user_id', user_id);
+        formData.append('user_id', user_id);
         if (image) formData.append('news', image); // Append new image if uploaded
 
         try {
@@ -114,26 +114,26 @@ const NewsEdit = () => {
         }
     };
     const handlePublished = async () => {
-    try {
-        const response = await fetch(`https://ketrb-backend.onrender.com/news/approve/${id}`, {
-            method: 'PUT', 
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        if (response.ok) {
-            const updatedNews = await response.json();
-            // Update state to reflect the published news
-            setAlertMessage('News published successfully');
-		window.location.href = '/news';
-        } else {
-            setAlertMessage('Failed to publish news');
+        try {
+            const response = await fetch(`https://ketrb-backend.onrender.com/news/approve/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.ok) {
+                const updatedNews = await response.json();
+                // Update state to reflect the published news
+                setAlertMessage('News published successfully');
+                window.location.href = '/news';
+            } else {
+                setAlertMessage('Failed to publish news');
+            }
+        } catch (error) {
+            console.error("Error publishing news:", error);
+            setAlertMessage('An error occurred while publishing the news.');
         }
-    } catch (error) {
-        console.error("Error publishing news:", error);
-        setAlertMessage('An error occurred while publishing the news.');
-    }
-};
+    };
 
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -161,7 +161,7 @@ const NewsEdit = () => {
 
                                 {/* Preview mode (default view) */}
                                 {!editMode ? (
-                                   <Card className="relative p-6 bg-white rounded-md w-[700px]">
+                                    <Card className="relative p-6 bg-white rounded-md w-[700px]">
                                         <CardHeader>
                                             <CardTitle className="text-2xl font-bold mb-4">News Preview</CardTitle>
                                         </CardHeader>
@@ -173,7 +173,7 @@ const NewsEdit = () => {
                                             >
                                                 <FilePenIcon className="w-5 h-5" />
                                             </button>
-                                    
+
                                             {/* News content */}
                                             <div className="mb-4">
                                                 <img
@@ -185,34 +185,34 @@ const NewsEdit = () => {
                                             <h3 className="text-xl font-semibold">{title}</h3>
                                             <p className="text-muted-foreground my-2">{content}</p>
                                             <p className="text-sm mt-4">{status === "published"
-                                                        ? `Published on ${publishedDate.toLocaleDateString()}`
-                                                        : status === "pending" 
-							? "Pending Approval"
-							: "Draft"}</p>
+                                                ? `Published on ${publishedDate.toLocaleDateString()}`
+                                                : status === "pending"
+                                                    ? "Pending Approval"
+                                                    : "Draft"}</p>
                                             <p className="text-sm">Author: {author}</p>
-					     <div className="flex justify-end gap-2 mt-6">
-						{/* Show Approve Publish button only for pending news if user is admin */}
-						{user.roles === "administrator" && status === "pending" && (
-						<Button size="sm" variant="black" onClick={() => handlePublished()}>
-						Approve Publish
-						</Button>
-						)}
-					    </div>     
+                                            <div className="flex justify-end gap-2 mt-6">
+                                                {/* Show Approve Publish button only for pending news if user is admin */}
+                                                {user.roles === "administrator" && status === "pending" && (
+                                                    <Button size="sm" variant="black" onClick={() => handlePublished()}>
+                                                        Approve Publish
+                                                    </Button>
+                                                )}
+                                            </div>
                                         </CardContent>
-					    
-					    
-					
+
+
+
                                     </Card>
                                 ) : (
                                     /* Edit mode (form view) */
                                     <Card className="relative p-6 bg-white rounded-md w-[800px]">
-                                         <CardHeader>
+                                        <CardHeader>
                                             <CardTitle className="text-2xl font-bold mb-4">Edit News</CardTitle>
                                         </CardHeader>
                                         <CardContent>
                                             {/* Form for editing the news */}
                                             <div>
-                                               
+
                                                 <form className="space-y-6 w-[700px]" encType="multipart/form-data">
                                                     {/* Title Input */}
                                                     <div>
@@ -228,7 +228,7 @@ const NewsEdit = () => {
                                                             required
                                                         />
                                                     </div>
-                                    
+
                                                     {/* Image Upload */}
                                                     <div>
                                                         <label htmlFor="image" className="block text-sm font-medium text-muted-foreground">
@@ -253,7 +253,7 @@ const NewsEdit = () => {
                                                             </div>
                                                         )}
                                                     </div>
-                                    
+
                                                     {/* Content Input */}
                                                     <div>
                                                         <label htmlFor="content" className="block text-sm font-medium text-muted-foreground">
@@ -268,7 +268,7 @@ const NewsEdit = () => {
                                                             required
                                                         />
                                                     </div>
-                                    
+
                                                     {/* Published Date */}
                                                     <div>
                                                         <label htmlFor="publishedDate" className="block text-sm font-medium text-muted-foreground">
@@ -295,24 +295,24 @@ const NewsEdit = () => {
                                                     </div>
 
                                                     {/* Buttons */}
-                                                     <div className="flex justify-end gap-2 mt-6">
-                                                    <Button onClick={() => setEditMode(false)} variant="outline">
-                                                        Cancel
-                                                    </Button>
-                                                    <Button onClick={handleSaveDraft} disabled={draftLoading} variant="black">
-                                                        {draftLoading ? "Saving Draft..." : "Save Draft"}
-                                                    </Button>
-                                                          {/* Conditionally render Approve & Publish button */}
-						    {user.roles === 'administrator' && status === 'pending' ? (
-							<Button onClick={() => handlePublish('published')} variant="black" disabled={loading}>
-							    {loading ? "Approving..." : "Approve & Publish"}
-							</Button>
-						    ) : (
-							<Button onClick={handlePublish} variant="black" disabled={loading}>
-							    {loading ? "Publishing..." : "Publish"}
-							</Button>
-						    )}
-                                                </div>
+                                                    <div className="flex justify-end gap-2 mt-6">
+                                                        <Button onClick={() => setEditMode(false)} variant="outline">
+                                                            Cancel
+                                                        </Button>
+                                                        <Button onClick={handleSaveDraft} disabled={draftLoading} variant="black">
+                                                            {draftLoading ? "Saving Draft..." : "Save Draft"}
+                                                        </Button>
+                                                        {/* Conditionally render Approve & Publish button */}
+                                                        {user.roles === 'administrator' && status === 'pending' ? (
+                                                            <Button onClick={() => handlePublish('published')} variant="black" disabled={loading}>
+                                                                {loading ? "Approving..." : "Approve & Publish"}
+                                                            </Button>
+                                                        ) : (
+                                                            <Button onClick={handlePublish} variant="black" disabled={loading}>
+                                                                {loading ? "Publishing..." : "Publish"}
+                                                            </Button>
+                                                        )}
+                                                    </div>
                                                 </form>
                                             </div>
                                         </CardContent>
@@ -348,4 +348,4 @@ function FilePenIcon(props) {
         </svg>
     );
 }
-              
+

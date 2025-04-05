@@ -34,6 +34,7 @@ const CareerEdit = () => {
     });
     const [alertMessage, setAlertMessage] = useState("");
     const [loading, setLoading] = useState(false);
+    const [isDraft, setIsDraft] = useState(false);
     const [draftLoading, setDraftLoading] = useState(false);
     const [editMode, setEditMode] = useState(false); // Handle edit mode toggle
     const storedUser = localStorage.getItem('user');
@@ -51,7 +52,7 @@ const CareerEdit = () => {
                     title: data.title,
                     department: data.department,
                     location: data.location,
-                    employment_type: data.employment_type,
+                    employment_type: data.job_type,
                     salary_range: data.salary_range,
                     description: data.description,
                     requirements: data.requirements,
@@ -59,8 +60,8 @@ const CareerEdit = () => {
                     benefits: data.benefits,
                     status: data.status,
                     application_link: data.application_link,
-                    application_deadline: data.application_deadline ? new Date(data.application_deadline) : new Date(),
-                    posted_at: data.posted_at ? new Date(data.posted_at) : new Date()
+                    application_deadline: data.closing_date ? new Date(data.application_deadline) : new Date(),
+                    posted_at: data.posted_date ? new Date(data.posted_at) : new Date()
                 });
             } catch (error) {
                 console.error("Error fetching career:", error);
