@@ -119,7 +119,7 @@ const EmployeeEdit = () => {
     await handleSubmit(employeeStatus);
   };
 
-  const handleSubmit = async (status) => {
+  const handleSubmit = async (estatus) => {
 
     try {
       // Create FormData object for file upload
@@ -136,7 +136,7 @@ const EmployeeEdit = () => {
       formDataToSend.append("updated_at", new Date().toISOString());
       formDataToSend.append("roles", user.roles);
       formDataToSend.append("author", author);
-      formDataToSend.append("status", status);
+      formDataToSend.append("status", estatus);
       const response = await fetch(`https://ketrb-backend.onrender.com/employees/edit/${id}`, {
         method: "PUT",
         body: formDataToSend, // Send as FormData, not JSON
