@@ -5,7 +5,6 @@ import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
 import { Button } from "../Component/button";
 import { Input } from "../Component/input";
-import { Textarea } from "../Component/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../Component/select";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../Component/card";
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
@@ -94,6 +93,7 @@ const EmployeeAddPage = () => {
           status: estatus,
           author: author,
           user_id: user_id,
+          profile_image: profile_image,
           created_at: new Date().toISOString(),
         }),
       });
@@ -290,7 +290,7 @@ const EmployeeAddPage = () => {
                     {formData.profile_image_url && (
                       <div className="h-20 w-20 overflow-hidden rounded-full">
                         <img
-                          src={formData.profile_image_url || "/placeholder.svg"}
+                          src={formData.profile_image_url}
                           alt="Profile preview"
                           className="h-full w-full object-cover"
                         />
