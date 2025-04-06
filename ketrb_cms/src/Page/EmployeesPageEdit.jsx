@@ -107,13 +107,13 @@ const EmployeeEdit = () => {
     setIsDraft(true);
     setDraftLoading(true);
     await handleSubmit('draft');
-};
+  };
 
-const handlePublish = async () => {
+  const handlePublish = async () => {
     const newStatus = (user?.roles === 'administrator' && status === 'pending') ? 'published' : status;
     setLoading(true);
     await handleSubmit(newStatus);
-};
+  };
 
   const handleSubmit = async (status) => {
 
@@ -465,9 +465,19 @@ const handlePublish = async () => {
                           <Button onClick={() => setEditMode(false)} variant="outline" type="button">
                             Cancel
                           </Button>
-                          <Button type="submit" variant="black" disabled={loading}>
-                            {loading ? "Saving..." : "Save Changes"}
+                          <Button onClick={handleSaveDraft} disabled={draftLoading} variant="black">
+                            {draftLoading ? "Saving Draft..." : "Save Draft"}
                           </Button>
+                          {/* Conditionally render Approve & Publish button */}
+                          {user.roles === 'administrator' && status === 'pending' ? (
+                            <Button onClick={() => handlePublish('published')} variant="black" disabled={loading}>
+                              {loading ? "Approving..." : "Approve & Publish"}
+                            </Button>
+                          ) : (
+                            <Button onClick={handlePublish} variant="black" disabled={loading}>
+                              {loading ? "Publishing..." : "Publish"}
+                            </Button>
+                          )}
                         </div>
                       </form>
                     </CardContent>
