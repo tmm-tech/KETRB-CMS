@@ -283,42 +283,7 @@ const EmployeeAddPage = () => {
                     </RadioGroup>
                   </div>
                 </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="bio">Bio</Label>
-                  <Textarea
-                    id="bio"
-                    name="bio"
-                    value={formData.bio}
-                    onChange={handleChange}
-                    placeholder="A brief biography or description of the employee..."
-                    rows={4}
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="linkedin_url">LinkedIn URL</Label>
-                    <Input
-                      id="linkedin_url"
-                      name="linkedin_url"
-                      value={formData.linkedin_url}
-                      onChange={handleChange}
-                      placeholder="https://linkedin.com/in/username"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="twitter_url">Twitter URL</Label>
-                    <Input
-                      id="twitter_url"
-                      name="twitter_url"
-                      value={formData.twitter_url}
-                      onChange={handleChange}
-                      placeholder="https://twitter.com/username"
-                    />
-                  </div>
-                </div>
-
+                
                 <div className="space-y-2">
                   <Label htmlFor="profile_image">Profile Image</Label>
                   <div className="flex items-center gap-4">
