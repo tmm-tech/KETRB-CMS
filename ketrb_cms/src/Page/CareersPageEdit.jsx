@@ -60,7 +60,7 @@ const CareerEdit = () => {
                     benefits: data.benefits,
                     status: data.status,
                     application_deadline: data.closing_date ? new Date(data.application_deadline) : new Date(),
-                    posted_date: data.posted_date ? new Date(data.posted_at) : new Date()
+                    posted_date: data.posted_date ? new Date(data.posted_date) : new Date()
                 });
             } catch (error) {
                 console.error("Error fetching career:", error);

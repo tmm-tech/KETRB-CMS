@@ -216,7 +216,7 @@ const CareerAddPage = () => {
                       name="salary_range"
                       value={formData.salary_range}
                       onChange={handleChange}
-                      placeholder="e.g. $80,000 - $100,000"
+                      placeholder="e.g. 80,000 - 100,000 KES"
                     />
                   </div>
                   <div className="space-y-2">
