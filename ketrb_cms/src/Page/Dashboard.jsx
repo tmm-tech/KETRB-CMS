@@ -198,9 +198,9 @@ const Dashboard = () => {
       return [...applications]
         .sort((a, b) => {
           if (sortOption.applications === "latest") {
-            return new Date(b.applied_at) - new Date(a.applied_at)
+            return new Date(b.applied_date) - new Date(a.applied_date)
           } else if (sortOption.applications === "oldest") {
-            return new Date(a.applied_at) - new Date(b.applied_at)
+            return new Date(a.applied_date) - new Date(b.applied_date)
           }
           return 0
         })
