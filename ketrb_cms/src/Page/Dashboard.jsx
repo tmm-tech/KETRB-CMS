@@ -1043,9 +1043,9 @@ const Dashboard = () => {
                     <TableBody>
                       {currentItems.employees.map((employee) => (
                         <TableRow key={employee.id}>
-                          <TableCell className="font-medium"><Link to={`/employees/edit employees/${employee.id}`} className="hover:underline">{employee.name}</Link></TableCell>
-                          <TableCell>{employee.department}</TableCell>
-                          <TableCell>{employee.position}</TableCell>
+                          <TableCell className="font-medium capitalize"><Link to={`/employees/edit employees/${employee.id}`} className="hover:underline">{`${employee.first_name} ${employee.last_name}`}</Link></TableCell>
+                          <TableCell className="capitalize">{employee.department}</TableCell>
+                          <TableCell>{employee.job_title}</TableCell>
                           <TableCell className="hidden md:table-cell">{employee.email}</TableCell>
                           <TableCell className="hidden md:table-cell">
                             {new Date(employee.hire_date).toLocaleDateString()}
