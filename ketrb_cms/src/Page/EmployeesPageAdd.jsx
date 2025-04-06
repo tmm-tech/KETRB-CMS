@@ -25,14 +25,19 @@ const EmployeeAddPage = () => {
     profile_image: null,
     profile_image_url: "", // For preview
   })
-  const [loading, setLoading] = useState(false)
-  const [alertMessage, setAlertMessage] = useState("")
-  const [alertType, setAlertType] = useState("success") // success or error
-  const navigate = useNavigate()
-  const storedUser = localStorage.getItem("user")
-  const user = JSON.parse(storedUser)
-  const user_id = user.id
-
+  const [loading, setLoading] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("success");
+  const [author, setAuthor] = useState("");
+  const navigate = useNavigate();
+  const storedUser = localStorage.getItem("user");
+  const user = JSON.parse(storedUser);
+  const user_id = user.id;
+  useEffect(() => {
+    if (user && user.fullname) {
+      setAuthor(user.fullname);
+    }
+  }, [user]);
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prevState) => ({
@@ -80,7 +85,7 @@ const EmployeeAddPage = () => {
       }
 
       // Add created_by and created_at
-      formDataToSend.append("created_by", user_id)
+      formDataToSend.append("created_by", author)
       formDataToSend.append("created_at", new Date().toISOString())
 
       const response = await fetch("https://ketrb-backend.onrender.com/employees/add", {
@@ -88,7 +93,7 @@ const EmployeeAddPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: formDataToSend, // Send as FormData, not JSON
+        body: formDataToSend,
       })
 
       if (response.ok) {
