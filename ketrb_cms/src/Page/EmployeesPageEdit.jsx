@@ -62,6 +62,7 @@ const EmployeeEdit = () => {
           role_type: data.role_type,
           email: data.email,
           phone: data.phone || "",
+          status: data.status,
           hire_date: data.hire_date ? new Date(data.hire_date) : new Date(),
           profile_image: data.profile_image || "",
         })
@@ -130,7 +131,7 @@ const EmployeeEdit = () => {
         formDataToSend.append("profile_image", formData.profile_image)
       }
 
-      // Add updated_by and updated_at
+      // Add
       formDataToSend.append("user_id", user_id);
       formDataToSend.append("updated_at", new Date().toISOString());
       formDataToSend.append("roles", user.roles);
