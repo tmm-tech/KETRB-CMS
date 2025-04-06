@@ -87,7 +87,7 @@ const CareersPage = () => {
   }
 
   const handleEdit = (id) => {
-    navigate(`/career/edit career/${id}`) // Redirect to the edit page
+    navigate(`/careers/edit career/${id}`) // Redirect to the edit page
   }
 
   const filteredCareers = careers
