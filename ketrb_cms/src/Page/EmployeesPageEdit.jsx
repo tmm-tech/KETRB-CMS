@@ -32,6 +32,7 @@ const EmployeeEdit = () => {
   const [alertType, setAlertType] = useState("success");
   const [alertMessage, setAlertMessage] = useState("")
   const [loading, setLoading] = useState(false)
+  const [author, setAuthor] = useState("");
   const [editMode, setEditMode] = useState(false) // Handle edit mode toggle
   const storedUser = localStorage.getItem("user")
   const user = JSON.parse(storedUser)
@@ -49,6 +50,7 @@ const EmployeeEdit = () => {
         });
         const data = await response.json()
         setEmployee(data)
+        setAuthor(data.author);
         setFormData({
           first_name: data.first_name,
           last_name: data.last_name,
@@ -61,8 +63,9 @@ const EmployeeEdit = () => {
           profile_image: data.profile_image || "",
         })
       } catch (error) {
-        console.error("Error fetching employee:", error)
-        setAlertMessage("Failed to load employee data.")
+        AlertType("error");
+        console.error("Error fetching employee:", error);
+        setAlertMessage("Failed to load employee data.");
       }
     }
     fetchEmployee()
@@ -100,25 +103,24 @@ const EmployeeEdit = () => {
       }))
     }
   }
+  const handleSaveDraft = async () => {
+    setIsDraft(true);
+    setDraftLoading(true);
+    await handleSubmit('draft');
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+const handlePublish = async () => {
+    const newStatus = (user?.roles === 'administrator' && status === 'pending') ? 'published' : status;
+    setLoading(true);
+    await handleSubmit(newStatus);
+};
+
+  const handleSubmit = async (status) => {
 
     try {
       // Create FormData object for file upload
       const formDataToSend = new FormData()
 
-      // Append all text fields
-      Object.keys(formData).forEach((key) => {
-        if (key !== "profile_image" && key !== "profile_image_url") {
-          if (key === "hire_date") {
-            formDataToSend.append(key, formData[key].toISOString().split("T")[0])
-          } else {
-            formDataToSend.append(key, formData[key])
-          }
-        }
-      })
 
       // Append the image file if it exists
       if (formData.profile_image) {
@@ -126,9 +128,11 @@ const EmployeeEdit = () => {
       }
 
       // Add updated_by and updated_at
-      formDataToSend.append("updated_by", user_id)
-      formDataToSend.append("updated_at", new Date().toISOString())
-
+      formDataToSend.append("user_id", user_id);
+      formDataToSend.append("updated_at", new Date().toISOString());
+      formDataToSend.append("roles", user.roles);
+      formDataToSend.append("author", author);
+      formDataToSend.append("status", status);
       const response = await fetch(`https://ketrb-backend.onrender.com/employees/edit/${id}`, {
         method: "PUT",
         body: formDataToSend, // Send as FormData, not JSON

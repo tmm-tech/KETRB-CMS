@@ -154,7 +154,7 @@ module.exports = {
         return res.status(404).json({ message: 'Program not found.' });
       }
 
-      let newStatus = status; 
+      let programStatus = status; 
       if (role === 'editor') {
         programStatus = 'pending';
       } else if (role === 'administrator' && status === 'pending') {
