@@ -8,7 +8,6 @@ import bgImage from "../Asset/bg.png";
 import { Button } from "../Component/button";
 import { Card, CardHeader, CardTitle, CardContent } from "../Component/card";
 import { Input } from "../Component/input";
-import { Textarea } from "../Component/textarea";
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../Component/select";
 import { Label } from "../Component/label";
@@ -402,29 +401,6 @@ const EmployeeEdit = () => {
                             </Popover>
                           </div>
 
-                          {/* LinkedIn URL */}
-                          <div>
-                            <Label htmlFor="linkedin_url">LinkedIn URL</Label>
-                            <Input
-                              id="linkedin_url"
-                              name="linkedin_url"
-                              value={formData.linkedin_url}
-                              onChange={handleChange}
-                              className="mt-1 block w-full"
-                            />
-                          </div>
-
-                          {/* Twitter URL */}
-                          <div>
-                            <Label htmlFor="twitter_url">Twitter URL</Label>
-                            <Input
-                              id="twitter_url"
-                              name="twitter_url"
-                              value={formData.twitter_url}
-                              onChange={handleChange}
-                              className="mt-1 block w-full"
-                            />
-                          </div>
                         </div>
 
                         {/* Role Type */}
@@ -454,19 +430,6 @@ const EmployeeEdit = () => {
                               </Label>
                             </div>
                           </RadioGroup>
-                        </div>
-
-                        {/* Bio */}
-                        <div>
-                          <Label htmlFor="bio">Bio</Label>
-                          <Textarea
-                            id="bio"
-                            name="bio"
-                            value={formData.bio}
-                            onChange={handleChange}
-                            rows={4}
-                            className="mt-1 block w-full"
-                          />
                         </div>
 
                         {/* Profile Image */}
