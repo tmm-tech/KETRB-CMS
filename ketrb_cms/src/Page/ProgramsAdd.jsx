@@ -9,22 +9,24 @@ import { Card, CardHeader, CardTitle, CardContent } from '../Component/card';
 import { Input } from '../Component/input';
 import { Textarea } from "../Component/textarea";
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
+import { set } from "date-fns";
 
 const ProgramsAdd = () => {
     const [title, setTitle] = useState("");
-    const [image, setImage] = useState(null);	 
-	const [previewUrl, setPreviewUrl] = useState("");
+    const [image, setImage] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState("");
     const [content, setContent] = useState("");
     const [publishedDate, setPublishedDate] = useState(new Date());
     const [author, setAuthor] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
+    const [alertType, setAlertType] = useState("success");
     const [isDraft, setIsDraft] = useState(true);
     const [loading, setLoading] = useState(false);
     const [draftloading, setdraftLoading] = useState(false);
     const storedUser = localStorage.getItem('user');
     const user = JSON.parse(storedUser);
-   const user_id=user.id;
-	
+    const user_id = user.id;
+
     useEffect(() => {
         if (user && user.fullname) {
             setAuthor(user.fullname);
@@ -34,15 +36,16 @@ const ProgramsAdd = () => {
     const handleTitleChange = (e) => setTitle(e.target.value);
 
     const handleImageChange = (event) => {
-	      const file = event.target.files[0];
-    if (file) {
-      setImage(file); // Save the actual file
-      const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
-    	 
-	} else {
-	  setAlertMessage("Please upload a valid image file.");
-	}
+        const file = event.target.files[0];
+        if (file) {
+            setImage(file); // Save the actual file
+            const url = URL.createObjectURL(file);
+            setPreviewUrl(url);
+
+        } else {
+            setAlertType("error");
+            setAlertMessage("Please upload a valid image file.");
+        }
 
     };
 
@@ -51,7 +54,7 @@ const ProgramsAdd = () => {
 
     const handleSaveDraft = async () => {
         setIsDraft(true);
-	setdraftLoading(true);
+        setdraftLoading(true);
         await handleSubmit('draft');
     };
 
@@ -61,17 +64,17 @@ const ProgramsAdd = () => {
     };
 
     const handleSubmit = async (status) => {
-	
-        
+
+
         const formData = new FormData();
-	     
+
         formData.append('title', title);
         formData.append('content', content);
         formData.append('publishedDate', publishedDate.toISOString().split('T')[0]);
         formData.append('author', author);
         formData.append('status', status);
         formData.append('program', image);
-	formData.append('user_id', user_id);
+        formData.append('user_id', user_id);
 
         try {
             const response = await fetch('https://ketrb-backend.onrender.com/programs/add', {
@@ -80,17 +83,20 @@ const ProgramsAdd = () => {
             });
 
             if (response.ok) {
+                setAlertType("success");
                 setAlertMessage("Program added successfully!");
                 window.location.href = '/programs';
             } else {
+                setAlertType("error");
                 setAlertMessage("Failed to add program.");
             }
         } catch (error) {
+            setAlertType("error");
             console.error('Error adding program:', error);
             setAlertMessage("An error occurred while adding the program.");
         } finally {
             setLoading(false);
-	   setdraftLoading(false);
+            setdraftLoading(false);
         }
     };
 
@@ -111,8 +117,10 @@ const ProgramsAdd = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 {alertMessage && (
                                     <div className="fixed top-0 left-0 w-full z-50">
-                                        <Alert className="max-w-md mx-auto mt-4">
-                                            <AlertTitle>Notification</AlertTitle>
+                                        <Alert
+                                            className={`max-w-md mx-auto mt-4 ${alertType === "error" ? "bg-red-100 border-red-500" : "bg-green-100 border-green-500"}`}
+                                        >
+                                            <AlertTitle>{alertType === "error" ? "Error" : "Success"}</AlertTitle>
                                             <AlertDescription>{alertMessage}</AlertDescription>
                                         </Alert>
                                     </div>
@@ -138,7 +146,7 @@ const ProgramsAdd = () => {
                                                 Image
                                             </label>
                                             <div className="mt-1">
-                                                <Input type="file" onChange={handleImageChange} className="block w-full"  accept="image/*" name="program" required />
+                                                <Input type="file" onChange={handleImageChange} className="block w-full" accept="image/*" name="program" required />
                                                 {previewUrl && (
                                                     <img
                                                         src={previewUrl}
@@ -191,7 +199,7 @@ const ProgramsAdd = () => {
                                             <Button
                                                 onClick={handleSaveDraft}
                                                 disabled={draftloading}
-                                               variant="outline"
+                                                variant="outline"
                                             >
                                                 {draftloading ? "Saving..." : "Save as Draft"}
                                             </Button>

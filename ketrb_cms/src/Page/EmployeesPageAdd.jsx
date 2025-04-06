@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
@@ -22,10 +22,14 @@ const EmployeeAddPage = () => {
     email: "",
     phone: "",
     hire_date: "",
-    profile_image: null,
-    profile_image_url: "", // For preview
+    profile_image_url: "",
+    status: "",
+    author: "",
   });
+  const [profile_image, setprofile_image] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isDraft, setIsDraft] = useState(true);
+  const [draftloading, setdraftLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("success");
   const [author, setAuthor] = useState("");
@@ -56,54 +60,49 @@ const EmployeeAddPage = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     if (file) {
+      setprofile_image(file);
       setFormData((prevState) => ({
         ...prevState,
-        profile_image: file,
         profile_image_url: URL.createObjectURL(file),
       }))
     }
+    else {
+      setAlertType("error")
+      setAlertMessage("Please upload a valid image file.");
+    }
   }
+  const handleSaveDraft = async () => {
+    setIsDraft(true);
+    setdraftLoading(true);
+    await handleSubmit('draft');
+  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+  const handlePublish = async () => {
+    setLoading(true);
+    await handleSubmit(user?.roles === 'editor' ? 'pending' : 'published');
+  };
 
+  const handleSubmit = async (estatus) => {
     try {
-      // Create FormData object for file upload
-      const formDataToSend = new FormData()
-
-      // Append all text fields
-      Object.keys(formData).forEach((key) => {
-        if (key !== "profile_image" && key !== "profile_image_url") {
-          formDataToSend.append(key, formData[key])
-        }
-      })
-
-      // Append the image file if it exists
-      if (formData.profile_image) {
-        formDataToSend.append("profile_image", formData.profile_image)
-      }
-
-      // Add created_by and created_at
-      formDataToSend.append("created_by", author)
-      formDataToSend.append("created_at", new Date().toISOString())
-
       const response = await fetch("https://ketrb-backend.onrender.com/employees/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: formDataToSend,
-      })
+        body: JSON.stringify({
+          ...formData,
+          status: estatus,
+          author: author,
+          user_id: user_id,
+          created_at: new Date().toISOString(),
+        }),
+      });
 
       if (response.ok) {
         setAlertType("success")
         setAlertMessage("Employee added successfully.")
 
-        // Redirect after a short delay
-        setTimeout(() => {
-          navigate("/employees")
-        }, 2000)
+        window.location.href = '/employees';
       } else {
         const errorData = await response.json()
         setAlertType("error")
@@ -114,7 +113,8 @@ const EmployeeAddPage = () => {
       setAlertType("error")
       setAlertMessage("An error occurred while adding the employee.")
     } finally {
-      setLoading(false)
+      setLoading(false);
+      setdraftLoading(false);
     }
   }
 
@@ -283,7 +283,7 @@ const EmployeeAddPage = () => {
                     </RadioGroup>
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="profile_image">Profile Image</Label>
                   <div className="flex items-center gap-4">
@@ -312,7 +312,14 @@ const EmployeeAddPage = () => {
               <Button variant="outline" onClick={() => navigate("/employees")} disabled={loading}>
                 Cancel
               </Button>
-              <Button onClick={handleSubmit} disabled={loading}>
+              <Button
+                variant="outline"
+                onClick={handleSaveDraft}
+                disabled={draftloading}
+              >
+                {draftloading ? "Saving..." : "Save as Draft"}
+              </Button>
+              <Button onClick={handlePublish} disabled={loading}>
                 {loading ? "Submitting..." : "Add Employee"}
               </Button>
             </CardFooter>

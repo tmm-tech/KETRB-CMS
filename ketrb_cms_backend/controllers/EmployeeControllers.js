@@ -4,19 +4,19 @@ const cloudinary = require('cloudinary').v2;
 module.exports = {
   // Add a new employee
   AddEmployee: async (req, res) => {
-    const { first_name, last_name, job_title, department, role_type, email, phone, hire_date, status, author } = req.body;
-    const profileImage = req.file;
+    const { first_name, last_name, job_title, department, role_type, email, phone, hire_date, status, author,user_id,created_at } = req.body;
+    const profile_image_url = req.file;
 
     try {
       let imagePath = null;
-      if (profileImage) {
-        const cloudinaryResult = await cloudinary.uploader.upload(profileImage.path, { folder: 'employees' });
+      if (profile_image_url) {
+        const cloudinaryResult = await cloudinary.uploader.upload(profile_image_url.path, { folder: 'employees' });
         imagePath = cloudinaryResult.secure_url;
       }
 
       const result = await query(
-        'INSERT INTO employee (first_name, last_name, job_title, department, role_type, email, phone, hire_date, profile_image, author, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *',
-        [first_name, last_name, job_title, department, role_type, email, phone, hire_date, imagePath, status, author]
+        'INSERT INTO employee (first_name, last_name, job_title, department, role_type, email, phone, hire_date, profile_image, author, status,created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
+        [first_name, last_name, job_title, department, role_type, email, phone, hire_date, imagePath, author, status,created_at]
       );
       // Notify admins for approval if status is pending
       if (status === 'pending') {
