@@ -28,8 +28,8 @@ const CareerEdit = () => {
         responsibilities: "",
         benefits: "",
         status: "",
-        application_deadline: new Date(),
-        posted_at: new Date()
+        application_deadline:"",
+        posted_date:"",
     });
     const [alertMessage, setAlertMessage] = useState("");
     const [loading, setLoading] = useState(false);
@@ -59,7 +59,7 @@ const CareerEdit = () => {
                     benefits: data.benefits,
                     status: data.status,
                     application_deadline: data.closing_date ? new Date(data.application_deadline) : new Date(),
-                    posted_at: data.posted_date ? new Date(data.posted_at) : new Date()
+                    posted_date: data.posted_date ? new Date(data.posted_at) : new Date()
                 });
             } catch (error) {
                 console.error("Error fetching career:", error);
@@ -97,9 +97,9 @@ const CareerEdit = () => {
     };
 
     const handlePublish = async () => {
-        const newStatus = (user?.roles === 'administrator' && formData.status === 'pending') ? 'active' : formData.status;
+        const careerstatus = (user?.roles === 'administrator' && formData.status === 'pending') ? 'active' : formData.status;
         setLoading(true);
-        await handleSubmit(newStatus);
+        await handleSubmit(careerstatus);
     };
 
     const handleSubmit = async (status) => {
@@ -111,10 +111,10 @@ const CareerEdit = () => {
                 },
                 body: JSON.stringify({
                     ...formData,
-                    status,
+                    status: status,
                     role: user.roles,
                     user_id,
-                    application_deadline: formData.application_deadline.toISOString().split('T')[0],
+                    posted_date: new Date().toISOString(),
                 }),
             });
 
@@ -132,27 +132,6 @@ const CareerEdit = () => {
             setDraftLoading(false);
         }
     };
-
-    const handleApprovePublish = async () => {
-        try {
-            const response = await fetch(`https://ketrb-backend.onrender.com/careers/approve/${id}`, {
-                method: 'PUT', 
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (response.ok) {
-                setAlertMessage('Career posting published successfully');
-                window.location.href = '/careers';
-            } else {
-                setAlertMessage('Failed to publish career posting');
-            }
-        } catch (error) {
-            console.error("Error publishing career posting:", error);
-            setAlertMessage('An error occurred while publishing the career posting.');
-        }
-    };
-
     // Format date for display
     const formatDate = (date) => {
         if (!date) return "Not specified";

@@ -12,8 +12,8 @@ import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 
 const NewsAdd = () => {
     const [title, setTitle] = useState("");
-    const [image, setImage] = useState(null);	 
-	const [previewUrl, setPreviewUrl] = useState("");
+    const [image, setImage] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState("");
     const [content, setContent] = useState("");
     const [publishedDate, setPublishedDate] = useState(new Date());
     const [author, setAuthor] = useState("");
@@ -25,7 +25,7 @@ const NewsAdd = () => {
     const user = JSON.parse(storedUser);
     const user_id = user.id;
 
-	
+
     useEffect(() => {
         if (user && user.fullname) {
             setAuthor(user.fullname);
@@ -35,15 +35,15 @@ const NewsAdd = () => {
     const handleTitleChange = (e) => setTitle(e.target.value);
 
     const handleImageChange = (event) => {
-	      const file = event.target.files[0];
-    if (file) {
-      setImage(file); // Save the actual file
-      const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
-    	 
-	} else {
-	  setAlertMessage("Please upload a valid image file.");
-	}
+        const file = event.target.files[0];
+        if (file) {
+            setImage(file); // Save the actual file
+            const url = URL.createObjectURL(file);
+            setPreviewUrl(url);
+
+        } else {
+            setAlertMessage("Please upload a valid image file.");
+        }
 
     };
 
@@ -52,7 +52,7 @@ const NewsAdd = () => {
 
     const handleSaveDraft = async () => {
         setIsDraft(true);
-	setdraftLoading(true);
+        setdraftLoading(true);
         await handleSubmit('draft');
     };
 
@@ -62,17 +62,17 @@ const NewsAdd = () => {
     };
 
     const handleSubmit = async (status) => {
-	
-        
+
+
         const formData = new FormData();
-	     
+
         formData.append('title', title);
         formData.append('content', content);
         formData.append('publishedDate', publishedDate.toISOString().split('T')[0]);
         formData.append('author', author);
         formData.append('status', status);
         formData.append('news', image);
-	formData.append('user_id', user_id);
+        formData.append('user_id', user_id);
 
         try {
             const response = await fetch('https://ketrb-backend.onrender.com/news/add', {
@@ -91,7 +91,7 @@ const NewsAdd = () => {
             setAlertMessage("An error occurred while adding the news.");
         } finally {
             setLoading(false);
-	   setdraftLoading(false);
+            setdraftLoading(false);
         }
     };
 
@@ -139,7 +139,7 @@ const NewsAdd = () => {
                                                 Image
                                             </label>
                                             <div className="mt-1">
-                                                <Input type="file" onChange={handleImageChange} className="block w-full"  accept="image/*" name="program" required />
+                                                <Input type="file" onChange={handleImageChange} className="block w-full" accept="image/*" name="program" required />
                                                 {previewUrl && (
                                                     <img
                                                         src={previewUrl}
@@ -192,7 +192,7 @@ const NewsAdd = () => {
                                             <Button
                                                 onClick={handleSaveDraft}
                                                 disabled={draftloading}
-                                               variant="outline"
+                                                variant="outline"
                                             >
                                                 {draftloading ? "Saving..." : "Save as Draft"}
                                             </Button>
@@ -216,4 +216,4 @@ const NewsAdd = () => {
 };
 
 export default NewsAdd;
-                
+

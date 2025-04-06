@@ -7,6 +7,8 @@ const {
   GetEmployeeById,
   UpdateEmployee,
   DeleteEmployee,
+  ApproveEmployee,
+  CancelEmployee,
 } = require('../controllers/EmployeeControllers');
 
 const EmployeeRoutes = express.Router();
@@ -46,5 +48,11 @@ EmployeeRoutes.put('/edit/:id', upload.single('profile_image'), UpdateEmployee);
 
 // Soft delete an employee
 EmployeeRoutes.delete('/delete/:id', DeleteEmployee);
+
+// Approve an Employee Creation or Edit
+EmployeeRoutes.put('/approve/:id', ApproveEmployee);
+
+// Cancel Employee Delete
+EmployeeRoutes.put('/cancledelete/:id', CancelEmployee);
 
 module.exports = EmployeeRoutes;

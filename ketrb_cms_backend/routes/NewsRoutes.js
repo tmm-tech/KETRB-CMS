@@ -40,7 +40,9 @@ NewsRoutes.post('/add', upload.single('news'), AddNews);
 // Get all news articles
 NewsRoutes.get('/', GetNews);
 
+// Get all published news articles
 NewsRoutes.get('/news', GetPublishedNews);
+
 // Get a specific news article by ID
 NewsRoutes.get('/:id', GetNewsById);
 

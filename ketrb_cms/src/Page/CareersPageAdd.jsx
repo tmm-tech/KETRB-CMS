@@ -12,18 +12,9 @@ import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 import { Label } from "../Component/label";
 
 const CareerAddPage = () => {
-  const storedUser = localStorage.getItem("user");
-  const user = JSON.parse(storedUser);
-  const user_id = user.id;
   const [author, setAuthor] = useState("");
   const [isDraft, setIsDraft] = useState(true);
   const [draftloading, setdraftLoading] = useState(false);
-  useEffect(() => {
-    if (user && user.fullname) {
-      setAuthor(user.fullname);
-    }
-  }, [user]);
-
   const [formData, setFormData] = useState({
     title: "",
     department: "",
@@ -34,15 +25,23 @@ const CareerAddPage = () => {
     requirements: "",
     responsibilities: "",
     benefits: "",
-    status: "draft",
+    status: "",
     application_deadline: "",
     created_by: "",
   });
-
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("success");
+  const storedUser = localStorage.getItem("user");
   const navigate = useNavigate();
+  const user = JSON.parse(storedUser);
+  const user_id = user.id;
+
+  useEffect(() => {
+    if (user && user.fullname) {
+      setAuthor(user.fullname);
+    }
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -71,7 +70,7 @@ const CareerAddPage = () => {
   };
 
   const handleSubmit = async (estatus) => {
-    setLoading(true);
+
     try {
       const response = await fetch("https://ketrb-backend.onrender.com/careers/add", {
         method: "POST",
@@ -82,31 +81,19 @@ const CareerAddPage = () => {
           ...formData,
           status: estatus,
           created_by: author,
+          user_id: user_id,
+          posted_date: new Date().toISOString(),
         }),
       });
 
       if (response.ok) {
-        setAlertType("success");
-        if (formData.status === "pending") {
-          setAlertMessage("Career posting submitted for approval.");
-        } else if (formData.status === "published") {
-          setAlertMessage("Career posting published successfully.");
-        } else {
-          setAlertMessage("Career posting saved as draft.");
-        }
-
-        // Redirect after a short delay
-        setTimeout(() => {
-          navigate("/careers");
-        }, 2000);
+        setAlertMessage("Career Post added successfully!");
+        window.location.href = '/careers';
       } else {
-        const errorData = await response.json();
-        setAlertType("error");
-        setAlertMessage(errorData.message || "Failed to add career posting.");
+        setAlertMessage("Failed to add career posting.");
       }
     } catch (error) {
       console.error("Error adding career posting:", error);
-      setAlertType("error");
       setAlertMessage("An error occurred while adding the career posting.");
     } finally {
       setLoading(false);

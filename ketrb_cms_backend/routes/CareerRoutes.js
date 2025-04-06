@@ -9,7 +9,9 @@ const {
   DeleteCareer,
   ApplyForJob,
   GetAllApplications,
-  ApproveCareer
+  ApproveCareer,
+  GetPublishedCareers,
+  CancelCareer
 } = require('../controllers/CareerControllers');
 
 const CareerRoutes = express.Router();
@@ -25,14 +27,35 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// Job posting routes
 
+// Get all careers
 CareerRoutes.get('/', GetAllCareers); 
+
+// Get all published career posts
+CareerRoutes.get('/careers', GetPublishedCareers); 
+
+// Get all applications
 CareerRoutes.get('/applications', GetAllApplications);
+
+// Apply for  a job
 CareerRoutes.post('/apply', upload.single('resume'), ApplyForJob); 
+
+// Approve a career post
 CareerRoutes.put('/approve/:id', ApproveCareer);
-CareerRoutes.put('/edit/:id', UpdateCareer); 
-CareerRoutes.put('/add', AddCareer); 
+
+// Soft delete a career post
+CareerRoutes.put('/cancledelete/:id', CancelCareer);
+
+// Update a career post
+CareerRoutes.put('/edit/:id', UpdateCareer);
+
+// Add a new career post
+CareerRoutes.put('/add', AddCareer);
+
+// Delet a career post
 CareerRoutes.delete('/delete/:id', DeleteCareer);
-CareerRoutes.get('/:id', GetCareerById); 
+
+// Get a specific career post by ID
+CareerRoutes.get('/:id', GetCareerById);
+
 module.exports = CareerRoutes;

@@ -214,7 +214,7 @@ UpdateNews: async (req, res) => {
 
     // Check if the image exists
     if (newsResult.rows.length === 0) {
-      return res.status(404).json({ message: 'Program not found.' });
+      return res.status(404).json({ message: 'News not found.' });
     }
 
     const filename = newsResult.rows[0].title; 
@@ -257,8 +257,7 @@ UpdateNews: async (req, res) => {
  // Delete a news article
 DeleteNews: async (req, res) => {
   const { id } = req.params;
-  const { role, user_id } = req.body; // Assuming user_id and role are passed in the request body
-
+  const { role, user_id } = req.body;
   try {
     if (role === 'editor') {
       // Editor marks the news for deletion (pending admin approval)
