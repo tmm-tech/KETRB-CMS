@@ -85,7 +85,7 @@ const Dashboard = () => {
           fetch("https://ketrb-backend.onrender.com/programs/"),
           fetch("https://ketrb-backend.onrender.com/users/allusers"),
           fetch("https://ketrb-backend.onrender.com/careers/"),
-          fetch("https://ketrb-backend.onrender.com/applications/"),
+          fetch("https://ketrb-backend.onrender.com/careers/applications/"),
           fetch("https://ketrb-backend.onrender.com/employees/"),
         ])
         const userdata = await usersResponse.json()
@@ -100,7 +100,7 @@ const Dashboard = () => {
         setApplications(await applicationsResponse.json())
         setEmployees(await employeesResponse.json())
       } catch (error) {
-        console.error("Error fetching data:", error)
+        console.error("Error fetching data:", error.message)
       }
     }
 
@@ -184,9 +184,9 @@ const Dashboard = () => {
       return [...careers]
         .sort((a, b) => {
           if (sortOption.careers === "latest") {
-            return new Date(b.posted_at) - new Date(a.posted_at)
+            return new Date(b.posted_date) - new Date(a.posted_date)
           } else if (sortOption.careers === "oldest") {
-            return new Date(a.posted_at) - new Date(b.posted_at)
+            return new Date(a.posted_date) - new Date(b.posted_date)
           }
           return 0
         })
@@ -843,7 +843,7 @@ const Dashboard = () => {
                           </TableCell>
                           <TableCell className="hidden md:table-cell">{career.location}</TableCell>
                           <TableCell className="hidden md:table-cell">
-                            {new Date(career.posted_at).toLocaleString()}
+                            {new Date(career.posted_date).toLocaleString()}
                           </TableCell>
                           <TableCell>
                             <DropdownMenu>
