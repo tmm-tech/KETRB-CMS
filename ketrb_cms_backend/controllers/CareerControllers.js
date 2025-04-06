@@ -4,8 +4,8 @@ const cloudinary = require('cloudinary').v2;
 module.exports = {
   // Add a new job posting
   AddCareer: async (req, res) => {
-    const { title, description, department, employment_type, location, salary_range, requirements, responsibilities, benefits, status, application_deadline, created_by, user_id, posted_date } = req.body;
     console.log('Received Data:', req.body); // Log incoming data
+    const { title, description, department, employment_type, location, salary_range, requirements, responsibilities, benefits, status, application_deadline, created_by, user_id, posted_date } = req.body;
 
     try {
       const result = await query(
