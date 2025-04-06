@@ -21,11 +21,11 @@ const EmployeeAddPage = () => {
     email: "",
     phone: "",
     hire_date: "",
-    profile_image_url: "",
+    profile_image: "",
     status: "",
     author: "",
   });
-  const [profile_image, setprofile_image] = useState(null);
+  const [profile_url, setProfile_url] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isDraft, setIsDraft] = useState(true);
   const [draftloading, setdraftLoading] = useState(false);
@@ -59,11 +59,13 @@ const EmployeeAddPage = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     if (file) {
-      setprofile_image(file);
+
       setFormData((prevState) => ({
         ...prevState,
-        profile_image_url: URL.createObjectURL(file),
+        profile_image: file,
       }))
+      const url = URL.createObjectURL(file);
+      setProfile_url(url);
     }
     else {
       setAlertType("error")
@@ -93,7 +95,6 @@ const EmployeeAddPage = () => {
           status: estatus,
           author: author,
           user_id: user_id,
-          profile_image: profile_image,
           created_at: new Date().toISOString(),
         }),
       });
@@ -287,10 +288,10 @@ const EmployeeAddPage = () => {
                 <div className="space-y-2">
                   <Label htmlFor="profile_image">Profile Image</Label>
                   <div className="flex items-center gap-4">
-                    {formData.profile_image_url && (
+                    {profile_url && (
                       <div className="h-20 w-20 overflow-hidden rounded-full">
                         <img
-                          src={formData.profile_image_url}
+                          src={profile_url}
                           alt="Profile preview"
                           className="h-full w-full object-cover"
                         />
