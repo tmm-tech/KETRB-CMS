@@ -495,7 +495,7 @@ const EmployeesPage = () => {
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                               <h3 className="text-sm font-medium text-gray-500">Department</h3>
-                              <p className="mt-1">{employee.department}</p>
+                              <p className="mt-1 capitalize">{employee.department}</p>
                             </div>
                             <div>
                               <h3 className="text-sm font-medium text-gray-500">Email</h3>
