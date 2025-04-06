@@ -50,7 +50,7 @@ CareerRoutes.put('/cancledelete/:id', CancelCareer);
 CareerRoutes.put('/edit/:id', UpdateCareer);
 
 // Add a new career post
-CareerRoutes.put('/add', AddCareer);
+CareerRoutes.post('/add', AddCareer);
 
 // Delet a career post
 CareerRoutes.delete('/delete/:id', DeleteCareer);
