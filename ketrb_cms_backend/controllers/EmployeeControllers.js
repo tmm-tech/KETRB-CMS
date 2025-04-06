@@ -93,7 +93,7 @@ module.exports = {
 
       const result = await query(
         'UPDATE employee SET first_name = $1, last_name = $2, job_title = $3, department = $4, role_type = $5, email = $6, phone = $7, hire_date = $8, profile_image = $9, author = $10, status = $11, created_at = $12 WHERE id = $13 RETURNING *',
-        [first_name, last_name, job_title, department, role_type, email, phone, hire_date, imagePath, author, status, id]
+        [first_name, last_name, job_title, department, role_type, email, phone, hire_date, imagePath, author, status, created_at, id]
       );
       if (employeestatus === 'pending') {
         await query(
