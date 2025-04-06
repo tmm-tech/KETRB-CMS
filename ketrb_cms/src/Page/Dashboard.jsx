@@ -528,9 +528,8 @@ const Dashboard = () => {
                           href="#"
                           onClick={() => handlePageChange("news", Math.max(currentPage.news - 1, 1))}
                           disabled={currentPage.news === 1}
-                          className={`flex items-center px-3 py-1 text-sm font-medium bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
-                            currentPage.news === 1 ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
+                          className={`flex items-center px-3 py-1 text-sm font-medium bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${currentPage.news === 1 ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
                         />
                       </PaginationItem>
 
@@ -540,11 +539,10 @@ const Dashboard = () => {
                           <PaginationLink
                             href="#"
                             onClick={() => handlePageChange("news", number + 1)}
-                            className={`flex items-center px-3 py-1 text-sm font-medium rounded border transition-colors duration-200 ${
-                              currentPage.news === number + 1
+                            className={`flex items-center px-3 py-1 text-sm font-medium rounded border transition-colors duration-200 ${currentPage.news === number + 1
                                 ? "bg-black text-white border-black"
                                 : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                            }`}
+                              }`}
                           >
                             {number + 1}
                           </PaginationLink>
@@ -557,9 +555,8 @@ const Dashboard = () => {
                           href="#"
                           onClick={() => handlePageChange("news", Math.min(currentPage.news + 1, totalPages.news))}
                           disabled={currentPage.news === totalPages.news}
-                          className={`flex items-center px-3 py-1 text-sm font-medium bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
-                            currentPage.news === totalPages.news ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
+                          className={`flex items-center px-3 py-1 text-sm font-medium bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${currentPage.news === totalPages.news ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
                         />
                       </PaginationItem>
                     </PaginationContent>
@@ -648,9 +645,8 @@ const Dashboard = () => {
                           href="#"
                           onClick={() => handlePageChange("images", Math.max(currentPage.images - 1, 1))}
                           disabled={currentPage.images === 1}
-                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
-                            currentPage.images === 1 ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
+                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${currentPage.images === 1 ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
                         />
                       </PaginationItem>
                       {[...Array(totalPages.images).keys()].map((number) => (
@@ -658,11 +654,10 @@ const Dashboard = () => {
                           <PaginationLink
                             href="#"
                             onClick={() => handlePageChange("images", number + 1)}
-                            className={`flex items-center px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
-                              currentPage.images === number + 1
+                            className={`flex items-center px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${currentPage.images === number + 1
                                 ? "bg-black text-white border-black"
                                 : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                            }`}
+                              }`}
                           >
                             {number + 1}
                           </PaginationLink>
@@ -675,9 +670,8 @@ const Dashboard = () => {
                             handlePageChange("images", Math.min(currentPage.images + 1, totalPages.images))
                           }
                           disabled={currentPage.images === totalPages.images}
-                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
-                            currentPage.images === totalPages.images ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
+                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${currentPage.images === totalPages.images ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
                         />
                       </PaginationItem>
                     </PaginationContent>
@@ -767,9 +761,8 @@ const Dashboard = () => {
                           href="#"
                           onClick={() => handlePageChange("programs", Math.max(currentPage.programs - 1, 1))}
                           disabled={currentPage.programs === 1}
-                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
-                            currentPage.programs === 1 ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
+                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${currentPage.programs === 1 ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
                         />
                       </PaginationItem>
                       {[...Array(totalPages.programs).keys()].map((number) => (
@@ -777,11 +770,10 @@ const Dashboard = () => {
                           <PaginationLink
                             href="#"
                             onClick={() => handlePageChange("programs", number + 1)}
-                            className={`flex items-center px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
-                              currentPage.programs === number + 1
+                            className={`flex items-center px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${currentPage.programs === number + 1
                                 ? "bg-black text-white border-black"
                                 : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                            }`}
+                              }`}
                           >
                             {number + 1}
                           </PaginationLink>
@@ -794,9 +786,8 @@ const Dashboard = () => {
                             handlePageChange("programs", Math.min(currentPage.programs + 1, totalPages.programs))
                           }
                           disabled={currentPage.programs === totalPages.programs}
-                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
-                            currentPage.programs === totalPages.programs ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
+                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${currentPage.programs === totalPages.programs ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
                         />
                       </PaginationItem>
                     </PaginationContent>
@@ -828,7 +819,7 @@ const Dashboard = () => {
                       {currentItems.careers.map((career) => (
                         <TableRow key={career.id}>
                           <TableCell className="font-medium">
-                            <Link to={`/careers/edit/${career.id}`} className="hover:underline">
+                            <Link to={`/careers/edit career/${career.id}`} className="hover:underline">
                               {career.title}
                             </Link>
                           </TableCell>
@@ -860,7 +851,7 @@ const Dashboard = () => {
                                   </Link>
                                 </DropdownMenuLabel>
                                 <DropdownMenuItem>
-                                  <Link to={`/careers/edit/${career.id}`} className="hover:underline">
+                                  <Link to={`/careers/edit career/${career.id}`} className="hover:underline">
                                     View
                                   </Link>
                                 </DropdownMenuItem>
@@ -878,9 +869,8 @@ const Dashboard = () => {
                           href="#"
                           onClick={() => handlePageChange("careers", Math.max(currentPage.careers - 1, 1))}
                           disabled={currentPage.careers === 1}
-                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
-                            currentPage.careers === 1 ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
+                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${currentPage.careers === 1 ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
                         />
                       </PaginationItem>
                       {[...Array(totalPages.careers).keys()].map((number) => (
@@ -888,11 +878,10 @@ const Dashboard = () => {
                           <PaginationLink
                             href="#"
                             onClick={() => handlePageChange("careers", number + 1)}
-                            className={`flex items-center px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
-                              currentPage.careers === number + 1
+                            className={`flex items-center px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${currentPage.careers === number + 1
                                 ? "bg-black text-white border-black"
                                 : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                            }`}
+                              }`}
                           >
                             {number + 1}
                           </PaginationLink>
@@ -905,9 +894,8 @@ const Dashboard = () => {
                             handlePageChange("careers", Math.min(currentPage.careers + 1, totalPages.careers))
                           }
                           disabled={currentPage.careers === totalPages.careers}
-                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
-                            currentPage.careers === totalPages.careers ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
+                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${currentPage.careers === totalPages.careers ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
                         />
                       </PaginationItem>
                     </PaginationContent>
@@ -938,7 +926,7 @@ const Dashboard = () => {
                     <TableBody>
                       {currentItems.applications.map((application) => (
                         <TableRow key={application.id}>
-                          <TableCell className="font-medium">{application.applicant_name}</TableCell>
+                          <TableCell className="font-medium"><Link to={`/careers/view application/${application.id}`} className="hover:underline"> {application.applicant_name}</Link></TableCell>
                           <TableCell>{application.job_title}</TableCell>
                           <TableCell>
                             <Badge
@@ -962,12 +950,12 @@ const Dashboard = () => {
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>
-                                  <Link to="/applications" className="hover:underline">
+                                  <Link to="/careers" className="hover:underline">
                                     Actions
                                   </Link>
                                 </DropdownMenuLabel>
                                 <DropdownMenuItem>
-                                  <Link to={`/applications/${application.id}`} className="hover:underline">
+                                  <Link to={`/careers/view application/${application.id}`} className="hover:underline">
                                     View
                                   </Link>
                                 </DropdownMenuItem>
@@ -995,9 +983,8 @@ const Dashboard = () => {
                           href="#"
                           onClick={() => handlePageChange("applications", Math.max(currentPage.applications - 1, 1))}
                           disabled={currentPage.applications === 1}
-                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
-                            currentPage.applications === 1 ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
+                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${currentPage.applications === 1 ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
                         />
                       </PaginationItem>
                       {[...Array(totalPages.applications).keys()].map((number) => (
@@ -1005,11 +992,10 @@ const Dashboard = () => {
                           <PaginationLink
                             href="#"
                             onClick={() => handlePageChange("applications", number + 1)}
-                            className={`flex items-center px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
-                              currentPage.applications === number + 1
+                            className={`flex items-center px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${currentPage.applications === number + 1
                                 ? "bg-black text-white border-black"
                                 : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                            }`}
+                              }`}
                           >
                             {number + 1}
                           </PaginationLink>
@@ -1025,9 +1011,8 @@ const Dashboard = () => {
                             )
                           }
                           disabled={currentPage.applications === totalPages.applications}
-                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
-                            currentPage.applications === totalPages.applications ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
+                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${currentPage.applications === totalPages.applications ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
                         />
                       </PaginationItem>
                     </PaginationContent>
@@ -1058,7 +1043,7 @@ const Dashboard = () => {
                     <TableBody>
                       {currentItems.employees.map((employee) => (
                         <TableRow key={employee.id}>
-                          <TableCell className="font-medium">{employee.name}</TableCell>
+                          <TableCell className="font-medium"><Link to={`/employees/edit employees/${employee.id}`} className="hover:underline">{employee.name}</Link></TableCell>
                           <TableCell>{employee.department}</TableCell>
                           <TableCell>{employee.position}</TableCell>
                           <TableCell className="hidden md:table-cell">{employee.email}</TableCell>
@@ -1080,7 +1065,7 @@ const Dashboard = () => {
                                   </Link>
                                 </DropdownMenuLabel>
                                 <DropdownMenuItem>
-                                  <Link to={`/employees/${employee.id}`} className="hover:underline">
+                                  <Link to={`/employees/edit employees/${employee.id}`} className="hover:underline">
                                     View
                                   </Link>
                                 </DropdownMenuItem>
@@ -1098,9 +1083,8 @@ const Dashboard = () => {
                           href="#"
                           onClick={() => handlePageChange("employees", Math.max(currentPage.employees - 1, 1))}
                           disabled={currentPage.employees === 1}
-                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
-                            currentPage.employees === 1 ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
+                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${currentPage.employees === 1 ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
                         />
                       </PaginationItem>
                       {[...Array(totalPages.employees).keys()].map((number) => (
@@ -1108,11 +1092,10 @@ const Dashboard = () => {
                           <PaginationLink
                             href="#"
                             onClick={() => handlePageChange("employees", number + 1)}
-                            className={`flex items-center px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
-                              currentPage.employees === number + 1
+                            className={`flex items-center px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${currentPage.employees === number + 1
                                 ? "bg-black text-white border-black"
                                 : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                            }`}
+                              }`}
                           >
                             {number + 1}
                           </PaginationLink>
@@ -1125,9 +1108,8 @@ const Dashboard = () => {
                             handlePageChange("employees", Math.min(currentPage.employees + 1, totalPages.employees))
                           }
                           disabled={currentPage.employees === totalPages.employees}
-                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
-                            currentPage.employees === totalPages.employees ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
+                          className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${currentPage.employees === totalPages.employees ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
                         />
                       </PaginationItem>
                     </PaginationContent>
@@ -1212,9 +1194,8 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => handlePageChange("users", Math.max(currentPage.users - 1, 1))}
                             disabled={currentPage.users === 1}
-                            className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
-                              currentPage.users === 1 ? "opacity-50 cursor-not-allowed" : ""
-                            }`}
+                            className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${currentPage.users === 1 ? "opacity-50 cursor-not-allowed" : ""
+                              }`}
                           />
                         </PaginationItem>
                         {[...Array(totalPages.users).keys()].map((number) => (
@@ -1222,11 +1203,10 @@ const Dashboard = () => {
                             <PaginationLink
                               href="#"
                               onClick={() => handlePageChange("users", number + 1)}
-                              className={`flex items-center px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${
-                                currentPage.users === number + 1
+                              className={`flex items-center px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 ${currentPage.users === number + 1
                                   ? "bg-black text-white border-black"
                                   : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                              }`}
+                                }`}
                             >
                               {number + 1}
                             </PaginationLink>
@@ -1237,9 +1217,8 @@ const Dashboard = () => {
                             href="#"
                             onClick={() => handlePageChange("users", Math.min(currentPage.users + 1, totalPages.users))}
                             disabled={currentPage.users === totalPages.users}
-                            className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${
-                              currentPage.users === totalPages.users ? "opacity-50 cursor-not-allowed" : ""
-                            }`}
+                            className={`flex items-center px-3 py-1 text-sm bg-transparent text-black rounded hover:bg-transparent transition-colors duration-200 ${currentPage.users === totalPages.users ? "opacity-50 cursor-not-allowed" : ""
+                              }`}
                           />
                         </PaginationItem>
                       </PaginationContent>

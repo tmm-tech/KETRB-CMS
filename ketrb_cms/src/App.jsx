@@ -23,6 +23,7 @@ import EmployeeAddPage from "./Page/EmployeesPageAdd";
 import ForgotPassword from "./Page/ForgotPassword";
 import CareerEdit from "./Page/CareersPageEdit";
 import EmployeeEdit from "./Page/EmployeesPageEdit";
+import ApplicationDetailPage from "./Page/ApplicationView";
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -84,6 +85,7 @@ const App = () => {
               <Route path="/careers" element={<CareersPage />} />
               <Route path="/careers/add career" element={<CareerAddPage />} />
               <Route path="/careers/edit career/:id" element={<CareerEdit />} />
+              <Route path="/careers/view application/:id" element={<ApplicationDetailPage />} />
               <Route path="/employees" element={<EmployeesPage />} />
               <Route
                 path="/employees/add employees"
