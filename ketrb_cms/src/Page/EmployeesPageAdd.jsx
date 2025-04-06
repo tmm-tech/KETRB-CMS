@@ -24,7 +24,7 @@ const EmployeeAddPage = () => {
     hire_date: "",
     profile_image: null,
     profile_image_url: "", // For preview
-  })
+  });
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("success");
