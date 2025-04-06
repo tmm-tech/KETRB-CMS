@@ -68,7 +68,7 @@ module.exports = {
   // Update employee details
   UpdateEmployee: async (req, res) => {
     const { id } = req.params;
-    const { first_name, last_name, job_title, department, role_type, email, phone, hire_date, status, author,role,user_id } = req.body;
+    const { first_name, last_name, job_title, department, role_type, email, phone, hire_date, status, author,role,user_id,created_at } = req.body;
     const profileImage = req.file;
 
     try {
@@ -92,7 +92,7 @@ module.exports = {
       }
 
       const result = await query(
-        'UPDATE employee SET first_name = $1, last_name = $2, job_title = $3, department = $4, role_type = $5, email = $6, phone = $7, hire_date = $8, profile_image = $9, author = $10, status = $11 WHERE id = $12 RETURNING *',
+        'UPDATE employee SET first_name = $1, last_name = $2, job_title = $3, department = $4, role_type = $5, email = $6, phone = $7, hire_date = $8, profile_image = $9, author = $10, status = $11, created_at = $12 WHERE id = $13 RETURNING *',
         [first_name, last_name, job_title, department, role_type, email, phone, hire_date, imagePath, author, status, id]
       );
       if (employeestatus === 'pending') {
