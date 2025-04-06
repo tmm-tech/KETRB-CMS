@@ -247,7 +247,7 @@ const EmployeeEdit = () => {
                         <div className="flex-shrink-0">
                           <div className="h-32 w-32 overflow-hidden rounded-full">
                             <img
-                              src={formData.profile_image_url || "/placeholder.svg?height=128&width=128"}
+                              src={formData.profile_image}
                               alt={`${formData.first_name} ${formData.last_name}`}
                               className="h-full w-full object-cover"
                             />
