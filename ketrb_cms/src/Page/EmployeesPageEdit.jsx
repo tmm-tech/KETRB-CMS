@@ -122,18 +122,32 @@ const EmployeeEdit = () => {
   const handleSubmit = async (estatus) => {
 
     try {
+      // Create FormData object for file upload
+      const formDataToSend = new FormData()
 
+
+      // Append the image file if it exists
+      if (formData.profile_image) {
+        formDataToSend.append("profile_image", formData.profile_image)
+      }
+
+      // Add
+      formDataToSend.append("first_name", formData.first_name)
+      formDataToSend.append("last_name", formData.last_name)
+      formDataToSend.append("job_title", formData.job_title)
+      formDataToSend.append("department", formData.department)
+      formDataToSend.append("role_type", formData.role_type)
+      formDataToSend.append("email", formData.email)
+      formDataToSend.append("phone", formData.phone)
+      formDataToSend.append("hire_date", formData.hire_date.toISOString()) // Convert date to ISO string
+      formDataToSend.append("user_id", user_id);
+      formDataToSend.append("created_at", new Date().toISOString());
+      formDataToSend.append("roles", user.roles);
+      formDataToSend.append("author", author);
+      formDataToSend.append("status", estatus);
       const response = await fetch(`https://ketrb-backend.onrender.com/employees/edit/${id}`, {
         method: "PUT",
-        body: JSON.stringify({
-          ...formData,
-          status: estatus,
-          role: user.roles,
-          author: author,
-          user_id: user_id,
-          profile_image: formData.profile_image,
-          created_at: new Date().toISOString(),
-      }), // Send as FormData, not JSON
+        body: formDataToSend, // Send as FormData, not JSON
       })
 
       if (response.ok) {
