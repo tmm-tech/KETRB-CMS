@@ -123,6 +123,14 @@ const EmployeeEdit = () => {
 
     try {
       // Create FormData object for file upload
+      const formDataToSend = new FormData()
+
+
+      // Append the image file if it exists
+      if (formData.profile_image) {
+        formDataToSend.append("profile_image", formData.profile_image)
+      }
+
       const response = await fetch(`https://ketrb-backend.onrender.com/employees/edit/${id}`, {
         method: "PUT",
         body: JSON.stringify({
