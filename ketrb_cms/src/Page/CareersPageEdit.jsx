@@ -28,8 +28,8 @@ const CareerEdit = () => {
         responsibilities: "",
         benefits: "",
         status: "",
-        application_deadline:"",
-        posted_date:"",
+        application_deadline: "",
+        posted_date: "",
     });
     const [alertMessage, setAlertMessage] = useState("");
     const [loading, setLoading] = useState(false);
@@ -176,7 +176,7 @@ const CareerEdit = () => {
                                             >
                                                 <FilePenIcon className="w-5 h-5" />
                                             </button>
-                                    
+
                                             {/* Career content */}
                                             <div className="space-y-6">
                                                 <div>
@@ -184,13 +184,12 @@ const CareerEdit = () => {
                                                     <div className="flex items-center gap-2 mt-2">
                                                         <Badge
                                                             variant="outline"
-                                                            className={`capitalize ${
-                                                                formData.status === "active"
+                                                            className={`capitalize ${formData.status === "published"
                                                                     ? "bg-green-500 text-green-50"
                                                                     : formData.status === "pending"
-                                                                    ? "bg-yellow-500 text-yellow-50"
-                                                                    : "bg-gray-500 text-gray-50"
-                                                            }`}
+                                                                        ? "bg-yellow-500 text-yellow-50"
+                                                                        : "bg-gray-500 text-gray-50"
+                                                                }`}
                                                         >
                                                             {formData.status}
                                                         </Badge>
@@ -245,18 +244,17 @@ const CareerEdit = () => {
                                                     </div>
                                                 )}
                                                 <div className="text-sm text-gray-500">
-                                                    <p>Posted on: {formatDate(formData.posted_at)}</p>
+                                                    <p>Posted on: {formatDate(formData.posted_date)}</p>
                                                 </div>
                                             </div>
-
                                             <div className="flex justify-end gap-2 mt-6">
                                                 {/* Show Approve Publish button only for pending careers if user is admin */}
                                                 {user.roles === "administrator" && formData.status === "pending" && (
-                                                    <Button size="sm" variant="black" onClick={handleApprovePublish}>
+                                                    <Button size="sm" variant="black" onClick={handlePublish}>
                                                         Approve Publish
                                                     </Button>
                                                 )}
-                                            </div>     
+                                            </div>
                                         </CardContent>
                                     </Card>
                                 ) : (
@@ -285,7 +283,7 @@ const CareerEdit = () => {
                                                     {/* Department */}
                                                     <div>
                                                         <Label htmlFor="department">Department</Label>
-                                                        <Select 
+                                                        <Select
                                                             onValueChange={(value) => handleSelectChange("department", value)}
                                                             value={formData.department}
                                                         >
@@ -323,7 +321,7 @@ const CareerEdit = () => {
                                                     {/* Employment Type */}
                                                     <div>
                                                         <Label htmlFor="employment_type">Employment Type</Label>
-                                                        <Select 
+                                                        <Select
                                                             onValueChange={(value) => handleSelectChange("employment_type", value)}
                                                             value={formData.employment_type}
                                                         >
@@ -335,7 +333,6 @@ const CareerEdit = () => {
                                                                 <SelectItem value="part_time">Part-time</SelectItem>
                                                                 <SelectItem value="contract">Contract</SelectItem>
                                                                 <SelectItem value="internship">Internship</SelectItem>
-                                                                <SelectItem value="temporary">Temporary</SelectItem>
                                                             </SelectContent>
                                                         </Select>
                                                     </div>
@@ -439,7 +436,7 @@ const CareerEdit = () => {
                                                     </Button>
                                                     {/* Conditionally render Approve & Publish button */}
                                                     {user.roles === 'administrator' && formData.status === 'pending' ? (
-                                                        <Button onClick={() => handlePublish('active')} variant="black" disabled={loading}>
+                                                        <Button onClick={() => handlePublish('published')} variant="black" disabled={loading}>
                                                             {loading ? "Approving..." : "Approve & Publish"}
                                                         </Button>
                                                     ) : (

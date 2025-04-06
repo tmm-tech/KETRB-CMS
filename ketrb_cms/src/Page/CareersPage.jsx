@@ -34,7 +34,6 @@ const CareersPage = () => {
   const navigate = useNavigate()
 
   // Add the applications state and fetch function
-  // Add after the careers state declaration (around line 22)
   const [applications, setApplications] = useState([])
 
   const fetchCareers = async () => {
@@ -100,7 +99,7 @@ const CareersPage = () => {
       } else if (sortOption === "desc") {
         return b.title.localeCompare(a.title)
       } else if (sortOption === "date") {
-        return new Date(b.posted_at) - new Date(a.posted_at)
+        return new Date(b.posted_date) - new Date(a.posted_date)
       }
       return 0
     })

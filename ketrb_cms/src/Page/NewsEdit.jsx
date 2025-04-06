@@ -48,7 +48,6 @@ const NewsEdit = () => {
                 setAuthor(data.author);
                 setPreviewUrl(data.imageUrl);
                 setStatus(data.status);
-                console.log("url: ", previewUrl);
             } catch (error) {
                 console.error("Error fetching news:", error);
                 setAlertMessage("Failed to load news data.");

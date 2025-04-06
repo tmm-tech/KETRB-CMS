@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
@@ -33,7 +33,6 @@ const CareerAddPage = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("success");
   const storedUser = localStorage.getItem("user");
-  const navigate = useNavigate();
   const user = JSON.parse(storedUser);
   const user_id = user.id;
 
