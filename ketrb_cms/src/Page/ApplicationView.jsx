@@ -1,5 +1,5 @@
-import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
+import { Input } from "../Component/input";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
@@ -19,11 +19,11 @@ import {
   Globe,
   Linkedin,
 } from "lucide-react";
-import { Button } from "../../../Component/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../Component/tabs";
-import { Badge } from "../../../Component/badge";
-import { Separator } from "../../../Component/separator";
-import { Textarea } from "../../../Component/textarea";
+import { Button } from "../Component/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../Component/tabs";
+import { Badge } from "../Component/badge";
+import { Separator } from "../Component/separator";
+import { Textarea } from "../Component/textarea";
 import {
   Dialog,
   DialogContent,
@@ -31,8 +31,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "../../../Component/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../Component/select";
+} from "../Component/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../Component/select";
 
 const ApplicationDetailPage = () => {
   const { id } = useParams()
