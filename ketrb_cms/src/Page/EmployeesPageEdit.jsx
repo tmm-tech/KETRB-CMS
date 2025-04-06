@@ -25,6 +25,7 @@ const EmployeeEdit = () => {
     role_type: "",
     email: "",
     phone: "",
+    status: "",
     hire_date: new Date(),
     profile_image: null,
     profile_image_url: "",
@@ -33,6 +34,8 @@ const EmployeeEdit = () => {
   const [alertMessage, setAlertMessage] = useState("")
   const [loading, setLoading] = useState(false)
   const [author, setAuthor] = useState("");
+  const [isDraft, setIsDraft] = useState(false);
+  const [draftLoading, setDraftLoading] = useState(false);
   const [editMode, setEditMode] = useState(false) // Handle edit mode toggle
   const storedUser = localStorage.getItem("user")
   const user = JSON.parse(storedUser)
@@ -63,7 +66,7 @@ const EmployeeEdit = () => {
           profile_image: data.profile_image || "",
         })
       } catch (error) {
-        AlertType("error");
+        setAlertType("error");
         console.error("Error fetching employee:", error);
         setAlertMessage("Failed to load employee data.");
       }
@@ -110,9 +113,9 @@ const EmployeeEdit = () => {
   };
 
   const handlePublish = async () => {
-    const newStatus = (user?.roles === 'administrator' && status === 'pending') ? 'published' : status;
+    const employeeStatus = (user?.roles === 'administrator' && status === 'pending') ? 'published' : status;
     setLoading(true);
-    await handleSubmit(newStatus);
+    await handleSubmit(employeeStatus);
   };
 
   const handleSubmit = async (status) => {
