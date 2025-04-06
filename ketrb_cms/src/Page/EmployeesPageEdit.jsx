@@ -25,11 +25,11 @@ const EmployeeEdit = () => {
     role_type: "",
     email: "",
     phone: "",
-    status: "",
     hire_date: new Date(),
     profile_image: null,
     profile_image_url: "",
   });
+  const [status, setStatus] = useState("");
   const [alertType, setAlertType] = useState("success");
   const [alertMessage, setAlertMessage] = useState("")
   const [loading, setLoading] = useState(false)
@@ -54,6 +54,7 @@ const EmployeeEdit = () => {
         const data = await response.json()
         setEmployee(data)
         setAuthor(data.author);
+        setStatus(data.status);
         setFormData({
           first_name: data.first_name,
           last_name: data.last_name,
@@ -62,7 +63,6 @@ const EmployeeEdit = () => {
           role_type: data.role_type,
           email: data.email,
           phone: data.phone || "",
-          status: data.status,
           hire_date: data.hire_date ? new Date(data.hire_date) : new Date(),
           profile_image: data.profile_image || "",
         })
