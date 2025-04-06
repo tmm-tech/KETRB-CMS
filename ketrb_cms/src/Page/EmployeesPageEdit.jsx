@@ -29,7 +29,8 @@ const EmployeeEdit = () => {
     hire_date: new Date(),
     profile_image: null,
     profile_image_url: "",
-  })
+  });
+  const [alertType, setAlertType] = useState("success");
   const [alertMessage, setAlertMessage] = useState("")
   const [loading, setLoading] = useState(false)
   const [editMode, setEditMode] = useState(false) // Handle edit mode toggle
@@ -135,13 +136,16 @@ const EmployeeEdit = () => {
       })
 
       if (response.ok) {
+        setAlertType("success");
         setAlertMessage("Employee updated successfully!")
         window.location.href = "/employees"
       } else {
+        setAlertType("error")
         const errorData = await response.json()
         setAlertMessage(errorData.message || "Failed to update employee.")
       }
     } catch (error) {
+      setAlertType("error");
       console.error("Error updating employee:", error)
       setAlertMessage("An error occurred while updating the employee.")
     } finally {
@@ -198,8 +202,10 @@ const EmployeeEdit = () => {
               <div className="grid grid-cols-1 gap-8">
                 {alertMessage && (
                   <div className="fixed top-0 left-0 w-full z-50">
-                    <Alert className="max-w-md mx-auto mt-4">
-                      <AlertTitle>Notification</AlertTitle>
+                    <Alert
+                      className={`max-w-md mx-auto mt-4 ${alertType === "error" ? "bg-red-100 border-red-500" : "bg-green-100 border-green-500"}`}
+                    >
+                      <AlertTitle>{alertType === "error" ? "Error" : "Success"}</AlertTitle>
                       <AlertDescription>{alertMessage}</AlertDescription>
                     </Alert>
                   </div>

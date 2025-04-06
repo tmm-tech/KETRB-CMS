@@ -31,6 +31,7 @@ const CareerEdit = () => {
         application_deadline: "",
         posted_date: "",
     });
+    const [alertType, setAlertType] = useState("success");
     const [alertMessage, setAlertMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const [isDraft, setIsDraft] = useState(false);
@@ -119,12 +120,15 @@ const CareerEdit = () => {
             });
 
             if (response.ok) {
+                setAlertType("success");
                 setAlertMessage("Career posting updated successfully!");
                 window.location.href = '/careers';
             } else {
+                setAlertType("error");
                 setAlertMessage("Failed to update career posting.");
             }
         } catch (error) {
+            setAlertType("error");
             console.error('Error updating career posting:', error);
             setAlertMessage("An error occurred while updating the career posting.");
         } finally {
@@ -155,8 +159,10 @@ const CareerEdit = () => {
                             <div className="grid grid-cols-1 gap-8">
                                 {alertMessage && (
                                     <div className="fixed top-0 left-0 w-full z-50">
-                                        <Alert className="max-w-md mx-auto mt-4">
-                                            <AlertTitle>Notification</AlertTitle>
+                                        <Alert
+                                            className={`max-w-md mx-auto mt-4 ${alertType === "error" ? "bg-red-100 border-red-500" : "bg-green-100 border-green-500"}`}
+                                        >
+                                            <AlertTitle>{alertType === "error" ? "Error" : "Success"}</AlertTitle>
                                             <AlertDescription>{alertMessage}</AlertDescription>
                                         </Alert>
                                     </div>
@@ -185,10 +191,10 @@ const CareerEdit = () => {
                                                         <Badge
                                                             variant="outline"
                                                             className={`capitalize ${formData.status === "published"
-                                                                    ? "bg-green-500 text-green-50"
-                                                                    : formData.status === "pending"
-                                                                        ? "bg-yellow-500 text-yellow-50"
-                                                                        : "bg-gray-500 text-gray-50"
+                                                                ? "bg-green-500 text-green-50"
+                                                                : formData.status === "pending"
+                                                                    ? "bg-yellow-500 text-yellow-50"
+                                                                    : "bg-gray-500 text-gray-50"
                                                                 }`}
                                                         >
                                                             {formData.status}

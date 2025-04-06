@@ -11,6 +11,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 import { Label } from "../Component/label";
 
+
 const CareerAddPage = () => {
   const [author, setAuthor] = useState("");
   const [isDraft, setIsDraft] = useState(true);
@@ -86,12 +87,15 @@ const CareerAddPage = () => {
       });
 
       if (response.ok) {
+        setAlertType("success");
         setAlertMessage("Career Post added successfully!");
         window.location.href = '/careers';
       } else {
+        setAlertType("error");
         setAlertMessage("Failed to add career posting.");
       }
     } catch (error) {
+      setAlertType("error");
       console.error("Error adding career posting:", error);
       setAlertMessage("An error occurred while adding the career posting.");
     } finally {
