@@ -21,11 +21,11 @@ const EmployeeAddPage = () => {
     email: "",
     phone: "",
     hire_date: "",
-    profile_image: "",
+    profile_image: null,
+    profile_image_url: "",
     status: "",
     author: "",
   });
-  const [profile_url, setProfile_url] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isDraft, setIsDraft] = useState(true);
   const [draftloading, setdraftLoading] = useState(false);
@@ -59,13 +59,11 @@ const EmployeeAddPage = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     if (file) {
-
       setFormData((prevState) => ({
         ...prevState,
         profile_image: file,
+        profile_image_url: URL.createObjectURL(file),
       }))
-      const url = URL.createObjectURL(file);
-      setProfile_url(url);
     }
     else {
       setAlertType("error")
@@ -94,13 +92,10 @@ const EmployeeAddPage = () => {
           ...formData,
           status: estatus,
           author: author,
-          profile_image: formData.profile_image,
           user_id: user_id,
           created_at: new Date().toISOString(),
         }),
       });
-      console.log('Profile Image URL:', profile_image_url);
-      console.log('Profile Image URL:', formData.profile_image);
       if (response.ok) {
         setAlertType("success")
         setAlertMessage("Employee added successfully.")
@@ -290,10 +285,10 @@ const EmployeeAddPage = () => {
                 <div className="space-y-2">
                   <Label htmlFor="profile_image">Profile Image</Label>
                   <div className="flex items-center gap-4">
-                    {profile_url && (
+                    {formData.profile_image_url && (
                       <div className="h-20 w-20 overflow-hidden rounded-full">
                         <img
-                          src={profile_url}
+                          src={formData.profile_image_url}
                           alt="Profile preview"
                           className="h-full w-full object-cover"
                         />
