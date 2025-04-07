@@ -94,6 +94,7 @@ const EmployeeAddPage = () => {
           ...formData,
           status: estatus,
           author: author,
+          profile_image: formData.profile_image,
           user_id: user_id,
           created_at: new Date().toISOString(),
         }),

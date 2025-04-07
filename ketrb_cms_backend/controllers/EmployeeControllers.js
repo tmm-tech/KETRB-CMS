@@ -68,9 +68,7 @@ module.exports = {
   // Update employee details
   UpdateEmployee: async (req, res) => {
     const { id } = req.params;
-    console.log('ID:', id);
     const { first_name, last_name, job_title, department, role_type, email, phone, hire_date, status, author, role, user_id, created_at } = req.body;
-    console.log('Data:', req.body);
     const profileImage = req.file;
 
     try {
