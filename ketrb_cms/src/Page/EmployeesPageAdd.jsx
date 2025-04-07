@@ -64,6 +64,7 @@ const EmployeeAddPage = () => {
         profile_image: file,
         profile_image_url: URL.createObjectURL(file),
       }))
+      console.log("Image file selected:", file);
     }
     else {
       setAlertType("error")
@@ -97,11 +98,12 @@ const EmployeeAddPage = () => {
           created_at: new Date().toISOString(),
         }),
       });
+      console.log("Form data being sent:", formData);
       if (response.ok) {
         setAlertType("success")
         setAlertMessage("Employee added successfully.")
 
-        window.location.href = '/employees';
+        // window.location.href = '/employees';
       } else {
         const errorData = await response.json()
         setAlertType("error")
