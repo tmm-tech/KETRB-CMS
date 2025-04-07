@@ -99,7 +99,8 @@ const EmployeeAddPage = () => {
           created_at: new Date().toISOString(),
         }),
       });
-
+      console.log('Profile Image URL:', profile_image_url);
+      console.log('Profile Image URL:', formData.profile_image);
       if (response.ok) {
         setAlertType("success")
         setAlertMessage("Employee added successfully.")
