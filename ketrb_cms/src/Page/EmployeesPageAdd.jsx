@@ -64,7 +64,7 @@ const EmployeeAddPage = () => {
         profile_image: file,
         profile_image_url: URL.createObjectURL(file),
       }))
-      console.log("Image file selected:", file);
+
     }
     else {
       setAlertType("error")
@@ -84,19 +84,26 @@ const EmployeeAddPage = () => {
 
   const handleSubmit = async (estatus) => {
     try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("first_name", formData.first_name);
+      formDataToSend.append("last_name", formData.last_name);
+      formDataToSend.append("job_title", formData.job_title);
+      formDataToSend.append("department", formData.department);
+      formDataToSend.append("role_type", formData.role_type);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("phone", formData.phone);
+      formDataToSend.append("hire_date", formData.hire_date);
+      formDataToSend.append("status", estatus);
+      formDataToSend.append("author", author);
+      formDataToSend.append("user_id", user_id);
+      formDataToSend.append("created_at", new Date().toISOString());
+      formDataToSend.append("profile_image", formData.profile_image); // important
       const response = await fetch("https://ketrb-backend.onrender.com/employees/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          ...formData,
-          status: estatus,
-          author: author,
-          profile_image: formData.profile_image,
-          user_id: user_id,
-          created_at: new Date().toISOString(),
-        }),
+        body: formDataToSend,
       });
       console.log("Form data being sent:", formData);
       if (response.ok) {
