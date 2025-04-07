@@ -4,13 +4,12 @@ const cloudinary = require('cloudinary').v2;
 module.exports = {
   // Add a new employee
   AddEmployee: async (req, res) => {
-    const { first_name, last_name, job_title, department, role_type, email, phone, hire_date, status, author, user_id, created_at } = req.body;
-    const profileImage = req.file;
-    console.log('Profile Image URL:', profileImage);
+    const { first_name, last_name, job_title, department, role_type, email, phone, hire_date, status, author, user_id, created_at, profile_image} = req.body;
+    console.log('Profile Image URL:', profile_image);
     try {
       let imagePath = null;
-      if (profileImage) {
-        const cloudinaryResult = await cloudinary.uploader.upload(profileImage.path, { folder: 'employees' });
+      if (profile_image) {
+        const cloudinaryResult = await cloudinary.uploader.upload(profile_image.path, { folder: 'employees' });
         imagePath = cloudinaryResult.secure_url;
       }
 

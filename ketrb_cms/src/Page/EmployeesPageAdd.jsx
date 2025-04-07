@@ -21,10 +21,10 @@ const EmployeeAddPage = () => {
     email: "",
     phone: "",
     hire_date: "",
-    profile_image: null,
-    profile_image_url: "",
     status: "",
     author: "",
+    profile_image: null,
+    profile_image_url: "",
   });
   const [loading, setLoading] = useState(false);
   const [isDraft, setIsDraft] = useState(true);
@@ -93,7 +93,7 @@ const EmployeeAddPage = () => {
           ...formData,
           status: estatus,
           author: author,
-          profileImage: formData.profile_image,
+          profile_image: formData.profile_image,
           user_id: user_id,
           created_at: new Date().toISOString(),
         }),
