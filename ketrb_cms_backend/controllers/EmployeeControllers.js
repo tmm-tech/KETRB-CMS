@@ -6,7 +6,7 @@ module.exports = {
   AddEmployee: async (req, res) => {
     const { first_name, last_name, job_title, department, role_type, email, phone, hire_date, status, author, user_id, created_at } = req.body;
     const profileImage = req.file;
-console.log('Profile Image URL:', profileImage);
+    console.log('Profile Image URL:', profileImage);
     try {
       let imagePath = null;
       if (profileImage) {
