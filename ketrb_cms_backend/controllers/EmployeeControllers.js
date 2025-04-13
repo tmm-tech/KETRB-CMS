@@ -4,7 +4,7 @@ const cloudinary = require('cloudinary').v2;
 module.exports = {
   // Add a new employee
   AddEmployee: async (req, res) => {
-    const { first_name, last_name, job_title, department, role_type, email, phone, hire_date, status, author, user_id, created_at,  profile_image} = req.body;
+    const {first_name, last_name, job_title, department, role_type, email, phone, hire_date, status, author, user_id, created_at} = req.body;
     const profileImage = req.file;
     console.log('Profile Image URL:', profileImage);
     try {
