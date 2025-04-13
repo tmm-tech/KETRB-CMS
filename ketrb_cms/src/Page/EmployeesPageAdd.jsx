@@ -99,9 +99,6 @@ const EmployeeAddPage = () => {
       formDataToSend.append("profile_image", formData.profile_image); // important
       const response = await fetch("https://ketrb-backend.onrender.com/employees/add", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: formDataToSend,
       });
       console.log("Form data being sent:", formData);
