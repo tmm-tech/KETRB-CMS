@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "../Component/input";
-import { useParams, useNavigate } from "react-router-dom";
+import {useParams, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   Download,
@@ -41,7 +41,7 @@ const ApplicationDetailPage = () => {
   const [notes, setNotes] = useState("")
   const [showRejectDialog, setShowRejectDialog] = useState(false)
   const [rejectReason, setRejectReason] = useState("")
-  const [applications, setApplications] = useState(null)
+  const [application, setApplications] = useState(null)
   const [showInterviewDialog, setShowInterviewDialog] = useState(false)
   const [interviewDate, setInterviewDate] = useState("")
   const [interviewTime, setInterviewTime] = useState("")
