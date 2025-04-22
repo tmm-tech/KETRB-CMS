@@ -320,7 +320,8 @@ module.exports = {
       require_sponsorship,
       consent_to_process,
       consent_to_contact,
-      created_at
+      created_at,
+      careerid
     } = req.body;
     const resumeFile = req.file;
 
@@ -338,14 +339,14 @@ module.exports = {
           current_job_title, years_of_experience, highest_education, field_of_study,
           school_name, graduation_year, referral_source, other_referral_source,
           willing_to_relocate, available_start_date, salary_expectation,
-          authorized_to_work, require_sponsorship, consent_to_process, consent_to_contact, created_at
+          authorized_to_work, require_sponsorship, consent_to_process, consent_to_contact, created_at,careerid
         ) VALUES (
           $1, $2, $3, $4, $5, $6, $7, $8, $9,
           $10, $11, $12, $13, $14,
           $15, $16, $17, $18,
           $19, $20, $21, $22,
           $23, $24, $25,
-          $26, $27, $28, $29, $30
+          $26, $27, $28, $29, $30, $31
         ) RETURNING *`,
         [
           first_name, last_name, email, phone, address, city, state, zip_code, country,
@@ -353,7 +354,7 @@ module.exports = {
           current_job_title, years_of_experience, highest_education, field_of_study,
           school_name, graduation_year, referral_source, other_referral_source,
           willing_to_relocate, available_start_date, salary_expectation,
-          authorized_to_work, require_sponsorship, consent_to_process, consent_to_contact, created_at
+          authorized_to_work, require_sponsorship, consent_to_process, consent_to_contact, created_at,careerid
         ]
       );
       res.status(201).json({ message: 'Job application submitted successfully', application: result.rows[0] });
