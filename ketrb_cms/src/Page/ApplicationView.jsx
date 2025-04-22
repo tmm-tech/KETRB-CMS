@@ -41,73 +41,42 @@ const ApplicationDetailPage = () => {
   const [notes, setNotes] = useState("")
   const [showRejectDialog, setShowRejectDialog] = useState(false)
   const [rejectReason, setRejectReason] = useState("")
+  const [applications, setApplications] = useState(null)
   const [showInterviewDialog, setShowInterviewDialog] = useState(false)
   const [interviewDate, setInterviewDate] = useState("")
   const [interviewTime, setInterviewTime] = useState("")
   const [interviewType, setInterviewType] = useState("in-person")
-
-  // Mock application data
-  const application = {
-    id: "APP-001",
-    status: "reviewed",
-    appliedDate: "2023-03-15",
-
-    // Personal Information
-    firstName: "John",
-    lastName: "Smith",
-    email: "john.smith@example.com",
-    phone: "+254 712 345 678",
-    address: "123 Moi Avenue",
-    city: "Nairobi",
-    state: "Nairobi County",
-    zipCode: "00100",
-    country: "Kenya",
-
-    // Professional Information
-    resumeUrl: "#",
-    coverLetter:
-      "I am writing to express my interest in the Senior Engineering Technology Officer position at KETRB. With over 8 years of experience in engineering technology and a strong background in regulatory frameworks, I believe I am well-qualified for this role.",
-    linkedinUrl: "https://linkedin.com/in/johnsmith",
-    portfolioUrl: "https://johnsmith.com",
-    currentEmployer: "ABC Engineering Ltd",
-    currentJobTitle: "Engineering Technology Specialist",
-    yearsOfExperience: "5-10 years",
-
-    // Education
-    highestEducation: "Masters Degree",
-    fieldOfStudy: "Mechanical Engineering",
-    schoolName: "University of Nairobi",
-    graduationYear: "2015",
-
-    // Job Details
-    position: "Senior Engineering Technology Officer",
-    department: "Engineering Registration",
-    location: "Nairobi",
-    willingToRelocate: "Yes",
-    availableStartDate: "2023-04-15",
-    salaryExpectation: "KES 150,000 - 180,000",
-
-    // Legal Information
-    authorizedToWork: true,
-    requireSponsorship: false,
-
-    // Application History
-    history: [
-      {
-        date: "2023-03-15 09:23 AM",
-        action: "Application Submitted",
-        user: "System",
-        notes: "Application received through online portal",
-      },
-      {
-        date: "2023-03-16 02:45 PM",
-        action: "Application Reviewed",
-        user: "Jane Doe (HR)",
-        notes: "Initial screening completed. Candidate meets basic qualifications.",
-      },
-    ],
-  }
-
+  // Add this inside the useEffect after fetchCareers
+    const fetchApplications = async () => {
+      try {
+        const response = await fetch("https://ketrb-backend.onrender.com/careers/applications/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json()
+        setApplications(data)
+      } catch (error) {
+        console.error("Error fetching applications:", error)
+      }
+    }
+  
+    // Modify the useEffect to fetch both careers and applications
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          await Promise.all(fetchApplications())
+        } catch (error) {
+          console.error("Error fetching data:", error)
+        } finally {
+          setLoading(false)
+        }
+      }
+  
+      fetchData()
+    }, [])
+  
   // Format date
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" }
@@ -166,7 +135,7 @@ const ApplicationDetailPage = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <div className="flex items-center">
-          <Button variant="ghost" size="sm" className="mr-2" onClick={() => navigate("/admin/applications")}>
+          <Button variant="ghost" size="sm" className="mr-2" onClick={() => navigate("/careers")}>
             <ArrowLeft className="h-4 w-4 mr-1" />
             Back
           </Button>
@@ -199,10 +168,10 @@ const ApplicationDetailPage = () => {
           <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h2 className="text-2xl font-bold text-gray-800">
-                {application.firstName} {application.lastName}
+                {application.first_name} {application.last_name}
               </h2>
               <p className="text-gray-600 mb-2">
-                {application.currentJobTitle} at {application.currentEmployer}
+                {application.current_job_title} at {application.current_employer}
               </p>
 
               <div className="flex flex-col gap-2 mt-4">
@@ -231,25 +200,25 @@ const ApplicationDetailPage = () => {
               <div className="flex items-center text-gray-600">
                 <Briefcase className="h-4 w-4 mr-2" />
                 <span>
-                  Applied for: <strong>{application.position}</strong>
+                  Applied for: <strong>{application.job_title}</strong>
                 </span>
               </div>
               <div className="flex items-center text-gray-600">
                 <Calendar className="h-4 w-4 mr-2" />
                 <span>
-                  Applied on: <strong>{formatDate(application.appliedDate)}</strong>
+                  Applied on: <strong>{formatDate(application.created_at)}</strong>
                 </span>
               </div>
               <div className="flex items-center text-gray-600">
                 <GraduationCap className="h-4 w-4 mr-2" />
                 <span>
-                  {application.highestEducation} in {application.fieldOfStudy}
+                  {application.highest_education} in {application.field_of_study}
                 </span>
               </div>
               <div className="flex items-center text-gray-600">
                 <Clock className="h-4 w-4 mr-2" />
                 <span>
-                  Experience: <strong>{application.yearsOfExperience}</strong>
+                  Experience: <strong>{application.years_of_experience}</strong>
                 </span>
               </div>
             </div>
@@ -295,7 +264,7 @@ const ApplicationDetailPage = () => {
                 <div>
                   <p className="text-sm text-gray-500">Full Name</p>
                   <p className="font-medium">
-                    {application.firstName} {application.lastName}
+                    {application.first_name} {application.last_name}
                   </p>
                 </div>
                 <div>
@@ -319,20 +288,20 @@ const ApplicationDetailPage = () => {
               <div className="space-y-4">
                 <div>
                   <p className="text-sm text-gray-500">Current Employer</p>
-                  <p className="font-medium">{application.currentEmployer}</p>
+                  <p className="font-medium">{application.current_employer}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Current Job Title</p>
-                  <p className="font-medium">{application.currentJobTitle}</p>
+                  <p className="font-medium">{application.current_job_title}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Years of Experience</p>
-                  <p className="font-medium">{application.yearsOfExperience}</p>
+                  <p className="font-medium">{application.years_of_experience}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">LinkedIn Profile</p>
                   <a
-                    href={application.linkedinUrl}
+                    href={application.linkedinurl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-medium text-[#5b92e5] hover:underline flex items-center"
@@ -345,7 +314,7 @@ const ApplicationDetailPage = () => {
                   <div>
                     <p className="text-sm text-gray-500">Portfolio Website</p>
                     <a
-                      href={application.portfolioUrl}
+                      href={application.portfoliourl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="font-medium text-[#5b92e5] hover:underline flex items-center"
@@ -363,19 +332,19 @@ const ApplicationDetailPage = () => {
               <div className="space-y-4">
                 <div>
                   <p className="text-sm text-gray-500">Highest Level of Education</p>
-                  <p className="font-medium">{application.highestEducation}</p>
+                  <p className="font-medium">{application.highest_education}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Field of Study</p>
-                  <p className="font-medium">{application.fieldOfStudy}</p>
+                  <p className="font-medium">{application.field_of_study}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">School/University</p>
-                  <p className="font-medium">{application.schoolName}</p>
+                  <p className="font-medium">{application.school_name}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Graduation Year</p>
-                  <p className="font-medium">{application.graduationYear}</p>
+                  <p className="font-medium">{application.graduation_year}</p>
                 </div>
               </div>
 
@@ -383,7 +352,7 @@ const ApplicationDetailPage = () => {
               <div className="space-y-4">
                 <div>
                   <p className="text-sm text-gray-500">Position Applied For</p>
-                  <p className="font-medium">{application.position}</p>
+                  <p className="font-medium">{application.job_title}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Department</p>
@@ -395,15 +364,15 @@ const ApplicationDetailPage = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Willing to Relocate</p>
-                  <p className="font-medium">{application.willingToRelocate}</p>
+                  <p className="font-medium">{application.willing_to_relocate}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Available Start Date</p>
-                  <p className="font-medium">{formatDate(application.availableStartDate)}</p>
+                  <p className="font-medium">{formatDate(application.available_start_date)}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Salary Expectation</p>
-                  <p className="font-medium">{application.salaryExpectation}</p>
+                  <p className="font-medium">{application.salary_expectation}</p>
                 </div>
               </div>
 
@@ -411,11 +380,11 @@ const ApplicationDetailPage = () => {
               <div className="space-y-4">
                 <div>
                   <p className="text-sm text-gray-500">Authorized to Work</p>
-                  <p className="font-medium">{application.authorizedToWork ? "Yes" : "No"}</p>
+                  <p className="font-medium">{application.authorized_to_work ? "Yes" : "No"}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Requires Sponsorship</p>
-                  <p className="font-medium">{application.requireSponsorship ? "Yes" : "No"}</p>
+                  <p className="font-medium">{application.require_sponsorship ? "Yes" : "No"}</p>
                 </div>
               </div>
             </div>
@@ -443,7 +412,7 @@ const ApplicationDetailPage = () => {
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Cover Letter</h3>
               <div className="border border-gray-200 rounded-lg p-6 bg-gray-50 min-h-[400px]">
-                <p className="text-gray-700 whitespace-pre-line">{application.coverLetter}</p>
+                <p className="text-gray-700 whitespace-pre-line">{application.cover_letter}</p>
               </div>
             </div>
           </div>

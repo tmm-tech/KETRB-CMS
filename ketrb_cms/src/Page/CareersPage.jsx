@@ -204,7 +204,7 @@ const CareersPage = () => {
 
   // Add these handler functions before the return statement
   const handleViewApplication = (id) => {
-    navigate(`/career/edit career/${id}`)
+    navigate(`/careers/view application/${id}`)
   }
 
   const handleApplicationStatus = async (id, status) => {
@@ -598,7 +598,7 @@ const CareersPage = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
                             <h3 className="text-sm font-medium text-gray-500">Applicant Name</h3>
-                            <p className="mt-1">{application.applicant_name}</p>
+                            <p className="mt-1"> {`${application.first_name} ${application.last_name}`}</p>
                           </div>
                           <div>
                             <h3 className="text-sm font-medium text-gray-500">Email</h3>

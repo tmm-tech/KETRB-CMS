@@ -367,7 +367,7 @@ module.exports = {
   // Get all job applications
   GetAllApplications: async (req, res) => {
     try {
-      const result = await query('SELECT ca.*, c.title AS job_title FROM  career_applications ca LEFT JOIN careers c ON ca.career_id = c.id ORDER BY applied_date DESC');
+      const result = await query('SELECT ca.*, c.title,c.department, c.location AS job_title FROM  career_applications ca LEFT JOIN careers c ON ca.career_id = c.id ORDER BY applied_date DESC');
       res.status(200).json(result.rows);
     } catch (error) {
       console.error('Error fetching job applications:', error);
