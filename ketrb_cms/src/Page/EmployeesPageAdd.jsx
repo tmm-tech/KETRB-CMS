@@ -304,7 +304,13 @@ const EmployeeAddPage = () => {
                     {formData.profile_image_url && (
                       <div className="h-20 w-20 overflow-hidden rounded-full">
                         <img
-                          src={formData.profile_image_url}
+                          src={
+                            formData.profile_image_url
+                              ? formData.profile_image_url
+                              : formData.gender === "female"
+                                ? "https://img.icons8.com/ios-filled/100/cccccc/user-female-circle.png"
+                                : "https://img.icons8.com/ios-filled/100/cccccc/user-male-circle.png"
+                          }
                           alt="Profile preview"
                           className="h-full w-full object-cover"
                         />

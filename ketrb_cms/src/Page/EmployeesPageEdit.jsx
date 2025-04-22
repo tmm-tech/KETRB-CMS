@@ -250,7 +250,13 @@ const EmployeeEdit = () => {
                         <div className="flex-shrink-0">
                           <div className="h-32 w-32 overflow-hidden rounded-full">
                             <img
-                              src={formData.profile_image}
+                              src={
+                                formData.profile_image_url
+                                  ? formData.profile_image_url
+                                  : formData.gender === "female"
+                                    ? "https://img.icons8.com/ios-filled/100/cccccc/user-female-circle.png"
+                                    : "https://img.icons8.com/ios-filled/100/cccccc/user-male-circle.png"
+                              }
                               alt={`${formData.first_name} ${formData.last_name}`}
                               className="h-full w-full object-cover"
                             />
