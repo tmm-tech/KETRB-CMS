@@ -63,6 +63,7 @@ const EmployeeEdit = () => {
           department: data.department,
           role_type: data.role_type,
           email: data.email,
+          gender: data.gender,
           phone: data.phone || "",
           hire_date: data.hire_date ? new Date(data.hire_date) : new Date(),
           profile_image: data.profile_image || "",
