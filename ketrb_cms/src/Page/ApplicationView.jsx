@@ -338,7 +338,7 @@ const ApplicationDetailPage = () => {
               <div className="space-y-4">
                 <div>
                   <p className="text-sm text-gray-500">Highest Level of Education</p>
-                  <p className="font-medium">{application.highest_education}</p>
+                  <p className="font-medium capitalize">{application.highest_education}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Field of Study</p>
