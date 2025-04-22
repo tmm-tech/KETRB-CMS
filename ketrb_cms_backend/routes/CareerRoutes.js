@@ -49,8 +49,6 @@ CareerRoutes.get('/careers', GetPublishedCareers);
 // Get all applications
 CareerRoutes.get('/applications', GetAllApplications);
 
-// Get JOB application by ID
-CareerRoutes.get('/applications/:id', GetApplicationById);
 // Apply for  a job
 CareerRoutes.post('/apply', upload.single('resume'), ApplyForJob);
 
@@ -71,5 +69,8 @@ CareerRoutes.delete('/delete/:id', DeleteCareer);
 
 // Get a specific career post by ID
 CareerRoutes.get('/:id', GetCareerById);
+
+// Get JOB application by ID
+CareerRoutes.get('/applications/:id', GetApplicationById);
 
 module.exports = CareerRoutes;
