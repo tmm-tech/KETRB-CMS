@@ -33,12 +33,14 @@ import {
   DialogTitle,
 } from "../Component/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../Component/select";
+import Loading from "../Component/Loading";
 
 const ApplicationDetailPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState("details")
-  const [notes, setNotes] = useState("")
+  const [notes, setNotes] = useState("");
+  const [loading, setLoading] = useState(true);
   const [showRejectDialog, setShowRejectDialog] = useState(false)
   const [rejectReason, setRejectReason] = useState("")
   const [application, setApplications] = useState(null)
@@ -130,6 +132,10 @@ const ApplicationDetailPage = () => {
     }
   }
 
+    if (loading) {
+      return <LoadingPage />
+    }
+    
   return (
     <div className="container px-4 mx-auto py-8">
       {/* Header */}
