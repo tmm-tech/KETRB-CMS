@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Input } from "../Component/input";
-import {useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   Download,
@@ -49,36 +49,36 @@ const ApplicationDetailPage = () => {
   const [interviewTime, setInterviewTime] = useState("")
   const [interviewType, setInterviewType] = useState("in-person")
   // Add this inside the useEffect after fetchCareers
-    const fetchApplications = async () => {
+  const fetchApplications = async () => {
+    try {
+      const response = await fetch(`https://ketrb-backend.onrender.com/careers/applications/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json()
+      setApplications(data)
+    } catch (error) {
+      console.error("Error fetching applications:", error)
+    }
+  }
+
+  // Modify the useEffect to fetch both careers and applications
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(`https://ketrb-backend.onrender.com/careers/applications/${id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json()
-        setApplications(data)
+        await fetchApplications();
       } catch (error) {
-        console.error("Error fetching applications:", error)
+        console.error("Error fetching data:", error)
+      } finally {
+        setLoading(false)
       }
     }
-  
-    // Modify the useEffect to fetch both careers and applications
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          await Promise.all(fetchApplications())
-        } catch (error) {
-          console.error("Error fetching data:", error)
-        } finally {
-          setLoading(false)
-        }
-      }
-  
-      fetchData()
-    }, [])
-  
+
+    fetchData()
+  }, [])
+
   // Format date
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" }
@@ -132,9 +132,9 @@ const ApplicationDetailPage = () => {
     }
   }
 
-    if (loading) {
-      return <LoadingPage />
-    }
+  if (loading) {
+    return <LoadingPage />
+  }
 
   return (
     <div className="container px-4 mx-auto py-8">
@@ -166,8 +166,8 @@ const ApplicationDetailPage = () => {
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex-shrink-0">
             <div className="h-24 w-24 rounded-full bg-[#5b92e5]/10 flex items-center justify-center text-[#5b92e5] text-3xl font-medium">
-              {application.firstName[0]}
-              {application.lastName[0]}
+              {application.first_name?.[0]}
+              {application.last_name?.[0]}
             </div>
           </div>
 

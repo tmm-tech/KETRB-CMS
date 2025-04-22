@@ -367,17 +367,16 @@ module.exports = {
   // Get all job applications
   GetAllApplications: async (req, res) => {
     try {
-      const result = await query('SELECT ca.*, c.title,c.department, c.location AS job_title FROM  career_applications ca LEFT JOIN careers c ON ca.career_id = c.id ORDER BY applied_date DESC');
+      const result = await query('SELECT ca.*, c.title AS job_title FROM  career_applications ca LEFT JOIN careers c ON ca.career_id = c.id ORDER BY applied_date DESC');
       res.status(200).json(result.rows);
     } catch (error) {
       console.error('Error fetching job applications:', error);
       res.status(500).json({ message: 'Error fetching job applications.' });
     }
   },
-  // Get all job applications
   // Get application by ID
   GetApplicationById: async (req, res) => {
-    const { id } = req.params; // Ensure you extract `id` from req.params
+    const { id } = req.params;
 
     try {
       const result = await query(`
@@ -392,7 +391,7 @@ module.exports = {
       ORDER BY applied_date DESC
     `, [id]);
 
-      res.status(200).json(result.rows[0]); // Use `rows[0]` if expecting a single record
+      res.status(200).json(result.rows[0]);
     } catch (error) {
       console.error('Error fetching job application by ID:', error);
       res.status(500).json({ message: 'Error fetching job application.' });
