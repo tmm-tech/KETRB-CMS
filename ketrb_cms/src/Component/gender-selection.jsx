@@ -33,18 +33,6 @@ const GenderSelection = ({ value, onChange }) => {
             Female
           </Label>
         </div>
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="other" id="gender-other" />
-          <Label htmlFor="gender-other" className="font-normal">
-            Other
-          </Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="prefer_not_to_say" id="gender-prefer-not" />
-          <Label htmlFor="gender-prefer-not" className="font-normal">
-            Prefer not to say
-          </Label>
-        </div>
       </RadioGroup>
 
       {showOtherInput && (
