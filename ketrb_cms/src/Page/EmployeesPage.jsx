@@ -479,11 +479,17 @@ const EmployeesPage = () => {
                             </div>
                             {employee.profile_image && (
                               <div className="h-12 w-12 overflow-hidden rounded-full">
-                                <img
-                                  src={employee.profile_image || "/placeholder.svg"}
-                                  alt={`${employee.first_name} ${employee.last_name}`}
-                                  className="h-full w-full object-cover"
-                                />
+                               <img
+                                src={
+                                  employee.profile_image
+                                    ? employee.profile_image
+                                    : employee.gender === "female"
+                                      ? "https://img.icons8.com/ios-filled/100/cccccc/user-female-circle.png"
+                                      : "https://img.icons8.com/ios-filled/100/cccccc/user-male-circle.png"
+                                }
+                                alt={`${employee.first_name} ${employee.last_name}`}
+                                className="h-full w-full object-cover"
+                              />
                               </div>
                             )}
                           </div>
@@ -507,12 +513,7 @@ const EmployeesPage = () => {
                               <p className="mt-1">{new Date(employee.hire_date).toLocaleDateString()}</p>
                             </div>
                           </div>
-                          {employee.bio && (
-                            <div className="mt-4">
-                              <h3 className="text-sm font-medium text-gray-500">Bio</h3>
-                              <p className="mt-1 line-clamp-3">{employee.bio}</p>
-                            </div>
-                          )}
+                      
                         </CardContent>
                         <CardFooter>
                           <div className="flex items-center justify-between gap-2 w-full">
@@ -520,7 +521,7 @@ const EmployeesPage = () => {
                               <Badge variant="outline" className="bg-purple-500 text-purple-50">
                                 Leadership
                               </Badge>
-                              <Badge variant="outline" className="bg-green-500 text-green-50">
+                              <Badge variant="outline" className="bg-green-500 text-green-50 capitalize">
                                 {employee.department}
                               </Badge>
                             </div>
@@ -570,10 +571,16 @@ const EmployeesPage = () => {
                             {employee.profile_image && (
                               <div className="h-12 w-12 overflow-hidden rounded-full">
                                 <img
-                                  src={employee.profile_image || "/placeholder.svg"}
-                                  alt={`${employee.first_name} ${employee.last_name}`}
-                                  className="h-full w-full object-cover"
-                                />
+                                src={
+                                  employee.profile_image
+                                    ? employee.profile_image
+                                    : employee.gender === "female"
+                                      ? "https://img.icons8.com/ios-filled/100/cccccc/user-female-circle.png"
+                                      : "https://img.icons8.com/ios-filled/100/cccccc/user-male-circle.png"
+                                }
+                                alt={`${employee.first_name} ${employee.last_name}`}
+                                className="h-full w-full object-cover"
+                              />
                               </div>
                             )}
                           </div>
@@ -582,7 +589,7 @@ const EmployeesPage = () => {
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                               <h3 className="text-sm font-medium text-gray-500">Department</h3>
-                              <p className="mt-1">{employee.department}</p>
+                              <p className="mt-1 capitalize">{employee.department}</p>
                             </div>
                             <div>
                               <h3 className="text-sm font-medium text-gray-500">Email</h3>
@@ -597,12 +604,7 @@ const EmployeesPage = () => {
                               <p className="mt-1">{new Date(employee.hire_date).toLocaleDateString()}</p>
                             </div>
                           </div>
-                          {employee.bio && (
-                            <div className="mt-4">
-                              <h3 className="text-sm font-medium text-gray-500">Bio</h3>
-                              <p className="mt-1 line-clamp-3">{employee.bio}</p>
-                            </div>
-                          )}
+                    
                         </CardContent>
                         <CardFooter>
                           <div className="flex items-center justify-between gap-2 w-full">
@@ -610,7 +612,7 @@ const EmployeesPage = () => {
                               <Badge variant="outline" className="bg-blue-500 text-blue-50">
                                 Management
                               </Badge>
-                              <Badge variant="outline" className="bg-green-500 text-green-50">
+                              <Badge variant="outline" className="bg-green-500 text-green-50 capitalize">
                                 {employee.department}
                               </Badge>
                             </div>

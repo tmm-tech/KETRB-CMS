@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Label } from "../Component/label";
 import { Badge } from "../Component/badge";
 import { RadioGroup, RadioGroupItem } from "../Component/radio-group";
+import GenderSelection from "../Component/gender-selection";
 
 const EmployeeEdit = () => {
   const { id } = useParams() // Get employee ID from route params
@@ -407,6 +408,13 @@ const EmployeeEdit = () => {
                               value={formData.phone}
                               onChange={handleChange}
                               className="mt-1 block w-full"
+                            />
+                          </div>
+                          {/* Gender Selection Component */}
+                          <div>
+                            <GenderSelection
+                              value={formData.gender}
+                              onChange={(value) => handleSelectChange("gender", value)}
                             />
                           </div>
 

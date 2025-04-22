@@ -291,7 +291,37 @@ module.exports = {
 
   // Apply for a job
   ApplyForJob: async (req, res) => {
-    const { career_id, first_name, last_name, email, phone, cover_letter } = req.body;
+    const {
+      first_name,
+      last_name,
+      email,
+      phone,
+      address,
+      city,
+      state,
+      zip_code,
+      country,
+      cover_letter,
+      linkedin_url,
+      portfolio_url,
+      current_employer,
+      current_job_title,
+      years_of_experience,
+      highest_education,
+      field_of_study,
+      school_name,
+      graduation_year,
+      referral_source,
+      other_referral_source,
+      willing_to_relocate,
+      available_start_date,
+      salary_expectation,
+      authorized_to_work,
+      require_sponsorship,
+      consent_to_process,
+      consent_to_contact,
+      created_at
+    } = req.body;
     const resumeFile = req.file;
 
     try {
@@ -302,11 +332,30 @@ module.exports = {
       }
 
       const result = await query(
-        `INSERT INTO career_applications (career_id, first_name, last_name, email, phone, resume, cover_letter) 
-        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-        [career_id, first_name, last_name, email, phone, resumeUrl, cover_letter]
+        `INSERT INTO career_applications (
+          first_name, last_name, email, phone, address, city, state, zip_code, country,
+          resume, cover_letter, linkedin_url, portfolio_url, current_employer,
+          current_job_title, years_of_experience, highest_education, field_of_study,
+          school_name, graduation_year, referral_source, other_referral_source,
+          willing_to_relocate, available_start_date, salary_expectation,
+          authorized_to_work, require_sponsorship, consent_to_process, consent_to_contact, created_at
+        ) VALUES (
+          $1, $2, $3, $4, $5, $6, $7, $8, $9,
+          $10, $11, $12, $13, $14,
+          $15, $16, $17, $18,
+          $19, $20, $21, $22,
+          $23, $24, $25,
+          $26, $27, $28, $29, $30
+        ) RETURNING *`,
+        [
+          first_name, last_name, email, phone, address, city, state, zip_code, country,
+          resumeUrl, cover_letter, linkedin_url, portfolio_url, current_employer,
+          current_job_title, years_of_experience, highest_education, field_of_study,
+          school_name, graduation_year, referral_source, other_referral_source,
+          willing_to_relocate, available_start_date, salary_expectation,
+          authorized_to_work, require_sponsorship, consent_to_process, consent_to_contact, created_at
+        ]
       );
-
       res.status(201).json({ message: 'Job application submitted successfully', application: result.rows[0] });
     } catch (error) {
       console.error('Error applying for job:', error);
