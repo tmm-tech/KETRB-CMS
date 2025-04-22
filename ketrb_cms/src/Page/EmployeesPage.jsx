@@ -335,7 +335,6 @@ const EmployeesPage = () => {
                             </CardTitle>
                             <CardDescription>{employee.job_title}</CardDescription>
                           </div>
-                          {employee.profile_image && (
                             <div className="h-12 w-12 overflow-hidden rounded-full">
                               <img
                                 src={
@@ -349,7 +348,6 @@ const EmployeesPage = () => {
                                 className="h-full w-full object-cover"
                               />
                             </div>
-                          )}
                         </div>
                       </CardHeader>
                       <CardContent>
