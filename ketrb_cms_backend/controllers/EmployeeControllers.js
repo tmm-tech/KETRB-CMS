@@ -15,8 +15,8 @@ module.exports = {
       }
 
       const result = await query(
-        'INSERT INTO employee (first_name, last_name, job_title,gender, department, role_type, email, phone, hire_date, profile_image, author, status,created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
-        [first_name, last_name, job_title, department, role_type,gender, email, phone, hire_date, imagePath, author, status, created_at]
+        'INSERT INTO employee (first_name, last_name, job_title, department, role_type, email, phone, hire_date, profile_image, author, status,created_at, gender) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *',
+        [first_name, last_name, job_title, department, role_type, email, phone, hire_date, imagePath, author, status, created_at, gender]
       );
       // Notify admins for approval if status is pending
       if (status === 'pending') {
