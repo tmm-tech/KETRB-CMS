@@ -339,7 +339,7 @@ module.exports = {
           current_job_title, years_of_experience, highest_education, field_of_study,
           school_name, graduation_year, referral_source, other_referral_source,
           willing_to_relocate, available_start_date, salary_expectation,
-          authorized_to_work, require_sponsorship, consent_to_process, consent_to_contact, created_at,careerid
+          authorized_to_work, require_sponsorship, consent_to_process, consent_to_contact, created_at,career_id
         ) VALUES (
           $1, $2, $3, $4, $5, $6, $7, $8, $9,
           $10, $11, $12, $13, $14,
