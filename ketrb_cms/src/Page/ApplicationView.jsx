@@ -51,7 +51,7 @@ const ApplicationDetailPage = () => {
   // Add this inside the useEffect after fetchCareers
     const fetchApplications = async () => {
       try {
-        const response = await fetch("https://ketrb-backend.onrender.com/careers/applications/", {
+        const response = await fetch(`https://ketrb-backend.onrender.com/careers/applications/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

@@ -11,7 +11,8 @@ const {
   GetAllApplications,
   ApproveCareer,
   GetPublishedCareers,
-  CancelCareer
+  CancelCareer,
+  GetApplicationById
 } = require('../controllers/CareerControllers');
 
 const CareerRoutes = express.Router();
@@ -48,6 +49,8 @@ CareerRoutes.get('/careers', GetPublishedCareers);
 // Get all applications
 CareerRoutes.get('/applications', GetAllApplications);
 
+// Get JOB application by ID
+CareerRoutes.get('/applications/:id', GetApplicationById);
 // Apply for  a job
 CareerRoutes.post('/apply', upload.single('resume'), ApplyForJob);
 

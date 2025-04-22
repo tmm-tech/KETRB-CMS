@@ -354,7 +354,7 @@ module.exports = {
           current_job_title, years_of_experience, highest_education, field_of_study,
           school_name, graduation_year, referral_source, other_referral_source,
           willing_to_relocate, available_start_date, salary_expectation,
-          authorized_to_work, require_sponsorship, consent_to_process, consent_to_contact, created_at,careerid
+          authorized_to_work, require_sponsorship, consent_to_process, consent_to_contact, created_at, careerid
         ]
       );
       res.status(201).json({ message: 'Job application submitted successfully', application: result.rows[0] });
@@ -372,6 +372,30 @@ module.exports = {
     } catch (error) {
       console.error('Error fetching job applications:', error);
       res.status(500).json({ message: 'Error fetching job applications.' });
+    }
+  },
+  // Get all job applications
+  // Get application by ID
+  GetApplicationById: async (req, res) => {
+    const { id } = req.params; // Ensure you extract `id` from req.params
+
+    try {
+      const result = await query(`
+      SELECT 
+        ca.*, 
+        c.title AS job_title, 
+        c.department, 
+        c.location 
+      FROM career_applications ca 
+      LEFT JOIN careers c ON ca.career_id = c.id 
+      WHERE ca.id = $1 
+      ORDER BY applied_date DESC
+    `, [id]);
+
+      res.status(200).json(result.rows[0]); // Use `rows[0]` if expecting a single record
+    } catch (error) {
+      console.error('Error fetching job application by ID:', error);
+      res.status(500).json({ message: 'Error fetching job application.' });
     }
   }
 };
