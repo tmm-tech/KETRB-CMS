@@ -926,7 +926,7 @@ const Dashboard = () => {
                     <TableBody>
                       {currentItems.applications.map((application) => (
                         <TableRow key={application.id}>
-                          <TableCell className="font-medium"><Link to={`/careers/view application/${application.id}`} className="hover:underline"> {application.applicant_name}</Link></TableCell>
+                          <TableCell className="font-medium"><Link to={`/careers/view application/${application.id}`} className="hover:underline"> {`${application.first_name} ${application.last_name}`}</Link></TableCell>
                           <TableCell>{application.job_title}</TableCell>
                           <TableCell>
                             <Badge
