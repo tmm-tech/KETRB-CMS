@@ -425,7 +425,7 @@ const ApplicationDetailPage = () => {
         </TabsContent>
 
         {/* Application History Tab */}
-        <TabsContent value="history" className="p-6">
+        {/* <TabsContent value="history" className="p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Application Timeline</h3>
           <div className="space-y-6">
             {application.history.map((item, index) => (
@@ -456,10 +456,10 @@ const ApplicationDetailPage = () => {
                   <p className="text-sm text-gray-500 mt-1">By: {item.user}</p>
                 </div>
               </div>
-            ))}
+            ))} */}
 
             {/* Current status */}
-            <div className="flex">
+            {/* <div className="flex">
               <div className="flex-shrink-0 mr-4">
                 <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
                   <CheckCircle className="h-5 w-5" />
@@ -475,7 +475,7 @@ const ApplicationDetailPage = () => {
               </div>
             </div>
           </div>
-        </TabsContent>
+        </TabsContent> */}
 
         {/* Notes & Actions Tab */}
         <TabsContent value="notes" className="p-6">
