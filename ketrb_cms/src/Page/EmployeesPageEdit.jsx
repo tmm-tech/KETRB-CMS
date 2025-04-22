@@ -24,6 +24,7 @@ const EmployeeEdit = () => {
     department: "",
     role_type: "",
     email: "",
+    gender: "",
     phone: "",
     hire_date: new Date(),
     profile_image: null,
@@ -132,14 +133,15 @@ const EmployeeEdit = () => {
       }
 
       // Add
-      formDataToSend.append("first_name", formData.first_name)
-      formDataToSend.append("last_name", formData.last_name)
-      formDataToSend.append("job_title", formData.job_title)
-      formDataToSend.append("department", formData.department)
-      formDataToSend.append("role_type", formData.role_type)
-      formDataToSend.append("email", formData.email)
-      formDataToSend.append("phone", formData.phone)
-      formDataToSend.append("hire_date", formData.hire_date.toISOString()) // Convert date to ISO string
+      formDataToSend.append("first_name", formData.first_name);
+      formDataToSend.append("last_name", formData.last_name);
+      formDataToSend.append("job_title", formData.job_title);
+      formDataToSend.append("department", formData.department);
+      formDataToSend.append("role_type", formData.role_type);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("gender", formData.gender);
+      formDataToSend.append("phone", formData.phone);
+      formDataToSend.append("hire_date", formData.hire_date.toISOString());
       formDataToSend.append("user_id", user_id);
       formDataToSend.append("created_at", new Date().toISOString());
       formDataToSend.append("roles", user.roles);
@@ -282,6 +284,10 @@ const EmployeeEdit = () => {
                             <div>
                               <h4 className="text-sm font-medium text-gray-500">Phone</h4>
                               <p>{formData.phone || "Not provided"}</p>
+                            </div>
+                            <div>
+                              <h4 className="text-sm font-medium text-gray-500">Gender</h4>
+                              <p className="capitalize">{formData.gender || "Not specified"}</p>
                             </div>
                             <div>
                               <h4 className="text-sm font-medium text-gray-500">Department</h4>

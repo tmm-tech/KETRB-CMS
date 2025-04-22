@@ -10,7 +10,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 import { Label } from "../Component/label";
 import { RadioGroup, RadioGroupItem } from "../Component/radio-group";
-
+import GenderSelection from "../Component/GenderSelection";
 const EmployeeAddPage = () => {
   const [formData, setFormData] = useState({
     first_name: "",
@@ -19,6 +19,7 @@ const EmployeeAddPage = () => {
     department: "",
     role_type: "other", // Default role type
     email: "",
+    gender: "",
     phone: "",
     hire_date: "",
     author: "",
@@ -90,6 +91,7 @@ const EmployeeAddPage = () => {
       formDataToSend.append("department", formData.department);
       formDataToSend.append("role_type", formData.role_type);
       formDataToSend.append("email", formData.email);
+      formDataToSend.append("gender", formData.gender);
       formDataToSend.append("phone", formData.phone);
       formDataToSend.append("hire_date", formData.hire_date);
       formDataToSend.append("status", estatus);
@@ -257,6 +259,14 @@ const EmployeeAddPage = () => {
                       required
                     />
                   </div>
+                  {/* Gender Selection Component */}
+                  <div className="space-y-2">
+                    <GenderSelection
+                      value={formData.gender}
+                      onChange={(value) => handleSelectChange("gender", value)}
+                    />
+                  </div>
+
                   <div className="space-y-2 md:col-span-2">
                     <Label>
                       Role Type <span className="text-red-500">*</span>
