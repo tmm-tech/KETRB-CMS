@@ -10,14 +10,14 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Alert, AlertDescription, AlertTitle } from "../Component/alert";
 import { Label } from "../Component/label";
 import { RadioGroup, RadioGroupItem } from "../Component/radio-group";
-import GenderSelection from "../Component/GenderSelection";
+import GenderSelection from "../Component/gender-selection";
 const EmployeeAddPage = () => {
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
     job_title: "",
     department: "",
-    role_type: "other", // Default role type
+    role_type: "other",
     email: "",
     gender: "",
     phone: "",
