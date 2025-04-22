@@ -4,7 +4,7 @@ const cloudinary = require('cloudinary').v2;
 module.exports = {
   // Add a new employee
   AddEmployee: async (req, res) => {
-    const {first_name, last_name, job_title, department, role_type, email, phone, hire_date, status, author, user_id, created_at} = req.body;
+    const {first_name, last_name, job_title, department, role_type, email,gender, phone, hire_date, status, author, user_id, created_at} = req.body;
     const profileImage = req.file;
     console.log('Profile Image URL:', profileImage);
     try {
@@ -15,8 +15,8 @@ module.exports = {
       }
 
       const result = await query(
-        'INSERT INTO employee (first_name, last_name, job_title, department, role_type, email, phone, hire_date, profile_image, author, status,created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
-        [first_name, last_name, job_title, department, role_type, email, phone, hire_date, imagePath, author, status, created_at]
+        'INSERT INTO employee (first_name, last_name, job_title,gender, department, role_type, email, phone, hire_date, profile_image, author, status,created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
+        [first_name, last_name, job_title, department, role_type,gender, email, phone, hire_date, imagePath, author, status, created_at]
       );
       // Notify admins for approval if status is pending
       if (status === 'pending') {
@@ -68,7 +68,7 @@ module.exports = {
   // Update employee details
   UpdateEmployee: async (req, res) => {
     const { id } = req.params;
-    const { first_name, last_name, job_title, department, role_type, email, phone, hire_date, status, author, role, user_id, created_at } = req.body;
+    const { first_name, last_name, job_title,gender, department, role_type, email, phone, hire_date, status, author, role, user_id, created_at } = req.body;
     const profileImage = req.file;
 
     try {
@@ -92,8 +92,8 @@ module.exports = {
       }
 
       const result = await query(
-        'UPDATE employee SET first_name = $1, last_name = $2, job_title = $3, department = $4, role_type = $5, email = $6, phone = $7, hire_date = $8, profile_image = $9, author = $10, status = $11, created_at = $12 WHERE id = $13 RETURNING *',
-        [first_name, last_name, job_title, department, role_type, email, phone, hire_date, imagePath, author, status, created_at, id]
+        'UPDATE employee SET first_name = $1, last_name = $2, job_title = $3, department = $4, role_type = $5, email = $6, phone = $7, hire_date = $8, profile_image = $9, author = $10, status = $11, created_at = $12, gender = $13 WHERE id = $14 RETURNING *',
+        [first_name, last_name, job_title, department, role_type, email, phone, hire_date, imagePath, author, status, created_at,gender, id]
       );
       if (employeestatus === 'pending') {
         await query(
