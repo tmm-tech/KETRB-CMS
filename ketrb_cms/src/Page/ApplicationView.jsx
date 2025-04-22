@@ -33,7 +33,7 @@ import {
   DialogTitle,
 } from "../Component/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../Component/select";
-import Loading from "../Component/Loading";
+import LoadingPage from "../Page/LoadingPage";
 
 const ApplicationDetailPage = () => {
   const { id } = useParams()
@@ -135,7 +135,7 @@ const ApplicationDetailPage = () => {
     if (loading) {
       return <LoadingPage />
     }
-    
+
   return (
     <div className="container px-4 mx-auto py-8">
       {/* Header */}
