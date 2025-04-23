@@ -3,6 +3,7 @@ import { Input } from "../Component/input";
 import { useParams, useNavigate } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
+import bgImage from "../Asset/bg.png";
 import {
   ArrowLeft,
   Download,
