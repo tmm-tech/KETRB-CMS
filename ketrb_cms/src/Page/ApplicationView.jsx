@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Input } from "../Component/input";
 import { useParams, useNavigate } from "react-router-dom";
+import SideNav from "../Component/SideNav";
+import HeaderNav from "../Component/HeaderNav";
 import {
   ArrowLeft,
   Download,
@@ -137,6 +139,13 @@ const ApplicationDetailPage = () => {
   }
 
   return (
+    <div className="flex min-h-screen w-full flex-col">
+      <SideNav />
+      <div
+        className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14"
+        style={{ backgroundImage: `url(${bgImage})`, backgroundSize: "cover", backgroundPosition: "center" }}
+      >
+        <HeaderNav />
     <div className="container px-4 mx-auto py-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
@@ -628,6 +637,8 @@ const ApplicationDetailPage = () => {
         </DialogContent>
       </Dialog>
     </div>
+        </div>
+      </div>
   )
 }
 
