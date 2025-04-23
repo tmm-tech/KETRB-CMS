@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Input } from "../Component/input";
-import { useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import SideNav from "../Component/SideNav";
 import HeaderNav from "../Component/HeaderNav";
 import bgImage from "../Asset/bg.png";
@@ -49,7 +49,7 @@ const ApplicationDetailPage = () => {
   const [application, setApplications] = useState(null)
   const [showInterviewDialog, setShowInterviewDialog] = useState(false)
   const [interviewDate, setInterviewDate] = useState("")
-  const [interviewTime, setInterviewTime] = useState("")
+  const [interviewTime, setInterviewTime] = useState("");
   const [interviewType, setInterviewType] = useState("in-person")
   // Add this inside the useEffect after fetchCareers
   const fetchApplications = async () => {
@@ -413,15 +413,19 @@ const ApplicationDetailPage = () => {
             <div>
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-gray-800">Resume/CV</h3>
-                <Button variant="outline" size="sm">
+                <Link to={application.resume}>
+                  <Button variant="outline" size="sm" disabled={!application.resume}>
                   <Download className="h-4 w-4 mr-2" />
                   Download
                 </Button>
+               </Link>
               </div>
               <div className="border-2 border-dashed border-gray-200 rounded-lg p-8 flex flex-col items-center justify-center min-h-[400px]">
                 <FileText className="h-16 w-16 text-gray-400 mb-4" />
                 <p className="text-gray-500 mb-4">Resume preview not available</p>
-                <Button className="bg-[#5b92e5] hover:bg-[#4a7fcf]">View Resume</Button>
+                <Link to={application.resume} target="_blank" rel="noopener noreferrer">
+                <Button className="bg-[#5b92e5] hover:bg-[#4a7fcf]" disabled={!application.resume}>View Resume</Button>
+                </Link>
               </div>
             </div>
 
