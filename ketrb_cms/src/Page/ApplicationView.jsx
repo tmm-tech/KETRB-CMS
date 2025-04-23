@@ -234,7 +234,7 @@ const ApplicationDetailPage = () => {
               <div className="flex items-center text-gray-600">
                 <Clock className="h-4 w-4 mr-2" />
                 <span>
-                  Experience: <strong>{application.years_of_experience}</strong>
+                  Experience: <strong>{application.years_of_experience} year(s)</strong>
                 </span>
               </div>
             </div>
